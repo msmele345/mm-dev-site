@@ -14,11 +14,11 @@ pipeline: repo → build → live URL.
 
 ## Acceptance criteria
 
-- [ ] Fresh Next.js App Router project with React 19 builds and runs locally
-- [ ] Color and typography design tokens defined once and used by the placeholder page (no hardcoded hex in components)
-- [ ] Placeholder home renders ink-black ground, white type, lime accent — visibly the site's aesthetic, not a framework default page
-- [ ] Deployed to Vercel; live `.vercel.app` URL loads the placeholder
-- [ ] Lint + typecheck pass in the build
+- [x] Fresh Next.js App Router project with React 19 builds and runs locally
+- [x] Color and typography design tokens defined once and used by the placeholder page (no hardcoded hex in components)
+- [x] Placeholder home renders ink-black ground, white type, lime accent — visibly the site's aesthetic, not a framework default page
+- [x] Deployed to Vercel; live `.vercel.app` URL loads the placeholder
+- [x] Lint + typecheck pass in the build
 
 ## Blocked by
 
