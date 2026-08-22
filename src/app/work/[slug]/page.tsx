@@ -6,6 +6,8 @@ import {
   listCaseStudySlugs,
 } from "@/content/projects/catalog";
 
+export const dynamicParams = false;
+
 const grooveDisplay = Chakra_Petch({
   subsets: ["latin"],
   weight: ["400", "600", "700"],

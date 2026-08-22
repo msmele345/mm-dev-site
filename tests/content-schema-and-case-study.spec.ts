@@ -8,6 +8,12 @@ test("elevated-bpm case study lives at its own route", async ({ page }) => {
   ).toBeVisible();
 });
 
+test("unpublished case studies return 404", async ({ page }) => {
+  const response = await page.goto("/work/terminal-one");
+
+  expect(response?.status()).toBe(404);
+});
+
 test("case study renders from the curated content file", async ({ page }) => {
   await page.goto("/work/elevated-bpm");
 
@@ -59,6 +65,7 @@ test("home project wall holds an unthemed card that opens the case study", async
 
   const wall = page.locator("#work");
   await expect(wall.getByRole("heading", { name: /project wall/i })).toBeVisible();
+  await expect(wall.getByText(/placeholder card/i)).toBeVisible();
 
   const card = wall.getByRole("link", { name: /elevated bpm/i });
   await expect(card).toBeVisible();

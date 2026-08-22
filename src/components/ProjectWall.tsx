@@ -8,7 +8,7 @@ export default function ProjectWall() {
     <section className="project-wall" id="work" aria-labelledby="work-title">
       <div className="project-wall__bar">
         <h2 id="work-title">Project wall</h2>
-        <p>01 of 04 · first tile live</p>
+        <p>01 of 04 · placeholder card</p>
       </div>
       <ul className="project-wall__grid">
         {projects.map((project, index) => (
