@@ -2,7 +2,7 @@
 
 ## Parent
 
-Wayfinder map: `/docs/plan-history/map.md`
+Wayfinder map: `/docs/plan/plan-history/map.md`
 
 ## What to build
 
