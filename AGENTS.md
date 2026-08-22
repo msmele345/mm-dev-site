@@ -5,7 +5,7 @@
 **One-liner:** Site to Showcase Development Work in Galley and Blogging. The gallery is visually stunning and eye catching, just like the projects that it will showcase.
 
 # Project Overview and Plan:
-See @docs/plan/site-v1/map.md for Wayfinder map and Project Plan
+See @docs/plan/plan-history/map.md for Wayfinder map and Project Plan
 See @issues for planned work slices
 
 ## Agent Orientation
