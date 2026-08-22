@@ -30,14 +30,23 @@ See @issues for planned work slices
     - `main` - production ready code
     - `feat/*` - individual feature branches created from main, merged back into main when complete (merges done by the user)
     - `release/*` - created from main when preparing for a release
-- PRs should be used to merge feature branches into develop, and release branches into main. PRs should be reviewed and approved by me before merging.
+- PRs should be used to merge feature branches into main. PRs should be reviewed and approved by me before merging.
 - **Merge method depends on the target branch** (this matters — getting it wrong breaks branch ancestry):
     - `feat/* → main`: **Squash and Merge** — keeps main's history clean, one commit per feature.
     - `release/* → main` **Create a Merge Commit (`--no-ff`), NEVER squash.** Squash-merging into main collapses the shared commits into a brand-new commit with no ancestry link, so Git's merge base for the *next* release stays stuck at the old point and every changed file surfaces spurious `add/add` conflicts. A real merge commit preserves ancestry and keeps subsequent releases conflict-free.
-    - If a `release → main` merge ever shows conflicts on every changed file, the cause is a prior squash-merge into main breaking ancestry. Fix: branch the release off develop, `git merge --no-ff -X ours origin/main` into it (keeps develop's content, brings main's tip in as a parent so main becomes an ancestor), then open the release PR — it will be conflict-free — and merge it with a merge commit.
 - Commit messages should follow best practices and use the format: (feat:, chore:, fix:, docs:, refactor:) Examples:
     - `feat: add new widget for genre breakdown`
     - `chore: minor tasks like updating dependencies or fixing typos`
     - `fix: resolve bug in Spotify API integration`
     - `docs: update README with setup instructions`
     - `refactor: service layer redesign`
+
+<!-- BEGIN:nextjs-agent-rules -->
+
+# This is NOT the Next.js you know
+
+This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
+
+This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
+
+<!-- END:nextjs-agent-rules -->
