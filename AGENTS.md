@@ -25,7 +25,7 @@ See @issues for planned work slices
 
 
 # Git Strategy and Instructions
-- Create feature branches off of develop for each new feature or task. Name branches using the format `feat/short-description` (e.g., `feat/spotify-integration`).
+- Create feature branches off of main for each new feature or task. Name branches using the format `feat/short-description` (e.g., `feat/spotify-integration`).
 - Git Strategy is Git Flow with the following branches:
     - `main` - production ready code
     - `feat/*` - individual feature branches created from main, merged back into main when complete (merges done by the user)

@@ -20,19 +20,19 @@ dev projects. The map is done when any agent could pick up issue 01 and start bu
 - This map was charted and worked in a single compressed session at the user's request
   (full pipeline: /wayfinder → /grill-with-docs → /to-issues).
 
-## Decisions so far
+## Implementation slices
 
-- [01 — Showcase concept](docs/plan/site-v1/01-showcase-concept.md) — Chameleon tiles: each project card is a mini-world in that project's own visual identity.
-- [02 — Chrome aesthetic](issues/02-chrome-aesthetic.md) — Ink-black ground, stark white type, electric lime accent.
-- [03 — Brand wordmark](issues/03-brand-wordmark.md) — MITCH MELE, the real name set huge.
-- [04 — Featured projects](issues/04-featured-projects.md) — elevated-bpm, terminal-one, telescope, sound-city; each gets a full tile.
-- [05 — Project data source](issues/05-project-data-source.md) — Curated content files + build-time GitHub enrichment for repos with remotes.
-- [06 — Stack](issues/06-stack.md) — Next.js App Router + React 19, deployed on Vercel.
-- [07 — Blog authoring](issues/07-blog-authoring.md) — MDX in-repo; React components embeddable in posts.
-- [08 — Tile click destination](issues/08-tile-click-destination.md) — Full case-study page per project, in that project's identity.
-- [09 — v1 scope](issues/09-v1-scope.md) — Core + about/hero/contact, RSS + OG images, "more projects" rail. No theme toggle.
-- [10 — Motion policy](issues/10-motion-policy.md) — Ambient idle + hover crescendo; prefers-reduced-motion freezes to static art.
-- [11 — Deploy & domain](issues/11-deploy-and-domain.md) — Vercel; custom personal domain connected post-launch.
+- [01 — Scaffold & first deploy](../../../issues/01-scaffold-and-first-deploy.md) — Next.js and React foundation, visual tokens, CI, and the first Vercel deployment.
+- [02 — Chrome shell](../../../issues/02-chrome-shell.md) — Navigation, wordmark, hero/about, contact links, footer, and metadata.
+- [03a — Content schema & elevated-bpm case study](../../../issues/03a-content-schema-and-case-study.md) — Curated project content and the first full case-study route.
+- [03b — Groovebox tile & motion system](../../../issues/03b-groovebox-tile-and-motion.md) — The first chameleon tile and reusable static, ambient, and crescendo states.
+- [04 — GitHub build-time enrichment](../../../issues/04-github-build-time-enrichment.md) — Build-time repository statistics with graceful fallback behavior.
+- [05 — Remaining three tiles](../../../issues/05-remaining-three-tiles.md) — terminal-one, telescope, and sound-city tiles and case studies.
+- [06 — MDX blog](../../../issues/06-mdx-blog.md) — In-repository posts, blog routes, code presentation, and interactive embeds.
+- [07 — RSS + OG images](../../../issues/07-rss-and-og-images.md) — Feed generation and branded sharing images.
+- [08 — More-projects rail](../../../issues/08-more-projects-rail.md) — A curated, lightweight showcase below the featured project wall.
+- [09 — Polish & audit](../../../issues/09-polish-and-audit.md) — Accessibility, motion, performance, and responsive review.
+- [10 — Custom domain](../../../issues/10-custom-domain.md) — Domain, DNS, HTTPS, and canonical URL setup.
 
 ## Not yet specified
 
@@ -42,7 +42,7 @@ Per-tile art direction is specified inside each tile's issue; remaining HITL tas
 
 ## Out of scope
 
-- **Dark/light theme toggle** — the ink-black identity *is* the design; a light mode dilutes it (ruled out in [09 — v1 scope](issues/09-v1-scope.md)).
-- **Runtime GitHub API rendering** — stats are build-time only; no runtime dependency (ruled out in [05 — Project data source](issues/05-project-data-source.md)).
-- **Headless CMS** — single-author blog doesn't warrant a service dependency (ruled out in [07 — Blog authoring](issues/07-blog-authoring.md)).
+- **Dark/light theme toggle** — the ink-black identity *is* the design; a light mode dilutes it (ruled out in [09 — v1 scope](09-v1-scope.md)).
+- **Runtime GitHub API rendering** — stats are build-time only; no runtime dependency (implemented through [04 — GitHub build-time enrichment](../../../issues/04-github-build-time-enrichment.md)).
+- **Headless CMS** — single-author blog doesn't warrant a service dependency (implemented through [06 — MDX blog](../../../issues/06-mdx-blog.md)).
 - **Showcasing all 82 public repos** — only a curated "more projects" rail beyond the four featured tiles.
