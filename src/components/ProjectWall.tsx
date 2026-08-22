@@ -1,5 +1,7 @@
-import Link from "next/link";
+import GrooveboxTile from "@/components/tiles/GrooveboxTile";
+import TileMotion from "@/components/tiles/TileMotion";
 import { listWallProjects } from "@/content/projects/catalog";
+import { displayFaceClass } from "@/fonts";
 
 export default function ProjectWall() {
   const projects = listWallProjects();
@@ -8,21 +10,20 @@ export default function ProjectWall() {
     <section className="project-wall" id="work" aria-labelledby="work-title">
       <div className="project-wall__bar">
         <h2 id="work-title">Project wall</h2>
-        <p>01 of 04 · placeholder card</p>
+        <p>01 of 04 · groovebox faceplate</p>
       </div>
       <ul className="project-wall__grid">
         {projects.map((project, index) => (
           <li key={project.slug}>
-            <Link className="project-wall__card" href={`/work/${project.slug}`}>
-              <span className="project-wall__index">
-                {String(index + 1).padStart(2, "0")}
-              </span>
-              <span className="project-wall__name">{project.title}</span>
-              <span className="project-wall__pitch">{project.pitch}</span>
-              <span className="project-wall__go">
-                Open case study <span aria-hidden="true">→</span>
-              </span>
-            </Link>
+            {project.tile ? (
+              <TileMotion>
+                <GrooveboxTile
+                  project={project}
+                  index={index}
+                  displayClassName={displayFaceClass(project.tile.displayFace)}
+                />
+              </TileMotion>
+            ) : null}
           </li>
         ))}
       </ul>

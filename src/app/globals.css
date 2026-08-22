@@ -310,48 +310,8 @@ body {
   list-style: none;
 }
 
-.project-wall__card {
-  display: grid;
-  gap: 0.85rem;
-  min-height: 18rem;
-  padding: clamp(1.25rem, 3vw, 2rem);
-  background: var(--color-ink-raised);
-  border: var(--line) solid var(--color-grid);
-  color: var(--color-paper);
-  text-decoration: none;
-  transition: border-color 160ms ease, transform 160ms ease;
-}
-
-.project-wall__card:hover {
-  border-color: var(--color-lime);
-  transform: translateY(-2px);
-}
-
-.project-wall__index,
-.project-wall__go {
-  color: var(--color-lime);
-  font-size: clamp(0.625rem, 0.9vw, 0.75rem);
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-}
-
-.project-wall__name {
-  font-family: var(--font-display), sans-serif;
-  font-size: clamp(2.25rem, 6vw, 4rem);
-  letter-spacing: 0.02em;
-  line-height: 0.9;
-  text-transform: uppercase;
-}
-
-.project-wall__pitch {
-  max-width: 36rem;
-  color: var(--color-mute);
-  font-size: clamp(0.8125rem, 1.3vw, 1rem);
-  line-height: 1.6;
-}
-
-.project-wall__go {
-  margin-top: auto;
+.project-wall__grid > li:empty {
+  display: none;
 }
 
 /* ── Contact ── */
@@ -465,7 +425,7 @@ body {
   --case-ink: var(--color-paper);
   --case-mute: var(--color-mute);
   --case-accent: var(--color-lime);
-  --case-display: var(--font-case-display), var(--font-display), sans-serif;
+  --case-display: var(--font-groove), var(--font-display), sans-serif;
   background:
     radial-gradient(120% 80% at 50% -10%, rgb(255 255 255 / 4%), transparent 55%),
     var(--case-ground);
@@ -738,6 +698,279 @@ body {
   .case__shots ul {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+}
+
+/* ── Chameleon tiles (ADR 0002) + motion system (ADR 0006) ──
+   Motion discipline: only transform and opacity are ever animated.
+   States are pure CSS — static (prefers-reduced-motion), ambient (default),
+   crescendo (:hover / :focus-visible, so one tile at a time by construction).
+   JS only pauses ambient motion off-screen via .tile-motion[data-in-view]. */
+.tile-motion {
+  display: block;
+  height: 100%;
+}
+
+.groovebox-tile {
+  display: grid;
+  gap: 1rem;
+  height: 100%;
+  padding: clamp(1.25rem, 3vw, 2rem);
+  background: var(--tile-ground);
+  border: var(--line) solid rgb(255 255 255 / 8%);
+  color: var(--tile-ink);
+  text-decoration: none;
+  transition: transform 160ms ease;
+}
+
+.groovebox-tile:hover {
+  transform: translateY(-2px);
+}
+
+.groovebox-tile:is(:hover, :focus-visible) {
+  border-color: var(--tile-accent);
+}
+
+/* Crescendo must be keyboard-accessible (ADR 0006): the tile carries its own
+   lime focus ring rather than depending on the chrome's global rule. */
+.groovebox-tile:focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: 3px;
+}
+
+.groovebox-tile__faceplate {
+  position: relative;
+  padding: 1.1rem 1.1rem 1rem;
+  background: linear-gradient(180deg, #22262b 0%, var(--tile-panel) 42%, #141618 100%);
+  border: 1px solid rgb(255 255 255 / 8%);
+  border-radius: 14px;
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 12%),
+    0 18px 40px rgb(0 0 0 / 45%);
+}
+
+.groovebox-tile__screw,
+.groovebox-tile__screw--right {
+  position: absolute;
+  top: 0.6rem;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #6a6e73, #1a1c1f 70%);
+  box-shadow: inset 0 0 0 1px rgb(0 0 0 / 50%);
+}
+
+.groovebox-tile__screw {
+  left: 0.6rem;
+}
+
+.groovebox-tile__screw--right {
+  right: 0.6rem;
+}
+
+.groovebox-tile__topline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.6rem;
+}
+
+.groovebox-tile__brand {
+  color: var(--tile-mute);
+  font-family: var(--font-groove), var(--font-display), sans-serif;
+  font-size: 0.75rem;
+  letter-spacing: 0.28em;
+}
+
+.groovebox-tile__tempo {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: var(--tile-accent);
+  box-shadow: 0 0 8px var(--tile-accent);
+  opacity: 0.35;
+  animation: groove-tempo 1.2s ease-in-out infinite;
+}
+
+.groovebox-tile__silkscreen {
+  margin: 0 0 0.85rem;
+  color: var(--tile-ink);
+  font-family: var(--font-groove), var(--font-display), sans-serif;
+  font-size: clamp(1.5rem, 4vw, 2.25rem);
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.groovebox-tile__steps,
+.groovebox-tile__pads {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.groovebox-tile__steps {
+  grid-template-columns: repeat(16, minmax(0, 1fr));
+  gap: 0.28rem;
+  margin-bottom: 0.85rem;
+}
+
+.groovebox-tile__step {
+  position: relative;
+  aspect-ratio: 3 / 4;
+  border-radius: 3px;
+  background: #2e3236;
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 12%), 0 2px 0 rgb(0 0 0 / 45%);
+}
+
+.groovebox-tile__step-glow {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: var(--step-color);
+  box-shadow: 0 0 10px var(--step-color);
+  opacity: 0;
+}
+
+/* Ambient: the four beat LEDs breathe in a slow traveling wave. */
+.groovebox-tile__step[data-lit="true"] .groovebox-tile__step-glow {
+  opacity: 0.3;
+  animation: groove-ambient 4.8s ease-in-out infinite;
+  animation-delay: calc(var(--step-index) * 300ms);
+}
+
+/* Crescendo: the sequencer visibly runs — a 16-step chase, 100ms per step. */
+.groovebox-tile:is(:hover, :focus-visible) .groovebox-tile__step-glow {
+  animation: groove-chase 1.6s linear infinite;
+  animation-delay: calc(var(--step-index) * 100ms);
+}
+
+.groovebox-tile:is(:hover, :focus-visible) .groovebox-tile__tempo {
+  animation-duration: 0.3s;
+}
+
+.groovebox-tile__pads {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.55rem;
+}
+
+.groovebox-tile__pads li {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1;
+  border-radius: 8px;
+  background: linear-gradient(180deg, #383c41, #232629);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 14%),
+    0 3px 5px rgb(0 0 0 / 50%);
+  color: var(--tile-mute);
+  font-size: 0.6rem;
+  letter-spacing: 0.12em;
+}
+
+/* Crescendo: pads strike on the beat, staggered across the bar. */
+.groovebox-tile:is(:hover, :focus-visible) .groovebox-tile__pads li {
+  animation: groove-pad 0.8s ease-in-out infinite;
+}
+
+.groovebox-tile:is(:hover, :focus-visible) .groovebox-tile__pads li:nth-child(2) {
+  animation-delay: 200ms;
+}
+
+.groovebox-tile:is(:hover, :focus-visible) .groovebox-tile__pads li:nth-child(3) {
+  animation-delay: 400ms;
+}
+
+.groovebox-tile:is(:hover, :focus-visible) .groovebox-tile__pads li:nth-child(4) {
+  animation-delay: 600ms;
+}
+
+.groovebox-tile__meta {
+  display: grid;
+  gap: 0.85rem;
+}
+
+.groovebox-tile__index,
+.groovebox-tile__go {
+  color: var(--tile-accent);
+  font-size: clamp(0.625rem, 0.9vw, 0.75rem);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.groovebox-tile__pitch {
+  max-width: 36rem;
+  color: var(--tile-mute);
+  font-size: clamp(0.8125rem, 1.3vw, 1rem);
+  line-height: 1.6;
+}
+
+/* Static state: reduced-motion users get deliberate frozen art — the groove
+   pattern lit and legible, nothing moving. */
+@media (prefers-reduced-motion: reduce) {
+  .groovebox-tile [data-anim] {
+    animation: none !important;
+  }
+
+  .groovebox-tile__step[data-lit="true"] .groovebox-tile__step-glow {
+    opacity: 1;
+  }
+
+  .groovebox-tile__tempo {
+    opacity: 1;
+  }
+}
+
+/* Keyframes: transform and opacity only — compositor-friendly, no layout
+   or paint work per frame (verify in DevTools → Rendering → Paint flashing). */
+@keyframes groove-ambient {
+  0%,
+  100% {
+    opacity: 0.55;
+  }
+  50% {
+    opacity: 0.95;
+  }
+}
+
+@keyframes groove-chase {
+  0% {
+    opacity: 1;
+  }
+  30%,
+  100% {
+    opacity: 0.12;
+  }
+}
+
+@keyframes groove-tempo {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.15;
+  }
+}
+
+@keyframes groove-pad {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  30% {
+    transform: scale(0.93);
+  }
+}
+
+/* Off-screen pause: ambient/crescendo motion halts when the tile leaves the
+   viewport and resumes on re-entry (IntersectionObserver flips data-in-view).
+   This selector is intentionally more specific than the state rules above —
+   those use the `animation` shorthand, which resets animation-play-state to
+   running, so the pause must out-rank them rather than rely on source order. */
+.project-wall .tile-motion[data-in-view="false"] [data-anim] {
+  animation-play-state: paused;
 }
 
 /* ── Mobile ── */
