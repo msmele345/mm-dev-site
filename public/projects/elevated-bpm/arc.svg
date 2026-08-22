@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" role="img">
+  <rect width="960" height="540" fill="#0c0d0f"/>
+  <rect x="48" y="48" width="864" height="444" rx="18" fill="#1a1c1f" stroke="#26292d"/>
+  <text x="80" y="100" fill="#b8b2a4" font-family="monospace" font-size="18" letter-spacing="4">ARC · SILENCE → GROOVE</text>
+  <g transform="translate(80 160)">
+    <rect width="56" height="56" rx="8" fill="#4dff6a"/>
+    <rect x="72" width="56" height="56" rx="8" fill="#4dff6a"/>
+    <rect x="144" width="56" height="56" rx="8" fill="#4dff6a"/>
+    <rect x="216" width="56" height="56" rx="8" fill="#2e3236" stroke="#ffd24d"/>
+    <rect x="288" width="56" height="56" rx="8" fill="#2e3236"/>
+    <rect x="360" width="56" height="56" rx="8" fill="#2e3236"/>
+    <rect x="432" width="56" height="56" rx="8" fill="#2e3236"/>
+    <rect x="504" width="56" height="56" rx="8" fill="#2e3236"/>
+    <rect x="576" width="56" height="56" rx="8" fill="#2e3236"/>
+    <rect x="648" width="56" height="56" rx="8" fill="#2e3236"/>
+    <rect x="720" width="56" height="56" rx="8" fill="#2e3236"/>
+  </g>
+  <rect x="80" y="260" width="800" height="180" rx="12" fill="#0d0f10"/>
+  <text x="112" y="330" fill="#e8e4da" font-family="monospace" font-size="28">04 / 14 · CLAP ON 2 AND 4</text>
+  <text x="112" y="380" fill="#8b8578" font-family="monospace" font-size="18">Goal checked against live pattern state.</text>
+</svg>

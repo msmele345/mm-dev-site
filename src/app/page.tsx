@@ -1,11 +1,5 @@
+import ProjectWall from "@/components/ProjectWall";
 import { contact } from "@/content/contact";
-
-const projects = [
-  { name: "elevated-bpm", kind: "groovebox, in the browser" },
-  { name: "terminal-one", kind: "trading floor for the dark" },
-  { name: "telescope", kind: "star fields on demand" },
-  { name: "sound-city", kind: "club flyers, printed loud" },
-];
 
 export default function Home() {
   return (
@@ -28,25 +22,12 @@ export default function Home() {
             shipping.
           </p>
           <p className="hero__next">
-            <span aria-hidden="true">▼</span> project wall landing soon
+            <span aria-hidden="true">▼</span> the wall is open
           </p>
         </div>
       </section>
 
-      <section className="wall-teaser" id="work" aria-labelledby="work-title">
-        <div className="wall-teaser__bar">
-          <h2 id="work-title">Selected work</h2>
-          <p>04 tiles · assembling</p>
-        </div>
-        <ul className="wall-teaser__list">
-          {projects.map((project) => (
-            <li key={project.name}>
-              <span className="wall-teaser__name">{project.name}</span>
-              <span className="wall-teaser__kind">{project.kind}</span>
-            </li>
-          ))}
-        </ul>
-      </section>
+      <ProjectWall />
 
       <section className="contact" id="contact" aria-labelledby="contact-title">
         <div className="contact__bar">
