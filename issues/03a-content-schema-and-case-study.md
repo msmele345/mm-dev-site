@@ -29,12 +29,12 @@ the case study. Issue 03b replaces that card with the real faceplate.
 
 ## Acceptance criteria
 
-- [ ] Content schema defined and documented, covering title, slug, pitch, tile identity, story sections, screenshots, links, stack
-- [ ] Schema validated by authoring two content files against it — elevated-bpm and terminal-one — with no schema changes needed for the second
-- [ ] Case-study page at its own route, rendering entirely from the content file: story, screenshots, stack badges, repo/demo links
-- [ ] Case study shares the tile's palette and display face, and reuses the faceplate motif in its hero
-- [ ] Project wall container on the home page with an unthemed placeholder card linking to the case study
-- [ ] Draft copy sourced from elevated-bpm's `CONCEPT.md` and flagged for user review — review is non-blocking, the slice ships with draft copy in place
+- [x] Content schema defined and documented, covering title, slug, pitch, tile identity, story sections, screenshots, links, stack
+- [x] Schema validated by authoring two content files against it — elevated-bpm and terminal-one — with no schema changes needed for the second
+- [x] Case-study page at its own route, rendering entirely from the content file: story, screenshots, stack badges, repo/demo links
+- [x] Case study shares the tile's palette and display face, and reuses the faceplate motif in its hero
+- [x] Project wall container on the home page with an unthemed placeholder card linking to the case study
+- [x] Draft copy sourced from elevated-bpm's `CONCEPT.md` and flagged for user review — review is non-blocking, the slice ships with draft copy in place
 - [ ] Deployed: the case-study route loads on the live URL
 
 ## Blocked by

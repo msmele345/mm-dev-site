@@ -40,7 +40,7 @@ test("hero introduces Mitch with personality", async ({ page }) => {
   await expect(
     main.getByText(/Built after dark\. Shipped with intent\./),
   ).toBeVisible();
-  await expect(main.getByText(/elevated-bpm/)).toBeVisible();
+  await expect(main.getByText(/elevated bpm/i)).toBeVisible();
 });
 
 test("contact links to GitHub and email in lime", async ({ page }) => {

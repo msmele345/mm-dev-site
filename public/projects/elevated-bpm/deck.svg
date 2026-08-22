@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" role="img">
+  <rect width="960" height="540" fill="#0c0d0f"/>
+  <rect x="48" y="48" width="864" height="444" rx="18" fill="#1a1c1f" stroke="#26292d"/>
+  <text x="80" y="100" fill="#b8b2a4" font-family="monospace" font-size="18" letter-spacing="4">EB-01 · DECK</text>
+  <g transform="translate(80 148)">
+    <rect width="800" height="72" rx="8" fill="#0d0f10"/>
+    <g>
+      <rect x="16" y="16" width="36" height="40" rx="4" fill="#ff4d33"/>
+      <rect x="64" y="16" width="36" height="40" rx="4" fill="#2e3236"/>
+      <rect x="112" y="16" width="36" height="40" rx="4" fill="#2e3236"/>
+      <rect x="160" y="16" width="36" height="40" rx="4" fill="#2e3236"/>
+      <rect x="220" y="16" width="36" height="40" rx="4" fill="#ff9d2e"/>
+      <rect x="268" y="16" width="36" height="40" rx="4" fill="#2e3236"/>
+      <rect x="316" y="16" width="36" height="40" rx="4" fill="#2e3236"/>
+      <rect x="364" y="16" width="36" height="40" rx="4" fill="#2e3236"/>
+      <rect x="424" y="16" width="36" height="40" rx="4" fill="#ffd24d"/>
+      <rect x="472" y="16" width="36" height="40" rx="4" fill="#2e3236"/>
+      <rect x="520" y="16" width="36" height="40" rx="4" fill="#2e3236"/>
+      <rect x="568" y="16" width="36" height="40" rx="4" fill="#2e3236"/>
+      <rect x="628" y="16" width="36" height="40" rx="4" fill="#f2ead8"/>
+      <rect x="676" y="16" width="36" height="40" rx="4" fill="#2e3236"/>
+      <rect x="724" y="16" width="36" height="40" rx="4" fill="#2e3236"/>
+      <rect x="772" y="16" width="36" height="40" rx="4" fill="#2e3236"/>
+    </g>
+  </g>
+  <g transform="translate(80 260)">
+    <rect width="176" height="176" rx="12" fill="#2e3236"/>
+    <text x="88" y="98" text-anchor="middle" fill="#e8e4da" font-family="monospace" font-size="20">KICK</text>
+    <rect x="208" width="176" height="176" rx="12" fill="#2e3236"/>
+    <text x="296" y="98" text-anchor="middle" fill="#e8e4da" font-family="monospace" font-size="20">CLAP</text>
+    <rect x="416" width="176" height="176" rx="12" fill="#2e3236"/>
+    <text x="504" y="98" text-anchor="middle" fill="#e8e4da" font-family="monospace" font-size="20">CH</text>
+    <rect x="624" width="176" height="176" rx="12" fill="#2e3236"/>
+    <text x="712" y="98" text-anchor="middle" fill="#e8e4da" font-family="monospace" font-size="20">OH</text>
+  </g>
+</svg>
