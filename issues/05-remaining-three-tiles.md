@@ -2,13 +2,13 @@
 
 ## Parent
 
-Wayfinder map: `/plan/plan-history/map.md`
+Wayfinder map: `/docs/plan/plan-history/map.md`
 
 ## What to build
 
-Repeat the proven pattern from issue 03 for the other three featured projects — each a
-curated content file, a chameleon tile with the three motion states, and an in-identity
-case-study page:
+Repeat the pattern proven in issues 03a and 03b for the other three featured projects —
+each a curated content file, a chameleon tile with the three motion states, and an
+in-identity case-study page:
 
 - **terminal-one** → trading terminal: scrolling ticker tape, green phosphor numbers,
   a slot-machine flourish in the crescendo. Story angle: Spring Boot + desktop monorepo,
@@ -31,4 +31,5 @@ project wall composes all four tiles; only one tile crescendos at a time (ADR 00
 
 ## Blocked by
 
-- [03 — First tracer tile: elevated-bpm](03-first-tracer-tile-elevated-bpm.md)
+- [03a — Content schema & elevated-bpm case study](03a-content-schema-and-case-study.md)
+- [03b — Groovebox tile & motion system](03b-groovebox-tile-and-motion.md)

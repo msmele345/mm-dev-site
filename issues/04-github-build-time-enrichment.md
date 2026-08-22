@@ -2,7 +2,7 @@
 
 ## Parent
 
-Wayfinder map: `/plan/plan-history/map.md`
+Wayfinder map: `/docs/plan/plan-history/map.md`
 
 ## What to build
 
@@ -26,4 +26,5 @@ periodic-rebuild mechanism so stats don't rot between deploys.
 
 ## Blocked by
 
-- [03 — First tracer tile: elevated-bpm](03-first-tracer-tile-elevated-bpm.md)
+- [03a — Content schema & elevated-bpm case study](03a-content-schema-and-case-study.md)
+- [03b — Groovebox tile & motion system](03b-groovebox-tile-and-motion.md)
