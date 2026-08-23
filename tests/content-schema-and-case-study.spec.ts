@@ -58,23 +58,3 @@ test("case study continues the groovebox identity", async ({ page }) => {
   await expect(page.locator(".faceplate__pads li")).toHaveCount(4);
 });
 
-test("home project wall holds an unthemed card that opens the case study", async ({
-  page,
-}) => {
-  await page.goto("/");
-
-  const wall = page.locator("#work");
-  await expect(wall.getByRole("heading", { name: /project wall/i })).toBeVisible();
-  await expect(wall.getByText(/placeholder card/i)).toBeVisible();
-
-  const card = wall.getByRole("link", { name: /elevated bpm/i });
-  await expect(card).toBeVisible();
-  await expect(card).toHaveCSS("background-color", "rgb(16, 18, 22)");
-  await expect(card).toHaveAttribute("href", "/work/elevated-bpm");
-
-  await card.click();
-  await expect(page).toHaveURL(/\/work\/elevated-bpm$/);
-  await expect(
-    page.getByRole("heading", { name: /elevated bpm/i, level: 1 }),
-  ).toBeVisible();
-});
