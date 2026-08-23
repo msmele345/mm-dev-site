@@ -15,7 +15,7 @@ import { createServer } from "node:http";
 const PORT = Number(process.argv[2] ?? process.env.PORT ?? 4010);
 const REPO = "/repos/msmele345/elevated-bpm";
 
-export const FIXTURE = {
+const FIXTURE = {
   commitCount: Number(process.env.MOCK_COMMITS ?? 1234),
   lastPushedAt: "2026-02-14T02:00:00Z",
   languages: { TypeScript: 750_000, CSS: 150_000, JavaScript: 100_000 },

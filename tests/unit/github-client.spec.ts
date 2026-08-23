@@ -167,11 +167,59 @@ test("counts a repo whose commit list fits on one page", async () => {
   expect(stats?.commitCount).toBe(1);
 });
 
-test("reports a repo with no commits as zero rather than guessing", async () => {
+test("reports no stats for an empty repo, which github refuses to list", async () => {
   const { fetchRepoStats } = await import("@/lib/github");
   const github = fakeGithub({
-    "/repos/msmele345/elevated-bpm/commits": () => Response.json([]),
+    "/repos/msmele345/elevated-bpm/commits": () =>
+      new Response('{"message":"Git Repository is empty."}', { status: 409 }),
   });
 
-  expect((await fetchRepoStats(REF, { fetch: github.fetch }))?.commitCount).toBe(0);
+  expect(await fetchRepoStats(REF, { fetch: github.fetch })).toBeNull();
+});
+
+test("counts commits whatever order github orders the link query in", async () => {
+  const { fetchRepoStats } = await import("@/lib/github");
+  const github = fakeGithub({
+    "/repos/msmele345/elevated-bpm/commits": () =>
+      new Response("[{}]", {
+        headers: {
+          "content-type": "application/json",
+          link: '<https://api.github.com/repositories/1/commits?page=2&per_page=1>; rel="next", <https://api.github.com/repositories/1/commits?page=904&per_page=1>; rel="last"',
+        },
+      }),
+  });
+
+  expect((await fetchRepoStats(REF, { fetch: github.fetch }))?.commitCount).toBe(904);
+});
+
+test("refuses to guess a count when the link header has no last page", async () => {
+  const { fetchRepoStats } = await import("@/lib/github");
+  // A paginated response whose last page cannot be read: the body holds one
+  // commit, so guessing would report "1 commit" for a repo of any size.
+  const github = fakeGithub({
+    "/repos/msmele345/elevated-bpm/commits": () =>
+      new Response("[{}]", {
+        headers: {
+          "content-type": "application/json",
+          link: '<https://api.github.com/repositories/1/commits?page=2&per_page=1>; rel="next"',
+        },
+      }),
+  });
+
+  expect(await fetchRepoStats(REF, { fetch: github.fetch })).toBeNull();
+});
+
+
+test("ignores an empty api base url instead of building relative urls", async () => {
+  const { fetchRepoStats } = await import("@/lib/github");
+  const urls: string[] = [];
+  const recording = (async (input: RequestInfo | URL, init?: RequestInit) => {
+    urls.push(String(input));
+    return fakeGithub().fetch(input, init);
+  }) as typeof globalThis.fetch;
+
+  // An env var defined with an empty value is a normal way to neutralise it.
+  await fetchRepoStats(REF, { fetch: recording, baseUrl: "" });
+
+  expect(urls[0]).toBe("https://api.github.com/repos/msmele345/elevated-bpm");
 });

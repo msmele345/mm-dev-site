@@ -92,8 +92,11 @@ export async function fetchRepoStats(
   const lastPushedAt = (await readJson<{ pushed_at?: string }>(repo))?.pushed_at;
   if (!lastPushedAt) return null;
 
+  const count = await commitCount(commits);
+  if (count === null) return null;
+
   return {
-    commitCount: await commitCount(commits),
+    commitCount: count,
     lastPushedAt,
     languages: languageShares(
       (await readJson<Record<string, number>>(languages)) ?? {},
@@ -103,7 +106,7 @@ export async function fetchRepoStats(
 
 function githubGetter(options: GithubClientOptions) {
   const doFetch = options.fetch ?? globalThis.fetch;
-  const baseUrl = options.baseUrl ?? DEFAULT_BASE_URL;
+  const baseUrl = options.baseUrl || DEFAULT_BASE_URL;
   const timeoutMs = options.timeoutMs ?? DEFAULT_TIMEOUT_MS;
   const buildKey = options.buildKey ?? process.env.ENRICHMENT_BUILD_ID ?? "local";
   const token = options.token;
@@ -137,17 +140,42 @@ async function readJson<T>(response: Response): Promise<T | null> {
 /**
  * GitHub has no commit-count endpoint. Asking for a single commit per page
  * makes the `rel="last"` page number the commit count — but that header only
- * appears once there is a second page, so a repo with one commit (or none)
- * has to be counted from the body instead.
+ * appears once there is a second page, so a single-commit repo has to be
+ * counted from the body instead.
+ *
+ * The distinction matters: a paginated response's body holds exactly one
+ * commit, so falling back to its length would report "1 commit" for a repo
+ * of any size. Returns `null` when the count is genuinely unknown, and the
+ * caller drops the whole stats block rather than publish a wrong number.
  */
-async function commitCount(response: Response): Promise<number> {
-  const last = response.headers
-    .get("link")
-    ?.match(/[?&]page=(\d+)>;\s*rel="last"/);
-  if (last) return Number(last[1]);
+async function commitCount(response: Response): Promise<number | null> {
+  const link = response.headers.get("link");
 
-  const page = await readJson<unknown[]>(response);
-  return Array.isArray(page) ? page.length : 0;
+  if (!link) {
+    const page = await readJson<unknown[]>(response);
+    return Array.isArray(page) ? page.length : null;
+  }
+
+  return lastPage(link);
+}
+
+/** Read the `page` of the `rel="last"` link, whatever order its query is in. */
+function lastPage(link: string): number | null {
+  for (const part of link.split(",")) {
+    if (!/rel="last"/.test(part)) continue;
+
+    const href = part.match(/<([^>]+)>/)?.[1];
+    if (!href) return null;
+
+    try {
+      const page = Number(new URL(href).searchParams.get("page"));
+      return Number.isInteger(page) && page > 0 ? page : null;
+    } catch {
+      return null;
+    }
+  }
+
+  return null;
 }
 
 function languageShares(bytes: Record<string, number>): readonly LanguageShare[] {
