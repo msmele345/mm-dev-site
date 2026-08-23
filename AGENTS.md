@@ -29,7 +29,7 @@ See @issues for planned work slices
 - Git Strategy is Git Flow with the following branches:
     - `main` - production ready code
     - `feat/*` - individual feature branches created from main, merged back into main when complete (merges done by the user)
-    - `release/*` - created from main when preparing for a release
+    - `release/*` - created from main when preparing for a release. This is done by me unless I request you the agent to do it.
 - PRs should be used to merge feature branches into main. PRs should be reviewed and approved by me before merging.
 - **Merge method depends on the target branch** (this matters — getting it wrong breaks branch ancestry):
     - `feat/* → main`: **Squash and Merge** — keeps main's history clean, one commit per feature.
