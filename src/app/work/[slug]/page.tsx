@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import CaseStudy from "@/components/CaseStudy";
 import {
+  getEnrichedProject,
   getProject,
   listCaseStudySlugs,
 } from "@/content/projects/catalog";
@@ -29,7 +30,7 @@ export default async function CaseStudyPage({
   params,
 }: PageProps<"/work/[slug]">) {
   const { slug } = await params;
-  const project = getProject(slug);
+  const project = await getEnrichedProject(slug);
   if (!project) notFound();
 
   return (

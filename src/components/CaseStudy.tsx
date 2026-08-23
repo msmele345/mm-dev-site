@@ -1,9 +1,11 @@
 import Image from "next/image";
 import type { CSSProperties } from "react";
-import type { Project, TilePalette } from "@/content/projects/schema";
+import ProjectStats from "@/components/ProjectStats";
+import type { EnrichedProject } from "@/content/projects/enrichment";
+import type { TilePalette } from "@/content/projects/schema";
 
 type CaseStudyProps = {
-  project: Project;
+  project: EnrichedProject;
   displayClassName?: string;
 };
 
@@ -66,6 +68,8 @@ export default function CaseStudy({
           </ul>
         </section>
       ) : null}
+
+      <ProjectStats stats={project.stats} variant="case" />
 
       <section className="case__meta" aria-labelledby="case-stack">
         <h2 id="case-stack">Stack</h2>

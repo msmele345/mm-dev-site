@@ -984,6 +984,113 @@ body {
   }
 }
 
+/* ── Enrichment (ADR 0004): build-time GitHub stats ──
+   Deliberately dressed in the chrome's electric lime rather than the
+   project's own palette. These are the site reporting on the project, not
+   part of the project's identity — so they read the same on every tile and
+   every case study, and their absence leaves no hole. */
+.enrichment {
+  font-family: var(--font-body), monospace;
+}
+
+.enrichment__chip {
+  display: inline-flex;
+  gap: 0.4rem;
+  align-items: baseline;
+  border: var(--line) solid rgb(198 255 0 / 45%);
+  color: var(--color-lime);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* Tile: one compact strip under the pitch, inside the card's link. */
+.enrichment--tile {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 0.7rem;
+  align-items: center;
+  margin: 0;
+  color: var(--color-lime);
+  font-size: clamp(0.5625rem, 0.85vw, 0.6875rem);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.enrichment--tile .enrichment__figure {
+  white-space: nowrap;
+}
+
+.enrichment--tile .enrichment__figure + .enrichment__figure::before {
+  margin-right: 0.7rem;
+  color: rgb(198 255 0 / 45%);
+  content: "·";
+}
+
+.enrichment--tile .enrichment__chip {
+  padding: 0.15rem 0.4rem;
+}
+
+/* Case study: a full band between the plates and the stack. */
+.enrichment--case {
+  max-width: 79rem;
+  margin: 0 auto;
+  padding-top: clamp(2rem, 5vw, 3.5rem);
+  border-top: var(--line) solid rgb(255 255 255 / 8%);
+}
+
+.case .enrichment--case h2 {
+  color: var(--color-lime);
+}
+
+.enrichment__figures {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.25rem 3rem;
+  margin: 0;
+}
+
+.enrichment__figures dt {
+  color: var(--color-mute);
+  font-size: 0.6875rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.enrichment__figures dd {
+  margin: 0.35rem 0 0;
+  color: var(--color-lime);
+  font-size: clamp(1.5rem, 3.5vw, 2.5rem);
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
+.enrichment__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: clamp(1.5rem, 3vw, 2.25rem) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.enrichment--case .enrichment__chip {
+  padding: 0.4rem 0.7rem;
+  font-size: 0.75rem;
+}
+
+.enrichment__share {
+  color: rgb(198 255 0 / 60%);
+  font-variant-numeric: tabular-nums;
+}
+
+.enrichment__note {
+  margin: 1.25rem 0 0;
+  color: var(--color-mute);
+  font-size: 0.6875rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
 /* ── Reduced motion (ADR 0006): freeze to static art ── */
 @media (prefers-reduced-motion: reduce) {
   html {

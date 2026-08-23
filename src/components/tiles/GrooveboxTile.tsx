@@ -1,9 +1,11 @@
 import Link from "next/link";
 import type { CSSProperties } from "react";
-import type { Project, TilePalette } from "@/content/projects/schema";
+import ProjectStats from "@/components/ProjectStats";
+import type { EnrichedProject } from "@/content/projects/enrichment";
+import type { TilePalette } from "@/content/projects/schema";
 
 type GrooveboxTileProps = {
-  project: Project;
+  project: EnrichedProject;
   index: number;
   displayClassName?: string;
 };
@@ -83,6 +85,7 @@ export default function GrooveboxTile({
           {String(index + 1).padStart(2, "0")}
         </span>
         <span className="groovebox-tile__pitch">{project.pitch}</span>
+        <ProjectStats stats={project.stats} variant="tile" />
         <span className="groovebox-tile__go">
           Open case study <span aria-hidden="true">→</span>
         </span>

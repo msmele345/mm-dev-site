@@ -1,0 +1,46 @@
+# Enrichment (ADR 0004) reads GitHub at build time only, so a project's
+# commit count and "last active" date are as old as the last deploy. This
+# redeploys the site on a schedule to keep them honest between releases.
+name: Refresh project stats
+
+on:
+  schedule:
+    # 06:17 UTC daily — off the hour, which GitHub schedules more reliably.
+    - cron: "17 6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: refresh-stats
+  cancel-in-progress: false
+
+jobs:
+  rebuild:
+    name: Trigger Vercel rebuild
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Post to the Vercel deploy hook
+        env:
+          DEPLOY_HOOK_URL: ${{ secrets.VERCEL_DEPLOY_HOOK_URL }}
+        run: |
+          set -euo pipefail
+
+          if [ -z "${DEPLOY_HOOK_URL:-}" ]; then
+            echo "::error::VERCEL_DEPLOY_HOOK_URL is not set. Create a deploy hook in" \
+                 "Vercel (Settings → Git → Deploy Hooks) and add its URL as a repository" \
+                 "secret. See the Enrichment section of the README."
+            exit 1
+          fi
+
+          status=$(curl -sS -X POST -o response.json -w '%{http_code}' "${DEPLOY_HOOK_URL}")
+
+          if [ "${status}" -lt 200 ] || [ "${status}" -ge 300 ]; then
+            echo "::error::Deploy hook returned HTTP ${status}."
+            cat response.json
+            exit 1
+          fi
+
+          echo "Deploy hook accepted the rebuild (HTTP ${status})."
