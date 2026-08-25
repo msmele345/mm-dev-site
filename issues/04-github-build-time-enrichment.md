@@ -21,7 +21,7 @@ periodic-rebuild mechanism so stats don't rot between deploys.
 - [x] elevated-bpm tile and case study show live commit count, last-push date, and language mix after a build
 - [x] A project without a remote (e.g. scholar, later) renders fully without stats — verified by test or demo
 - [x] API failure or missing token falls back to curated-only rendering with a build warning, not a build failure
-- [ ] `GITHUB_TOKEN` configured in Vercel envs; documented in the README
+- [X] `GITHUB_TOKEN` configured in Vercel envs; documented in the README
 - [x] Scheduled rebuild (cron or equivalent) keeps stats fresh without manual deploys
 
 ## Blocked by
