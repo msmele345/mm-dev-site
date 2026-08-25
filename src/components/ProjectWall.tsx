@@ -1,10 +1,10 @@
 import GrooveboxTile from "@/components/tiles/GrooveboxTile";
 import TileMotion from "@/components/tiles/TileMotion";
-import { listWallProjects } from "@/content/projects/catalog";
+import { listEnrichedWallProjects } from "@/content/projects/catalog";
 import { displayFaceClass } from "@/fonts";
 
-export default function ProjectWall() {
-  const projects = listWallProjects();
+export default async function ProjectWall() {
+  const projects = await listEnrichedWallProjects();
 
   return (
     <section className="project-wall" id="work" aria-labelledby="work-title">
