@@ -1,8 +1,7 @@
 import Link from "next/link";
 import type { CSSProperties } from "react";
-import ProjectStats from "@/components/ProjectStats";
 import type { EnrichedProject } from "@/content/projects/enrichment";
-import type { TilePalette } from "@/content/projects/schema";
+import TileMeta, { tilePaletteStyle } from "./TileMeta";
 
 export default function TerminalTile({
   project,
@@ -18,9 +17,9 @@ export default function TerminalTile({
     <Link
       className="chameleon-tile terminal-tile"
       href={`/work/${project.slug}`}
-      style={paletteStyle(tile.palette)}
+      style={tilePaletteStyle(tile.palette)}
     >
-      <div className="terminal-tile__screen">
+      <div className="terminal-tile__screen" aria-hidden="true">
         <p className="terminal-tile__ticker" data-anim>
           SPY 602.41 +0.42% · QQQ 531.08 -0.18% · NVDA 184.72 +1.08% ·
         </p>
@@ -38,37 +37,7 @@ export default function TerminalTile({
           ))}
         </ol>
       </div>
-      <TileMeta project={project} index={index} className="terminal-tile" />
+      <TileMeta project={project} index={index} classPrefix="terminal-tile" />
     </Link>
   );
-}
-
-function TileMeta({
-  project,
-  index,
-  className,
-}: {
-  project: EnrichedProject;
-  index: number;
-  className: string;
-}) {
-  return (
-    <div className={`${className}__meta`}>
-      <span className={`${className}__index`}>{String(index + 1).padStart(2, "0")}</span>
-      <strong>{project.title}</strong>
-      <span className={`${className}__pitch`}>{project.pitch}</span>
-      <ProjectStats stats={project.stats} variant="tile" />
-      <span className={`${className}__go`}>Open case study <span aria-hidden="true">→</span></span>
-    </div>
-  );
-}
-
-function paletteStyle(palette: TilePalette): CSSProperties {
-  return {
-    "--tile-ground": palette.ground,
-    "--tile-panel": palette.panel,
-    "--tile-ink": palette.ink,
-    "--tile-mute": palette.mute,
-    "--tile-accent": palette.accent,
-  } as CSSProperties;
 }

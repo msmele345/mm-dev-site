@@ -1,8 +1,7 @@
 import Link from "next/link";
 import type { CSSProperties } from "react";
-import ProjectStats from "@/components/ProjectStats";
 import type { EnrichedProject } from "@/content/projects/enrichment";
-import type { TilePalette } from "@/content/projects/schema";
+import TileMeta, { tilePaletteStyle } from "./TileMeta";
 
 export default function SoundCityTile({
   project,
@@ -18,9 +17,9 @@ export default function SoundCityTile({
     <Link
       className="chameleon-tile sound-city-tile"
       href={`/work/${project.slug}`}
-      style={paletteStyle(tile.palette)}
+      style={tilePaletteStyle(tile.palette)}
     >
-      <div className="sound-city-tile__poster">
+      <div className="sound-city-tile__poster" aria-hidden="true">
         <div className="sound-city-tile__grain" aria-hidden="true" />
         <p className="sound-city-tile__stamp">CHI / SOURCE VERIFIED</p>
         <p className="sound-city-tile__tonight" data-anim>TONIGHT</p>
@@ -40,23 +39,7 @@ export default function SoundCityTile({
           ))}
         </div>
       </div>
-      <div className="sound-city-tile__meta">
-        <span className="sound-city-tile__index">{String(index + 1).padStart(2, "0")}</span>
-        <strong>{project.title}</strong>
-        <span className="sound-city-tile__pitch">{project.pitch}</span>
-        <ProjectStats stats={project.stats} variant="tile" />
-        <span className="sound-city-tile__go">Open case study <span aria-hidden="true">→</span></span>
-      </div>
+      <TileMeta project={project} index={index} classPrefix="sound-city-tile" />
     </Link>
   );
-}
-
-function paletteStyle(palette: TilePalette): CSSProperties {
-  return {
-    "--tile-ground": palette.ground,
-    "--tile-panel": palette.panel,
-    "--tile-ink": palette.ink,
-    "--tile-mute": palette.mute,
-    "--tile-accent": palette.accent,
-  } as CSSProperties;
 }

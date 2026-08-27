@@ -198,6 +198,12 @@ test("tap-and-hold owns the mobile crescendo and off-screen motion pauses", asyn
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto("/");
 
+  const widths = await page.evaluate(() => ({
+    viewport: document.documentElement.clientWidth,
+    content: document.documentElement.scrollWidth,
+  }));
+  expect(widths.content).toBe(widths.viewport);
+
   const motion = page.locator('[data-tile-slug="sound-city"]');
   const tile = page.getByRole("link", { name: /sound city/i });
   const meter = tile.locator(".sound-city-tile__meter span").first();
