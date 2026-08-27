@@ -1,12 +1,29 @@
 import { elevatedBpm } from "./elevated-bpm";
 import { siteEnricher, type EnrichedProject } from "./enrichment";
+import { soundCity } from "./sound-city";
 import { terminalOne } from "./terminal-one";
+import { telescope } from "./telescope";
 import type { Project } from "./schema";
 
-const projects: readonly Project[] = [elevatedBpm, terminalOne];
+const projects: readonly Project[] = [
+  elevatedBpm,
+  terminalOne,
+  telescope,
+  soundCity,
+];
 
-const CASE_STUDY_SLUGS = ["elevated-bpm"] as const;
-const WALL_SLUGS = ["elevated-bpm"] as const;
+const CASE_STUDY_SLUGS = [
+  "elevated-bpm",
+  "terminal-one",
+  "telescope",
+  "sound-city",
+] as const;
+const WALL_SLUGS = [
+  "elevated-bpm",
+  "terminal-one",
+  "telescope",
+  "sound-city",
+] as const;
 
 export function listProjects(): readonly Project[] {
   return projects;

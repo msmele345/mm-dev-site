@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="540" viewBox="0 0 960 540" role="img" aria-labelledby="title desc">
+  <title id="title">Sound City events draft plate</title>
+  <desc id="desc">A dense black, white, and amber Chicago club event finder.</desc>
+  <rect width="960" height="540" fill="#08090b"/>
+  <text x="38" y="112" fill="#f1eee8" font-family="sans-serif" font-size="98" font-weight="900" letter-spacing="-3">TONIGHT</text>
+  <text x="735" y="73" fill="#ffb000" font-family="monospace" font-size="16" letter-spacing="4">CHI / 08.27</text>
+  <line x1="38" y1="142" x2="922" y2="142" stroke="#ffb000" stroke-width="5"/>
+  <g font-family="monospace"><text x="38" y="190" fill="#97949a" font-size="14" letter-spacing="4">RECOMMENDED / SOURCE VERIFIED</text>
+    <text x="38" y="260" fill="#f1eee8" font-size="32">SMARTBAR</text><text x="690" y="260" fill="#ffb000" font-size="26">23:00</text>
+    <text x="38" y="302" fill="#97949a" font-size="16">HOUSE · LAKEVIEW · VERIFIED 08.26</text>
+    <line x1="38" y1="332" x2="922" y2="332" stroke="#38383e"/>
+    <text x="38" y="394" fill="#f1eee8" font-size="32">PODLASIE CLUB</text><text x="690" y="394" fill="#ffb000" font-size="26">22:00</text>
+    <text x="38" y="436" fill="#97949a" font-size="16">TECHNO · AVONDALE · VERIFIED 08.25</text></g>
+  <rect x="38" y="480" width="884" height="2" fill="#ffb000"/>
+</svg>

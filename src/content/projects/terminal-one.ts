@@ -40,6 +40,11 @@ export const terminalOne = {
       alt: "Draft plate of the Terminal One portfolio console with phosphor tickers.",
       caption: "Draft plate — console still. Replace with a live capture.",
     },
+    {
+      src: "/projects/terminal-one/ledger.svg",
+      alt: "Draft plate of the Terminal One paper and taken trade ledger.",
+      caption: "Draft plate — the auditable paper and taken ledger. Replace with a live capture.",
+    },
   ],
   links: {
     repo: "https://github.com/msmele345/terminal-one",

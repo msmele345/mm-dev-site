@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="540" viewBox="0 0 960 540" role="img" aria-labelledby="title desc">
+  <title id="title">Telescope constellation lesson draft plate</title>
+  <desc id="desc">A constellation diagram beside an editorial mythology lesson panel.</desc>
+  <rect width="960" height="540" fill="#030711"/>
+  <rect x="32" y="32" width="390" height="476" fill="#09152b" stroke="#274b78"/>
+  <g stroke="#79c9ff" stroke-width="3" fill="#eef6ff"><path d="M103 358 160 267 224 290 290 226 350 132"/><circle cx="103" cy="358" r="6"/><circle cx="160" cy="267" r="5"/><circle cx="224" cy="290" r="6"/><circle cx="290" cy="226" r="5"/><circle cx="350" cy="132" r="7"/></g>
+  <text x="472" y="104" fill="#79c9ff" font-family="monospace" font-size="18" letter-spacing="5">CONSTELLATION 07</text>
+  <text x="472" y="174" fill="#eef6ff" font-family="sans-serif" font-size="64" font-weight="700">ORION</text>
+  <g fill="#8da7c7"><rect x="472" y="214" width="396" height="8"/><rect x="472" y="242" width="350" height="8"/><rect x="472" y="270" width="382" height="8"/><rect x="472" y="298" width="294" height="8"/></g>
+  <rect x="472" y="380" width="210" height="52" fill="none" stroke="#79c9ff"/><text x="498" y="413" fill="#eef6ff" font-family="monospace" font-size="15" letter-spacing="3">READ THE MYTH</text>
+</svg>
