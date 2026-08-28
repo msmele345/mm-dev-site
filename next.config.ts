@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+import createMDX from "@next/mdx";
 
 /**
  * Seed the per-build enrichment cache key (ADR 0004).
@@ -15,6 +16,29 @@ import type { NextConfig } from "next";
 process.env.ENRICHMENT_BUILD_ID ??=
   process.env.VERCEL_DEPLOYMENT_ID ?? String(Date.now());
 
-const nextConfig: NextConfig = {};
+const nextConfig: NextConfig = {
+  // Blog posts are in-repo .mdx files (ADR 0005).
+  pageExtensions: ["ts", "tsx", "mdx"],
+};
 
-export default nextConfig;
+/**
+ * Wrap with MDX support. Plugins are declared as string names (with
+ * serializable options) because the build runs on Turbopack, which cannot
+ * receive JavaScript functions.
+ */
+const withMDX = createMDX({
+  options: {
+    // remark-frontmatter lifts the YAML block out of the markdown so it is
+    // never rendered as content; remark-mdx-frontmatter re-exports it as a
+    // `frontmatter` constant on the compiled module.
+    remarkPlugins: [
+      "remark-frontmatter",
+      ["remark-mdx-frontmatter", { name: "frontmatter" }],
+    ],
+    rehypePlugins: [
+      ["rehype-pretty-code", { theme: "min-dark", keepBackground: false }],
+    ],
+  },
+});
+
+export default withMDX(nextConfig);
