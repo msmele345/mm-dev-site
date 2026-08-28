@@ -23,11 +23,11 @@ project wall composes all four tiles; only one tile crescendos at a time (ADR 00
 
 ## Acceptance criteria
 
-- [ ] All three tiles on the project wall with static, ambient, and crescendo states
-- [ ] Case-study page per project in its identity, with story, screenshots, stack badges, repo/demo links
-- [ ] Draft copy sourced from each project's docs, flagged for user review
-- [ ] Only one tile in crescendo at a time; wall stays performant with four ambient tiles (no jank on mid-range mobile)
-- [ ] Enrichment stats appear on all three (their repos have remotes)
+- [x] All three tiles on the project wall with static, ambient, and crescendo states
+- [x] Case-study page per project in its identity, with story, screenshots, stack badges, repo/demo links
+- [x] Draft copy sourced from each project's docs, flagged for user review
+- [x] Only one tile in crescendo at a time; wall stays performant with four ambient tiles (no jank on mid-range mobile)
+- [x] Enrichment stats appear on all three (their repos have remotes)
 
 ## Blocked by
 
