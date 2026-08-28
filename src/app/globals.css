@@ -18,6 +18,7 @@
 
 html {
   background: var(--color-ink);
+  color-scheme: dark;
   scroll-behavior: smooth;
 }
 
@@ -310,6 +311,10 @@ body {
   list-style: none;
 }
 
+#work {
+  scroll-margin-top: 4.5rem;
+}
+
 .project-wall__grid > li:empty {
   display: none;
 }
@@ -566,6 +571,138 @@ body {
   letter-spacing: 0.12em;
 }
 
+/* The remaining case-study heroes reuse each tile's visual grammar without
+   carrying motion onto a long-form reading surface. */
+.case--terminal-one {
+  --case-display: var(--font-body), monospace;
+}
+
+.case--telescope,
+.case--sound-city {
+  --case-display: var(--font-display), sans-serif;
+}
+
+.case-motif {
+  position: relative;
+  overflow: hidden;
+  width: min(100%, 38rem);
+  min-height: 15rem;
+  margin-top: clamp(2rem, 5vw, 3.5rem);
+  border: 1px solid color-mix(in srgb, var(--case-accent) 55%, transparent);
+}
+
+.case-motif--terminal {
+  padding: 1.25rem;
+  background:
+    linear-gradient(color-mix(in srgb, var(--case-accent) 5%, transparent) 1px, transparent 1px) 0 0 / 100% 1.5rem,
+    var(--case-panel);
+  box-shadow: inset 0 0 3rem color-mix(in srgb, var(--case-accent) 8%, transparent);
+  font-family: var(--font-body), monospace;
+}
+
+.case-motif__tape,
+.case-motif__readout,
+.case-motif__venue,
+.case-motif__bill {
+  margin: 0;
+  color: var(--case-accent);
+  font-size: 0.75rem;
+  letter-spacing: 0.13em;
+}
+
+.case-motif__readout {
+  margin-top: 2rem;
+  color: var(--case-ink);
+  font-size: clamp(1.5rem, 5vw, 3rem);
+  font-variant-numeric: tabular-nums;
+}
+
+.case-motif__reels {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+  margin: 1.25rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.case-motif__reels li {
+  display: grid;
+  min-height: 4rem;
+  place-items: center;
+  border: 1px solid var(--case-mute);
+  background: var(--case-ground);
+  color: var(--case-ink);
+  font-size: clamp(0.8rem, 2vw, 1.1rem);
+}
+
+.case-motif--telescope {
+  background:
+    radial-gradient(circle at 50% 25%, color-mix(in srgb, var(--case-accent) 15%, transparent), transparent 45%),
+    var(--case-panel);
+}
+
+.case-motif--telescope p {
+  position: absolute;
+  right: 1rem;
+  bottom: 0.75rem;
+  margin: 0;
+  color: var(--case-mute);
+  font-size: 0.65rem;
+  letter-spacing: 0.16em;
+}
+
+.case-motif__star {
+  position: absolute;
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 50%;
+  background: var(--case-ink);
+  box-shadow: 0 0 1rem var(--case-accent);
+}
+
+.case-motif__star--one { left: 15%; top: 68%; }
+.case-motif__star--two { left: 38%; top: 42%; }
+.case-motif__star--three { left: 61%; top: 54%; }
+.case-motif__star--four { left: 82%; top: 22%; }
+
+.case-motif__line {
+  position: absolute;
+  height: 1px;
+  background: var(--case-accent);
+  transform-origin: left center;
+}
+
+.case-motif__line--one { left: 16%; top: 67%; width: 28%; transform: rotate(-27deg); }
+.case-motif__line--two { left: 39%; top: 43%; width: 25%; transform: rotate(13deg); }
+.case-motif__line--three { left: 62%; top: 54%; width: 29%; transform: rotate(-34deg); }
+
+.case-motif--sound-city {
+  display: grid;
+  align-content: center;
+  padding: 1.25rem;
+  background:
+    repeating-linear-gradient(112deg, transparent 0 9px, color-mix(in srgb, var(--case-ink) 2%, transparent) 10px 11px),
+    var(--case-panel);
+  border-width: 4px;
+}
+
+.case-motif__tonight {
+  margin: 0.4rem 0 0;
+  color: var(--case-ink);
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(5rem, 19vw, 10rem);
+  letter-spacing: -0.03em;
+  line-height: 0.72;
+}
+
+.case-motif__bill {
+  margin-top: 1.4rem;
+  padding-top: 0.65rem;
+  border-top: 4px solid var(--case-accent);
+  color: var(--case-ink);
+}
+
 .case__story,
 .case__shots,
 .case__meta {
@@ -716,7 +853,7 @@ body {
   height: 100%;
   padding: clamp(1.25rem, 3vw, 2rem);
   background: var(--tile-ground);
-  border: var(--line) solid rgb(255 255 255 / 8%);
+  border: var(--line) solid color-mix(in srgb, var(--tile-ink) 8%, transparent);
   color: var(--tile-ink);
   text-decoration: none;
   transition: transform 160ms ease;
@@ -841,12 +978,12 @@ body {
 }
 
 /* Crescendo: the sequencer visibly runs — a 16-step chase, 100ms per step. */
-.groovebox-tile:is(:hover, :focus-visible) .groovebox-tile__step-glow {
+.tile-motion[data-crescendo="true"] .groovebox-tile__step-glow {
   animation: groove-chase 1.6s linear infinite;
   animation-delay: calc(var(--step-index) * 100ms);
 }
 
-.groovebox-tile:is(:hover, :focus-visible) .groovebox-tile__tempo {
+.tile-motion[data-crescendo="true"] .groovebox-tile__tempo {
   animation-duration: 0.3s;
 }
 
@@ -870,19 +1007,19 @@ body {
 }
 
 /* Crescendo: pads strike on the beat, staggered across the bar. */
-.groovebox-tile:is(:hover, :focus-visible) .groovebox-tile__pads li {
+.tile-motion[data-crescendo="true"] .groovebox-tile__pads li {
   animation: groove-pad 0.8s ease-in-out infinite;
 }
 
-.groovebox-tile:is(:hover, :focus-visible) .groovebox-tile__pads li:nth-child(2) {
+.tile-motion[data-crescendo="true"] .groovebox-tile__pads li:nth-child(2) {
   animation-delay: 200ms;
 }
 
-.groovebox-tile:is(:hover, :focus-visible) .groovebox-tile__pads li:nth-child(3) {
+.tile-motion[data-crescendo="true"] .groovebox-tile__pads li:nth-child(3) {
   animation-delay: 400ms;
 }
 
-.groovebox-tile:is(:hover, :focus-visible) .groovebox-tile__pads li:nth-child(4) {
+.tile-motion[data-crescendo="true"] .groovebox-tile__pads li:nth-child(4) {
   animation-delay: 600ms;
 }
 
@@ -906,10 +1043,136 @@ body {
   line-height: 1.6;
 }
 
+/* Three additional chameleon identities. Shared geometry keeps the wall calm;
+   everything inside the frame belongs to the project. */
+.chameleon-tile {
+  display: grid;
+  gap: 1rem;
+  height: 100%;
+  padding: clamp(1.25rem, 3vw, 2rem);
+  overflow: hidden;
+  background: var(--tile-ground);
+  border: var(--line) solid color-mix(in srgb, var(--tile-ink) 8%, transparent);
+  color: var(--tile-ink);
+  -webkit-tap-highlight-color: color-mix(in srgb, var(--color-lime) 18%, transparent);
+  text-decoration: none;
+  touch-action: manipulation;
+  transition: transform 160ms ease;
+}
+
+.chameleon-tile:hover { transform: translateY(-2px); }
+.chameleon-tile:is(:hover, :focus-visible) { border-color: var(--tile-accent); }
+.chameleon-tile:focus-visible { outline: var(--focus-ring); outline-offset: 3px; }
+
+.terminal-tile { font-family: var(--font-body), monospace; }
+.terminal-tile__screen {
+  position: relative;
+  overflow: hidden;
+  min-height: 17rem;
+  padding: 1rem;
+  background:
+    linear-gradient(color-mix(in srgb, var(--tile-accent) 4%, transparent) 1px, transparent 1px) 0 0 / 100% 1.35rem,
+    var(--tile-panel);
+  border: 1px solid color-mix(in srgb, var(--tile-accent) 28%, transparent);
+  box-shadow: inset 0 0 3rem color-mix(in srgb, var(--tile-accent) 7%, transparent);
+}
+.terminal-tile__ticker {
+  width: max-content;
+  margin: 0;
+  color: var(--tile-accent);
+  font-size: 0.66rem;
+  letter-spacing: 0.12em;
+  white-space: nowrap;
+  animation: terminal-tape 4.8s linear infinite;
+}
+.terminal-tile__mast { display: flex; justify-content: space-between; gap: 1rem; margin-top: 2rem; color: var(--tile-mute); font-size: 0.58rem; letter-spacing: 0.12em; }
+.terminal-tile__score { margin: 1.35rem 0 0; color: var(--tile-ink); font-size: clamp(3rem, 9vw, 5.5rem); font-variant-numeric: tabular-nums; line-height: 0.8; }
+.terminal-tile__signal { margin: 0.7rem 0 0; color: var(--tile-accent); font-size: 0.62rem; letter-spacing: 0.12em; }
+.terminal-tile__reels { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.4rem; margin: 1.25rem 0 0; padding: 0; list-style: none; }
+.terminal-tile__reels li { display: grid; min-height: 3.4rem; place-items: center; overflow: hidden; background: var(--tile-ground); border: 1px solid var(--tile-mute); }
+.terminal-tile__reels span { color: var(--tile-ink); font-size: 0.72rem; }
+.tile-motion[data-crescendo="true"] .terminal-tile__ticker { animation-duration: 3.5s; }
+.tile-motion[data-crescendo="true"] .terminal-tile__reels span { animation: terminal-reel 0.72s ease-in-out infinite; animation-delay: calc(var(--reel) * 80ms); }
+
+.telescope-tile__sky { position: relative; overflow: hidden; min-height: 17rem; background: radial-gradient(circle at 50% 30%, color-mix(in srgb, var(--tile-accent) 14%, transparent), transparent 48%), var(--tile-panel); border: 1px solid color-mix(in srgb, var(--tile-accent) 25%, transparent); }
+.telescope-tile__sky p { position: absolute; z-index: 2; top: 0.8rem; left: 1rem; margin: 0; color: var(--tile-mute); font-size: 0.62rem; letter-spacing: 0.15em; }
+.telescope-tile__star { position: absolute; z-index: 2; top: var(--star-y); left: var(--star-x); width: var(--star-size); height: var(--star-size); border-radius: 50%; background: var(--tile-ink); box-shadow: 0 0 0.6rem var(--tile-accent); animation: sky-twinkle 5s ease-in-out infinite; animation-delay: calc(var(--star-index) * -370ms); }
+.telescope-tile__line { position: absolute; z-index: 1; height: 1px; background: var(--tile-accent); opacity: 0.2; transform-origin: left center; }
+.telescope-tile__line--one { --line-angle: -35deg; top: 68%; left: 18%; width: 29%; transform: rotate(var(--line-angle)); }
+.telescope-tile__line--two { --line-angle: 17deg; top: 42%; left: 43%; width: 24%; transform: rotate(var(--line-angle)); }
+.telescope-tile__line--three { --line-angle: -37deg; top: 53%; left: 62%; width: 27%; transform: rotate(var(--line-angle)); }
+.tile-motion[data-crescendo="true"] .telescope-tile__line { animation: constellation-draw 1.8s ease-in-out infinite; }
+.tile-motion[data-crescendo="true"] .telescope-tile__line--two { animation-delay: 180ms; }
+.tile-motion[data-crescendo="true"] .telescope-tile__line--three { animation-delay: 360ms; }
+.telescope-tile__horizon { position: absolute; right: -5%; bottom: -20%; left: -5%; height: 38%; border-top: 1px solid var(--tile-accent); border-radius: 50% 50% 0 0; background: var(--tile-ground); }
+
+.sound-city-tile__poster { position: relative; overflow: hidden; min-height: 17rem; padding: 1rem; background: var(--tile-panel); border: 4px solid var(--tile-accent); }
+.sound-city-tile__grain { position: absolute; inset: 0; opacity: 0.2; background: repeating-linear-gradient(113deg, transparent 0 8px, color-mix(in srgb, var(--tile-ink) 9%, transparent) 9px 10px); }
+.sound-city-tile__stamp { position: relative; margin: 0; color: var(--tile-accent); font-size: 0.62rem; letter-spacing: 0.15em; }
+.sound-city-tile__tonight { position: relative; margin: 1.2rem 0 0; color: var(--tile-ink); font-family: var(--font-display), sans-serif; font-size: clamp(5rem, 18vw, 9rem); letter-spacing: -0.03em; line-height: 0.68; transform-origin: left center; }
+.sound-city-tile__lineup { position: relative; margin: 1.6rem 0 0; padding-top: 0.65rem; border-top: 4px solid var(--tile-accent); color: var(--tile-ink); font-size: 0.72rem; letter-spacing: 0.16em; line-height: 1.6; }
+.sound-city-tile__meter { position: absolute; right: 1rem; bottom: 1rem; display: flex; gap: 0.2rem; align-items: end; height: 3rem; }
+.sound-city-tile__meter span { width: 0.18rem; height: var(--bar-height); background: var(--tile-accent); transform-origin: bottom; animation: club-idle 3.6s ease-in-out infinite; animation-delay: calc(var(--bar) * -180ms); }
+.tile-motion[data-crescendo="true"] .sound-city-tile__tonight { animation: flyer-crescendo 0.7s ease-in-out infinite; }
+.tile-motion[data-crescendo="true"] .sound-city-tile__meter span { animation-name: club-crescendo; animation-duration: 0.55s; }
+
+.terminal-tile__meta,
+.telescope-tile__meta,
+.sound-city-tile__meta { display: grid; gap: 0.75rem; }
+.terminal-tile__meta strong,
+.telescope-tile__meta strong,
+.sound-city-tile__meta strong { color: var(--tile-ink); font-family: var(--font-display), sans-serif; font-size: clamp(1.8rem, 5vw, 3.4rem); font-weight: 400; letter-spacing: 0.04em; line-height: 0.9; text-transform: uppercase; text-wrap: balance; }
+.terminal-tile__meta strong { font-family: var(--font-body), monospace; font-size: clamp(1.3rem, 3vw, 2rem); }
+.terminal-tile__index, .terminal-tile__go,
+.telescope-tile__index, .telescope-tile__go,
+.sound-city-tile__index, .sound-city-tile__go { color: var(--tile-accent); font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; }
+.terminal-tile__pitch, .telescope-tile__pitch, .sound-city-tile__pitch { color: var(--tile-mute); font-size: clamp(0.75rem, 1.2vw, 0.9rem); line-height: 1.6; }
+
+@media (min-width: 56rem) {
+  .project-wall__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@keyframes terminal-tape {
+  from { transform: translateX(0); }
+  to { transform: translateX(-28%); }
+}
+
+@keyframes terminal-reel {
+  0%, 100% { transform: translateY(0); opacity: 1; }
+  45% { transform: translateY(-115%); opacity: 0; }
+  55% { transform: translateY(115%); opacity: 0; }
+}
+
+@keyframes sky-twinkle {
+  0%, 100% { transform: scale(0.75); opacity: 0.45; }
+  50% { transform: scale(1.2); opacity: 1; }
+}
+
+@keyframes constellation-draw {
+  0%, 15% { transform: rotate(var(--line-angle)) scaleX(0); opacity: 0; }
+  55%, 100% { transform: rotate(var(--line-angle)) scaleX(1); opacity: 0.9; }
+}
+
+@keyframes club-idle {
+  0%, 100% { transform: scaleY(0.55); opacity: 0.55; }
+  50% { transform: scaleY(1); opacity: 0.9; }
+}
+
+@keyframes club-crescendo {
+  0%, 100% { transform: scaleY(0.35); opacity: 0.5; }
+  45% { transform: scaleY(1.25); opacity: 1; }
+}
+
+@keyframes flyer-crescendo {
+  0%, 100% { transform: scaleX(1); opacity: 1; }
+  50% { transform: scaleX(1.025); opacity: 0.82; }
+}
+
 /* Static state: reduced-motion users get deliberate frozen art — the groove
    pattern lit and legible, nothing moving. */
 @media (prefers-reduced-motion: reduce) {
-  .groovebox-tile [data-anim] {
+  .groovebox-tile [data-anim],
+  .chameleon-tile [data-anim] {
     animation: none !important;
   }
 
@@ -919,6 +1182,19 @@ body {
 
   .groovebox-tile__tempo {
     opacity: 1;
+  }
+
+  .terminal-tile__ticker,
+  .terminal-tile__reels span,
+  .sound-city-tile__tonight,
+  .sound-city-tile__meter span,
+  .telescope-tile__star {
+    transform: none;
+    opacity: 1;
+  }
+
+  .telescope-tile__line {
+    opacity: 0.75;
   }
 }
 

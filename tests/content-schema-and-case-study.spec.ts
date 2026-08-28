@@ -9,7 +9,7 @@ test("elevated-bpm case study lives at its own route", async ({ page }) => {
 });
 
 test("unpublished case studies return 404", async ({ page }) => {
-  const response = await page.goto("/work/terminal-one");
+  const response = await page.goto("/work/not-a-project");
 
   expect(response?.status()).toBe(404);
 });
@@ -57,4 +57,3 @@ test("case study continues the groovebox identity", async ({ page }) => {
   await expect(page.locator(".faceplate__step")).toHaveCount(16);
   await expect(page.locator(".faceplate__pads li")).toHaveCount(4);
 });
-

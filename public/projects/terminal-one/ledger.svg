@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="540" viewBox="0 0 960 540" role="img" aria-labelledby="title desc">
+  <title id="title">Terminal One ledger draft plate</title>
+  <desc id="desc">A green phosphor trading ledger listing ranked paper and taken positions.</desc>
+  <rect width="960" height="540" fill="#07080a"/>
+  <g stroke="#21352a" stroke-width="1"><path d="M0 55H960M0 110H960M0 165H960M0 220H960M0 275H960M0 330H960M0 385H960M0 440H960M0 495H960"/></g>
+  <text x="34" y="48" fill="#39ff14" font-family="monospace" font-size="18" letter-spacing="4">TERMINAL ONE / PAPER + TAKEN LEDGER</text>
+  <g fill="#6f8a78" font-family="monospace" font-size="14"><text x="34" y="96">SYMBOL</text><text x="210" y="96">STRATEGY</text><text x="430" y="96">RANK</text><text x="610" y="96">STATE</text><text x="790" y="96">P/L</text></g>
+  <g fill="#d7ffe3" font-family="monospace" font-size="22"><text x="34" y="151">SPY</text><text x="210" y="151">CALL DEBIT</text><text x="430" y="151">87.4</text><text x="610" y="151">PAPER</text><text x="790" y="151" fill="#39ff14">+1.82%</text>
+    <text x="34" y="206">QQQ</text><text x="210" y="206">PUT CREDIT</text><text x="430" y="206">81.2</text><text x="610" y="206">TAKEN</text><text x="790" y="206" fill="#39ff14">+0.64%</text>
+    <text x="34" y="261">NVDA</text><text x="210" y="261">IRON CONDOR</text><text x="430" y="261">76.8</text><text x="610" y="261">SETTLED</text><text x="790" y="261">-0.18%</text></g>
+  <rect x="34" y="378" width="892" height="116" fill="#10141a" stroke="#39ff14" stroke-opacity=".45"/>
+  <text x="58" y="419" fill="#6f8a78" font-family="monospace" font-size="14" letter-spacing="3">WHY THIS TRADE</text>
+  <text x="58" y="462" fill="#d7ffe3" font-family="monospace" font-size="18">DEFINED RISK · LIQUID CHAIN · CONFIG v12 · ADVISORY ONLY</text>
+</svg>

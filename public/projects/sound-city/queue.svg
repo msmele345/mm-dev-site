@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="540" viewBox="0 0 960 540" role="img" aria-labelledby="title desc">
+  <title id="title">Sound City review queue draft plate</title>
+  <desc id="desc">An industrial event-data review queue with source evidence and approval status.</desc>
+  <rect width="960" height="540" fill="#08090b"/>
+  <rect x="28" y="28" width="904" height="72" fill="#ffb000"/>
+  <text x="54" y="77" fill="#08090b" font-family="sans-serif" font-size="38" font-weight="900" letter-spacing="3">REFRESH REVIEW / CHICAGO</text>
+  <g font-family="monospace" font-size="15">
+    <text x="44" y="138" fill="#97949a">SUGGESTION</text><text x="485" y="138" fill="#97949a">SOURCE</text><text x="740" y="138" fill="#97949a">STATUS</text>
+    <g fill="#f1eee8"><text x="44" y="190">SMARTBAR · FRI 23:00</text><text x="485" y="190">VENUE CALENDAR</text><text x="740" y="190" fill="#ffb000">READY TO REVIEW</text></g>
+    <line x1="44" y1="216" x2="916" y2="216" stroke="#38383e"/>
+    <g fill="#f1eee8"><text x="44" y="265">PODLASIE · SAT 22:00</text><text x="485" y="265">TICKETING PAGE</text><text x="740" y="265" fill="#ffb000">EVIDENCE 02</text></g>
+    <line x1="44" y1="291" x2="916" y2="291" stroke="#38383e"/>
+    <g fill="#f1eee8"><text x="44" y="340">SPYBAR · SUN 21:00</text><text x="485" y="340">OFFICIAL LISTING</text><text x="740" y="340" fill="#ffb000">SOURCE CHECK</text></g>
+  </g>
+  <rect x="44" y="423" width="238" height="62" fill="#ffb000"/><text x="76" y="463" fill="#08090b" font-family="monospace" font-size="18" font-weight="700" letter-spacing="3">ACCEPT CHANGE</text>
+  <rect x="300" y="423" width="220" height="62" fill="none" stroke="#97949a"/><text x="340" y="463" fill="#f1eee8" font-family="monospace" font-size="18" letter-spacing="3">REJECT</text>
+</svg>

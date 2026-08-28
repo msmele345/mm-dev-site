@@ -18,7 +18,7 @@ export default function CaseStudy({
 
   return (
     <article
-      className={`case${displayClassName ? ` ${displayClassName}` : ""}`}
+      className={`case case--${project.slug}${displayClassName ? ` ${displayClassName}` : ""}`}
       style={paletteStyle(palette)}
     >
       {project.draft ? (
@@ -31,7 +31,7 @@ export default function CaseStudy({
         </p>
         <h1>{project.title}</h1>
         <p className="case__pitch">{project.pitch}</p>
-        {tile ? <FaceplateMotif palette={tile.palette} /> : null}
+        {tile ? <CaseStudyMotif project={project} /> : null}
       </header>
 
       <section className="case__story" aria-labelledby="case-story">
@@ -97,6 +97,52 @@ export default function CaseStudy({
       </section>
     </article>
   );
+}
+
+function CaseStudyMotif({ project }: { project: EnrichedProject }) {
+  const palette = project.tile?.palette;
+  if (!palette) return null;
+
+  if (project.slug === "terminal-one") {
+    return (
+      <div className="case-motif case-motif--terminal" aria-hidden="true">
+        <p className="case-motif__tape">SPY +0.42 · QQQ -0.18 · NVDA +1.08</p>
+        <p className="case-motif__readout">RANK / 87.4</p>
+        <ol className="case-motif__reels">
+          <li>CALL</li>
+          <li>30Δ</li>
+          <li>45D</li>
+        </ol>
+      </div>
+    );
+  }
+
+  if (project.slug === "telescope") {
+    return (
+      <div className="case-motif case-motif--telescope" aria-hidden="true">
+        <span className="case-motif__star case-motif__star--one" />
+        <span className="case-motif__star case-motif__star--two" />
+        <span className="case-motif__star case-motif__star--three" />
+        <span className="case-motif__star case-motif__star--four" />
+        <span className="case-motif__line case-motif__line--one" />
+        <span className="case-motif__line case-motif__line--two" />
+        <span className="case-motif__line case-motif__line--three" />
+        <p>ORION · LOCAL SKY · 22:14</p>
+      </div>
+    );
+  }
+
+  if (project.slug === "sound-city") {
+    return (
+      <div className="case-motif case-motif--sound-city" aria-hidden="true">
+        <p className="case-motif__venue">CHICAGO / SOURCE VERIFIED</p>
+        <p className="case-motif__tonight">TONIGHT</p>
+        <p className="case-motif__bill">HOUSE · TECHNO · AFTER DARK</p>
+      </div>
+    );
+  }
+
+  return <FaceplateMotif palette={palette} />;
 }
 
 function FaceplateMotif({ palette }: { palette: TilePalette }) {
