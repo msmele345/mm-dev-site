@@ -1,11 +1,17 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { formatPostDate, listPosts } from "@/lib/posts";
+import { socialMetadata } from "@/lib/metadata";
+import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Blog",
-  description:
-    "Notes from the late shift: build logs, experiments, and what ships next.",
+  description: site.blogDescription,
+  ...socialMetadata({
+    title: site.blogTitle,
+    description: site.blogDescription,
+    path: "/blog",
+  }),
 };
 
 export default function BlogPage() {
@@ -17,6 +23,9 @@ export default function BlogPage() {
         <div className="blog__bar">
           <h1 id="blog-title">Blog</h1>
           <p>notes from the late shift</p>
+          <a className="blog__feed" href={site.feedPath}>
+            RSS <span aria-hidden="true">↗</span>
+          </a>
         </div>
 
         {posts.length === 0 ? (

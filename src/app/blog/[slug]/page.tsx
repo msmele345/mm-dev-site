@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { socialMetadata } from "@/lib/metadata";
 import { formatPostDate, listPosts } from "@/lib/posts";
 
 export const dynamicParams = false;
@@ -20,13 +21,14 @@ export async function generateMetadata({
   return {
     title: post.title,
     description: post.summary,
-    openGraph: {
+    ...socialMetadata({
       title: post.title,
       description: post.summary,
+      path: `/blog/${post.slug}`,
       type: "article",
       publishedTime: post.date,
       tags: post.tags,
-    },
+    }),
   };
 }
 

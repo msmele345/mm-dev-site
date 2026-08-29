@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Bebas_Neue, IBM_Plex_Mono } from "next/font/google";
 import SiteFooter from "@/components/SiteFooter";
 import SiteHeader from "@/components/SiteHeader";
+import { socialMetadata } from "@/lib/metadata";
+import { site } from "@/lib/site";
 import "./globals.css";
 
 const display = Bebas_Neue({
@@ -17,13 +19,21 @@ const body = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://mitchmele.dev"),
+  metadataBase: new URL(site.url),
   title: {
-    default: "MITCH MELE — Developer",
-    template: "%s — MITCH MELE",
+    default: site.title,
+    template: `%s — ${site.wordmark}`,
   },
-  description:
-    "The development portfolio of Mitch Mele: grooveboxes, trading terminals, star fields, and club flyers — built after dark, shipped with intent.",
+  description: site.description,
+  ...socialMetadata({
+    title: site.title,
+    description: site.description,
+    path: "/",
+  }),
+  // Emits the <link rel="alternate"> that makes the feed discoverable to readers.
+  alternates: {
+    types: { "application/rss+xml": site.feedPath },
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
