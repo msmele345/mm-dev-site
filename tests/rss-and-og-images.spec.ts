@@ -86,6 +86,18 @@ test.describe("Open Graph images", () => {
     });
   }
 
+  test("addresses each card directly, so every one can be baked at build time", async ({
+    page,
+  }) => {
+    await page.goto(`/blog/${POST_SLUG}`);
+    const image = await metaContent(page, 'meta[property="og:image"]');
+
+    // Routing a card through `generateImageMetadata` appends a `[__metadata_id__]`
+    // segment Next cannot enumerate at build, and the card stops being
+    // prerendered — a crawler would then pay a cold render for the preview.
+    expect(new URL(image!).pathname).toBe(`/blog/${POST_SLUG}/opengraph-image`);
+  });
+
   test("gives each case study its own tile-coloured card", async ({ page }) => {
     await page.goto("/work/sound-city");
     const soundCity = await metaContent(page, 'meta[property="og:image"]');

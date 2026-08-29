@@ -6,6 +6,13 @@ import { site } from "@/lib/site";
 
 export const dynamicParams = false;
 
+/**
+ * One alt string for every post. `generateImageMetadata` would let this name
+ * the post, but it routes the image through `[__metadata_id__]`, which Next
+ * cannot enumerate at build — the cards stop being prerendered and a crawler
+ * pays a cold render for the preview it came to fetch. The card's own artwork
+ * carries the title; the alt stays generic so the images stay static.
+ */
 export const alt = `A post on ${site.wordmark}`;
 export const size = OG_SIZE;
 export const contentType = OG_CONTENT_TYPE;

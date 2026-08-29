@@ -6,6 +6,8 @@ import { site } from "@/lib/site";
 
 export const dynamicParams = false;
 
+// One alt string for every case study, for the reason given in the blog card's
+// twin: naming the project here would cost build-time generation.
 export const alt = `A case study on ${site.wordmark}`;
 export const size = OG_SIZE;
 export const contentType = OG_CONTENT_TYPE;

@@ -29,7 +29,9 @@ function rfc822(date: string): string {
 }
 
 function itemXml(post: PostMeta, site: FeedSite): string {
-  const url = new URL(`/blog/${post.slug}`, site.url).toString();
+  // `&` is a legal path character, so `new URL` passes it through untouched —
+  // a slug carrying one would make the whole document unparseable if emitted raw.
+  const url = escapeXml(new URL(`/blog/${post.slug}`, site.url).toString());
 
   return [
     "    <item>",
@@ -38,6 +40,7 @@ function itemXml(post: PostMeta, site: FeedSite): string {
     `      <guid isPermaLink="true">${url}</guid>`,
     `      <pubDate>${rfc822(post.date)}</pubDate>`,
     `      <description>${escapeXml(post.summary)}</description>`,
+    `      <dc:creator>${escapeXml(site.author)}</dc:creator>`,
     ...post.tags.map((tag) => `      <category>${escapeXml(tag)}</category>`),
     "    </item>",
   ].join("\n");
@@ -55,18 +58,21 @@ export function buildFeed(
   posts: readonly PostMeta[],
   site: FeedSite,
 ): string {
-  const blogUrl = new URL("/blog", site.url).toString();
-  const feedUrl = new URL("/feed.xml", site.url).toString();
+  const blogUrl = escapeXml(new URL("/blog", site.url).toString());
+  const feedUrl = escapeXml(new URL("/feed.xml", site.url).toString());
   const newest = posts[0];
 
   return [
     '<?xml version="1.0" encoding="UTF-8"?>',
-    '<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">',
+    '<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" ' +
+      'xmlns:dc="http://purl.org/dc/elements/1.1/">',
     "  <channel>",
     `    <title>${escapeXml(site.title)}</title>`,
     `    <link>${blogUrl}</link>`,
     `    <description>${escapeXml(site.description)}</description>`,
     "    <language>en</language>",
+    // Dublin Core carries a plain name; RSS's own <author> demands an email address.
+    `    <dc:creator>${escapeXml(site.author)}</dc:creator>`,
     // The self-reference a feed validator asks every feed to declare.
     `    <atom:link href="${feedUrl}" rel="self" type="application/rss+xml"/>`,
     ...(newest ? [`    <lastBuildDate>${rfc822(newest.date)}</lastBuildDate>`] : []),

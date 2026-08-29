@@ -17,7 +17,6 @@ export type OgCard = {
   signature: string;
   footnote: string;
   accent: string;
-  alt: string;
 };
 
 /** The home page: the wordmark itself, in the chrome's own colours. */
@@ -30,7 +29,6 @@ export function homeCard(): OgCard {
     signature: site.host,
     footnote: "Built after dark. Shipped with intent.",
     accent: LIME,
-    alt: `${site.wordmark} — the development portfolio of Mitch Mele`,
   };
 }
 
@@ -42,7 +40,6 @@ export function blogCard(): OgCard {
     signature: site.wordmark,
     footnote: "Build logs / experiments",
     accent: LIME,
-    alt: `The blog on ${site.wordmark}`,
   };
 }
 
@@ -54,7 +51,6 @@ export function postCard(post: PostMeta): OgCard {
     signature: site.wordmark,
     footnote: formatPostDate(post.date),
     accent: LIME,
-    alt: `${post.title} — a post on ${site.wordmark}`,
   };
 }
 
@@ -70,7 +66,6 @@ export function caseStudyCard(project: Project): OgCard {
     signature: site.wordmark,
     footnote: project.slug,
     accent: project.tile?.palette.accent ?? LIME,
-    alt: `${project.title} — a case study on ${site.wordmark}`,
   };
 }
 

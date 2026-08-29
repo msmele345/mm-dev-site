@@ -16,7 +16,6 @@ test("the home card carries the wordmark and the site's own lime", () => {
   // The headline is already the wordmark; the footer must not repeat it.
   expect(card.signature).toBe(site.host);
   expect(card.accent).toBe("#c6ff00");
-  expect(card.alt).toContain("Mitch Mele");
 });
 
 test("a post card leads with its title and dates the eyebrow", () => {
@@ -32,7 +31,6 @@ test("a post card leads with its title and dates the eyebrow", () => {
   expect(card.eyebrow).toBe("BLOG");
   expect(card.signature).toBe(site.wordmark);
   expect(card.footnote).toBe("27 Aug 2026");
-  expect(card.alt).toContain("Shipping a groovebox");
 });
 
 test("a case-study card nods to the tile by borrowing its accent", () => {
@@ -77,5 +75,4 @@ test("the blog index gets its own card rather than the home wordmark", () => {
   expect(card.title).toBe("BLOG");
   expect(card.eyebrow).toBe("NOTES FROM THE LATE SHIFT");
   expect(card.accent).toBe("#c6ff00");
-  expect(card.alt).toContain(site.wordmark);
 });

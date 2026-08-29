@@ -84,6 +84,26 @@ test("escapes markup in titles and summaries instead of emitting it", () => {
   expect(xml).not.toContain("<angles>");
 });
 
+test("escapes a slug that would otherwise break every item in the feed", () => {
+  // `&` is legal in a URL path, so `new URL` leaves it alone — bare in XML it
+  // makes the whole document unparseable, not just this item.
+  const xml = buildFeed([post({ slug: "a&b" })], site);
+
+  expect(xml).toContain("<link>https://example.dev/blog/a&amp;b</link>");
+  expect(xml).toContain(
+    '<guid isPermaLink="true">https://example.dev/blog/a&amp;b</guid>',
+  );
+  expect(xml).not.toMatch(/blog\/a&(?!amp;)/);
+});
+
+test("credits the author on the channel and every item", () => {
+  const xml = buildFeed([post()], site);
+
+  expect(xml).toContain('xmlns:dc="http://purl.org/dc/elements/1.1/"');
+  // Dublin Core carries a name; RSS's own <author> would demand an email address.
+  expect(tag(xml, "dc:creator")).toEqual(["Mitch Mele", "Mitch Mele"]);
+});
+
 test("stays a valid empty feed when nothing is published", () => {
   const xml = buildFeed([], site);
 
