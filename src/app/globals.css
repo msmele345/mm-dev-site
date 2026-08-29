@@ -1417,11 +1417,33 @@ body {
 }
 
 .blog__bar p {
-  margin: 0;
+  /* Absorbs the free space so the tagline stays beside the title and the
+     feed link is the only thing pushed to the far edge. */
+  margin: 0 auto 0 0;
   color: var(--color-lime);
   font-size: clamp(0.625rem, 1vw, 0.8125rem);
   letter-spacing: 0.14em;
   text-transform: uppercase;
+}
+
+/* Feed link: the reader-facing half of RSS discovery (issue 07). */
+.blog__feed {
+  flex: none;
+  padding: 0.4rem 0.75rem;
+  border: var(--line) solid var(--color-lime-border);
+  color: var(--color-lime);
+  font-size: clamp(0.625rem, 1vw, 0.8125rem);
+  letter-spacing: 0.14em;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition:
+    background-color 120ms ease,
+    color 120ms ease;
+}
+
+.blog__feed:hover {
+  background: var(--color-lime);
+  color: var(--color-ink);
 }
 
 .blog__list {

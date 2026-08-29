@@ -22,7 +22,7 @@ See @issues for planned work slices
 ## Cadences to follow:
 1. TDD on any new feature code or bug fixes. Use Test Driven Development whenever possible
 2. Red green refactor. Reference the /tdd skill and follow it
-3. Always check off the tracer bullets from an issues or ticket that were completed in a session.
+3. Always check off the tracer bullets from an issue or ticket that were completed in a session.
 
 
 # Git Strategy and Instructions

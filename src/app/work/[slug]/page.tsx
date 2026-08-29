@@ -6,6 +6,7 @@ import {
   listCaseStudySlugs,
 } from "@/content/projects/catalog";
 import { displayFaceClass } from "@/fonts";
+import { socialMetadata } from "@/lib/metadata";
 
 export const dynamicParams = false;
 
@@ -23,6 +24,12 @@ export async function generateMetadata({
   return {
     title: project.title,
     description: project.pitch,
+    ...socialMetadata({
+      title: project.title,
+      description: project.pitch,
+      path: `/work/${project.slug}`,
+      type: "article",
+    }),
   };
 }
 

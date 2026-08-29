@@ -14,11 +14,12 @@ site.
 
 ## Acceptance criteria
 
-- [ ] Valid RSS feed of all posts, linked/discoverable from the blog
-- [ ] Every blog post gets a generated OG image with its title in the ink-black + lime style
-- [ ] Every case-study page gets a generated OG image carrying the project name
-- [ ] Home page has a branded OG image; all pages declare correct OG/Twitter metadata
+- [x] Valid RSS feed of all posts, linked/discoverable from the blog
+- [x] Every blog post gets a generated OG image with its title in the ink-black + lime style
+- [x] Every case-study page gets a generated OG image carrying the project name
+- [x] Home page has a branded OG image; all pages declare correct OG/Twitter metadata
 - [ ] Rendering verified with a link-preview check (paste into a validator or messenger)
+      — HITL: needs a publicly reachable URL, so it waits on a preview or production deploy.
 
 ## Blocked by
 
