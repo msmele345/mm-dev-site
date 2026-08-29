@@ -42,6 +42,10 @@ const FIXTURES = {
     commitCount: 999,
     languages: { Java: 980_000, TSQL: 20_000 },
   },
+  "/repos/msmele345/feedback-listener": {
+    commitCount: 111,
+    languages: { Java: 1_000_000 },
+  },
   "/repos/msmele345/screens": {
     commitCount: 777,
     languages: { TypeScript: 600_000, Java: 400_000 },

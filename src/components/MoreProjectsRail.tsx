@@ -1,7 +1,5 @@
-import ProjectStats from "@/components/ProjectStats";
+import RailCard from "@/components/RailCard";
 import { listEnrichedRailProjects } from "@/content/projects/catalog";
-import type { Enriched } from "@/content/projects/enrichment";
-import type { RailProject } from "@/content/projects/schema";
 
 /**
  * The more-projects rail: breadth below the project wall, at a deliberately
@@ -10,10 +8,12 @@ import type { RailProject } from "@/content/projects/schema";
  * to the repository.
  *
  * The tier is the message: the wall is what these four projects *are*, the
- * rail is what else there is.
+ * rail is what else there is. Which projects that means is curated in
+ * `content/projects/rail.ts`, never crawled from the public repo list.
  */
 export default async function MoreProjectsRail() {
   const projects = await listEnrichedRailProjects();
+  if (projects.length === 0) return null;
 
   return (
     <section
@@ -33,42 +33,5 @@ export default async function MoreProjectsRail() {
         ))}
       </ul>
     </section>
-  );
-}
-
-function RailCard({ project }: { project: Enriched<RailProject> }) {
-  const repo = project.links.repo;
-
-  return (
-    <article className={`rail-card rail-card--${project.slug}`}>
-      <h3 className="rail-card__title">
-        {repo ? (
-          /* The whole card is the hit area (see `.rail-card__title a::after`),
-             while the accessible name and the focus ring stay on the title. */
-          <a href={repo} rel="noreferrer" target="_blank">
-            {project.title}
-            <span className="visually-hidden"> — repository on GitHub</span>
-          </a>
-        ) : (
-          project.title
-        )}
-      </h3>
-      <p className="rail-card__pitch">{project.pitch}</p>
-      <ProjectStats stats={project.stats} variant="tile" />
-      <ul className="rail-card__stack">
-        {/* Three, like a tile's language chips: the rail states the shape of a
-            project, and the repository holds the full inventory. */}
-        {project.stack.slice(0, 3).map((item) => (
-          <li key={item}>{item}</li>
-        ))}
-      </ul>
-      {repo ? (
-        <p className="rail-card__go" aria-hidden="true">
-          Repository ↗
-        </p>
-      ) : (
-        <p className="rail-card__note">{project.unlinkedNote}</p>
-      )}
-    </article>
   );
 }

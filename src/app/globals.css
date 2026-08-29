@@ -349,16 +349,17 @@ body {
 }
 
 .rail__grid {
+  /* auto-fit, not a fixed column count: the rail's selection is curated in
+     content and changes, so the grid has to lay out any number of cards. Each
+     card carries its own hairline rather than the grid drawing a table around
+     them — a shared frame would leave a visible empty box on a short last row. */
   display: grid;
-  gap: 1px;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
+  gap: clamp(0.6rem, 1.2vw, 0.9rem);
   max-width: 79rem;
   margin: 0 auto;
   padding: 0;
   list-style: none;
-  /* A hairline ledger: the 1px gap lets the ground read as the rule between
-     cards, so the rail is a table of work rather than a second card grid. */
-  background: var(--color-grid);
-  border: var(--line) solid var(--color-grid);
 }
 
 .rail-card {
@@ -369,7 +370,8 @@ body {
   height: 100%;
   padding: clamp(1rem, 1.8vw, 1.35rem);
   background: var(--color-ink);
-  transition: background 180ms ease;
+  border: var(--line) solid var(--color-grid);
+  transition: background 180ms ease, border-color 180ms ease;
 }
 
 .rail-card__title {
@@ -388,12 +390,28 @@ body {
   text-decoration: none;
 }
 
+/* Outbound affordance on the title line, not a row of its own. */
+.rail-card__out {
+  margin-left: 0.45rem;
+  color: var(--color-lime);
+  font-size: 0.7em;
+  vertical-align: 0.25em;
+}
+
 /* Whole-card hit area, with the accessible name and focus ring left on the
    title text — a card-sized focus ring would out-shout the tiles above. */
 .rail-card__title a::after {
   position: absolute;
   inset: 0;
   content: "";
+}
+
+/* Rail cards are narrow enough that the stats strip almost always wraps, and
+   the tile's mid-dot separator then lands orphaned at the start of a line. The
+   flex gap already does the separating here. */
+.rail-card .enrichment--tile .enrichment__figure + .enrichment__figure::before {
+  margin-right: 0;
+  content: none;
 }
 
 .rail-card__pitch {
@@ -421,16 +439,11 @@ body {
   content: "/";
 }
 
-.rail-card__go,
 .rail-card__note {
   margin: 0;
   font-size: clamp(0.5625rem, 0.85vw, 0.6875rem);
   letter-spacing: 0.14em;
   text-transform: uppercase;
-}
-
-.rail-card__go {
-  color: var(--color-lime);
 }
 
 /* A project with no remote is a finished state, not a broken one: it says so
@@ -442,14 +455,7 @@ body {
 .rail-card:has(a:hover),
 .rail-card:has(a:focus-visible) {
   background: var(--color-ink-raised);
-}
-
-@media (min-width: 42rem) {
-  .rail__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-}
-
-@media (min-width: 64rem) {
-  .rail__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  border-color: var(--color-lime-border-soft);
 }
 
 @media (prefers-reduced-motion: reduce) {
