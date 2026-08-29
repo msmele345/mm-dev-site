@@ -57,9 +57,10 @@ export type Project = ProjectCore & {
  * the long-form case-study material. A rail card is the whole presentation, so
  * `pitch` has to stand on its own — there is no page behind it to click into.
  *
- * `links.repo` is optional here in practice as well as in type: a project with
- * no remote (scholar) renders as a plain card with no stats and no link, which
- * is a complete state rather than a degraded one.
+ * `links.repo` is optional here in practice as well as in type: an entry with
+ * no remote renders as a plain card with no stats and no link, which is a
+ * complete state rather than a degraded one. The current selection is all
+ * remotes, so that path lives in tests rather than on the page.
  */
 export type RailProject = ProjectCore & {
   /** Why the card is not clickable, shown when there is no remote. */

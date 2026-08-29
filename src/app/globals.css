@@ -335,9 +335,9 @@ body {
 
 /* ── More-projects rail ──
    Breadth below the wall, one tier down in every dimension: chrome palette
-   instead of project palettes, a third of a tile's height, no motion, and no
-   page behind the card. The rail is a list of what else there is; the wall is
-   what the four featured projects are. */
+   instead of project palettes, roughly a quarter of a tile's footprint, no
+   motion, and no page behind the card. The rail is a list of what else there
+   is; the wall is what the four featured projects are. */
 .rail h2 {
   margin: 0;
   color: var(--color-paper);
@@ -428,7 +428,9 @@ body {
   margin: 0;
   padding: 0;
   list-style: none;
-  color: rgb(245 243 237 / 45%);
+  /* The chrome's established quiet voice, not a new one: at this size a lower
+     alpha drops the stack below the 4.5:1 small-text contrast floor. */
+  color: var(--color-mute);
   font-size: clamp(0.5625rem, 0.85vw, 0.6875rem);
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -439,17 +441,15 @@ body {
   content: "/";
 }
 
+/* A project with no remote is a finished state, not a broken one: it says so
+   in the chrome's quiet voice rather than leaving a dead affordance. This note
+   is the only thing explaining the missing link, so it stays readable. */
 .rail-card__note {
   margin: 0;
+  color: var(--color-mute);
   font-size: clamp(0.5625rem, 0.85vw, 0.6875rem);
   letter-spacing: 0.14em;
   text-transform: uppercase;
-}
-
-/* A project with no remote is a finished state, not a broken one: it says so
-   in the chrome's quiet voice rather than leaving a dead affordance. */
-.rail-card__note {
-  color: rgb(245 243 237 / 38%);
 }
 
 .rail-card:has(a:hover),

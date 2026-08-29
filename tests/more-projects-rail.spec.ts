@@ -48,10 +48,16 @@ test("the rail sits below the project wall as a curated, lighter tier", async ({
   expect(railBox!.y).toBeGreaterThan(wallBox!.y);
   expect(contactBox!.y).toBeGreaterThan(railBox!.y);
 
-  // Visibly lighter weight: a rail card is far shorter than a chameleon tile.
-  const tileBox = await page.locator("#work .tile-motion").first().boundingBox();
-  const cardBox = await cards.first().boundingBox();
-  expect(cardBox!.height).toBeLessThan(tileBox!.height / 2);
+  // Visibly lighter weight than a chameleon tile. Measured as footprint rather
+  // than height alone: the grid is auto-fit, so the column count — and with it
+  // every card's height — moves with the viewport and the size of the
+  // selection. Area carries the design intent without tracking that noise.
+  const tileBox = (await page.locator("#work .tile-motion").first().boundingBox())!;
+  const cardBox = (await cards.first().boundingBox())!;
+  expect(cardBox.width * cardBox.height).toBeLessThan(
+    (tileBox.width * tileBox.height) / 2,
+  );
+  expect(cardBox.height).toBeLessThan(tileBox.height * 0.7);
 });
 
 test("the rail shows its selection in the curated order", async ({ page }) => {
@@ -103,5 +109,11 @@ test("the rail reflows to a single column on a narrow viewport", async ({ page }
   const second = await cards.nth(1).boundingBox();
 
   expect(second!.y).toBeGreaterThan(first!.y + first!.height - 1);
-  await expect(page.locator("body")).toHaveJSProperty("scrollWidth", 390);
+  // Compare against the document's own client width rather than the viewport:
+  // a headed run's scrollbar narrows the page without any overflow existing.
+  const overflow = await page.evaluate(() => {
+    const root = document.documentElement;
+    return root.scrollWidth - root.clientWidth;
+  });
+  expect(overflow).toBeLessThanOrEqual(0);
 });

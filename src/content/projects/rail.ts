@@ -17,7 +17,7 @@ import type { RailProject } from "./schema";
  * its GitHub description and build file, kept to a single sentence rather
  * than embellished into claims the sources do not make.
  */
-const entries: readonly RailProject[] = [
+const entries = [
   {
     title: "Screens",
     slug: "screens",
@@ -72,22 +72,36 @@ const entries: readonly RailProject[] = [
       "MongoDB",
     ],
   },
-];
+] as const satisfies readonly RailProject[];
+
+/**
+ * Every slug the rail could show. Typing the selection against this turns a
+ * typo or a stale slug into a compile error rather than a project silently
+ * missing from the page — which matters because RAIL_SLUGS is the surface
+ * this file invites you to edit.
+ */
+type RailSlug = (typeof entries)[number]["slug"];
 
 /** The rail, in page order. Edit this to rotate what the rail shows. */
-const RAIL_SLUGS = [
+const RAIL_SLUGS: readonly RailSlug[] = [
   "screens",
   "feedback-listener",
   "interstellar-exchange",
   "buzzball",
-] as const;
+];
 
 export function listRailEntries(): readonly RailProject[] {
   return entries;
 }
 
 export function listRailProjects(): readonly RailProject[] {
-  return RAIL_SLUGS.map((slug) =>
-    entries.find((entry) => entry.slug === slug),
-  ).filter((entry): entry is RailProject => entry !== undefined);
+  return RAIL_SLUGS.map((slug) => {
+    const entry = entries.find((candidate) => candidate.slug === slug);
+    if (!entry) {
+      throw new Error(
+        `[rail] RAIL_SLUGS names "${slug}", which no entry defines. Add the entry to rail.ts or correct the slug.`,
+      );
+    }
+    return entry;
+  });
 }
