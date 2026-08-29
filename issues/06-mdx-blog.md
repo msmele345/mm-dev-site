@@ -15,11 +15,11 @@ future "post about a project with the project inside it" writing.
 
 ## Acceptance criteria
 
-- [ ] `.mdx` files with frontmatter become posts; adding a file and rebuilding publishes it
-- [ ] Blog index lists posts (title, date, summary) newest-first, linked from the nav
-- [ ] Post page: readable measure, strong type hierarchy, styled code blocks with highlighting
-- [ ] One seed post published containing a working interactive React embed
-- [ ] Post pages carry correct metadata (title, description, date)
+- [x] `.mdx` files with frontmatter become posts; adding a file and rebuilding publishes it
+- [x] Blog index lists posts (title, date, summary) newest-first, linked from the nav
+- [x] Post page: readable measure, strong type hierarchy, styled code blocks with highlighting
+- [x] One seed post published containing a working interactive React embed
+- [x] Post pages carry correct metadata (title, description, date)
 
 ## Blocked by
 

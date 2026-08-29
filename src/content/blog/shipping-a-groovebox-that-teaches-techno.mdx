@@ -1,0 +1,81 @@
+---
+title: Shipping a groovebox that teaches techno
+date: 2026-08-27
+summary: What it took to turn elevated-bpm's concept doc into a playable groovebox — and what the sequencer taught me about scheduling audio on the web.
+tags: [elevated-bpm, web-audio, react]
+---
+
+import MiniSequencer from "@/components/embeds/MiniSequencer";
+
+[elevated-bpm](https://github.com/msmele345/elevated-bpm) started as a one-line brief:
+a learning-focused web app for making techno, playable from the first click.
+Not a DAW. Not a course. A **groovebox** — TR-909 and TB-303 lineage — with
+a curriculum woven into the live instrument.
+
+This site's whole thesis is that work should be experienced, not listed.
+So instead of describing the sequencer, here is one. Two lanes, eight steps,
+124 BPM. Flip steps while it runs — the clock reads live state, so edits
+land on the next pass:
+
+<MiniSequencer />
+
+## The DAW is architecture, not UI
+
+The central design decision in elevated-bpm is that under the hood it is a
+small DAW — clock, sequencer, instruments, mixer bus — while the surface
+stays a single instrument. v1 exposes only looping patterns: no timeline,
+no arrangement. The graduation path is exporting a pattern as MIDI or audio
+for a real DAW. The app is an on-ramp to Ableton, not a competitor.
+
+That split shows up most in the audio engine. Musical time never runs on
+`setTimeout` — a look-ahead scheduler queues notes against the audio
+hardware clock, and React state changes only when the *user* edits
+something. The playhead you saw move above is the DOM catching up to the
+clock, never the clock waiting on React:
+
+```ts
+function tick(clock: Clock) {
+  const { ctx } = clock;
+
+  // Schedule everything the audio clock will need shortly.
+  while (clock.nextStepTime < ctx.currentTime + LOOKAHEAD_SECONDS) {
+    const step = clock.step % STEPS;
+
+    for (const lane of LANES) {
+      if (clock.pattern[lane][step]) {
+        playStep(lane, clock.nextStepTime);
+      }
+    }
+
+    clock.step += 1;
+    clock.nextStepTime += STEP_SECONDS;
+  }
+}
+```
+
+The kick is a sine with a pitch envelope — 150 Hz collapsing to 45 Hz in
+120 ms. The hat is a noise burst through a highpass. No samples, no assets:
+just oscillators, filters, and gain envelopes, which is roughly the
+techno vocabulary the lessons end up teaching anyway.
+
+## Lessons are data, not code
+
+The other decision that keeps paying rent: a lesson is a declarative goal
+checked against live pattern state — "kicks on every downbeat", "sweep the
+filter while the loop plays" — and goals are JSON assertions over the same
+serialized state the sequencer runs on. Adding a challenge means adding
+data, and the completion detection, celebration, and progress persistence
+all fall out for free.
+
+- Instrument-first: the app opens playable, sound on first click
+- Lessons optional, always available — never a gate
+- Everything persists into one versioned `ProjectState` document
+- Patterns are tiny JSON, so sharing is a URL parameter, not a backend
+
+## What the embed proves
+
+That sequencer up there is the point of this post. Posts on this site are
+MDX in the repository — write, commit, publish — and MDX means a post can
+carry the project inside it. A write-up about a groovebox should let you
+touch the grid. Expect the same treatment for the trading terminal, the
+star field, and the club flyer as their case studies land.

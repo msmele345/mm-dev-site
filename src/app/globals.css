@@ -5,8 +5,18 @@
   --color-paper: #ffffff;
   --color-lime: #c6ff00;
   --color-lime-glow: rgb(198 255 0 / 24%);
+  --color-lime-border: rgb(198 255 0 / 45%);
+  --color-lime-border-soft: rgb(198 255 0 / 30%);
   --color-grid: rgb(245 243 237 / 12%);
   --color-mute: rgb(245 243 237 / 55%);
+  --color-reading-copy: rgb(245 243 237 / 86%);
+  --color-code-panel: #0b0c0e;
+  --color-paper-highlight-soft: rgb(255 255 255 / 10%);
+  --color-paper-highlight: rgb(255 255 255 / 12%);
+  --color-shadow: rgb(0 0 0 / 45%);
+  --color-sequencer-step: #2e3236;
+  --color-sequencer-beat: #3a3f44;
+  --color-playhead: rgb(245 243 237 / 65%);
   --space-page: clamp(1.25rem, 3vw, 3.5rem);
   --line: 1px;
   --focus-ring: 2px solid var(--color-lime);
@@ -1380,4 +1390,400 @@ body {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+}
+
+/* ── Blog index (ADR 0005: in-repo MDX posts) — ledger voice like contact ── */
+.blog {
+  padding: clamp(3rem, 7vw, 6rem) var(--space-page);
+}
+
+.blog__bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  max-width: 79rem;
+  margin: 0 auto clamp(1.5rem, 4vw, 3rem);
+}
+
+.blog h1 {
+  margin: 0;
+  color: var(--color-paper);
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  line-height: 1;
+}
+
+.blog__bar p {
+  margin: 0;
+  color: var(--color-lime);
+  font-size: clamp(0.625rem, 1vw, 0.8125rem);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.blog__list {
+  max-width: 79rem;
+  margin: 0 auto;
+  padding: 0;
+  list-style: none;
+}
+
+.blog__item {
+  padding: clamp(1.5rem, 3.5vw, 2.5rem) 0;
+  border-top: var(--line) solid var(--color-grid);
+}
+
+.blog__item:last-child {
+  border-bottom: var(--line) solid var(--color-grid);
+}
+
+.blog__date {
+  margin: 0 0 0.4rem;
+  color: var(--color-mute);
+  font-size: clamp(0.625rem, 0.9vw, 0.75rem);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.blog__title {
+  margin: 0;
+}
+
+.blog__title a {
+  color: var(--color-paper);
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(1.75rem, 4vw, 3rem);
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  line-height: 1;
+  text-decoration: none;
+  transition: color 120ms ease;
+}
+
+.blog__title a:hover {
+  color: var(--color-lime);
+}
+
+.blog__summary {
+  max-width: 42rem;
+  margin: 0.85rem 0 0;
+  color: var(--color-mute);
+  font-size: clamp(0.8125rem, 1.4vw, 1.0625rem);
+  line-height: 1.75;
+}
+
+.blog__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 1.1rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.blog__tags li {
+  padding: 0.3rem 0.6rem;
+  border: 1px solid var(--color-lime-border);
+  color: var(--color-lime);
+  font-size: 0.6875rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.blog__empty {
+  max-width: 42rem;
+  margin: 0 auto;
+  color: var(--color-mute);
+  font-size: clamp(0.8125rem, 1.4vw, 1.0625rem);
+  line-height: 1.75;
+}
+
+/* ── Post page: reading typography on the ink-black chrome ──
+   The measure is the star: 66ch body, generous leading, everything else
+   subordinate so long-form code prose stays easy to travel through. */
+.post {
+  padding: clamp(2.5rem, 6vw, 5rem) var(--space-page) clamp(3rem, 7vw, 6rem);
+}
+
+.post__header {
+  max-width: 66ch;
+  margin: 0 auto clamp(2rem, 5vw, 3.5rem);
+}
+
+.post__eyebrow {
+  margin: 0 0 1rem;
+  color: var(--color-lime);
+  font-size: clamp(0.625rem, 1vw, 0.8125rem);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.post__eyebrow a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.post__eyebrow a:hover {
+  text-decoration: underline;
+  text-underline-offset: 0.25em;
+}
+
+.post__header h1 {
+  margin: 0;
+  color: var(--color-paper);
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(2.25rem, 6vw, 4.5rem);
+  font-weight: 400;
+  letter-spacing: 0.015em;
+  line-height: 0.95;
+  text-wrap: balance;
+}
+
+.post__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem 1.25rem;
+  align-items: baseline;
+  margin-top: 1.25rem;
+  padding-top: 0.9rem;
+  border-top: var(--line) solid var(--color-grid);
+}
+
+.post__meta time {
+  color: var(--color-mute);
+  font-size: clamp(0.625rem, 0.9vw, 0.75rem);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.post__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.post__tags li {
+  padding: 0.25rem 0.55rem;
+  border: 1px solid var(--color-lime-border);
+  color: var(--color-lime);
+  font-size: 0.6875rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.post__body {
+  max-width: 66ch;
+  margin: 0 auto;
+  color: var(--color-reading-copy);
+  font-size: clamp(1rem, 1.3vw, 1.125rem);
+  line-height: 1.8;
+}
+
+.post__body p {
+  margin: 1.25em 0;
+}
+
+.post__body strong {
+  color: var(--color-paper);
+}
+
+.post__body a {
+  color: var(--color-lime);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.25em;
+}
+
+.post__body a:hover {
+  text-decoration-thickness: 2px;
+}
+
+.post__body h2 {
+  margin: 2.2em 0 0.75em;
+  color: var(--color-paper);
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(1.5rem, 3vw, 2.25rem);
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  line-height: 1.05;
+  text-wrap: balance;
+}
+
+.post__body h3 {
+  margin: 1.8em 0 0.6em;
+  color: var(--color-paper);
+  font-size: 1.15em;
+  letter-spacing: 0.02em;
+}
+
+.post__body ul,
+.post__body ol {
+  margin: 1.25em 0;
+  padding-left: 1.4em;
+}
+
+.post__body li {
+  margin: 0.4em 0;
+}
+
+.post__body li::marker {
+  color: var(--color-lime);
+}
+
+.post__body blockquote {
+  margin: 1.5em 0;
+  padding: 0.2em 0 0.2em 1.25em;
+  border-left: 3px solid var(--color-lime);
+  color: var(--color-mute);
+}
+
+/* Inline code sits quiet; fenced blocks get the spotlight below. */
+.post__body :not(pre) > code {
+  padding: 0.12em 0.4em;
+  background: var(--color-ink-raised);
+  border: 1px solid var(--color-grid);
+  border-radius: 4px;
+  color: var(--color-lime);
+  font-family: var(--font-body), monospace;
+  font-size: 0.85em;
+}
+
+/* Fenced code: raised panel, Shiki (min-dark) tokens pop off the ink. */
+.post__body [data-rehype-pretty-code-figure] {
+  margin: 2em 0;
+  padding: 1.1rem 1.25rem;
+  overflow-x: auto;
+  background: var(--color-code-panel);
+  border: 1px solid var(--color-grid);
+  border-radius: 10px;
+}
+
+.post__body [data-rehype-pretty-code-figure] pre {
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  font-family: var(--font-body), monospace;
+  font-size: clamp(0.8125rem, 1.1vw, 0.9375rem);
+  line-height: 1.7;
+  tab-size: 2;
+}
+
+.post__body [data-rehype-pretty-code-figure] code {
+  display: block;
+  min-width: max-content;
+  font-family: inherit;
+}
+
+/* ── Mini sequencer embed (posts carry React components — ADR 0005) ── */
+.embed-sequencer {
+  max-width: 34rem;
+  margin: 2.5rem 0;
+  padding: 1.1rem 1.1rem 1rem;
+  background: var(--color-ink-raised);
+  border: 1px solid var(--color-lime-border-soft);
+  border-radius: 14px;
+  box-shadow:
+    inset 0 1px 0 var(--color-paper-highlight-soft),
+    0 18px 40px var(--color-shadow);
+}
+
+.embed-sequencer__topline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.embed-sequencer__brand {
+  color: var(--color-mute);
+  font-family: var(--font-groove), var(--font-display), sans-serif;
+  font-size: 0.75rem;
+  letter-spacing: 0.28em;
+}
+
+.embed-sequencer__transport {
+  padding: 0.5rem 1.5rem;
+  border: none;
+  border-radius: 6px;
+  background: var(--color-lime);
+  color: var(--color-ink);
+  cursor: pointer;
+  font-family: var(--font-body), monospace;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  transition: box-shadow 120ms ease;
+}
+
+.embed-sequencer__transport:hover {
+  box-shadow: 0 0 16px var(--color-lime-glow);
+}
+
+.embed-sequencer__grid {
+  display: grid;
+  gap: 0.7rem;
+}
+
+.embed-sequencer__lane {
+  display: grid;
+  grid-template-columns: 3rem 1fr;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.embed-sequencer__lane-label {
+  color: var(--color-mute);
+  font-size: 0.625rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.embed-sequencer__steps {
+  display: grid;
+  grid-template-columns: repeat(8, minmax(0, 1fr));
+  gap: 0.3rem;
+}
+
+.embed-sequencer__step {
+  aspect-ratio: 1;
+  border: none;
+  border-radius: 4px;
+  background: var(--color-sequencer-step);
+  box-shadow:
+    inset 0 1px 0 var(--color-paper-highlight),
+    0 2px 0 var(--color-shadow);
+  cursor: pointer;
+  padding: 0;
+  transition: background-color 80ms ease;
+}
+
+.embed-sequencer__step[data-beat="true"] {
+  background: var(--color-sequencer-beat);
+}
+
+.embed-sequencer__step[aria-pressed="true"] {
+  background: var(--color-lime);
+  box-shadow: 0 0 10px var(--color-lime-glow);
+}
+
+/* The playhead reads as a slim ring around the current column. */
+.embed-sequencer__step[data-current="true"] {
+  outline: 1px solid var(--color-playhead);
+  outline-offset: 1px;
+}
+
+.embed-sequencer__note {
+  margin: 0.9rem 0 0;
+  color: var(--color-mute);
+  font-size: 0.625rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
 }
