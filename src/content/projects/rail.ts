@@ -54,7 +54,7 @@ const rail: readonly RailProject[] = [
   {
     title: "Buzzball",
     slug: "buzzball",
-    pitch: "Advanced MLB metrics, put in front of the people who read them.",
+    pitch: "Advanced MLB metrics — a React and TypeScript front end over them.",
     // The remote's casing is load-bearing: enrichment sends it to GitHub verbatim.
     links: { repo: "https://github.com/msmele345/Buzzball" },
     stack: ["TypeScript", "React", "Vite"],
@@ -65,7 +65,7 @@ const rail: readonly RailProject[] = [
     pitch:
       "A local-first workspace for Azure AI-103 and AZ-400 study — notes, progress, and practice attempts, persisted in the browser with no backend behind them.",
     links: {},
-    unlinkedNote: "Not published — private repository",
+    unlinkedNote: "Not published",
     stack: ["React 19", "TypeScript", "Vite", "Vitest"],
   },
 ];
