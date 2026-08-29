@@ -15,11 +15,11 @@ repo or a short curated blurb — no case-study pages at this tier.
 
 ## Acceptance criteria
 
-- [ ] Rail renders below the project wall with visibly lighter-weight cards than the tiles
-- [ ] scholar appears (no remote → curated data only, no stats, nothing broken)
-- [ ] At least three additional repos appear with enriched stats
-- [ ] Selection is curated in content files, not auto-pulled from all public repos
-- [ ] Rail is responsive and keyboard-navigable
+- [x] Rail renders below the project wall with visibly lighter-weight cards than the tiles
+- [x] scholar appears (no remote → curated data only, no stats, nothing broken)
+- [x] At least three additional repos appear with enriched stats
+- [x] Selection is curated in content files, not auto-pulled from all public repos
+- [x] Rail is responsive and keyboard-navigable
 
 ## Blocked by
 

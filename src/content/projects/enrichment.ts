@@ -4,7 +4,7 @@ import {
   type GithubClientOptions,
   type RepoStats,
 } from "@/lib/github";
-import type { Project } from "./schema";
+import type { Project, ProjectCore } from "./schema";
 
 /**
  * Enrichment (ADR 0004): build-time layering of live GitHub stats onto a
@@ -18,19 +18,24 @@ import type { Project } from "./schema";
 
 export type ProjectStats = RepoStats;
 
-export type EnrichedProject = Project & {
+/** Anything curated enough to be enriched: a featured project or a rail entry. */
+export type Enrichable = ProjectCore;
+
+export type Enriched<T extends Enrichable> = T & {
   stats: ProjectStats | null;
 };
+
+export type EnrichedProject = Enriched<Project>;
 
 export type EnricherOptions = GithubClientOptions & {
   warn?: (message: string) => void;
 };
 
 export type Enricher = {
-  enrichProject: (project: Project) => Promise<EnrichedProject>;
-  enrichProjects: (
-    projects: readonly Project[],
-  ) => Promise<readonly EnrichedProject[]>;
+  enrichProject: <T extends Enrichable>(project: T) => Promise<Enriched<T>>;
+  enrichProjects: <T extends Enrichable>(
+    projects: readonly T[],
+  ) => Promise<readonly Enriched<T>[]>;
 };
 
 const WARN_PREFIX = "[enrichment]";
@@ -45,7 +50,7 @@ export function createEnricher(options: EnricherOptions = {}): Enricher {
   const inFlight = new Map<string, Promise<ProjectStats | null>>();
   let warnedAboutToken = false;
 
-  function statsFor(project: Project): Promise<ProjectStats | null> {
+  function statsFor(project: Enrichable): Promise<ProjectStats | null> {
     const ref = parseRepoRef(project.links.repo);
     if (!ref) return Promise.resolve(null);
 
@@ -73,13 +78,16 @@ export function createEnricher(options: EnricherOptions = {}): Enricher {
     return pending;
   }
 
-  async function enrichProject(project: Project): Promise<EnrichedProject> {
+  async function enrichProject<T extends Enrichable>(
+    project: T,
+  ): Promise<Enriched<T>> {
     return { ...project, stats: await statsFor(project) };
   }
 
   return {
     enrichProject,
-    enrichProjects: (projects) => Promise.all(projects.map(enrichProject)),
+    enrichProjects: (projects) =>
+      Promise.all(projects.map((project) => enrichProject(project))),
   };
 }
 

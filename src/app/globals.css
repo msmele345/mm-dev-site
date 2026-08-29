@@ -262,18 +262,21 @@ body {
 /* ── Section shells (project wall + contact share the ledger voice) ── */
 .chrome-placeholder,
 .project-wall,
+.rail,
 .contact {
   padding: clamp(3rem, 7vw, 6rem) var(--space-page);
   scroll-margin-top: 4.5rem;
 }
 
 .project-wall,
+.rail,
 .contact {
   border-top: var(--line) solid var(--color-grid);
 }
 
 .chrome-placeholder__bar,
 .project-wall__bar,
+.rail__bar,
 .contact__bar {
   display: flex;
   justify-content: space-between;
@@ -304,6 +307,7 @@ body {
 }
 
 .project-wall__bar p,
+.rail__bar p,
 .contact__bar p {
   margin: 0;
   color: var(--color-lime);
@@ -327,6 +331,129 @@ body {
 
 .project-wall__grid > li:empty {
   display: none;
+}
+
+/* ── More-projects rail ──
+   Breadth below the wall, one tier down in every dimension: chrome palette
+   instead of project palettes, a third of a tile's height, no motion, and no
+   page behind the card. The rail is a list of what else there is; the wall is
+   what the four featured projects are. */
+.rail h2 {
+  margin: 0;
+  color: var(--color-paper);
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(1.5rem, 3.2vw, 2.25rem);
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  line-height: 1;
+}
+
+.rail__grid {
+  display: grid;
+  gap: 1px;
+  max-width: 79rem;
+  margin: 0 auto;
+  padding: 0;
+  list-style: none;
+  /* A hairline ledger: the 1px gap lets the ground read as the rule between
+     cards, so the rail is a table of work rather than a second card grid. */
+  background: var(--color-grid);
+  border: var(--line) solid var(--color-grid);
+}
+
+.rail-card {
+  position: relative;
+  display: grid;
+  gap: 0.6rem;
+  align-content: start;
+  height: 100%;
+  padding: clamp(1rem, 1.8vw, 1.35rem);
+  background: var(--color-ink);
+  transition: background 180ms ease;
+}
+
+.rail-card__title {
+  margin: 0;
+  color: var(--color-paper);
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(1.25rem, 2.4vw, 1.6rem);
+  font-weight: 400;
+  letter-spacing: 0.03em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.rail-card__title a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Whole-card hit area, with the accessible name and focus ring left on the
+   title text — a card-sized focus ring would out-shout the tiles above. */
+.rail-card__title a::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+}
+
+.rail-card__pitch {
+  margin: 0;
+  color: var(--color-mute);
+  font-size: clamp(0.75rem, 1.1vw, 0.8125rem);
+  line-height: 1.65;
+}
+
+.rail-card__stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 0.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  color: rgb(245 243 237 / 45%);
+  font-size: clamp(0.5625rem, 0.85vw, 0.6875rem);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.rail-card__stack li + li::before {
+  margin-right: 0.5rem;
+  content: "/";
+}
+
+.rail-card__go,
+.rail-card__note {
+  margin: 0;
+  font-size: clamp(0.5625rem, 0.85vw, 0.6875rem);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.rail-card__go {
+  color: var(--color-lime);
+}
+
+/* A project with no remote is a finished state, not a broken one: it says so
+   in the chrome's quiet voice rather than leaving a dead affordance. */
+.rail-card__note {
+  color: rgb(245 243 237 / 38%);
+}
+
+.rail-card:has(a:hover),
+.rail-card:has(a:focus-visible) {
+  background: var(--color-ink-raised);
+}
+
+@media (min-width: 42rem) {
+  .rail__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (min-width: 64rem) {
+  .rail__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rail-card { transition: none; }
 }
 
 /* ── Contact ── */
