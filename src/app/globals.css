@@ -52,7 +52,8 @@ body {
      page gutter alone is not enough to clear the cutout. Insetting the body —
      rather than each section — also keeps the sticky header out from under the
      notch; `html` paints the same ink behind the strips, so nothing shows. */
-  padding-inline: env(safe-area-inset-left) env(safe-area-inset-right);
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
 }
 
 /* Clear the sticky header when jump-targeted (skip link, hash anchors). */
@@ -1236,7 +1237,6 @@ body {
 /* Three additional chameleon identities. Shared geometry keeps the wall calm;
    everything inside the frame belongs to the project. */
 .chameleon-tile {
-  --tile-silk: color-mix(in srgb, var(--tile-ink) 75%, var(--tile-panel));
   display: grid;
   gap: 1rem;
   height: 100%;
@@ -1653,6 +1653,9 @@ body {
 
 .blog__title {
   margin: 0;
+  /* On the heading, not on the inline <a> inside it — text-wrap-style only
+     applies to the block that establishes the inline formatting context. */
+  text-wrap: balance;
 }
 
 .blog__title a {
@@ -1663,7 +1666,6 @@ body {
   letter-spacing: 0.02em;
   line-height: 1;
   text-decoration: none;
-  text-wrap: balance;
   transition: color 120ms ease;
 }
 
@@ -1889,7 +1891,7 @@ body {
    to 4.78:1; every other token in the theme already clears the floor. Shiki
    writes the colour inline on the span, so the override has to out-rank it.
    The audit spec measures every token, so a theme change fails loudly here. */
-.post__body [data-rehype-pretty-code-figure] span[style*="#6B737C"] {
+.post__body [data-rehype-pretty-code-figure] span[style*="#6B737C" i] {
   color: #767f88 !important;
 }
 

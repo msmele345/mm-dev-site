@@ -72,8 +72,13 @@ against the exact surface a label sits on instead of a copied literal.
 **Code comments below AA** — `src/app/globals.css`
 Shiki's `min-dark` prints comments at `#6B737C`, which is 4.07:1 on the code panel —
 under the floor for 13px text, and comments are the one token carrying prose. Lifted to
-`#767F88` (4.78:1). Every token is now measured by the spec, so a theme change fails
-loudly rather than silently regressing.
+`#767F88` (4.78:1). Shiki writes the colour inline on the span, so the override matches
+on the style attribute — case-insensitively, since the theme file stores the hex in
+lower case and only Shiki's output is upper. The cleaner fix is a theme override in the
+`rehype-pretty-code` options, but Turbopack requires those options to be serializable,
+which would mean vendoring the whole `min-dark` theme into `next.config.ts`. The spec
+measures every token in every fenced block instead, so a theme bump that reintroduces a
+sub-AA colour fails loudly rather than regressing silently.
 
 **Double-tap zoom delay on the groovebox tile and the sequencer embed** —
 `src/app/globals.css`
@@ -89,17 +94,27 @@ site. Declared as `#08090b`, matching `--color-ink`.
 `/favicon.ico` 404'd on every page, which Lighthouse counts as a console error
 (best practices 96 → 100). Added a sequencer glyph in the chrome's lime on ink.
 
-**Full-bleed layout under a notch** — `src/app/globals.css`
+**Full-bleed layout under a notch** — `src/app/globals.css`, `src/app/layout.tsx`
 Every section runs edge to edge, and the `1.25rem` minimum page gutter is narrower than
-an iPhone's 44px landscape safe-area inset. `body` now carries
-`padding-inline: env(safe-area-inset-left) env(safe-area-inset-right)`, which also keeps
-the sticky header out from under the cutout; `html` paints the same ink behind the
-strips, so nothing shows. (Not covered by a test — Playwright cannot emulate insets.)
+an iPhone's 44px landscape safe-area inset. `body` now carries physical
+`padding-left`/`padding-right` from `env(safe-area-inset-*)`, which also keeps the
+sticky header out from under the cutout; `html` paints the same ink behind the strips,
+so nothing shows. Physical properties rather than `padding-inline`, because `env()`
+values are physical and would swap under an RTL writing mode.
+
+This needs `viewportFit: "cover"` in the `viewport` export to work at all: without it
+iOS letterboxes the page inside the safe area and every `env(safe-area-inset-*)`
+resolves to 0. The first pass shipped the padding without it, which made the fix inert
+on exactly the hardware it targets — caught in review, not by a test, because Playwright
+cannot emulate insets. Verify by hand on a notched device, or in the emitted HTML:
+`<meta name="viewport" … viewport-fit=cover>`.
 
 **Typography** — `src/content/blog/…​.mdx`, `src/app/globals.css`
 Straight quotes in post prose replaced with curly. `text-wrap: balance` added to the
-three headings that lacked it (`.blog__title a`, `.rail-card__title`,
-`.case__story-list h3`).
+three headings that lacked it: `.blog__title`, `.rail-card__title`,
+`.case__story-list h3`. On `.blog__title`, not the `<a>` inside it — `text-wrap-style`
+only applies to the block that establishes the inline formatting context, so the first
+pass put it on an inline box where it did nothing.
 
 ## Findings waived
 
@@ -133,6 +148,20 @@ The guidelines ask for Title Case. "Project wall", "More projects", "The story",
 **Framework-owned performance items**
 `render-blocking-resources`, `unused-javascript`, and `legacy-javascript` all point at
 Next's own chunks. Performance is 97–100; nothing here is ours to fix.
+
+## Review pass
+
+`/code-review` over the finished diff found two fixes that had not actually taken effect
+(the missing `viewportFit`, and `text-wrap: balance` on an inline box) and several places
+where the audit spec asserted less than its name claimed. All are fixed above and in the
+spec: the contrast helpers now composite over the real ground so a translucent colour is
+measured honestly rather than scored as opaque; the reduced-motion check reads animation
+*duration* rather than `playState`, so paused off-screen motion can no longer hide a
+missing rule; the code-token check covers every fenced block; the keyframe check is
+scoped to the animations the wall actually references, and fails if any of them was
+unreadable; and the Tab walk runs until focus wraps instead of a fixed budget a rail
+rotation could overrun. Each of the four assertions above was mutation-tested — the fix
+reverted, the test observed to fail, the fix restored.
 
 ## Checked and passing, no change needed
 

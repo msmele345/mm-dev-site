@@ -1,4 +1,4 @@
-import { expect, test } from "@playwright/test";
+import { expect, test, type Page } from "@playwright/test";
 
 /**
  * Issue 09 — the pre-launch pass across every finished surface.
@@ -44,26 +44,38 @@ test.describe("responsive", () => {
           () => new Promise((resolve) => requestAnimationFrame(resolve)),
         );
 
-        const overflow = await page.evaluate(() => {
+        const { scrollWidth, clientWidth } = await page.evaluate(() => ({
+          scrollWidth: document.documentElement.scrollWidth,
+          clientWidth: document.documentElement.clientWidth,
+        }));
+        if (scrollWidth <= clientWidth + 1) continue;
+
+        // Only now is a full-document rect sweep worth its cost. Both edges:
+        // an absolutely positioned decoration at a negative offset widens the
+        // document without any element's right edge crossing the viewport.
+        const culprits = await page.evaluate(() => {
           const root = document.documentElement;
-          const widest = [...document.querySelectorAll<HTMLElement>("body *")]
-            .map((el) => ({
-              el: el.tagName.toLowerCase() + (el.className ? `.${String(el.className).split(" ")[0]}` : ""),
-              right: Math.round(el.getBoundingClientRect().right),
-            }))
-            .filter((entry) => entry.right > root.clientWidth + 1)
+          return [...document.querySelectorAll<HTMLElement>("body *")]
+            .map((el) => {
+              const box = el.getBoundingClientRect();
+              return {
+                el:
+                  el.tagName.toLowerCase() +
+                  (el.className ? `.${String(el.className).split(" ")[0]}` : ""),
+                left: Math.round(box.left),
+                right: Math.round(box.right),
+              };
+            })
+            .filter(
+              (entry) => entry.right > root.clientWidth + 1 || entry.left < -1,
+            )
             .slice(0, 5);
-          return {
-            scrollWidth: root.scrollWidth,
-            clientWidth: root.clientWidth,
-            widest,
-          };
         });
 
         expect(
-          overflow.scrollWidth,
-          `${label} at ${width}px overflows: ${JSON.stringify(overflow.widest)}`,
-        ).toBeLessThanOrEqual(overflow.clientWidth + 1);
+          scrollWidth,
+          `${label} at ${width}px overflows: ${JSON.stringify(culprits)}`,
+        ).toBeLessThanOrEqual(clientWidth + 1);
       }
     });
   }
@@ -144,18 +156,28 @@ test.describe("motion", () => {
         window.scrollTo(0, 0);
       });
 
+      /* Not `playState === "running"`: below-the-fold motion is *paused* by
+         the off-screen observer and the reduced-motion reset *finishes*
+         animations instantly, and both states are filtered out by a
+         playState check — so that assertion could only ever see the first
+         viewport. An animation's active duration is independent of both. */
       await expect
         .poll(
           async () =>
             page.evaluate(() =>
               document
                 .getAnimations()
-                .filter((animation) => animation.playState === "running")
-                .map((animation) =>
-                  animation instanceof CSSAnimation
-                    ? animation.animationName
-                    : animation.constructor.name,
-                ),
+                .map((animation) => ({
+                  name:
+                    animation instanceof CSSAnimation
+                      ? animation.animationName
+                      : animation.constructor.name,
+                  duration: Number(
+                    animation.effect?.getComputedTiming().duration ?? 0,
+                  ),
+                }))
+                .filter((animation) => animation.duration > 1)
+                .map((animation) => `${animation.name} (${animation.duration}ms)`),
             ),
           { message: `${label} still animates under reduced motion` },
         )
@@ -165,9 +187,25 @@ test.describe("motion", () => {
 
   test("every wall tile animates only transform and opacity", async ({ page }) => {
     await page.goto("/");
+    // Both motion states, so crescendo-only keyframes are covered too.
+    for (const slug of WALL_TILES) {
+      await page.locator(`[data-tile-slug="${slug}"]`).getByRole("link").hover();
+    }
 
-    const properties = await page.evaluate(() => {
-      const names = new Set<string>();
+    const measured = await page.evaluate(() => {
+      /* Only the keyframes the wall actually references — asserting over every
+         stylesheet would fail the site's audit for a dev-overlay spinner and
+         would silently skip any cross-origin sheet it could not read. */
+      const used = new Set<string>();
+      for (const el of document.querySelectorAll(".project-wall [data-anim]")) {
+        for (const name of getComputedStyle(el).animationName.split(",")) {
+          const trimmed = name.trim();
+          if (trimmed && trimmed !== "none") used.add(trimmed);
+        }
+      }
+
+      const properties = new Set<string>();
+      const found = new Set<string>();
       for (const sheet of [...document.styleSheets]) {
         let rules: CSSRuleList;
         try {
@@ -176,18 +214,33 @@ test.describe("motion", () => {
           continue;
         }
         for (const rule of [...rules]) {
-          if (!(rule instanceof CSSKeyframesRule)) continue;
+          if (!(rule instanceof CSSKeyframesRule) || !used.has(rule.name)) continue;
+          found.add(rule.name);
           for (const frame of [...rule.cssRules] as CSSKeyframeRule[]) {
-            for (const property of [...frame.style]) names.add(property);
+            for (const property of [...frame.style]) properties.add(property);
           }
         }
       }
-      return [...names];
+      return {
+        used: [...used].sort(),
+        found: [...found].sort(),
+        properties: [...properties].sort(),
+      };
     });
 
-    expect(properties.sort()).toEqual(["opacity", "transform"]);
+    // Every referenced keyframe was readable — no silent skip.
+    expect(measured.found, "unreadable keyframes").toEqual(measured.used);
+    expect(measured.used.length).toBeGreaterThan(3);
+    expect(measured.properties).toEqual(["opacity", "transform"]);
   });
 });
+
+/** Has Tab wrapped back around to the skip link? */
+async function isFirstStopFocused(page: Page): Promise<boolean> {
+  return page.evaluate(
+    () => document.activeElement?.classList.contains("site-header__skip") ?? false,
+  );
+}
 
 test.describe("keyboard", () => {
   test("the whole home page is reachable by Tab, crescendo included", async ({
@@ -196,10 +249,12 @@ test.describe("keyboard", () => {
     await page.goto("/");
 
     const order: string[] = [];
-    // Generous cap: enough to cross the page, small enough to fail fast if the
-    // focus order ever loops.
-    for (let i = 0; i < 40; i += 1) {
+    /* Tab until focus wraps back to the first stop, so a rail rotation or an
+       extra contact link cannot push the footer past a hard-coded budget.
+       The cap is only a runaway guard, not the expected length. */
+    for (let i = 0; i < 200; i += 1) {
       await page.keyboard.press("Tab");
+      if (order.length > 1 && (await isFirstStopFocused(page))) break;
       const id = await page.evaluate(() => {
         const active = document.activeElement as HTMLElement | null;
         if (!active || active === document.body) return null;
@@ -329,38 +384,68 @@ test.describe("contrast", () => {
           : [".faceplate__brand", ".faceplate__pads li"];
 
       for (const selector of selectors) {
-        const measured = await page.locator(selector).first().evaluate((el) => {
-          /* Paint each colour into a 1x1 canvas and read the pixel back: the
-             label is a color-mix() and the hardware stops are custom
-             properties, and neither resolves to plain rgb() in every engine. */
-          const canvas = document.createElement("canvas");
-          canvas.width = canvas.height = 1;
-          const context = canvas.getContext("2d")!;
-          const resolve = (value: string): [number, number, number] | null => {
-            if (!value.trim()) return null;
-            context.clearRect(0, 0, 1, 1);
-            context.fillStyle = "#000";
-            context.fillStyle = value;
-            context.fillRect(0, 0, 1, 1);
-            const [r, g, b] = context.getImageData(0, 0, 1, 1).data;
-            return [r, g, b];
-          };
-          const root = getComputedStyle(document.documentElement);
-          return {
-            color: resolve(getComputedStyle(el).color),
-            hardware: ["--hw-face-top", "--hw-pad-top"].map((token) => ({
-              token,
-              rgb: resolve(root.getPropertyValue(token)),
-            })),
-          };
-        });
+        const panelToken = path === "/" ? "--tile-panel" : "--case-panel";
+        const measured = await page.locator(selector).first().evaluate(
+          (el, panelToken) => {
+            const canvas = document.createElement("canvas");
+            canvas.width = canvas.height = 1;
+            const context = canvas.getContext("2d")!;
+            /* Composite `value` over `ground` and read the pixel back. Paint
+               the ground first rather than reading RGB off a transparent
+               canvas: several of the site's own colours are translucent
+               (--color-mute is 55%), and dropping the alpha channel would
+               score them as opaque and overstate their contrast. The label is
+               a color-mix() and the stops are custom properties, so neither
+               resolves to plain rgb() in every engine either. */
+            const resolve = (
+              value: string,
+              ground: string,
+            ): [number, number, number] | null => {
+              if (!value.trim()) return null;
+              context.clearRect(0, 0, 1, 1);
+              context.fillStyle = ground;
+              context.fillRect(0, 0, 1, 1);
+              context.fillStyle = value;
+              context.fillRect(0, 0, 1, 1);
+              const [r, g, b, a] = context.getImageData(0, 0, 1, 1).data;
+              return a === 255 ? [r, g, b] : null;
+            };
 
-        expect(measured.color, `${path} ${selector}: unreadable colour`).not.toBeNull();
-        for (const { token, rgb } of measured.hardware) {
-          expect(rgb, `${path} ${selector}: ${token} missing`).not.toBeNull();
+            const root = getComputedStyle(document.documentElement);
+            const ink = root.getPropertyValue("--color-ink").trim() || "#000";
+            /* The 42% mid-stop is the one that carries the project's own
+               palette, so it is the stop a new palette can break. */
+            const stops = ["--hw-face-top", "--hw-pad-top", panelToken].map(
+              (token) => {
+                const declared =
+                  token === panelToken
+                    ? getComputedStyle(el).getPropertyValue(token)
+                    : root.getPropertyValue(token);
+                return { token, rgb: resolve(declared, ink) };
+              },
+            );
+
+            return {
+              color: getComputedStyle(el).color,
+              stops: stops.map(({ token, rgb }) => ({
+                token,
+                rgb,
+                // The label composites over the stop it is printed on.
+                over: rgb
+                  ? resolve(getComputedStyle(el).color, `rgb(${rgb.join(",")})`)
+                  : null,
+              })),
+            };
+          },
+          panelToken,
+        );
+
+        for (const { token, rgb, over } of measured.stops) {
+          expect(rgb, `${path} ${selector}: ${token} unreadable`).not.toBeNull();
+          expect(over, `${path} ${selector}: colour unreadable`).not.toBeNull();
           expect(
-            contrast(measured.color!, rgb!),
-            `${path} ${selector} on ${token}`,
+            contrast(over!, rgb!),
+            `${path} ${selector} (${measured.color}) on ${token}`,
           ).toBeGreaterThanOrEqual(4.5);
         }
       }
@@ -377,36 +462,67 @@ test.describe("code", () => {
   test("every code token clears AA on the code panel", async ({ page }) => {
     await page.goto("/blog/shipping-a-groovebox-that-teaches-techno");
 
-    const tokens = await page.evaluate(() => {
+    const measured = await page.evaluate(() => {
       const canvas = document.createElement("canvas");
       canvas.width = canvas.height = 1;
       const context = canvas.getContext("2d")!;
-      const resolve = (value: string): [number, number, number] => {
-        context.fillStyle = "#000";
+      /* Clear before every paint and composite over a named ground: without
+         the clear, a translucent token would composite over whichever token
+         was measured before it, making the result depend on document order. */
+      const resolve = (
+        value: string,
+        ground: string,
+      ): [number, number, number] | null => {
+        context.clearRect(0, 0, 1, 1);
+        context.fillStyle = ground;
+        context.fillRect(0, 0, 1, 1);
         context.fillStyle = value;
         context.fillRect(0, 0, 1, 1);
-        const [r, g, b] = context.getImageData(0, 0, 1, 1).data;
-        return [r, g, b];
+        const [r, g, b, a] = context.getImageData(0, 0, 1, 1).data;
+        return a === 255 ? [r, g, b] : null;
       };
 
-      const figure = document.querySelector<HTMLElement>(
+      const ink =
+        getComputedStyle(document.documentElement)
+          .getPropertyValue("--color-ink")
+          .trim() || "#000";
+
+      // Every fenced block on the page, not just the first.
+      const out: {
+        color: string;
+        text: string;
+        rgb: [number, number, number] | null;
+        panel: [number, number, number] | null;
+      }[] = [];
+      const figures = document.querySelectorAll<HTMLElement>(
         "[data-rehype-pretty-code-figure]",
-      )!;
-      const panel = resolve(getComputedStyle(figure).backgroundColor);
-      const seen = new Map<string, { rgb: [number, number, number]; text: string }>();
-      for (const span of figure.querySelectorAll<HTMLElement>("code span")) {
-        const text = span.textContent ?? "";
-        if (!text.trim()) continue;
-        const color = getComputedStyle(span).color;
-        if (!seen.has(color)) seen.set(color, { rgb: resolve(color), text: text.trim().slice(0, 24) });
+      );
+      for (const figure of figures) {
+        const panel = resolve(getComputedStyle(figure).backgroundColor, ink);
+        const seen = new Set<string>();
+        for (const span of figure.querySelectorAll<HTMLElement>("code span")) {
+          if (!(span.textContent ?? "").trim()) continue;
+          const color = getComputedStyle(span).color;
+          if (seen.has(color)) continue;
+          seen.add(color);
+          out.push({
+            color,
+            text: (span.textContent ?? "").trim().slice(0, 24),
+            rgb: panel ? resolve(color, `rgb(${panel.join(",")})`) : null,
+            panel,
+          });
+        }
       }
-      return { panel, tokens: [...seen.entries()].map(([color, v]) => ({ color, ...v })) };
+      return { figures: figures.length, tokens: out };
     });
 
-    expect(tokens.tokens.length).toBeGreaterThan(3);
-    for (const token of tokens.tokens) {
+    expect(measured.figures, "no fenced code on the post").toBeGreaterThan(0);
+    expect(measured.tokens.length).toBeGreaterThan(3);
+    for (const token of measured.tokens) {
+      expect(token.panel, "code panel unreadable").not.toBeNull();
+      expect(token.rgb, `code token ${token.color} unreadable`).not.toBeNull();
       expect(
-        contrast(token.rgb, tokens.panel),
+        contrast(token.rgb!, token.panel!),
         `code token ${token.color} ("${token.text}")`,
       ).toBeGreaterThanOrEqual(4.5);
     }
@@ -444,6 +560,10 @@ test.describe("chrome metadata", () => {
     const painted = await page.evaluate(
       () => getComputedStyle(document.documentElement).backgroundColor,
     );
+    // A transparent root parses to black, which is within 1.06:1 of the ink —
+    // close enough to pass by accident while the page paints nothing.
+    expect(painted, "root paints no background").not.toMatch(/^rgba\(.*,\s*0\)$/);
+    expect(painted).not.toBe("transparent");
     expect(contrast(declared, painted)).toBeLessThan(1.1);
   });
 });

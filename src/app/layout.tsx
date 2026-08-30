@@ -43,6 +43,10 @@ export const metadata: Metadata = {
  */
 export const viewport: Viewport = {
   themeColor: "#08090b",
+  // Without this the page is letterboxed inside the safe area and every
+  // env(safe-area-inset-*) resolves to 0 — which would make the inset on
+  // `body` in globals.css do nothing on the exact hardware it targets.
+  viewportFit: "cover",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
