@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Bebas_Neue, IBM_Plex_Mono } from "next/font/google";
 import SiteFooter from "@/components/SiteFooter";
 import SiteHeader from "@/components/SiteHeader";
@@ -34,6 +34,15 @@ export const metadata: Metadata = {
   alternates: {
     types: { "application/rss+xml": site.feedPath },
   },
+};
+
+/**
+ * Tells the browser chrome — Android address bar, iOS PWA status bar — the
+ * page is ink-black, so it stops painting a light strip above a dark site.
+ * Kept in step with `--color-ink` in globals.css.
+ */
+export const viewport: Viewport = {
+  themeColor: "#08090b",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
