@@ -67,6 +67,33 @@ test.describe("responsive", () => {
       }
     });
   }
+
+  /**
+   * Every case study, not just the representative one: the hero type scale is
+   * shared but the faces are not, and it was the two non-condensed faces
+   * (Chakra Petch, mono) that overran a 320px screen.
+   */
+  test("every case-study hero fits the narrowest phone", async ({ page }) => {
+    await page.setViewportSize({ width: 320, height: 900 });
+
+    for (const slug of WALL_TILES) {
+      await page.goto(`/work/${slug}`);
+      const measured = await page.evaluate(() => {
+        const root = document.documentElement;
+        const h1 = document.querySelector("h1")!;
+        return {
+          scrollWidth: root.scrollWidth,
+          clientWidth: root.clientWidth,
+          headingOverflow: h1.scrollWidth - h1.clientWidth,
+        };
+      });
+
+      expect(measured.scrollWidth, `${slug} document`).toBeLessThanOrEqual(
+        measured.clientWidth + 1,
+      );
+      expect(measured.headingOverflow, `${slug} hero type`).toBeLessThanOrEqual(1);
+    }
+  });
 });
 
 test.describe("landmarks and headings", () => {

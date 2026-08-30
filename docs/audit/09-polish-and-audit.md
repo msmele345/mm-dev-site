@@ -54,8 +54,12 @@ The `.case__hero h1` floor of `4.5rem` is wider than a 320px screen in the two
 non-condensed faces: "ELEVATED" in Chakra Petch and "TERMINAL" in IBM Plex Mono each
 overran the page gutter and dragged a scrollbar onto the whole document (342px and
 348px against a 320px viewport). Telescope and Sound City were fine — Bebas Neue is
-condensed enough to fit, which is why the bug survived issue 05. Floor lowered to
-`3.25rem`, plus `overflow-wrap: break-word` as a guard for a future single-word title.
+condensed enough to fit, which is why the bug survived issue 05. Only the floor was at
+fault: the preferred `16vw` works out to roughly 0.72 × viewport, which always fits
+inside the gutters. So the floor alone drops to `3.25rem` and the type scale at every
+other width is untouched, plus `overflow-wrap: break-word` as a guard for a future
+single-word title. All four heroes are now measured at 320px, not just the
+representative one.
 
 **Faceplate silkscreen below AA** — `src/app/globals.css`
 The `EB-01` brand and the `KICK / CLAP / CH / OH` pad labels were `--tile-mute` printed

@@ -634,7 +634,7 @@ body {
      4.5rem "ELEVATED" in Chakra Petch — or "TERMINAL" in mono — runs past the
      page gutter and drags a horizontal scrollbar onto the whole document.
      break-word is the belt to that braces, for a future single-word title. */
-  font-size: clamp(3.25rem, 13vw, 12rem);
+  font-size: clamp(3.25rem, 16vw, 12rem);
   font-weight: 600;
   letter-spacing: -0.03em;
   line-height: 0.78;
