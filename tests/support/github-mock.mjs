@@ -3,10 +3,10 @@
  * end-to-end without depending on the network or GitHub's rate limits.
  *
  * Serves the same response shapes as api.github.com for the featured repos
- * used by the wall and case studies, and 404s everything else. The numbers are
- * deliberately nothing like the real repo's: if a stray dev server is reused
- * without GITHUB_API_BASE_URL pointed here, the tests fail loudly on the real
- * values instead of quietly passing.
+ * used by the wall and case studies, plus the more-projects rail repos, and
+ * 404s everything else. The numbers are deliberately nothing like the real
+ * repo's: if a stray dev server is reused without GITHUB_API_BASE_URL pointed
+ * here, the tests fail loudly on the real values instead of quietly passing.
  *
  * Usage: node tests/support/github-mock.mjs [port]
  */
@@ -29,6 +29,30 @@ const FIXTURES = {
   "/repos/msmele345/sound-city": {
     commitCount: 444,
     languages: { TypeScript: 900_000, CSS: 100_000 },
+  },
+  "/repos/msmele345/interstellar-exchange": {
+    commitCount: 555,
+    languages: { Java: 950_000, Dockerfile: 50_000 },
+  },
+  "/repos/msmele345/algorithm-cloud-processor": {
+    commitCount: 666,
+    languages: { Kotlin: 800_000, Dockerfile: 200_000 },
+  },
+  "/repos/msmele345/livequotes": {
+    commitCount: 999,
+    languages: { Java: 980_000, TSQL: 20_000 },
+  },
+  "/repos/msmele345/feedback-listener": {
+    commitCount: 111,
+    languages: { Java: 1_000_000 },
+  },
+  "/repos/msmele345/screens": {
+    commitCount: 777,
+    languages: { TypeScript: 600_000, Java: 400_000 },
+  },
+  "/repos/msmele345/Buzzball": {
+    commitCount: 888,
+    languages: { TypeScript: 700_000, CSS: 300_000 },
   },
 };
 

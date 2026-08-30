@@ -15,11 +15,13 @@ repo or a short curated blurb — no case-study pages at this tier.
 
 ## Acceptance criteria
 
-- [ ] Rail renders below the project wall with visibly lighter-weight cards than the tiles
-- [ ] scholar appears (no remote → curated data only, no stats, nothing broken)
-- [ ] At least three additional repos appear with enriched stats
-- [ ] Selection is curated in content files, not auto-pulled from all public repos
-- [ ] Rail is responsive and keyboard-navigable
+- [x] Rail renders below the project wall with visibly lighter-weight cards than the tiles
+- [x] ~~scholar appears~~ — dropped at the owner's request (unfinished side idea).
+      The no-remote path it was meant to prove is covered by `tests/unit/rail.spec.ts`
+      instead, so a future entry without a remote still renders as a complete card.
+- [x] At least three additional repos appear with enriched stats
+- [x] Selection is curated in content files, not auto-pulled from all public repos
+- [x] Rail is responsive and keyboard-navigable
 
 ## Blocked by
 
