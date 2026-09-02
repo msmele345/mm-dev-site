@@ -242,6 +242,26 @@ async function isFirstStopFocused(page: Page): Promise<boolean> {
   );
 }
 
+/* Focusing an off-screen element makes the browser scroll it into view, and
+   `scroll-behavior: smooth` on `html` (globals.css) animates that over ~300ms.
+   A rect read straight after a Tab is therefore mid-flight: the element is
+   still above the fold and reads as parked under the header. That is what the
+   element lands *on the way to*, not where it comes to rest, so this test
+   takes the animation out rather than waiting it out — a wait long enough to
+   be safe on a loaded CI runner is a guess, and the guess is what broke.
+   `auto` is the site's own reduced-motion value, and it changes when the
+   scroll finishes, never where it stops. */
+async function stopSmoothScrolling(page: Page): Promise<void> {
+  await page.addStyleTag({ content: "html { scroll-behavior: auto !important; }" });
+}
+
+/** One frame, so an instant scroll is reflected in the rect we then read. */
+async function nextFrame(page: Page): Promise<void> {
+  await page.evaluate(
+    () => new Promise((resolve) => requestAnimationFrame(() => resolve(null))),
+  );
+}
+
 test.describe("keyboard", () => {
   test("the whole home page is reachable by Tab, crescendo included", async ({
     page,
@@ -313,12 +333,17 @@ test.describe("keyboard", () => {
   for (const { label, path } of SURFACES) {
     test(`${label} never parks focus under the sticky header`, async ({ page }) => {
       await page.goto(path);
+      await stopSmoothScrolling(page);
       const headerBottom = await page.evaluate(
         () => document.querySelector(".site-header")!.getBoundingClientRect().bottom,
       );
 
-      for (let i = 0; i < 40; i += 1) {
+      /* Stop once focus wraps, so a short page is not walked three times
+         over — the repeat stops assert nothing new and drag the run out. */
+      for (let i = 0; i < 60; i += 1) {
         await page.keyboard.press("Tab");
+        if (i > 0 && (await isFirstStopFocused(page))) break;
+        await nextFrame(page);
         const focused = await page.evaluate(() => {
           const active = document.activeElement as HTMLElement | null;
           if (!active || active === document.body) return null;

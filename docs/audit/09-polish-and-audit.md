@@ -163,6 +163,38 @@ unreadable; and the Tab walk runs until focus wraps instead of a fixed budget a 
 rotation could overrun. Each of the four assertions above was mutation-tested — the fix
 reverted, the test observed to fail, the fix restored.
 
+## Follow-up: a flaky assertion, not a flaky site
+
+CI failed the sticky-header keyboard test on `blog index` and `post` — both reporting a
+focused link at a *negative* `top`, i.e. above the viewport entirely rather than merely
+tucked under the header. That is not what the test names, and the site was never at
+fault.
+
+Focusing an off-screen element makes the browser scroll it into view, and
+`scroll-behavior: smooth` on `html` animates that over roughly 300 ms. The spec read
+`getBoundingClientRect()` immediately after each `Tab`, so on a page short enough for
+focus to wrap past the sticky header back to top-of-document content, it sampled a rect
+mid-flight. The negative numbers CI reported (−73 px, −91 px) are frames from that
+animation. It passed locally only because a faster machine happened to sample later in
+the scroll; nothing about Linux or the runner mattered except speed.
+
+Proven rather than guessed: a probe that Tabbed the same surfaces and re-measured each
+element after the scroll position went quiet showed the failing stops resting at
+`top = 172` and `top = 584` — comfortably clear of the 58 px header — with the raw
+post-`Tab` read on the same stops at −160.
+
+The fix disables smooth scrolling for the duration of the walk (`scroll-behavior: auto`,
+the site's own reduced-motion value) instead of sleeping long enough to outlast it: a
+wait picked to be safe on a loaded runner is a guess, and the guess is what broke.
+`auto` changes when the scroll finishes, never where it stops, so the test still measures
+exactly the resting position it claims to. The walk now also stops when focus wraps
+instead of running a fixed 40 stops, which had been cycling short pages three times over.
+
+Mutation-tested both before and after the change: with a 200 px-tall `.site-header`
+forced into `globals.css`, the test fails on the surfaces that then genuinely park focus
+under the bar; restored, it passes. Stress-run 5× on the CI worker count, 20/20 green,
+and the four tests dropped from 18 s to 7.5 s.
+
 ## Checked and passing, no change needed
 
 - Landmarks (`banner` / `main` / `contentinfo` / `navigation`) and a gapless heading
