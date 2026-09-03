@@ -20,11 +20,16 @@ skill as the checklist:
 
 ## Acceptance criteria
 
-- [ ] Web-design-guidelines review run; findings fixed or explicitly waived
-- [ ] Reduced-motion verified on every animated component
-- [ ] Lighthouse (or equivalent) green on performance and accessibility for home, one case study, one post — mobile and desktop
-- [ ] No horizontal scroll or broken layout at narrow widths
-- [ ] Keyboard-only walkthrough of the whole site succeeds, crescendo included
+- [x] Web-design-guidelines review run; findings fixed or explicitly waived
+- [x] Reduced-motion verified on every animated component
+- [x] Lighthouse (or equivalent) green on performance and accessibility for home, one case study, one post — mobile and desktop
+- [x] No horizontal scroll or broken layout at narrow widths
+- [x] Keyboard-only walkthrough of the whole site succeeds, crescendo included
+
+## Result
+
+Findings, fixes, waivers, and the Lighthouse numbers: [`docs/audit/09-polish-and-audit.md`](../docs/audit/09-polish-and-audit.md).
+The machine-checkable half is `tests/polish-and-audit.spec.ts`.
 
 ## Blocked by
 
