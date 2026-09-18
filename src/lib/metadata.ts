@@ -19,6 +19,12 @@ type SocialPage<T extends OgType> = {
  * `OpenGraph` is a discriminated union, and a widened `type` matches no member.
  */
 export type SocialTags<T extends OgType> = {
+  alternates: {
+    canonical: string;
+    types: {
+      "application/rss+xml": string;
+    };
+  };
   openGraph: {
     type: T;
     title: string;
@@ -52,6 +58,10 @@ export function socialMetadata<T extends OgType = "website">({
   tags,
 }: SocialPage<T>): SocialTags<T> {
   return {
+    alternates: {
+      canonical: path,
+      types: { "application/rss+xml": site.feedPath },
+    },
     openGraph: {
       type: (type ?? "website") as T,
       title,

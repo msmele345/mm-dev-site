@@ -32,6 +32,7 @@ export const metadata: Metadata = {
   }),
   // Emits the <link rel="alternate"> that makes the feed discoverable to readers.
   alternates: {
+    canonical: "/",
     types: { "application/rss+xml": site.feedPath },
   },
 };

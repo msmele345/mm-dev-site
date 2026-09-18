@@ -13,8 +13,8 @@ site metadata so canonical URLs, RSS, and OG images point at the custom domain.
 
 ## Acceptance criteria
 
-- [ ] User has chosen and purchased the domain (checklist handed to user if needed)
-- [ ] Domain connected to the Vercel project; HTTPS serving on apex and/or www with redirect settled
+- [X] User has chosen and purchased the domain (checklist handed to user if needed)
+- [X] Domain connected to the Vercel project; HTTPS serving on apex and/or www with redirect settled
 - [ ] Canonical URLs, sitemap/robots, RSS links, and OG metadata use the custom domain
 - [ ] `.vercel.app` URL still resolves (redirects to the domain)
 
