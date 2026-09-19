@@ -8,11 +8,45 @@ const metaContent = (page: Page, selector: string) =>
 
 /** Every surface that can be shared, and the title its card must carry. */
 const SHARED_PAGES = [
-  { path: "/", label: "home", ogTitle: "MITCH MELE — Developer" },
-  { path: "/blog", label: "blog index", ogTitle: "MITCH MELE — Blog" },
-  { path: `/blog/${POST_SLUG}`, label: "post", ogTitle: POST_TITLE },
-  { path: "/work/sound-city", label: "case study", ogTitle: "Sound City" },
+  {
+    path: "/",
+    label: "home",
+    ogTitle: "MITCH MELE — Developer",
+    canonicalUrl: "https://www.mitchmele.dev",
+  },
+  {
+    path: "/blog",
+    label: "blog index",
+    ogTitle: "MITCH MELE — Blog",
+    canonicalUrl: "https://www.mitchmele.dev/blog",
+  },
+  {
+    path: `/blog/${POST_SLUG}`,
+    label: "post",
+    ogTitle: POST_TITLE,
+    canonicalUrl:
+      "https://www.mitchmele.dev/blog/shipping-a-groovebox-that-teaches-techno",
+  },
+  {
+    path: "/work/sound-city",
+    label: "case study",
+    ogTitle: "Sound City",
+    canonicalUrl: "https://www.mitchmele.dev/work/sound-city",
+  },
 ] as const;
+
+test.describe("Canonical URLs", () => {
+  for (const { path, label, canonicalUrl } of SHARED_PAGES) {
+    test(`the ${label} identifies its own custom-domain URL`, async ({ page }) => {
+      await page.goto(path);
+
+      await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
+        "href",
+        canonicalUrl,
+      );
+    });
+  }
+});
 
 test.describe("RSS feed", () => {
   test("serves a parseable RSS document as an RSS content type", async ({ request }) => {
@@ -35,7 +69,7 @@ test.describe("RSS feed", () => {
 
     expect(xml).toContain(`<title>${POST_TITLE}</title>`);
     expect(xml).toContain(
-      `<guid isPermaLink="true">https://mitchmele.dev/blog/${POST_SLUG}</guid>`,
+      `<guid isPermaLink="true">https://www.mitchmele.dev/blog/${POST_SLUG}</guid>`,
     );
     expect(xml).toContain("<pubDate>Thu, 27 Aug 2026 00:00:00 GMT</pubDate>");
   });

@@ -5,8 +5,8 @@
  * card's address must point at the canonical site, never at a preview build.
  */
 export const site = {
-  url: "https://mitchmele.dev",
-  host: "mitchmele.dev",
+  url: "https://www.mitchmele.dev",
+  host: "www.mitchmele.dev",
   title: "MITCH MELE — Developer",
   wordmark: "MITCH MELE",
   description:
