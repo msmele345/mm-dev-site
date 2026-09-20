@@ -76,4 +76,5 @@ that mechanism, verify it by building twice against
 `.next`: the second build must show the second number, and `next build` must
 still report `/` as `○ (Static)`.
 
-The first live deployment is available at [mm-dev-site.vercel.app](https://mm-dev-site.vercel.app).
+The site is live at [www.mitchmele.dev](https://www.mitchmele.dev); the apex
+`mitchmele.dev` redirects there.
