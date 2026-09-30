@@ -34,7 +34,20 @@ dev projects. The map is done when any agent could pick up issue 01 and start bu
 - [09 — Polish & audit](../../../issues/09-polish-and-audit.md) — Accessibility, motion, performance, and responsive review.
 - [10 — Custom domain](../../../issues/10-custom-domain.md) — Domain, DNS, HTTPS, and canonical URL setup.
 
-## Not yet specified
+## Subsequent planning
+
+- [12 — Current Transmission](12-current-transmission.md) — Resolved grilling record
+  for the home-page status ledger, synthesized into the
+  [local spec](../../current-transmission-spec.md). The
+  [approved tickets](../../../issues/feature-current-transmission/README.md) are
+  stored individually with explicit dependencies. This is subsequent work, separate
+  from the original v1 scope.
+- [Featured Project Update spec](../../featured-project-update-spec.md) — Reusable
+  add/remove/replace/reorder workflow for the Project wall, with retained published
+  case-study URLs. The [approved tickets](../../../issues/featured-project-update/README.md)
+  are stored individually with explicit dependencies.
+
+## Not yet specified — original v1
 
 (Empty — all remaining work graduated into implementation issues at `/issues/`.
 Per-tile art direction is specified inside each tile's issue; remaining HITL tasks

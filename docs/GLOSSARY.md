@@ -7,6 +7,10 @@ Domain vocabulary for the site. Issues, ADRs, and code use these terms.
   terminal, star field, club flyer). See ADR 0002.
 - **Chrome** — everything around the tiles: nav, hero, blog, footer. Ink-black ground,
   white type, electric lime accent. See ADR 0003.
+- **Current Transmission** — the compact home-page Chrome ledger between the hero and
+  Project wall. It carries three signals: manually curated **Now Building** and **Next
+  Experiment** entries, plus a **Latest Dispatch** derived from the newest published
+  blog post.
 - **Wordmark** — the MITCH MELE brand mark set in the display face; appears in nav,
   tab title, and OG images.
 - **Project wall** — the home-page section holding the four chameleon tiles.
