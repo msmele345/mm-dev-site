@@ -4,6 +4,11 @@ Implement the homepage ledger described in the [local spec](../../docs/current-t
 
 Work the **frontier**: start a ticket only when all its blockers are complete. Ticket 01 comes first. Tickets 02, 03, and 05 can then proceed independently; ticket 04 follows 02 and 03.
 
+Owner placement revision — 2026-09-30: Current Transmission follows the Project wall
+and precedes More projects. The owner subsequently selected direct hero whitespace
+reduction; ticket 03 is implemented and verified locally in its
+[verification record](../../docs/verification/current-transmission/03/README.md).
+
 | Ticket | Blocked by |
 | --- | --- |
 | [01 — Render the curated ledger and empty-blog state](01-curated-ledger-and-empty-blog.md) | None |
@@ -16,7 +21,13 @@ Ticket 01 must capture the actual pre-ledger homepage at representative wide vie
 
 Ticket 01 delivers the complete empty-catalogue scenario, not a production workaround that hides existing posts. Ticket 02 supplies the populated scenario. The feature is not complete until all five tickets are verified, including build enforcement in 05 and the separate owner review of rendered launch copy in 04. Ticket numbering does not add a dependency from 04 to 05.
 
-All implementation acceptance criteria remain unchecked. Planning approval is not evidence that the feature has been implemented or reviewed in a browser.
+Ticket 01 is implemented and verified locally; see its checked criteria and
+[verification record](../../docs/verification/current-transmission/01/README.md).
+Tickets 02 and 05 are now on the frontier; 03 is verified, and 04 still awaits 02. The intermediate production homepage
+shows only the two curated signals until 02 supplies the populated dispatch; the
+isolated empty-catalogue homepage verifies all three. Remaining tickets and the
+feature-wide acceptance checklist are unchecked. Planning approval is not evidence
+that the feature has been implemented or reviewed in a browser.
 
 ## Verification and scope
 
@@ -27,4 +38,3 @@ Use isolated fixtures for empty catalogues, date ties, newer posts, long copy, a
 The tickets retain the existing static-first architecture, Chrome identity, and minimal footer metadata. No ambient animation ships in this version; a future slow status pulse remains deferred. PIRATE WORLD remains a tentative, editable working title, with no destination or release commitment.
 
 Adding Birdsview to the Project wall or writing its case study is separate work. These tickets neither depend on nor block the Featured Project Update tickets. No commits, pushes, deployments, or external issue publication are authorized by this local planning request.
-
