@@ -187,7 +187,7 @@ body {
   position: relative;
   isolation: isolate;
   overflow: hidden;
-  padding: 3rem var(--space-page) clamp(3rem, 8vw, 7rem);
+  padding: 3rem var(--space-page) clamp(1rem, 2vw, 1.5rem);
 }
 
 .hero__grid {
@@ -224,7 +224,7 @@ body {
 .hero__core {
   max-width: 79rem;
   margin-inline: auto;
-  padding-block: clamp(2.5rem, 6vw, 5rem);
+  padding-block: clamp(2.5rem, 6vw, 5rem) 1.5rem;
 }
 
 .hero__eyebrow {
@@ -276,6 +276,132 @@ body {
   color: var(--color-lime);
 }
 
+/* ── Current Transmission: quiet editorial chrome ── */
+.transmission {
+  padding: 1.5rem var(--space-page);
+  background: var(--color-ink);
+  border-top: var(--line) solid var(--color-grid);
+}
+
+.transmission__inner {
+  max-width: 79rem;
+  margin-inline: auto;
+}
+
+.transmission__header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: var(--line) solid var(--color-grid);
+}
+
+.transmission__header h2 {
+  margin: 0;
+  font-family: var(--font-display), sans-serif;
+  font-size: 1.5rem;
+  font-weight: 400;
+  letter-spacing: 0.03em;
+}
+
+.transmission__header > p,
+.transmission__label,
+.transmission__footer {
+  margin: 0;
+  font-size: 0.6875rem;
+  line-height: 1.6;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.transmission__header > p,
+.transmission__footer {
+  color: var(--color-mute);
+}
+
+.transmission__signals {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.transmission__signal {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding-block: 1.25rem;
+}
+
+.transmission__signal + .transmission__signal {
+  border-top: var(--line) solid var(--color-grid);
+}
+
+.transmission__label {
+  color: var(--color-lime);
+}
+
+.transmission__signal h3 {
+  margin: 0.75rem 0 0;
+  font-family: var(--font-display), sans-serif;
+  font-size: 1.875rem;
+  font-weight: 400;
+  line-height: 1.1;
+  overflow-wrap: anywhere;
+  text-wrap: balance;
+}
+
+.transmission__link {
+  display: inline-block;
+  max-width: 100%;
+  padding-block: 0.25rem;
+  color: inherit;
+  text-decoration: none;
+  transition: color 160ms ease;
+}
+
+.transmission__link:hover {
+  color: var(--color-lime);
+}
+
+.transmission__copy {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  overflow-wrap: anywhere;
+  margin: 0.75rem 0 1rem;
+  color: var(--color-paper);
+  font-size: 0.8125rem;
+  line-height: 1.6;
+}
+
+.transmission__footer {
+  margin-top: auto;
+}
+
+@media (min-width: 56rem) {
+  .transmission__signals {
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(0, 1fr);
+    grid-template-columns: none;
+  }
+
+  .transmission__signal + .transmission__signal {
+    border-top: 0;
+    border-left: var(--line) solid var(--color-grid);
+    padding-left: 1.5rem;
+  }
+
+  .transmission__signal:not(:last-child) {
+    padding-right: 1.5rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .transmission__link { transition: none; }
+}
+
 /* ── Section shells (project wall + contact share the ledger voice) ── */
 .chrome-placeholder,
 .project-wall,
@@ -289,6 +415,10 @@ body {
 .rail,
 .contact {
   border-top: var(--line) solid var(--color-grid);
+}
+
+.project-wall {
+  padding-top: clamp(1.5rem, 4vw, 3rem);
 }
 
 .chrome-placeholder__bar,

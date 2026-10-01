@@ -4,6 +4,13 @@ Status: ready for implementation planning
 Distribution: local only; no issue-tracker publication
 Source: resolved Current Transmission grilling session
 
+Owner revision — 2026-09-30: place Current Transmission immediately after the
+Project wall and before More projects. This supersedes the original between-hero-and-wall
+placement throughout this spec and its tickets. The hero gap remains a separate
+spacing improvement. The owner subsequently selected direct reduction of the hero's
+trailing and Project wall's leading padding, delivered in ticket 03. The original
+requirement to fill the gap with the ledger is superseded.
+
 ## Problem Statement
 
 The home page has a large unused band between the hero and the Project wall. The

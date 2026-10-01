@@ -1,0 +1,31 @@
+{
+  "url": "http://127.0.0.1:3000/",
+  "capturedAt": "2026-09-30T21:06:31.514Z",
+  "revision": "1ee4ba4e34d40affa7a0d9eb3aff3999abc12562",
+  "checkout": "feat/01-render-curated-ledger-empty-blog-state; clean before capture; actual working checkout",
+  "reducedMotion": "reduce",
+  "measurements": [
+    {
+      "viewport": {
+        "width": 1024,
+        "height": 900
+      },
+      "projectWallTop": 769.765625,
+      "heroTop": 53.734375,
+      "heroHeight": 716.03125,
+      "heroPadding": "48px 30.72px 81.92px",
+      "projectWallPadding": "71.68px 30.72px"
+    },
+    {
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "projectWallTop": 973.796875,
+      "heroTop": 58.578125,
+      "heroHeight": 915.21875,
+      "heroPadding": "48px 43.2px 112px",
+      "projectWallPadding": "96px 43.2px"
+    }
+  ]
+}

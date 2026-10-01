@@ -1,0 +1,38 @@
+{
+  "reducedMotion": "reduce",
+  "contentState": "real published blog; two curated signals",
+  "measurements": [
+    {
+      "viewport": {
+        "width": 1024,
+        "height": 900
+      },
+      "projectWallTop": 670.890625,
+      "cueToWallHeadingGap": 86.421875
+    },
+    {
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "projectWallTop": 829.796875,
+      "cueToWallHeadingGap": 97
+    },
+    {
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "projectWallTop": 554.65625,
+      "cueToWallHeadingGap": 71.71875
+    },
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "projectWallTop": 481.890625,
+      "cueToWallHeadingGap": 65
+    }
+  ]
+}
