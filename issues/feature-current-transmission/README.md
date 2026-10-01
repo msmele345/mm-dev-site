@@ -23,11 +23,13 @@ Ticket 01 delivers the complete empty-catalogue scenario, not a production worka
 
 Ticket 01 is implemented and verified locally; see its checked criteria and
 [verification record](../../docs/verification/current-transmission/01/README.md).
-Tickets 02 and 05 are now on the frontier; 03 is verified, and 04 still awaits 02. The intermediate production homepage
-shows only the two curated signals until 02 supplies the populated dispatch; the
-isolated empty-catalogue homepage verifies all three. Remaining tickets and the
-feature-wide acceptance checklist are unchecked. Planning approval is not evidence
-that the feature has been implemented or reviewed in a browser.
+Ticket 02 is implemented and verified locally; see its checked criteria and
+[verification record](../../docs/verification/current-transmission/02/README.md).
+The production homepage now shows all three signals, with Latest Dispatch derived
+from the existing blog catalogue. The isolated empty-catalogue homepage also retains
+all three. Tickets 04 and 05 are now on the frontier; 03 is already verified.
+Remaining tickets and the feature-wide acceptance checklist are unchecked. Planning
+approval is not evidence that the feature has been implemented or reviewed in a browser.
 
 ## Verification and scope
 
