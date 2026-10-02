@@ -27,9 +27,12 @@ Ticket 02 is implemented and verified locally; see its checked criteria and
 [verification record](../../docs/verification/current-transmission/02/README.md).
 The production homepage now shows all three signals, with Latest Dispatch derived
 from the existing blog catalogue. The isolated empty-catalogue homepage also retains
-all three. Tickets 04 and 05 are now on the frontier; 03 is already verified.
-Remaining tickets and the feature-wide acceptance checklist are unchecked. Planning
-approval is not evidence that the feature has been implemented or reviewed in a browser.
+all three. Ticket 03 is already verified; ticket 05 remains on the implementation frontier.
+Ticket 04 is complete locally, with technical verification and owner approval recorded in its
+[verification record](../../docs/verification/current-transmission/04/README.md),
+including owner review of rendered launch copy on 2026-10-02. Ticket 05 and the feature-wide
+acceptance checklist remain unchecked. Planning approval is not evidence that the
+feature has been implemented or reviewed in a browser.
 
 ## Verification and scope
 
