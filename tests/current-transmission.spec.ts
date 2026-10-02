@@ -3,6 +3,7 @@ import { rmSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import type { ChildProcess } from "node:child_process";
 import { buildTransmissionApp, createTransmissionApp, serveTransmissionApp } from "./support/transmission-app";
+import { checkTransmissionLayout, expectStaticTransmission, expectVisibleLinkFocus } from "./support/transmission-reading";
 
 test.describe("Current Transmission with an empty blog", () => {
   test.describe.configure({ mode: "serial" });
@@ -80,28 +81,34 @@ test.describe("Current Transmission with an empty blog", () => {
     await expect(page.getByText(/Nothing published yet/)).toBeVisible();
   });
 
+  test("the empty-blog ledger stays complete on both sides of the breakpoint and across phone, tablet, and desktop", async ({ page }, info) => {
+    await page.emulateMedia({ reducedMotion: "reduce" });
+    await page.goto("http://127.0.0.1:3021/");
+    const measurements = await checkTransmissionLayout(page, info, "empty");
+    writeFileSync(info.outputPath("empty-geometry.json"), JSON.stringify(measurements, null, 2));
+  });
+
   for (const reducedMotion of ["no-preference", "reduce"] as const) {
     test(`keeps only Birdsview in the ledger tab sequence with ${reducedMotion} motion`, async ({ page }) => {
       await page.emulateMedia({ reducedMotion });
-      await page.goto("http://127.0.0.1:3021/");
-      const ledger = page.getByRole("region", { name: "Current Transmission" });
-      await page.getByRole("region", { name: "Project wall" }).getByRole("link").last().focus();
-      await page.keyboard.press("Tab");
-      const building = ledger.getByRole("link", { name: "BIRDSVIEW" });
-      await expect(building).toBeFocused();
-      await expect(building).toHaveCSS("outline-color", "rgb(198, 255, 0)");
-      await expect(building).toHaveCSS("outline-style", "solid");
-      await expect(building).toHaveCSS("outline-width", "2px");
-      await expect(ledger.getByRole("link")).toHaveCount(1);
-      await page.keyboard.press("Tab");
-      await expect(page.getByRole("region", { name: "More projects" }).getByRole("link").first()).toBeFocused();
-      const animated = await ledger.evaluate((section) => [section, ...section.querySelectorAll("*")].filter((el) => getComputedStyle(el).animationName !== "none").length);
-      expect(animated).toBe(0);
       // Activate the semantic link without relying on the external site's availability.
       await page.route("https://github.com/msmele345/birdsview", (route) => route.fulfill({ body: "Birdsview repository", contentType: "text/html" }));
-      await building.focus();
-      await page.keyboard.press("Enter");
-      await expect(page).toHaveURL("https://github.com/msmele345/birdsview");
+      for (const viewport of [{ width: 390, height: 844 }, { width: 1440, height: 900 }]) {
+        await page.setViewportSize(viewport);
+        await page.goto("http://127.0.0.1:3021/");
+        const ledger = page.getByRole("region", { name: "Current Transmission" });
+        await page.getByRole("region", { name: "Project wall" }).getByRole("link").last().focus();
+        await page.keyboard.press("Tab");
+        const building = ledger.getByRole("link", { name: "BIRDSVIEW" });
+        await expectVisibleLinkFocus(page, building);
+        await expect(ledger.getByRole("link")).toHaveCount(1);
+        await page.keyboard.press("Tab");
+        await expect(page.getByRole("region", { name: "More projects" }).getByRole("link").first()).toBeFocused();
+        await expectStaticTransmission(ledger);
+        await building.focus();
+        await page.keyboard.press("Enter");
+        await expect(page).toHaveURL("https://github.com/msmele345/birdsview");
+      }
     });
   }
 
@@ -163,6 +170,6 @@ test("the production dispatch previews the published post and opens its complete
   await page.keyboard.press("Enter");
   await expect(page).toHaveURL("/blog/shipping-a-groovebox-that-teaches-techno");
   await expect(page.getByRole("heading", { name: title, level: 1 })).toBeVisible();
-  await expect(page.getByRole("heading", { name: "What the embed proves" })).toBeVisible();
-  await expect(page.getByText("Expect the same treatment for the trading terminal, the star field, and the club flyer as their case studies land.", { exact: false })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Lessons are data, not code", level: 2 })).toBeVisible();
+  await expect(page.getByText("Patterns are tiny JSON, so sharing is a URL parameter, not a backend", { exact: true })).toBeVisible();
 });
