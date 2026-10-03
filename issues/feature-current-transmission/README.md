@@ -39,6 +39,27 @@ after integration with tickets 02–04. All five tickets and the feature-wide ac
 checklist are now verified locally. Planning approval is separate from this implementation
 and rendered verification evidence.
 
+## Polish tickets — post-implementation review, 2026-10-03
+
+A review of the completed feature found four defects and five improvements. The owner
+approved grouping them into six tickets. They follow the same frontier rule: ticket 06
+comes first; 07 and 08 can then proceed independently; 09 follows 06 and 07; 10 follows
+07; 11 follows 09. None is started.
+
+| Ticket | Covers | Blocked by |
+| --- | --- | --- |
+| [06 — Decouple the ledger tests from live editorial copy](06-decouple-tests-from-live-copy.md) | Tests welded to launch copy | None |
+| [07 — Render every signal through one component and validate in one place](07-single-signal-component-and-validation-site.md) | Repeated signal markup; double validation | 06 |
+| [08 — Format the ledger's two dates consistently](08-consistent-ledger-dates.md) | "Sept" month and day-padding mismatch; shared date formatter | 06 |
+| [09 — Make the Now Building link match its destination](09-destination-aware-now-building-link.md) | Hardcoded "Repository ↗" cue; external link not opening in a new tab | 06, 07 |
+| [10 — Align the columns and make the whole signal the hit area](10-whole-signal-hit-area-and-aligned-columns.md) | Desktop column misalignment; headline-only hit area | 07 |
+| [11 — Show where each link goes, at rest and to screen readers](11-link-cues-at-rest-and-for-screen-readers.md) | No resting cue on Latest Dispatch; no destination for screen readers | 09 |
+
+Owner decision recorded 2026-10-03: the external Now Building link opens in a new tab,
+matching the site's other external links. Ticket 08 carries one open owner decision
+(whether the blog index, post page, and OG card adopt the shared date format). Tickets
+09 and 11 introduce draft cue copy that needs owner review.
+
 ## Verification and scope
 
 Follow the repository's feature-branch workflow and use TDD with meaningful red-green-refactor slices. Each ticket owns tests for the behavior it introduces; 04 owns the combined layout and browser acceptance. Assert rendered homepage behavior and observable content-contract outcomes rather than private component wiring.
