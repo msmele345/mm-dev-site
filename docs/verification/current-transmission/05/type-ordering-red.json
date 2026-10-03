@@ -1,0 +1,23 @@
+[
+  {
+    "scenario": "a missing supporting sentence",
+    "expectedError": "Current Transmission nowBuilding.supportingText must be a non-empty string",
+    "exitCode": 1,
+    "signal": null,
+    "output": "\n> mm-dev-site@0.1.0 build\n> next build --webpack\n\n\u25b2 Next.js 16.3.2 (webpack)\n(node:27121) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.\n(Use `node --trace-warnings ...` to show where the warning was created)\n\u2713 Running next.config.ts took 11ms\n\u26a0 No build cache found. Please configure build caching for faster rebuilds. Read more: https://nextjs.org/docs/messages/no-cache\nAttention: Next.js now collects completely anonymous telemetry regarding usage.\nThis information is used to shape Next.js' roadmap and prioritize features.\nYou can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:\nhttps://nextjs.org/telemetry\n\n\n  Creating an optimized production build ...\n\u2713 Compiled successfully in 2.3s\n  Running TypeScript ...\nsrc/content/current-transmission.ts(4,3): error TS2741: Property 'supportingText' is missing in type '{ headline: string; destination: string; }' but required in type '{ headline: string; supportingText: string; destination: string; }'.\nFailed to type check.\n\n"
+  },
+  {
+    "scenario": "a Next Experiment destination",
+    "expectedError": "Current Transmission nextExperiment.destination is forbidden because Next Experiment is non-interactive",
+    "exitCode": 1,
+    "signal": null,
+    "output": "\n> mm-dev-site@0.1.0 build\n> next build --webpack\n\n\u25b2 Next.js 16.3.2 (webpack)\n(node:27210) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.\n(Use `node --trace-warnings ...` to show where the warning was created)\n\u2713 Running next.config.ts took 11ms\n\u26a0 No build cache found. Please configure build caching for faster rebuilds. Read more: https://nextjs.org/docs/messages/no-cache\nAttention: Next.js now collects completely anonymous telemetry regarding usage.\nThis information is used to shape Next.js' roadmap and prioritize features.\nYou can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:\nhttps://nextjs.org/telemetry\n\n\n  Creating an optimized production build ...\n\u2713 Compiled successfully in 2.1s\n  Running TypeScript ...\nsrc/content/current-transmission.ts(12,5): error TS2353: Object literal may only specify known properties, and '\"destination\"' does not exist in type '{ headline: string; supportingText: string; }'.\nFailed to type check.\n\n"
+  },
+  {
+    "scenario": "a wrong headline type",
+    "expectedError": "Current Transmission nowBuilding.headline must be a non-empty string",
+    "exitCode": 1,
+    "signal": null,
+    "output": "\n> mm-dev-site@0.1.0 build\n> next build --webpack\n\n\u25b2 Next.js 16.3.2 (webpack)\n(node:27162) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.\n(Use `node --trace-warnings ...` to show where the warning was created)\n\u2713 Running next.config.ts took 11ms\n\u26a0 No build cache found. Please configure build caching for faster rebuilds. Read more: https://nextjs.org/docs/messages/no-cache\nAttention: Next.js now collects completely anonymous telemetry regarding usage.\nThis information is used to shape Next.js' roadmap and prioritize features.\nYou can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:\nhttps://nextjs.org/telemetry\n\n\n  Creating an optimized production build ...\n\u2713 Compiled successfully in 2.1s\n  Running TypeScript ...\nsrc/content/current-transmission.ts(5,5): error TS2322: Type 'number' is not assignable to type 'string'.\nFailed to type check.\n\n"
+  }
+]

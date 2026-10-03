@@ -27,12 +27,17 @@ Ticket 02 is implemented and verified locally; see its checked criteria and
 [verification record](../../docs/verification/current-transmission/02/README.md).
 The production homepage now shows all three signals, with Latest Dispatch derived
 from the existing blog catalogue. The isolated empty-catalogue homepage also retains
-all three. Ticket 03 is already verified; ticket 05 remains on the implementation frontier.
+all three. Ticket 03 is already verified.
 Ticket 04 is complete locally, with technical verification and owner approval recorded in its
 [verification record](../../docs/verification/current-transmission/04/README.md),
-including owner review of rendered launch copy on 2026-10-02. Ticket 05 and the feature-wide
-acceptance checklist remain unchecked. Planning approval is not evidence that the
-feature has been implemented or reviewed in a browser.
+including owner review of rendered launch copy on 2026-10-02. Ticket 05 is complete
+locally, with exact field errors enforced before TypeScript in the real production
+build. Its [verification record](../../docs/verification/current-transmission/05/README.md)
+includes typed invalid fixtures, valid editorial rebuilds, inspected phone/tablet/desktop
+captures, and all 303 tests plus lint, type checking, and the default build passing
+after integration with tickets 02–04. All five tickets and the feature-wide acceptance
+checklist are now verified locally. Planning approval is separate from this implementation
+and rendered verification evidence.
 
 ## Verification and scope
 

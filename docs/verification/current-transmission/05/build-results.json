@@ -1,0 +1,65 @@
+[
+  {
+    "scenario": "a non-HTTPS external destination",
+    "expectedError": "Current Transmission nowBuilding.destination must be a safe root-relative path or an absolute HTTPS URL",
+    "exitCode": 1,
+    "signal": null,
+    "output": "\n> mm-dev-site@0.1.0 build\n> next build --webpack\n\n\u25b2 Next.js 16.3.2 (webpack)\n(node:27950) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.\n(Use `node --trace-warnings ...` to show where the warning was created)\n\u2a2f Failed to load next.config.ts, see more info here https://nextjs.org/docs/messages/next-config-error\n\n> Build error occurred\nError: Current Transmission nowBuilding.destination must be a safe root-relative path or an absolute HTTPS URL\n    at validateTransmissionEditorial (src/lib/current-transmission.ts:56:15)\n    at Object.<anonymous> (next.config.compiled.js:21:57)\n"
+  },
+  {
+    "scenario": "an executable Now Building destination",
+    "expectedError": "Current Transmission nowBuilding.destination must be a safe root-relative path or an absolute HTTPS URL",
+    "exitCode": 1,
+    "signal": null,
+    "output": "\n> mm-dev-site@0.1.0 build\n> next build --webpack\n\n\u25b2 Next.js 16.3.2 (webpack)\n(node:27654) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.\n(Use `node --trace-warnings ...` to show where the warning was created)\n\u2a2f Failed to load next.config.ts, see more info here https://nextjs.org/docs/messages/next-config-error\n\n> Build error occurred\nError: Current Transmission nowBuilding.destination must be a safe root-relative path or an absolute HTTPS URL\n    at validateTransmissionEditorial (src/lib/current-transmission.ts:56:15)\n    at Object.<anonymous> (next.config.compiled.js:21:57)\n"
+  },
+  {
+    "scenario": "a missing supporting sentence",
+    "expectedError": "Current Transmission nowBuilding.supportingText must be a non-empty string",
+    "exitCode": 1,
+    "signal": null,
+    "output": "\n> mm-dev-site@0.1.0 build\n> next build --webpack\n\n\u25b2 Next.js 16.3.2 (webpack)\n(node:27713) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.\n(Use `node --trace-warnings ...` to show where the warning was created)\n\u2a2f Failed to load next.config.ts, see more info here https://nextjs.org/docs/messages/next-config-error\n\n> Build error occurred\nError: Current Transmission nowBuilding.supportingText must be a non-empty string\n    at requiredString (src/lib/current-transmission.ts:19:15)\n    at validateTransmissionEditorial (src/lib/current-transmission.ts:45:25)\n    at Object.<anonymous> (next.config.compiled.js:21:57)\n"
+  },
+  {
+    "scenario": "a Next Experiment destination",
+    "expectedError": "Current Transmission nextExperiment.destination is forbidden because Next Experiment is non-interactive",
+    "exitCode": 1,
+    "signal": null,
+    "output": "\n> mm-dev-site@0.1.0 build\n> next build --webpack\n\n\u25b2 Next.js 16.3.2 (webpack)\n(node:27991) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.\n(Use `node --trace-warnings ...` to show where the warning was created)\n\u2a2f Failed to load next.config.ts, see more info here https://nextjs.org/docs/messages/next-config-error\n\n> Build error occurred\nError: Current Transmission nextExperiment.destination is forbidden because Next Experiment is non-interactive\n    at validateTransmissionEditorial (src/lib/current-transmission.ts:53:15)\n    at Object.<anonymous> (next.config.compiled.js:21:57)\n"
+  },
+  {
+    "scenario": "a whitespace-only working title",
+    "expectedError": "Current Transmission nextExperiment.headline must be a non-empty string",
+    "exitCode": 1,
+    "signal": null,
+    "output": "\n> mm-dev-site@0.1.0 build\n> next build --webpack\n\n\u25b2 Next.js 16.3.2 (webpack)\n(node:27755) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.\n(Use `node --trace-warnings ...` to show where the warning was created)\n\u2a2f Failed to load next.config.ts, see more info here https://nextjs.org/docs/messages/next-config-error\n\n> Build error occurred\nError: Current Transmission nextExperiment.headline must be a non-empty string\n    at requiredString (src/lib/current-transmission.ts:19:15)\n    at validateTransmissionEditorial (src/lib/current-transmission.ts:49:19)\n    at Object.<anonymous> (next.config.compiled.js:21:57)\n"
+  },
+  {
+    "scenario": "a wrong headline type",
+    "expectedError": "Current Transmission nowBuilding.headline must be a non-empty string",
+    "exitCode": 1,
+    "signal": null,
+    "output": "\n> mm-dev-site@0.1.0 build\n> next build --webpack\n\n\u25b2 Next.js 16.3.2 (webpack)\n(node:27796) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.\n(Use `node --trace-warnings ...` to show where the warning was created)\n\u2a2f Failed to load next.config.ts, see more info here https://nextjs.org/docs/messages/next-config-error\n\n> Build error occurred\nError: Current Transmission nowBuilding.headline must be a non-empty string\n    at requiredString (src/lib/current-transmission.ts:19:15)\n    at validateTransmissionEditorial (src/lib/current-transmission.ts:44:19)\n    at Object.<anonymous> (next.config.compiled.js:21:57)\n"
+  },
+  {
+    "scenario": "a malformed editorial date",
+    "expectedError": "Current Transmission updatedOn must be a real ISO calendar date (yyyy-mm-dd)",
+    "exitCode": 1,
+    "signal": null,
+    "output": "\n> mm-dev-site@0.1.0 build\n> next build --webpack\n\n\u25b2 Next.js 16.3.2 (webpack)\n(node:27833) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.\n(Use `node --trace-warnings ...` to show where the warning was created)\n\u2a2f Failed to load next.config.ts, see more info here https://nextjs.org/docs/messages/next-config-error\n\n> Build error occurred\nError: Current Transmission updatedOn must be a real ISO calendar date (yyyy-mm-dd)\n    at validateTransmissionEditorial (src/lib/current-transmission.ts:39:15)\n    at Object.<anonymous> (next.config.compiled.js:21:57)\n"
+  },
+  {
+    "scenario": "an impossible editorial date",
+    "expectedError": "Current Transmission updatedOn must be a real ISO calendar date (yyyy-mm-dd)",
+    "exitCode": 1,
+    "signal": null,
+    "output": "\n> mm-dev-site@0.1.0 build\n> next build --webpack\n\n\u25b2 Next.js 16.3.2 (webpack)\n(node:27874) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.\n(Use `node --trace-warnings ...` to show where the warning was created)\n\u2a2f Failed to load next.config.ts, see more info here https://nextjs.org/docs/messages/next-config-error\n\n> Build error occurred\nError: Current Transmission updatedOn must be a real ISO calendar date (yyyy-mm-dd)\n    at validateTransmissionEditorial (src/lib/current-transmission.ts:39:15)\n    at Object.<anonymous> (next.config.compiled.js:21:57)\n"
+  },
+  {
+    "scenario": "a protocol-relative destination",
+    "expectedError": "Current Transmission nowBuilding.destination must be a safe root-relative path or an absolute HTTPS URL",
+    "exitCode": 1,
+    "signal": null,
+    "output": "\n> mm-dev-site@0.1.0 build\n> next build --webpack\n\n\u25b2 Next.js 16.3.2 (webpack)\n(node:27912) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.\n(Use `node --trace-warnings ...` to show where the warning was created)\n\u2a2f Failed to load next.config.ts, see more info here https://nextjs.org/docs/messages/next-config-error\n\n> Build error occurred\nError: Current Transmission nowBuilding.destination must be a safe root-relative path or an absolute HTTPS URL\n    at validateTransmissionEditorial (src/lib/current-transmission.ts:56:15)\n    at Object.<anonymous> (next.config.compiled.js:21:57)\n"
+  }
+]

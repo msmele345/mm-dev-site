@@ -1,6 +1,6 @@
 # Current Transmission — Homepage Ledger Spec
 
-Status: ready for implementation planning
+Status: implemented and verified locally — 2026-10-02
 Distribution: local only; no issue-tracker publication
 Source: resolved Current Transmission grilling session
 
@@ -239,17 +239,23 @@ change as the concept develops.
 
 ### Implementation Acceptance Checklist
 
-- [ ] Current Transmission appears between the hero and Project wall in the existing Chrome identity.
-- [ ] Three signals use the agreed four-part structure and minimal footer metadata.
-- [ ] Now Building features BIRDSVIEW with the verified repository destination.
-- [ ] Latest Dispatch derives from the newest post, links correctly, and displays its publication date.
-- [ ] Next Experiment features the editable PIRATE WORLD placeholder with IN CONCEPT and no link.
-- [ ] The header displays the manual editorial update date; stale valid content stays visible.
-- [ ] An empty blog retains the non-interactive FIRST DISPATCH PENDING / OFF AIR signal.
-- [ ] Headlines wrap naturally and supporting text uses the agreed two-line excerpt behavior.
-- [ ] Wide columns become compact stacked rows without overflow or an orphaned intermediate layout.
-- [ ] Matching wide-view measurements show the Project wall starts at the same scroll depth or sooner.
-- [ ] Keyboard navigation, visible focus, reduced-motion behavior, and absence of ambient motion are verified.
-- [ ] Invalid manual content fails the actual build with a field-specific error; valid edge cases pass.
-- [ ] Desktop, tablet, and phone composition has been visually inspected and required repository checks pass.
-- [ ] Owner review of the rendered launch copy is recorded.
+- [x] Current Transmission follows the Project wall and precedes More projects in the existing Chrome identity, per the owner's 2026-09-30 placement revision.
+- [x] Three signals use the agreed four-part structure and minimal footer metadata.
+- [x] Now Building features BIRDSVIEW with the verified repository destination.
+- [x] Latest Dispatch derives from the newest post, links correctly, and displays its publication date.
+- [x] Next Experiment features the editable PIRATE WORLD placeholder with IN CONCEPT and no link.
+- [x] The header displays the manual editorial update date; stale valid content stays visible.
+- [x] An empty blog retains the non-interactive FIRST DISPATCH PENDING / OFF AIR signal.
+- [x] Headlines wrap naturally and supporting text uses the agreed two-line excerpt behavior.
+- [x] Wide columns become compact stacked rows without overflow or an orphaned intermediate layout.
+- [x] Matching wide-view measurements show the Project wall starts at the same scroll depth or sooner.
+- [x] Keyboard navigation, visible focus, reduced-motion behavior, and absence of ambient motion are verified.
+- [x] Invalid manual content fails the actual build with a field-specific error; valid edge cases pass.
+- [x] Desktop, tablet, and phone composition has been visually inspected and required repository checks pass.
+- [x] Owner review of the rendered launch copy is recorded.
+
+Final integration evidence: [ticket 05 verification](verification/current-transmission/05/README.md),
+including all 303 tests, lint, type checking, and the default production build after
+tickets 02–04 were integrated. The [ticket 04 verification](verification/current-transmission/04/README.md)
+records the owner's rendered launch-copy approval on 2026-10-02; current agent inspection
+does not replace that approval.

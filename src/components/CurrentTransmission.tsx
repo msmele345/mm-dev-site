@@ -1,9 +1,14 @@
 import Link from "next/link";
 import { currentTransmission } from "@/content/current-transmission";
+import { validateTransmissionEditorial } from "@/lib/current-transmission";
 import { formatPostDate, listPosts } from "@/lib/posts";
 
+// Module initialization also runs in Next's production page-data collection.
+// Fail the real build (including CI) before invalid copy can reach the homepage.
+const editorial = validateTransmissionEditorial(currentTransmission);
+
 export default function CurrentTransmission() {
-  const { updatedOn, nowBuilding, nextExperiment } = currentTransmission;
+  const { updatedOn, nowBuilding, nextExperiment } = editorial;
   const latestPost = listPosts()[0];
   const updatedDate = new Intl.DateTimeFormat("en-GB", {
     day: "2-digit", month: "short", year: "numeric", timeZone: "UTC",

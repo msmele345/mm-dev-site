@@ -1,5 +1,11 @@
 import type { NextConfig } from "next";
 import createMDX from "@next/mdx";
+import { currentTransmission } from "./src/content/current-transmission";
+import { validateTransmissionEditorial } from "./src/lib/current-transmission";
+
+// Validate before Next's TypeScript phase so even mistyped editorial edits
+// fail with the exact content field, rather than a generic compiler diagnostic.
+validateTransmissionEditorial(currentTransmission);
 
 /**
  * Seed the per-build enrichment cache key (ADR 0004).
