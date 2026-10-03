@@ -1,15 +1,5 @@
-export type TransmissionEditorial = {
-  updatedOn: string;
-  nowBuilding: {
-    headline: string;
-    supportingText: string;
-    destination: string;
-  };
-  nextExperiment: {
-    headline: string;
-    supportingText: string;
-  };
-};
+import type { TransmissionEditorial } from "../lib/current-transmission";
+export type { TransmissionEditorial } from "../lib/current-transmission";
 
 /** Editable launch drafts; update the date when revising the manual signals. */
 export const currentTransmission: TransmissionEditorial = {

@@ -17,19 +17,27 @@ export function createTransmissionApp() {
   return dir;
 }
 
-export async function buildTransmissionApp(dir: string) {
-  await new Promise<void>((resolve, reject) => {
-    const child = spawn(process.execPath, [join(process.cwd(), "node_modules/next/dist/bin/next"), "build", "--webpack"], {
+export async function runTransmissionBuild(dir: string) {
+  return new Promise<{ exitCode: number | null; signal: NodeJS.Signals | null; output: string }>((resolve, reject) => {
+    // Invoke the package script used by CI. Webpack supports the isolated app's
+    // shared node_modules symlink; production uses the default Turbopack build.
+    const child = spawn("npm", ["run", "build", "--", "--webpack"], {
       cwd: dir,
       timeout: 150_000,
-      env: { ...process.env, GITHUB_API_BASE_URL: "http://127.0.0.1:4010", GITHUB_TOKEN: "mock-token", TZ: "America/Los_Angeles" },
+      env: { ...process.env, CI: "1", GITHUB_API_BASE_URL: "http://127.0.0.1:4010", GITHUB_TOKEN: "mock-token", TZ: "America/Los_Angeles" },
     });
     let output = "";
     child.stdout.on("data", (data) => { output += data; });
     child.stderr.on("data", (data) => { output += data; });
     child.on("error", reject);
-    child.on("exit", (code) => code === 0 ? resolve() : reject(new Error(output)));
+    child.on("close", (exitCode, signal) => resolve({ exitCode, signal, output }));
   });
+}
+
+export async function buildTransmissionApp(dir: string) {
+  const result = await runTransmissionBuild(dir);
+  if (result.exitCode !== 0) throw new Error(result.output);
+  return result.output;
 }
 
 export async function serveTransmissionApp(dir: string, port: number): Promise<ChildProcess> {
