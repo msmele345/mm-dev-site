@@ -240,8 +240,8 @@ Launch supporting sentences remain editable drafts for review with the rendered 
 - **Empty-blog fallback:** "Field notes are being prepared."
 
 A post-implementation review on 2026-10-03 produced six polish tickets (06–11), listed
-in the [ticket index](../issues/feature-current-transmission/README.md). They are not
-started; the acceptance checklist below describes the original five tickets only.
+in the [ticket index](../issues/feature-current-transmission/README.md), which tracks
+their status. The acceptance checklist below describes the original five tickets only.
 
 A low-frequency Now Building status pulse may be explored in a future polish pass.
 It is deliberately deferred from this spec. PIRATE WORLD is a working title and may

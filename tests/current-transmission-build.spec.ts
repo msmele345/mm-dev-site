@@ -1,15 +1,8 @@
 import { expect, test } from "@playwright/test";
 import type { ChildProcess } from "node:child_process";
 import { rmSync, writeFileSync } from "node:fs";
-import { join } from "node:path";
-import { buildTransmissionApp, createTransmissionApp, runTransmissionBuild, serveTransmissionApp } from "./support/transmission-app";
+import { buildTransmissionApp, createTransmissionApp, runTransmissionBuild, serveTransmissionApp, writeEditorial } from "./support/transmission-app";
 import { editorialWith, validEditorial } from "./support/transmission-editorial";
-
-function writeEditorial(dir: string, editorial: unknown) {
-  // Keep the production annotation: contract errors must reach the owner even
-  // when TypeScript would also reject the same missing or mistyped field.
-  writeFileSync(join(dir, "src/content/current-transmission.ts"), `import type { TransmissionEditorial } from "../lib/current-transmission";\nexport const currentTransmission: TransmissionEditorial = ${JSON.stringify(editorial, null, 2)};\n`);
-}
 
 for (const [scenario, field, value, error] of [
   ["an executable Now Building destination", "nowBuilding.destination", "javascript:alert(1)", "must be a safe root-relative path or an absolute HTTPS URL"],
@@ -24,9 +17,8 @@ for (const [scenario, field, value, error] of [
 ] as const) {
   test(`the production build rejects ${scenario} with its field named`, async ({}, info) => {
     test.setTimeout(180_000);
-    const dir = createTransmissionApp();
+    const dir = createTransmissionApp(editorialWith(field, value));
     try {
-      writeEditorial(dir, editorialWith(field, value));
       const result = await runTransmissionBuild(dir);
       const expectedError = `Current Transmission ${field} ${error}`;
       writeFileSync(info.outputPath("build.log"), result.output);

@@ -3,6 +3,9 @@ import type { ChildProcess } from "node:child_process";
 import { rmSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { buildTransmissionApp, createTransmissionApp, serveTransmissionApp } from "./support/transmission-app";
+import { updatedLabel, validEditorial } from "./support/transmission-editorial";
+
+const fixture = validEditorial();
 
 function writePost(dir: string, post: { slug: string; title: string; date: string; summary: string; body: string }) {
   writeFileSync(join(dir, "src/content/blog", `${post.slug}.mdx`), `---
@@ -23,7 +26,7 @@ test.describe("Latest Dispatch from isolated published posts", () => {
 
   test.beforeAll(async () => {
     test.setTimeout(180_000);
-    dir = createTransmissionApp();
+    dir = createTransmissionApp(fixture);
     // Titles and creation order disagree with slug order. Future dates remain
     // published under the existing catalogue semantics; there is no scheduling.
     writePost(dir, {
@@ -52,7 +55,7 @@ test.describe("Latest Dispatch from isolated published posts", () => {
   test("uses the blog's date and descending-slug tie order and links to the complete article", async ({ page }) => {
     await page.goto("http://127.0.0.1:3022/");
     const ledger = page.getByRole("region", { name: "Current Transmission" });
-    await expect(ledger.getByRole("heading", { level: 3 })).toHaveText(["BIRDSVIEW", "Antenna field notes", "PIRATE WORLD"]);
+    await expect(ledger.getByRole("heading", { level: 3 })).toHaveText([fixture.nowBuilding.headline, "Antenna field notes", fixture.nextExperiment.headline]);
     const dispatch = ledger.getByRole("article", { name: "Antenna field notes" });
     await expect(dispatch.getByText("Listening for patterns across the globe.")).toBeVisible();
     await expect(dispatch.locator("time")).toHaveText("2 Apr 2099");
@@ -74,8 +77,8 @@ test.describe("Latest Dispatch from isolated published posts", () => {
     test.setTimeout(180_000);
     await page.goto("http://127.0.0.1:3022/");
     const ledger = page.getByRole("region", { name: "Current Transmission" });
-    const building = ledger.getByRole("article", { name: "BIRDSVIEW" });
-    const experiment = ledger.getByRole("article", { name: "PIRATE WORLD" });
+    const building = ledger.getByRole("article", { name: fixture.nowBuilding.headline });
+    const experiment = ledger.getByRole("article", { name: fixture.nextExperiment.headline });
     const buildingBefore = await building.innerText();
     const experimentBefore = await experiment.innerText();
     const headerBefore = await ledger.locator("header").innerText();
@@ -92,7 +95,7 @@ test.describe("Latest Dispatch from isolated published posts", () => {
     server = await serveTransmissionApp(dir, 3022);
 
     await page.goto("http://127.0.0.1:3022/");
-    await expect(ledger.getByRole("heading", { level: 3 })).toHaveText(["BIRDSVIEW", "Fresh field notes", "PIRATE WORLD"]);
+    await expect(ledger.getByRole("heading", { level: 3 })).toHaveText([fixture.nowBuilding.headline, "Fresh field notes", fixture.nextExperiment.headline]);
     const dispatch = ledger.getByRole("article", { name: "Fresh field notes" });
     await expect(dispatch.getByText("A new dispatch arrives without an editorial ledger edit.")).toBeVisible();
     await expect(dispatch.locator("time")).toHaveText("2 Jan 2100");
@@ -103,9 +106,9 @@ test.describe("Latest Dispatch from isolated published posts", () => {
     expect(await building.innerText()).toBe(buildingBefore);
     expect(await experiment.innerText()).toBe(experimentBefore);
     expect(await ledger.locator("header").innerText()).toBe(headerBefore);
-    await expect(ledger.getByText("UPDATED · 30 SEP 2026")).toBeVisible();
-    await expect(ledger.locator("header time")).toHaveAttribute("datetime", "2026-09-30");
-    await expect(building.getByRole("link")).toHaveAttribute("href", "https://github.com/msmele345/birdsview");
+    await expect(ledger.getByText(updatedLabel(fixture.updatedOn))).toBeVisible();
+    await expect(ledger.locator("header time")).toHaveAttribute("datetime", fixture.updatedOn);
+    await expect(building.getByRole("link")).toHaveAttribute("href", fixture.nowBuilding.destination);
     await expect(experiment.locator("a, button, input, [tabindex]")).toHaveCount(0);
     await link.click();
     await expect(page).toHaveURL("http://127.0.0.1:3022/blog/a-newer");

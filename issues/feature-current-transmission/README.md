@@ -44,7 +44,9 @@ and rendered verification evidence.
 A review of the completed feature found four defects and five improvements. The owner
 approved grouping them into six tickets. They follow the same frontier rule: ticket 06
 comes first; 07 and 08 can then proceed independently; 09 follows 06 and 07; 10 follows
-07; 11 follows 09. None is started.
+07; 11 follows 09. Ticket 06 is complete locally; see its
+[verification record](../../docs/verification/current-transmission/06/README.md). Tickets 07–11
+are not started.
 
 | Ticket | Covers | Blocked by |
 | --- | --- | --- |
