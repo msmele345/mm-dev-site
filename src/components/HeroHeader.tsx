@@ -11,7 +11,7 @@ export default function HeroHeader() {
             <div className="hero__core">
                 <p className="hero__eyebrow">Software Engineer · Side Quest Showcase</p>
                 <h1 id="site-title">MITCH MELE</h1>
-                <p className="hero__hook">Husband and proud father of two. Outside of work, I like to build projects that relate to my personal interests.</p>
+                <p className="hero__hook">Sounds, vibrations, strobe lights, lever pulls, and space explorations. Side projects are supposed to be fun.</p>
                 <p className="hero__summary">
                     2026 Projects
                 </p>
