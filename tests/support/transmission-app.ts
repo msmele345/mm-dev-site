@@ -1,10 +1,20 @@
 import { spawn, type ChildProcess } from "node:child_process";
-import { cpSync, mkdirSync, mkdtempSync, symlinkSync } from "node:fs";
+import { cpSync, mkdirSync, mkdtempSync, symlinkSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
+import { validEditorial } from "./transmission-editorial";
 
-/** Exercise the real homepage/build with isolated files, never authored posts. */
-export function createTransmissionApp() {
+export function writeEditorial(dir: string, editorial: unknown) {
+  // Keep the production annotation: contract errors must reach the owner even
+  // when TypeScript would also reject the same missing or mistyped field.
+  writeFileSync(join(dir, "src/content/current-transmission.ts"), `import type { TransmissionEditorial } from "../lib/current-transmission";\nexport const currentTransmission: TransmissionEditorial = ${JSON.stringify(editorial, null, 2)};\n`);
+}
+
+/**
+ * Exercise the real homepage/build with isolated files, never authored posts.
+ * Every app gets its own editorial record, never the production copy.
+ */
+export function createTransmissionApp(editorial: unknown = validEditorial()) {
   const dir = mkdtempSync(join(tmpdir(), "transmission-app-"));
   for (const file of ["src", "public", "package.json", "tsconfig.json", "next.config.ts"]) {
     cpSync(join(process.cwd(), file), join(dir, file), {
@@ -13,6 +23,7 @@ export function createTransmissionApp() {
     });
   }
   mkdirSync(join(dir, "src/content/blog"));
+  writeEditorial(dir, editorial);
   symlinkSync(join(process.cwd(), "node_modules"), join(dir, "node_modules"), "dir");
   return dir;
 }

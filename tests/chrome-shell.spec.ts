@@ -38,7 +38,7 @@ test("hero introduces Mitch with personality", async ({ page }) => {
 
   const main = page.getByRole("main");
   await expect(
-    main.getByText(/I like to build projects that relate to my personal interests/i),
+    main.getByText(/Sounds, vibrations, strobe lights, lever pulls, and space explorations. Side projects are supposed to be fun/i),
   ).toBeVisible();
   await expect(main.getByText(/elevated bpm/i)).toBeVisible();
 });

@@ -3,9 +3,11 @@ import type { ChildProcess } from "node:child_process";
 import { readFileSync, rmSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { buildTransmissionApp, createTransmissionApp, serveTransmissionApp } from "./support/transmission-app";
+import { liveTransmission } from "./support/transmission-editorial";
 import { checkTransmissionLayout, expectStaticTransmission, expectVisibleLinkFocus } from "./support/transmission-reading";
 
-const publishedTitle = "Shipping a groovebox that teaches techno";
+const { nowBuilding, nextExperiment, dispatch: published } = liveTransmission();
+const publishedTitle = published.title;
 
 test("stacked signals provide readable copy and comfortable link targets", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
@@ -28,7 +30,7 @@ test("the published ledger changes directly from full-width rows to equal column
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/");
   await expect(page.getByRole("region", { name: "Current Transmission" }).getByRole("heading", { level: 3 }))
-    .toHaveText(["BIRDSVIEW", publishedTitle, "PIRATE WORLD"]);
+    .toHaveText([nowBuilding.headline, publishedTitle, nextExperiment.headline]);
   const measurements = await checkTransmissionLayout(page, info, "populated");
   writeFileSync(info.outputPath("populated-geometry.json"), JSON.stringify(measurements, null, 2));
 });
@@ -36,18 +38,18 @@ test("the published ledger changes directly from full-width rows to equal column
 for (const reducedMotion of ["no-preference", "reduce"] as const) {
   test(`published signals keep their reading order, visible link focus, and static content with ${reducedMotion} motion`, async ({ page }) => {
     await page.emulateMedia({ reducedMotion });
-    await page.route("https://github.com/msmele345/birdsview", (route) => route.fulfill({ body: "Birdsview repository", contentType: "text/html" }));
+    await page.route(nowBuilding.destination, (route) => route.fulfill({ body: "Now Building destination", contentType: "text/html" }));
     for (const viewport of [{ width: 390, height: 844 }, { width: 1440, height: 900 }]) {
       await page.setViewportSize(viewport);
       await page.goto("/");
       const ledger = page.getByRole("region", { name: "Current Transmission" });
-      await expect(ledger.getByRole("heading", { level: 3 })).toHaveText(["BIRDSVIEW", publishedTitle, "PIRATE WORLD"]);
+      await expect(ledger.getByRole("heading", { level: 3 })).toHaveText([nowBuilding.headline, publishedTitle, nextExperiment.headline]);
       await expect(ledger.getByRole("link")).toHaveCount(2);
-      await expect(ledger.getByRole("article", { name: "PIRATE WORLD" }).locator("a, button, input, [tabindex]")).toHaveCount(0);
+      await expect(ledger.getByRole("article", { name: nextExperiment.headline }).locator("a, button, input, [tabindex]")).toHaveCount(0);
       await expectStaticTransmission(ledger);
       await page.getByRole("region", { name: "Project wall" }).getByRole("link").last().focus();
       await page.keyboard.press("Tab");
-      const building = ledger.getByRole("link", { name: "BIRDSVIEW" });
+      const building = ledger.getByRole("link", { name: nowBuilding.headline });
       const dispatch = ledger.getByRole("link", { name: publishedTitle });
       await expectVisibleLinkFocus(page, building);
       await page.keyboard.press("Tab");
@@ -59,15 +61,14 @@ for (const reducedMotion of ["no-preference", "reduce"] as const) {
       await page.keyboard.press("Shift+Tab");
       await expectVisibleLinkFocus(page, building);
       await page.keyboard.press("Enter");
-      await expect(page).toHaveURL("https://github.com/msmele345/birdsview");
+      await expect(page).toHaveURL(nowBuilding.destination);
       await page.goto("/");
       await building.focus();
       await page.keyboard.press("Tab");
       await page.keyboard.press("Enter");
-      await expect(page).toHaveURL("/blog/shipping-a-groovebox-that-teaches-techno");
+      await expect(page).toHaveURL(published.route);
+      // The article's own body is covered by the isolated dispatch and long-copy fixtures.
       await expect(page.getByRole("heading", { name: publishedTitle, level: 1 })).toBeVisible();
-      await expect(page.getByRole("heading", { name: "Lessons are data, not code", level: 2 })).toBeVisible();
-      await expect(page.getByText("Patterns are tiny JSON, so sharing is a URL parameter, not a backend", { exact: true })).toBeVisible();
     }
   });
 }
@@ -92,21 +93,20 @@ test("the final published homepage keeps the Project wall ahead of its actual pr
 
 const longTitle = "Field notes from a geography experiment: mapping coastlines, following surprising connections, and keeping the complete story readable on every screen";
 const longSummary = "A complete set of field notes follows the coast from the first survey to the final observation, including the small islands, winding estuaries, changing light, and unexpected connections that deserve more than a short homepage preview. The report preserves every authored sentence so a reader can follow the dispatch for the full account, compare the early sketches with later discoveries, and read the final observation without losing any detail to the compact two-line excerpt.";
-const buildingTitle = "BIRDSVIEW FIELD ATLAS — COASTLINESANDCONNECTIONSABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZ";
-const experimentTitle = "PIRATE WORLD — considering a generous all-ages adventure through islands, harbours, and unexplored seas";
+const buildingTitle = "FIELD ATLAS — COASTLINESANDCONNECTIONSABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZ";
+const experimentTitle = "SAIL SKETCHES — considering a generous all-ages adventure through islands, harbours, and unexplored seas";
 
 test.describe("Reading isolated long authored copy", () => {
   let dir: string;
   let server: ChildProcess;
   test.beforeAll(async () => {
     test.setTimeout(180_000);
-    dir = createTransmissionApp();
-    writeFileSync(join(dir, "src/content/current-transmission.ts"), `export const currentTransmission = ${JSON.stringify({
-      updatedOn: "2026-09-30",
-      nowBuilding: { headline: buildingTitle, supportingText: longSummary, destination: "https://github.com/msmele345/birdsview" },
+    dir = createTransmissionApp({
+      updatedOn: "2025-03-14",
+      nowBuilding: { headline: buildingTitle, supportingText: longSummary, destination: "https://example.com/field-atlas" },
       nextExperiment: { headline: experimentTitle, supportingText: longSummary },
-    }, null, 2)};\n`);
-    writeFileSync(join(dir, "src/content/blog/long-field-notes.mdx"), `---\ntitle: ${JSON.stringify(longTitle)}\ndate: "2026-09-30"\nsummary: ${JSON.stringify(longSummary)}\ntags: [field-notes]\n---\n\n## The complete field report\n\n${longSummary}\n\n## Final observation\n\nThe final shoreline detail remains in the complete article.\n`);
+    });
+    writeFileSync(join(dir, "src/content/blog/long-field-notes.mdx"), `---\ntitle: ${JSON.stringify(longTitle)}\ndate: "2025-03-14"\nsummary: ${JSON.stringify(longSummary)}\ntags: [field-notes]\n---\n\n## The complete field report\n\n${longSummary}\n\n## Final observation\n\nThe final shoreline detail remains in the complete article.\n`);
     await buildTransmissionApp(dir);
     server = await serveTransmissionApp(dir, 3023);
   });

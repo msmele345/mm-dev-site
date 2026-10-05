@@ -1,0 +1,11 @@
+# Temporary newer post (untracked, deleted after the run)
+---
+title: Temporary dispatch for the decoupling check
+date: 2026-10-03
+summary: A throwaway post proving the ledger tests follow the newest catalogue entry.
+tags: [field-notes]
+---
+
+A temporary body that is deleted once the check has run.
+# Ledger tests
+  148 passed (18.4s)

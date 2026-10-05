@@ -6,10 +6,15 @@ Source: resolved Current Transmission grilling session
 
 Owner revision — 2026-09-30: place Current Transmission immediately after the
 Project wall and before More projects. This supersedes the original between-hero-and-wall
-placement throughout this spec and its tickets. The hero gap remains a separate
-spacing improvement. The owner subsequently selected direct reduction of the hero's
-trailing and Project wall's leading padding, delivered in ticket 03. The original
-requirement to fill the gap with the ledger is superseded.
+placement. The hero gap remains a separate spacing improvement. The owner subsequently
+selected direct reduction of the hero's trailing and Project wall's leading padding,
+delivered in ticket 03. The original requirement to fill the gap with the ledger is
+superseded.
+
+Text revision — 2026-10-03: the Solution, user stories 1–2, and the placement and
+wide-layout implementation decisions below were reworded to state the revised placement
+directly. The Problem Statement is kept as originally written, as the record of what
+prompted the feature.
 
 ## Problem Statement
 
@@ -23,8 +28,8 @@ site's restrained Chrome and allowing the chameleon tiles to remain the showpiec
 
 ## Solution
 
-Add **Current Transmission**, a compact Chrome ledger between the hero and the
-Project wall. It presents three signals in this reading order:
+Add **Current Transmission**, a compact Chrome ledger immediately after the Project
+wall and before More projects. It presents three signals in this reading order:
 
 | Signal | Source | Launch content | Interaction |
 | --- | --- | --- | --- |
@@ -34,8 +39,9 @@ Project wall. It presents three signals in this reading order:
 
 Each signal has a fixed label, headline, supporting text, and minimal footer metadata.
 The ledger header includes an editorial update date. Three equal columns become three
-compact stacked rows on narrower screens. Existing whitespace is redistributed to
-accommodate the ledger; the wide-layout Project wall should appear at the same scroll
+compact stacked rows on narrower screens. The oversized gap between the hero and the
+Project wall is closed separately, by reducing the hero's trailing and the Project
+wall's leading padding; the wide-layout Project wall should appear at the same scroll
 depth or sooner. Stacked rows may take the additional space required for readability.
 
 The ledger remains static apart from established link hover and keyboard-focus
@@ -44,8 +50,8 @@ fallback rather than a missing signal.
 
 ## User Stories
 
-1. As a visitor, I want useful content between the hero and Project wall, so that the transition feels intentional.
-2. As a visitor, I want Current Transmission to appear before the Project wall, so that I understand the current activity before exploring featured work.
+1. As a visitor, I want the Project wall to follow the hero without an oversized empty band, so that the transition feels intentional.
+2. As a visitor, I want Current Transmission to appear after the Project wall and before More projects, so that I see the current activity once I have explored the featured work.
 3. As a visitor, I want to see Now Building, so that I know which project is currently in development.
 4. As a visitor, I want Now Building to identify Birdsview at launch, so that the status reflects the owner's actual work.
 5. As a visitor, I want Now Building to link to the project's repository or published case study, so that I can investigate the work.
@@ -84,7 +90,7 @@ fallback rather than a missing signal.
 ## Implementation Decisions
 
 - **Placement and responsibility:** introduce a Current Transmission presentation
-  module in the home-page composition between the hero and Project wall. Treat it as
+  module in the home-page composition after the Project wall and before More projects. Treat it as
   Chrome, not a chameleon tile or another featured-project tier.
 - **Visual identity:** follow ADR 0003: ink-black ground, white reading text, sparse
   electric-lime labels and link accents, established typography, and thin ledger
@@ -116,8 +122,8 @@ fallback rather than a missing signal.
   excerpt and an ellipsis when it overflows. Preserve the underlying authored copy;
   do not destructively shorten blog metadata or add a character-count validator.
 - **Wide layout:** render three equal columns in the established reading order.
-  Reduce the hero's trailing padding and Project wall's leading padding so the ledger
-  primarily consumes the existing oversized gap. Preserve distinct section boundaries.
+  Reduce the hero's trailing padding and Project wall's leading padding to close the
+  existing oversized gap directly. Preserve distinct section boundaries.
   Compare against the actual pre-change home page at matching viewports.
 - **Stacked layout:** switch directly from three columns to three compact full-width
   rows separated by hard divider lines. Avoid a two-column intermediate layout,
@@ -232,6 +238,10 @@ Launch supporting sentences remain editable drafts for review with the rendered 
 - **BIRDSVIEW:** "Explore a 3D globe, bird's-eye views, and surprising geography facts."
 - **PIRATE WORLD:** "Exploring a 3D pirate adventure for players of all ages."
 - **Empty-blog fallback:** "Field notes are being prepared."
+
+A post-implementation review on 2026-10-03 produced six polish tickets (06–11), listed
+in the [ticket index](../issues/feature-current-transmission/README.md), which tracks
+their status. The acceptance checklist below describes the original five tickets only.
 
 A low-frequency Now Building status pulse may be explored in a future polish pass.
 It is deliberately deferred from this spec. PIRATE WORLD is a working title and may
