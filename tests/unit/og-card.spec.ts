@@ -30,7 +30,19 @@ test("a post card leads with its title and dates the eyebrow", () => {
   expect(card.title).toBe("Shipping a groovebox");
   expect(card.eyebrow).toBe("BLOG");
   expect(card.signature).toBe(site.wordmark);
-  expect(card.footnote).toBe("27 Aug 2026");
+  expect(card.footnote).toBe("27 AUG 2026");
+});
+
+test("a September post card uses the shared padded calendar-date format", () => {
+  const card = postCard({
+    slug: "a-september-post",
+    title: "A September dispatch",
+    date: "2026-09-02",
+    summary: "A summary.",
+    tags: [],
+  });
+
+  expect(card.footnote).toBe("02 SEP 2026");
 });
 
 test("a case-study card nods to the tile by borrowing its accent", () => {

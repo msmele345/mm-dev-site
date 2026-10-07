@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { formatCalendarDate } from "@/lib/calendar-date";
 import { socialMetadata } from "@/lib/metadata";
-import { formatPostDate, listPosts } from "@/lib/posts";
+import { listPosts } from "@/lib/posts";
 
 export const dynamicParams = false;
 
@@ -50,7 +51,7 @@ export default async function PostPage({
           </p>
           <h1>{post.title}</h1>
           <div className="post__meta">
-            <time dateTime={post.date}>{formatPostDate(post.date)}</time>
+            <time dateTime={post.date}>{formatCalendarDate(post.date)}</time>
             <ul className="post__tags" aria-label="Tags">
               {post.tags.map((tag) => (
                 <li key={tag}>{tag}</li>

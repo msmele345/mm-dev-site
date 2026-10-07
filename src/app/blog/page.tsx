@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { formatPostDate, listPosts } from "@/lib/posts";
+import { formatCalendarDate } from "@/lib/calendar-date";
+import { listPosts } from "@/lib/posts";
 import { socialMetadata } from "@/lib/metadata";
 import { site } from "@/lib/site";
 
@@ -38,7 +39,7 @@ export default function BlogPage() {
             {posts.map((post) => (
               <li key={post.slug} className="blog__item">
                 <p className="blog__date">
-                  <time dateTime={post.date}>{formatPostDate(post.date)}</time>
+                  <time dateTime={post.date}>{formatCalendarDate(post.date)}</time>
                 </p>
                 <h2 className="blog__title">
                   <Link href={`/blog/${post.slug}`}>{post.title}</Link>

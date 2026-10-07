@@ -45,8 +45,12 @@ A review of the completed feature found four defects and five improvements. The 
 approved grouping them into six tickets. They follow the same frontier rule: ticket 06
 comes first; 07 and 08 can then proceed independently; 09 follows 06 and 07; 10 follows
 07; 11 follows 09. Ticket 06 is complete locally; see its
-[verification record](../../docs/verification/current-transmission/06/README.md). Tickets 07–11
-are not started.
+[verification record](../../docs/verification/current-transmission/06/README.md).
+Tickets 07 and 08 are complete locally on 2026-10-06; their
+[shared-signal verification](../../docs/verification/current-transmission/07/README.md)
+and [calendar-date verification](../../docs/verification/current-transmission/08/README.md)
+record unchanged refactor tests, date regressions, and all 317 tests plus lint,
+type checking, and the default production build passing. Tickets 09–11 are not started.
 
 | Ticket | Covers | Blocked by |
 | --- | --- | --- |
@@ -58,9 +62,10 @@ are not started.
 | [11 — Show where each link goes, at rest and to screen readers](11-link-cues-at-rest-and-for-screen-readers.md) | No resting cue on Latest Dispatch; no destination for screen readers | 09 |
 
 Owner decision recorded 2026-10-03: the external Now Building link opens in a new tab,
-matching the site's other external links. Ticket 08 carries one open owner decision
-(whether the blog index, post page, and OG card adopt the shared date format). Tickets
-09 and 11 introduce draft cue copy that needs owner review.
+matching the site's other external links. For ticket 08, the owner selected the
+shared uppercase `DD MMM YYYY` format site-wide on 2026-10-06; the ledger, blog
+index, post page, and OG card now use it. Tickets 09 and 11 introduce draft cue
+copy that needs owner review.
 
 ## Verification and scope
 

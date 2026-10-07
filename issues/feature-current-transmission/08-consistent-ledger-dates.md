@@ -1,6 +1,10 @@
 # 08 — Format the ledger's two dates consistently
 
-Status: not started
+Status: complete locally — 2026-10-06
+
+Owner decision — 2026-10-06: use the shared `DD MMM YYYY` format site-wide,
+including the blog index, post page, and OG card. Months use three uppercase
+letters and days use two digits (for example, `02 SEP 2026`).
 
 ## Parent
 
@@ -23,13 +27,17 @@ Both ledger dates should come from one shared, unit-tested calendar-date formatt
 
 ## Acceptance criteria
 
-- [ ] The editorial update date and the dispatch publication date are produced by one shared formatter, covered by focused unit tests.
-- [ ] The month is always exactly three letters. A unit test covers every month, including September, and a fixture post dated in September renders a three-letter month in the ledger.
-- [ ] Both ledger dates use the same day padding; a fixture with a single-digit day in each position proves it.
-- [ ] Formatting is pinned to UTC: the rendered dates match the authored yyyy-mm-dd values when the build runs in a timezone behind UTC.
-- [ ] Each `<time>` element keeps its authored ISO date in `datetime`.
-- [ ] The owner's decision on the blog index, post page, and OG card is recorded here, and those surfaces and their tests match it.
-- [ ] `npm test`, `npm run lint`, `npm run typecheck`, and `npm run build` pass.
+- [x] The editorial update date and the dispatch publication date are produced by one shared formatter, covered by focused unit tests.
+- [x] The month is always exactly three letters. A unit test covers every month, including September, and a fixture post dated in September renders a three-letter month in the ledger.
+- [x] Both ledger dates use the same day padding; a fixture with a single-digit day in each position proves it.
+- [x] Formatting is pinned to UTC: the rendered dates match the authored yyyy-mm-dd values when the build runs in a timezone behind UTC.
+- [x] Each `<time>` element keeps its authored ISO date in `datetime`.
+- [x] The owner's decision on the blog index, post page, and OG card is recorded here, and those surfaces and their tests match it.
+- [x] `npm test`, `npm run lint`, `npm run typecheck`, and `npm run build` pass.
+
+Evidence: [verification record](../../docs/verification/current-transmission/08/README.md),
+including the red-to-green date regression, behind-UTC production fixture, and
+inspected desktop/tablet/phone captures.
 
 ## Blocked by
 

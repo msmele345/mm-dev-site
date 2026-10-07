@@ -6,6 +6,7 @@ import { buildTransmissionApp, createTransmissionApp, serveTransmissionApp } fro
 import { updatedLabel, validEditorial } from "./support/transmission-editorial";
 
 const fixture = validEditorial();
+fixture.updatedOn = "2099-09-03";
 
 function writePost(dir: string, post: { slug: string; title: string; date: string; summary: string; body: string }) {
   writeFileSync(join(dir, "src/content/blog", `${post.slug}.mdx`), `---
@@ -30,7 +31,7 @@ test.describe("Latest Dispatch from isolated published posts", () => {
     // Titles and creation order disagree with slug order. Future dates remain
     // published under the existing catalogue semantics; there is no scheduling.
     writePost(dir, {
-      slug: "y-same-day", title: "Antenna field notes", date: "2099-04-02",
+      slug: "y-same-day", title: "Antenna field notes", date: "2099-09-02",
       summary: "Listening for patterns across the globe.",
       body: "## The full field report\n\nThe antenna report includes every observation beyond its homepage summary.\n\n## Closing observations\n\nA final observation from the complete report.",
     });
@@ -39,7 +40,7 @@ test.describe("Latest Dispatch from isolated published posts", () => {
       summary: "An older report has a higher slug but an earlier date.", body: "An older complete report.",
     });
     writePost(dir, {
-      slug: "b-same-day", title: "Zebra field notes", date: "2099-04-02",
+      slug: "b-same-day", title: "Zebra field notes", date: "2099-09-02",
       summary: "Another report on the same calendar day.", body: "The other complete report.",
     });
     await buildTransmissionApp(dir);
@@ -58,19 +59,34 @@ test.describe("Latest Dispatch from isolated published posts", () => {
     await expect(ledger.getByRole("heading", { level: 3 })).toHaveText([fixture.nowBuilding.headline, "Antenna field notes", fixture.nextExperiment.headline]);
     const dispatch = ledger.getByRole("article", { name: "Antenna field notes" });
     await expect(dispatch.getByText("Listening for patterns across the globe.")).toBeVisible();
-    await expect(dispatch.locator("time")).toHaveText("2 Apr 2099");
-    await expect(dispatch.locator("time")).toHaveAttribute("datetime", "2099-04-02");
+    // The production fixture builds in America/Los_Angeles, behind UTC.
+    // Both calendar dates must retain their authored day and the same format.
+    await expect(ledger.locator("header time")).toHaveText("03 SEP 2099");
+    await expect(ledger.locator("header time")).toHaveAttribute("datetime", "2099-09-03");
+    await expect(dispatch.locator("time")).toHaveText("02 SEP 2099");
+    await expect(dispatch.locator("time")).toHaveAttribute("datetime", "2099-09-02");
+    for (const width of [1440, 768, 390]) {
+      await page.setViewportSize({ width, height: 900 });
+      await page.evaluate(() => document.fonts.ready);
+      await page.evaluate(() => window.scrollTo({ top: 0, behavior: "instant" }));
+      const clip = await ledger.boundingBox();
+      await page.screenshot({ path: test.info().outputPath(`september-ledger-${width}.png`), fullPage: true, clip: clip! });
+    }
     const link = dispatch.getByRole("link", { name: "Antenna field notes" });
     await expect(link).toHaveAttribute("href", "/blog/y-same-day");
     await link.click();
     await expect(page).toHaveURL("http://127.0.0.1:3022/blog/y-same-day");
     await expect(page.getByRole("heading", { name: "Antenna field notes", level: 1 })).toBeVisible();
+    await expect(page.locator("header time")).toHaveText("02 SEP 2099");
+    await expect(page.locator("header time")).toHaveAttribute("datetime", "2099-09-02");
     await expect(page.getByText("The antenna report includes every observation beyond its homepage summary.")).toBeVisible();
     await expect(page.getByRole("heading", { name: "Closing observations" })).toBeVisible();
     await expect(page.getByText("A final observation from the complete report.")).toBeVisible();
     await page.goto("http://127.0.0.1:3022/blog");
     const posts = page.getByRole("list", { name: "Posts", exact: true });
     await expect(posts.getByRole("link")).toHaveText(["Antenna field notes", "Zebra field notes", "Older field notes"]);
+    await expect(posts.locator("time")).toHaveText(["02 SEP 2099", "02 SEP 2099", "30 DEC 2098"]);
+    await expect(posts.locator("time").first()).toHaveAttribute("datetime", "2099-09-02");
   });
 
   test("adding a newer post and rebuilding updates only the dispatch", async ({ page }) => {
@@ -98,7 +114,7 @@ test.describe("Latest Dispatch from isolated published posts", () => {
     await expect(ledger.getByRole("heading", { level: 3 })).toHaveText([fixture.nowBuilding.headline, "Fresh field notes", fixture.nextExperiment.headline]);
     const dispatch = ledger.getByRole("article", { name: "Fresh field notes" });
     await expect(dispatch.getByText("A new dispatch arrives without an editorial ledger edit.")).toBeVisible();
-    await expect(dispatch.locator("time")).toHaveText("2 Jan 2100");
+    await expect(dispatch.locator("time")).toHaveText("02 JAN 2100");
     await expect(dispatch.locator("time")).toHaveAttribute("datetime", "2100-01-02");
     const link = dispatch.getByRole("link", { name: "Fresh field notes" });
     await expect(link).toHaveAttribute("href", "/blog/a-newer");
