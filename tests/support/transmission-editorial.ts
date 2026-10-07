@@ -1,12 +1,16 @@
 import { currentTransmission } from "@/content/current-transmission";
-import { formatPostDate, listPosts } from "@/lib/posts";
+import { listPosts } from "@/lib/posts";
 
 const MONTHS = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
 
-/** The header's contract (UPDATED · DD MMM YYYY), stated independently of the component. */
-export function updatedLabel(isoDate: string) {
+/** The calendar-date contract, stated independently of the production formatter. */
+function calendarDateLabel(isoDate: string) {
   const [year, month, day] = isoDate.split("-");
-  return `UPDATED · ${day} ${MONTHS[Number(month) - 1]} ${year}`;
+  return `${day} ${MONTHS[Number(month) - 1]} ${year}`;
+}
+
+export function updatedLabel(isoDate: string) {
+  return `UPDATED · ${calendarDateLabel(isoDate)}`;
 }
 
 /**
@@ -18,7 +22,7 @@ export function liveTransmission() {
   if (!latest) throw new Error("The production ledger tests need a published post; the empty state has its own fixture.");
   return {
     ...currentTransmission,
-    dispatch: { ...latest, route: `/blog/${latest.slug}`, publishedOn: formatPostDate(latest.date) },
+    dispatch: { ...latest, route: `/blog/${latest.slug}`, publishedOn: calendarDateLabel(latest.date) },
   };
 }
 

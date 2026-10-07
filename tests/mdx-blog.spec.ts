@@ -15,7 +15,7 @@ test.describe("blog index", () => {
     const list = page.getByRole("list", { name: /posts/i });
     const postLink = list.getByRole("link", { name: new RegExp(POST_TITLE, "i") });
     await expect(postLink).toHaveAttribute("href", `/blog/${POST_SLUG}`);
-    await expect(list.getByText("27 Aug 2026")).toBeVisible();
+    await expect(list.getByText("27 AUG 2026")).toBeVisible();
     await expect(list.getByText(/scheduling audio on the web/)).toBeVisible();
     await expect(list.getByText("elevated-bpm", { exact: true })).toBeVisible();
   });
@@ -34,7 +34,7 @@ test.describe("post page", () => {
     await expect(
       page.getByRole("heading", { name: POST_TITLE, level: 1 }),
     ).toBeVisible();
-    await expect(page.getByText("27 Aug 2026")).toBeVisible();
+    await expect(page.getByText("27 AUG 2026")).toBeVisible();
     await expect(page.getByLabel("Tags")).toBeVisible();
     await expect(
       page.getByRole("list", { name: "Tags" }).getByText("elevated-bpm"),

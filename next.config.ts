@@ -3,8 +3,9 @@ import createMDX from "@next/mdx";
 import { currentTransmission } from "./src/content/current-transmission";
 import { validateTransmissionEditorial } from "./src/lib/current-transmission";
 
-// Validate before Next's TypeScript phase so even mistyped editorial edits
-// fail with the exact content field, rather than a generic compiler diagnostic.
+// The sole editorial enforcement point: Next loads this config for both dev
+// and build, before type checking or page rendering. Mistyped editorial edits
+// therefore fail with the exact content field ahead of generic type diagnostics.
 validateTransmissionEditorial(currentTransmission);
 
 /**

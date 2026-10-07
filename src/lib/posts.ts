@@ -106,13 +106,3 @@ const PRODUCTION_POSTS = readPosts(POSTS_DIR);
 export function listPosts(dir: string = POSTS_DIR): PostMeta[] {
   return dir === POSTS_DIR ? PRODUCTION_POSTS : readPosts(dir);
 }
-
-/** Human date for the chrome: 27 Aug 2026. UTC-pinned so it never drifts. */
-export function formatPostDate(date: string): string {
-  return new Intl.DateTimeFormat("en-GB", {
-    day: "numeric",
-    month: "short",
-    year: "numeric",
-    timeZone: "UTC",
-  }).format(new Date(`${date}T00:00:00Z`));
-}

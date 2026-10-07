@@ -1,6 +1,6 @@
 # 07 — Render every signal through one component and validate in one place
 
-Status: not started
+Status: complete locally — 2026-10-06
 
 ## Parent
 
@@ -18,12 +18,15 @@ This is a refactor: the rendered homepage is unchanged.
 
 ## Acceptance criteria
 
-- [ ] Now Building, Latest Dispatch (populated and empty-blog), and Next Experiment render through a single signal presentation; the four-part structure is defined once.
-- [ ] A signal without a destination renders no link, no tab stop, and no link styling, by construction rather than by a separate branch per signal.
-- [ ] Rendered output is unchanged: the same headings, labels, copy, footer metadata, document order, accessible names, and link destinations. The existing browser tests pass without edits to their assertions.
-- [ ] Invalid editorial content still fails the real production build with the exact field error, ahead of any generic type diagnostic. The existing build-enforcement and content-contract tests pass unchanged.
-- [ ] Validation has one documented enforcement point, or each remaining point carries a comment explaining its distinct purpose.
-- [ ] `npm test`, `npm run lint`, `npm run typecheck`, and `npm run build` pass.
+- [x] Now Building, Latest Dispatch (populated and empty-blog), and Next Experiment render through a single signal presentation; the four-part structure is defined once.
+- [x] A signal without a destination renders no link, no tab stop, and no link styling, by construction rather than by a separate branch per signal.
+- [x] Rendered output is unchanged: the same headings, labels, copy, footer metadata, document order, accessible names, and link destinations. The existing browser tests pass without edits to their assertions.
+- [x] Invalid editorial content still fails the real production build with the exact field error, ahead of any generic type diagnostic. The existing build-enforcement and content-contract tests pass unchanged.
+- [x] Validation has one documented enforcement point, or each remaining point carries a comment explaining its distinct purpose.
+- [x] `npm test`, `npm run lint`, `npm run typecheck`, and `npm run build` pass.
+
+Evidence: [verification record](../../docs/verification/current-transmission/07/README.md),
+including the 147 unchanged tests before ticket 08 and the final integrated checks.
 
 ## Blocked by
 

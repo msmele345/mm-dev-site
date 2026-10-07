@@ -1,5 +1,6 @@
 import type { Project } from "@/content/projects/schema";
-import { formatPostDate, type PostMeta } from "@/lib/posts";
+import { formatCalendarDate } from "@/lib/calendar-date";
+import type { PostMeta } from "@/lib/posts";
 import { site } from "@/lib/site";
 
 /** The chrome's electric lime (ADR 0003) — the default accent for any card. */
@@ -49,7 +50,7 @@ export function postCard(post: PostMeta): OgCard {
     eyebrow: "BLOG",
     title: post.title,
     signature: site.wordmark,
-    footnote: formatPostDate(post.date),
+    footnote: formatCalendarDate(post.date),
     accent: LIME,
   };
 }
