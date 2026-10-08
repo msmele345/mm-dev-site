@@ -36,9 +36,12 @@ test("the published ledger changes directly from full-width rows to equal column
 });
 
 for (const reducedMotion of ["no-preference", "reduce"] as const) {
-  test(`published signals keep their reading order, visible link focus, and static content with ${reducedMotion} motion`, async ({ page }) => {
+  test(`published signals keep their reading order, visible link focus, and static content with ${reducedMotion} motion`, async ({ page, context }) => {
     await page.emulateMedia({ reducedMotion });
-    await page.route(nowBuilding.destination, (route) => route.fulfill({ body: "Now Building destination", contentType: "text/html" }));
+    const externalDestination = !nowBuilding.destination.startsWith("/");
+    if (externalDestination) {
+      await context.route(nowBuilding.destination, (route) => route.fulfill({ body: "Now Building destination", contentType: "text/html" }));
+    }
     for (const viewport of [{ width: 390, height: 844 }, { width: 1440, height: 900 }]) {
       await page.setViewportSize(viewport);
       await page.goto("/");
@@ -51,6 +54,8 @@ for (const reducedMotion of ["no-preference", "reduce"] as const) {
       await page.keyboard.press("Tab");
       const building = ledger.getByRole("link", { name: nowBuilding.headline });
       const dispatch = ledger.getByRole("link", { name: publishedTitle });
+      await expect(dispatch).not.toHaveAttribute("target");
+      await expect(dispatch).not.toHaveAttribute("rel");
       await expectVisibleLinkFocus(page, building);
       await page.keyboard.press("Tab");
       await expectVisibleLinkFocus(page, dispatch);
@@ -60,8 +65,23 @@ for (const reducedMotion of ["no-preference", "reduce"] as const) {
       await expectVisibleLinkFocus(page, dispatch);
       await page.keyboard.press("Shift+Tab");
       await expectVisibleLinkFocus(page, building);
-      await page.keyboard.press("Enter");
-      await expect(page).toHaveURL(nowBuilding.destination);
+      if (externalDestination) {
+        await expect(building).toHaveAttribute("target", "_blank");
+        await expect(building).toHaveAttribute("rel", "noreferrer");
+        const homepageUrl = page.url();
+        const popupPromise = page.waitForEvent("popup");
+        await page.keyboard.press("Enter");
+        const popup = await popupPromise;
+        await expect(popup).toHaveURL(nowBuilding.destination);
+        await expect(popup.getByText("Now Building destination", { exact: true })).toBeVisible();
+        await expect(page).toHaveURL(homepageUrl);
+        await popup.close();
+      } else {
+        await expect(building).not.toHaveAttribute("target");
+        await expect(building).not.toHaveAttribute("rel");
+        await page.keyboard.press("Enter");
+        await expect(page).toHaveURL(nowBuilding.destination);
+      }
       await page.goto("/");
       await building.focus();
       await page.keyboard.press("Tab");

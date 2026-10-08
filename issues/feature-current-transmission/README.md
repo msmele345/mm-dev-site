@@ -50,7 +50,10 @@ Tickets 07 and 08 are complete locally on 2026-10-06; their
 [shared-signal verification](../../docs/verification/current-transmission/07/README.md)
 and [calendar-date verification](../../docs/verification/current-transmission/08/README.md)
 record unchanged refactor tests, date regressions, and all 317 tests plus lint,
-type checking, and the default production build passing. Tickets 09–11 are not started.
+type checking, and the default production build passing. Ticket 09 is implemented
+and technically verified locally; owner review of its internal cue is pending.
+See its [verification record](../../docs/verification/current-transmission/09/README.md).
+Tickets 10–11 are not started.
 
 | Ticket | Covers | Blocked by |
 | --- | --- | --- |

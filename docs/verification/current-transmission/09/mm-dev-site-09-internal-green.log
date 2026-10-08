@@ -1,0 +1,18 @@
+
+> mm-dev-site@0.1.0 test
+> playwright test tests/current-transmission.spec.ts --grep editing the manual record
+
+[WebServer] (node:56498) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:56523) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:56524) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+(node:56556) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 tests/current-transmission.spec.ts:125:7 › Current Transmission with an empty blog › editing the manual record and rebuilding preserves an old calendar date and the empty state (5.1s)
+
+  1 passed (12.7s)

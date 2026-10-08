@@ -90,10 +90,10 @@ test.describe("Current Transmission with an empty blog", () => {
   });
 
   for (const reducedMotion of ["no-preference", "reduce"] as const) {
-    test(`keeps only Now Building in the ledger tab sequence with ${reducedMotion} motion`, async ({ page }) => {
+    test(`keeps only Now Building in the ledger tab sequence with ${reducedMotion} motion`, async ({ page, context }) => {
       await page.emulateMedia({ reducedMotion });
       // Activate the semantic link without relying on the external site's availability.
-      await page.route(fixture.nowBuilding.destination, (route) => route.fulfill({ body: "Now Building destination", contentType: "text/html" }));
+      await context.route(fixture.nowBuilding.destination, (route) => route.fulfill({ body: "Now Building destination", contentType: "text/html" }));
       for (const viewport of [{ width: 390, height: 844 }, { width: 1440, height: 900 }]) {
         await page.setViewportSize(viewport);
         await page.goto("http://127.0.0.1:3021/");
@@ -101,14 +101,23 @@ test.describe("Current Transmission with an empty blog", () => {
         await page.getByRole("region", { name: "Project wall" }).getByRole("link").last().focus();
         await page.keyboard.press("Tab");
         const building = ledger.getByRole("link", { name: fixture.nowBuilding.headline });
+        await expect(building).toHaveAttribute("href", fixture.nowBuilding.destination);
+        await expect(building).toHaveAttribute("target", "_blank");
+        await expect(building).toHaveAttribute("rel", "noreferrer");
+        await expect(ledger.getByRole("article", { name: fixture.nowBuilding.headline }).locator("p").last()).toHaveText("Repository ↗");
         await expectVisibleLinkFocus(page, building);
         await expect(ledger.getByRole("link")).toHaveCount(1);
         await page.keyboard.press("Tab");
         await expect(page.getByRole("region", { name: "More projects" }).getByRole("link").first()).toBeFocused();
         await expectStaticTransmission(ledger);
         await building.focus();
+        const opened = page.waitForEvent("popup");
         await page.keyboard.press("Enter");
-        await expect(page).toHaveURL(fixture.nowBuilding.destination);
+        const destination = await opened;
+        await expect(destination).toHaveURL(fixture.nowBuilding.destination);
+        await expect(destination.getByText("Now Building destination", { exact: true })).toBeVisible();
+        await expect(page).toHaveURL("http://127.0.0.1:3021/");
+        await destination.close();
       }
     });
   }
@@ -128,7 +137,12 @@ test.describe("Current Transmission with an empty blog", () => {
     await page.goto("http://127.0.0.1:3021/");
     const ledger = page.getByRole("region", { name: "Current Transmission" });
     await expect(ledger.getByText("UPDATED · 02 JAN 2001")).toBeVisible();
-    await expect(ledger.getByRole("link", { name: edited.nowBuilding.headline })).toHaveAttribute("href", "/work/telescope");
+    const building = ledger.getByRole("link", { name: edited.nowBuilding.headline });
+    await expect(building).toHaveAttribute("href", "/work/telescope");
+    await expect(building).not.toHaveAttribute("target");
+    await expect(building).not.toHaveAttribute("rel");
+    await expect(ledger.getByRole("article", { name: edited.nowBuilding.headline }).locator("p").last()).toHaveText("Case study →");
+    await expect(ledger.getByText("Repository", { exact: false })).toHaveCount(0);
     await expect(ledger.getByText(edited.nowBuilding.supportingText)).toBeVisible();
     await expect(ledger.getByRole("heading", { name: edited.nextExperiment.headline })).toBeVisible();
     await expect(ledger.getByText(edited.nextExperiment.supportingText)).toBeVisible();
@@ -137,6 +151,37 @@ test.describe("Current Transmission with an empty blog", () => {
     await expect(ledger.getByRole("heading", { name: "FIRST DISPATCH PENDING" })).toBeVisible();
     await expect(ledger.getByText("IN CONCEPT")).toBeVisible();
     await expect(ledger.getByText("OFF AIR")).toBeVisible();
+    for (const width of [1440, 768, 390]) {
+      await page.setViewportSize({ width, height: 900 });
+      await page.evaluate(() => document.fonts.ready);
+      await page.evaluate(() => window.scrollTo({ top: 0, behavior: "instant" }));
+      const clip = await ledger.boundingBox();
+      await page.screenshot({ path: test.info().outputPath(`internal-ledger-${width}.png`), fullPage: true, clip: clip! });
+    }
+    for (const reducedMotion of ["no-preference", "reduce"] as const) {
+      await page.emulateMedia({ reducedMotion });
+      for (const viewport of [{ width: 390, height: 844 }, { width: 1440, height: 900 }]) {
+        await page.setViewportSize(viewport);
+        await page.goto("http://127.0.0.1:3021/");
+        await page.getByRole("region", { name: "Project wall" }).getByRole("link").last().focus();
+        await page.keyboard.press("Tab");
+        await expectVisibleLinkFocus(page, building);
+        await expect(ledger.getByRole("link")).toHaveCount(1);
+        await page.keyboard.press("Tab");
+        await expect(page.getByRole("region", { name: "More projects" }).getByRole("link").first()).toBeFocused();
+        await expectStaticTransmission(ledger);
+        const originalDocument = await page.evaluateHandle(() => document);
+        const pageCount = page.context().pages().length;
+        await building.focus();
+        await page.keyboard.press("Enter");
+        await expect(page).toHaveURL("http://127.0.0.1:3021/work/telescope");
+        await expect(page.getByRole("heading", { level: 1 })).toHaveText(/telescope/i);
+        // A full document navigation destroys this handle; client-side navigation preserves it.
+        expect(await page.evaluate((original) => original === document, originalDocument)).toBe(true);
+        expect(page.context().pages()).toHaveLength(pageCount);
+        await originalDocument.dispose();
+      }
+    }
   });
 });
 
