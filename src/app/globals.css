@@ -353,6 +353,8 @@ body {
 
 .transmission__link {
   display: inline-block;
+  /* Keep reverse keyboard focus clear of the sticky header. */
+  scroll-margin-top: 4.5rem;
   max-width: 100%;
   min-height: 2.75rem;
   padding-block: 0.25rem;

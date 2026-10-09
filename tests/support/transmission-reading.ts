@@ -91,6 +91,27 @@ export async function expectVisibleLinkFocus(page: Page, link: Locator) {
   await expect(link).toHaveCSS("outline-color", "rgb(198, 255, 0)");
   await expect(link).toHaveCSS("outline-style", "solid");
   await expect(link).toHaveCSS("outline-width", "2px");
+  // A usable rectangle can be observed mid-scroll. Wait for a stable viewport
+  // before the next Tab can interrupt it and leave the focus target off-screen.
+  await page.evaluate(() => new Promise<void>((resolve, reject) => {
+    let previousY = window.scrollY;
+    let stableFrames = 0;
+    let frame: number;
+    const timeout = window.setTimeout(() => {
+      cancelAnimationFrame(frame);
+      reject(new Error(`Viewport scroll did not settle at scrollY=${window.scrollY}`));
+    }, 5_000);
+    const check = () => {
+      const currentY = window.scrollY;
+      stableFrames = currentY === previousY ? stableFrames + 1 : 0;
+      previousY = currentY;
+      if (stableFrames >= 3) {
+        clearTimeout(timeout);
+        resolve();
+      } else frame = requestAnimationFrame(check);
+    };
+    frame = requestAnimationFrame(check);
+  }));
   await expect.poll(async () => {
     const target = (await link.boundingBox())!;
     const header = (await page.getByRole("navigation", { name: "Primary" }).boundingBox())!;

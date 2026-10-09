@@ -36,9 +36,12 @@ test("the published ledger changes directly from full-width rows to equal column
 });
 
 for (const reducedMotion of ["no-preference", "reduce"] as const) {
-  test(`published signals keep their reading order, visible link focus, and static content with ${reducedMotion} motion`, async ({ page }) => {
+  test(`published signals keep their reading order, visible link focus, and static content with ${reducedMotion} motion`, async ({ page, context }) => {
     await page.emulateMedia({ reducedMotion });
-    await page.route(nowBuilding.destination, (route) => route.fulfill({ body: "Now Building destination", contentType: "text/html" }));
+    const externalDestination = !nowBuilding.destination.startsWith("/");
+    if (externalDestination) {
+      await context.route(nowBuilding.destination, (route) => route.fulfill({ body: "Now Building destination", contentType: "text/html" }));
+    }
     for (const viewport of [{ width: 390, height: 844 }, { width: 1440, height: 900 }]) {
       await page.setViewportSize(viewport);
       await page.goto("/");
@@ -51,17 +54,34 @@ for (const reducedMotion of ["no-preference", "reduce"] as const) {
       await page.keyboard.press("Tab");
       const building = ledger.getByRole("link", { name: nowBuilding.headline });
       const dispatch = ledger.getByRole("link", { name: publishedTitle });
+      await expect(dispatch).not.toHaveAttribute("target");
+      await expect(dispatch).not.toHaveAttribute("rel");
       await expectVisibleLinkFocus(page, building);
       await page.keyboard.press("Tab");
       await expectVisibleLinkFocus(page, dispatch);
       await page.keyboard.press("Tab");
-      await expect(page.getByRole("region", { name: "More projects" }).getByRole("link").first()).toBeFocused();
+      await expectVisibleLinkFocus(page, page.getByRole("region", { name: "More projects" }).getByRole("link").first());
       await page.keyboard.press("Shift+Tab");
       await expectVisibleLinkFocus(page, dispatch);
       await page.keyboard.press("Shift+Tab");
       await expectVisibleLinkFocus(page, building);
-      await page.keyboard.press("Enter");
-      await expect(page).toHaveURL(nowBuilding.destination);
+      if (externalDestination) {
+        await expect(building).toHaveAttribute("target", "_blank");
+        await expect(building).toHaveAttribute("rel", "noreferrer");
+        const homepageUrl = page.url();
+        const popupPromise = page.waitForEvent("popup");
+        await page.keyboard.press("Enter");
+        const popup = await popupPromise;
+        await expect(popup).toHaveURL(nowBuilding.destination);
+        await expect(popup.getByText("Now Building destination", { exact: true })).toBeVisible();
+        await expect(page).toHaveURL(homepageUrl);
+        await popup.close();
+      } else {
+        await expect(building).not.toHaveAttribute("target");
+        await expect(building).not.toHaveAttribute("rel");
+        await page.keyboard.press("Enter");
+        await expect(page).toHaveURL(nowBuilding.destination);
+      }
       await page.goto("/");
       await building.focus();
       await page.keyboard.press("Tab");
@@ -69,6 +89,31 @@ for (const reducedMotion of ["no-preference", "reduce"] as const) {
       await expect(page).toHaveURL(published.route);
       // The article's own body is covered by the isolated dispatch and long-copy fixtures.
       await expect(page.getByRole("heading", { name: publishedTitle, level: 1 })).toBeVisible();
+    }
+  });
+
+  test(`reverse ledger focus clears the sticky header after manual scrolling with ${reducedMotion} motion`, async ({ page }, info) => {
+    await page.emulateMedia({ reducedMotion });
+    for (const viewport of [{ width: 390, height: 844 }, { width: 1440, height: 900 }]) {
+      await page.setViewportSize(viewport);
+      await page.goto("/");
+      await page.evaluate(() => document.fonts.ready);
+      const ledger = page.getByRole("region", { name: "Current Transmission" });
+      const building = ledger.getByRole("link", { name: nowBuilding.headline });
+      const dispatch = ledger.getByRole("link", { name: publishedTitle });
+      for (const offset of [0, 8]) {
+        await dispatch.focus();
+        await expectVisibleLinkFocus(page, dispatch);
+        // A visitor can scroll the preceding link into the header-covered strip.
+        // Shift+Tab must bring that link and its focus ring clear of the header.
+        await building.evaluate((link, shift) => window.scrollTo({
+          top: link.getBoundingClientRect().top + window.scrollY - shift,
+          behavior: "instant",
+        }), offset);
+        await page.keyboard.press("Shift+Tab");
+        await expectVisibleLinkFocus(page, building);
+      }
+      await page.screenshot({ path: info.outputPath(`reverse-focus-${viewport.width}.png`) });
     }
   });
 }

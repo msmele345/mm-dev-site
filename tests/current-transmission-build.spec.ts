@@ -32,7 +32,7 @@ for (const [scenario, field, value, error] of [
   });
 }
 
-test("valid editorial edits and unchanged rebuilds reach the static homepage with an empty blog", async ({ page }, info) => {
+test("valid editorial edits and unchanged rebuilds reach the static homepage with an empty blog", async ({ page, context }, info) => {
   test.setTimeout(240_000);
   const dir = createTransmissionApp();
   let server: ChildProcess | undefined;
@@ -62,10 +62,18 @@ test("valid editorial edits and unchanged rebuilds reach the static homepage wit
     await expect(ledger.getByRole("article", { name: "SAIL SKETCHES" }).locator("p").nth(1)).toHaveText("Considering an all-ages sailing prototype.");
     const initialLink = ledger.getByRole("link", { name: "FIELD ATLAS" });
     await expect(initialLink).toHaveAttribute("href", "https://offline.invalid/current-work");
-    await page.route("https://offline.invalid/current-work", (route) => route.fulfill({ body: "Current work repository", contentType: "text/html" }));
+    await expect(initialLink).toHaveAttribute("target", "_blank");
+    await expect(initialLink).toHaveAttribute("rel", "noreferrer");
+    await expect(ledger.getByRole("article", { name: "FIELD ATLAS" }).locator(".transmission__footer")).toHaveText("Repository ↗");
+    await context.route("https://offline.invalid/current-work", (route) => route.fulfill({ body: "Current work repository", contentType: "text/html" }));
     await initialLink.focus();
+    const popupPromise = page.waitForEvent("popup");
     await page.keyboard.press("Enter");
-    await expect(page).toHaveURL("https://offline.invalid/current-work");
+    const popup = await popupPromise;
+    await expect(popup).toHaveURL("https://offline.invalid/current-work");
+    await expect(popup.getByText("Current work repository", { exact: true })).toBeVisible();
+    await expect(page).toHaveURL("http://127.0.0.1:3024/");
+    await popup.close();
 
     await stopServer();
     editorial.updatedOn = "2000-02-29";

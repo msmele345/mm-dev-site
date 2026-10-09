@@ -1,0 +1,49 @@
+
+> mm-dev-site@0.1.0 build
+> next build
+
+▲ Next.js 16.3.2 (Turbopack)
+- Environments: .env.local
+✓ Running next.config.ts took 51ms
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 736ms
+  Running TypeScript ...
+  Finished TypeScript in 987ms ...
+  Collecting page data using 11 workers ...
+  Generating static pages using 11 workers (0/20) ...
+  Generating static pages using 11 workers (5/20) 
+  Generating static pages using 11 workers (10/20) 
+  Generating static pages using 11 workers (15/20) 
+✓ Generating static pages using 11 workers (20/20) in 947ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /blog
+├   /blog/[slug]
+│ └ ● /blog/shipping-a-groovebox-that-teaches-techno
+├   /blog/[slug]/opengraph-image
+│ └ ● /blog/shipping-a-groovebox-that-teaches-techno/opengraph-image
+├ ○ /blog/opengraph-image
+├ ○ /feed.xml
+├ ○ /icon.svg
+├ ○ /opengraph-image
+├ ○ /robots.txt
+├ ○ /sitemap.xml
+├   /work/[slug]
+│ ├ ● /work/elevated-bpm
+│ ├ ● /work/terminal-one
+│ ├ ● /work/telescope
+│ └ ● /work/sound-city
+└   /work/[slug]/opengraph-image
+  ├ ● /work/elevated-bpm/opengraph-image
+  ├ ● /work/terminal-one/opengraph-image
+  ├ ● /work/telescope/opengraph-image
+  └ ● /work/sound-city/opengraph-image
+
+
+○  (Static)  prerendered as static content
+●  (SSG)     prerendered as static HTML (uses generateStaticParams)
+

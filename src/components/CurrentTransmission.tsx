@@ -22,7 +22,7 @@ function TransmissionSignal({ titleId, label, headline, supportingText, footer, 
           destination.startsWith("/") ? (
             <Link className="transmission__link" href={destination}>{headline}</Link>
           ) : (
-            <a className="transmission__link" href={destination}>{headline}</a>
+            <a className="transmission__link" href={destination} target="_blank" rel="noreferrer">{headline}</a>
           )
         ) : headline}
       </h3>
@@ -34,6 +34,7 @@ function TransmissionSignal({ titleId, label, headline, supportingText, footer, 
 
 export default function CurrentTransmission() {
   const { updatedOn, nowBuilding, nextExperiment } = currentTransmission;
+  const buildingIsInternal = nowBuilding.destination.startsWith("/");
   const latestPost = listPosts()[0];
 
   return (
@@ -48,7 +49,7 @@ export default function CurrentTransmission() {
             titleId="building-title"
             label="Now Building"
             {...nowBuilding}
-            footer={<>Repository <span aria-hidden="true">↗</span></>}
+            footer={<>{buildingIsInternal ? "Case study" : "Repository"} <span aria-hidden="true">{buildingIsInternal ? "→" : "↗"}</span></>}
           />
           <TransmissionSignal
             titleId="dispatch-title"
