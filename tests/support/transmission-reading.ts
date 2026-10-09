@@ -48,6 +48,25 @@ export async function checkTransmissionLayout(page: Page, info: TestInfo, state:
         expect(boxes[index].leftDivider).toBe("0px");
       }
     }
+    const spacing = await signals.evaluateAll((articles) => articles.map((article) => {
+      const label = article.querySelector("p")!.getBoundingClientRect();
+      const heading = article.querySelector("h3")!;
+      const range = document.createRange();
+      range.selectNodeContents(heading);
+      const text = range.getBoundingClientRect();
+      const box = heading.getBoundingClientRect();
+      const copy = article.querySelectorAll("p")[1].getBoundingClientRect();
+      return { textTop: text.top, copyTop: copy.top, labelGap: text.top - label.bottom,
+        copyGap: copy.top - box.bottom, singleLine: box.height < 40 };
+    }));
+    for (const item of spacing) {
+      expect(Math.abs(item.labelGap - spacing[2].labelGap)).toBeLessThanOrEqual(1);
+      expect(Math.abs(item.copyGap - spacing[2].copyGap)).toBeLessThanOrEqual(1);
+      if (wide && item.singleLine && spacing[2].singleLine) {
+        expect(Math.abs(item.textTop - spacing[2].textTop)).toBeLessThanOrEqual(1);
+        expect(Math.abs(item.copyTop - spacing[2].copyTop)).toBeLessThanOrEqual(1);
+      }
+    }
     const ledgerBox = (await ledger.boundingBox())!;
     expect(boxes[0].x).toBeGreaterThan(ledgerBox.x);
     expect(boxes[2].x + boxes[2].width).toBeLessThan(ledgerBox.x + ledgerBox.width);
@@ -64,17 +83,10 @@ export async function checkTransmissionLayout(page: Page, info: TestInfo, state:
       });
       expect(text.height).toBeLessThanOrEqual(text.lineHeight * 2 + 1);
       expect(text.fontSize).toBeGreaterThanOrEqual(14);
-      const signalBox = (await signal.boundingBox())!;
-      for (const link of await signal.getByRole("link").all()) {
-        const target = (await link.boundingBox())!;
-        expect(target.height).toBeGreaterThanOrEqual(44);
-        expect(target.width).toBeGreaterThanOrEqual(44);
-        expect(target.x).toBeGreaterThanOrEqual(signalBox.x);
-        expect(target.x + target.width).toBeLessThanOrEqual(signalBox.x + signalBox.width + 1);
-        expect(target.y + target.height).toBeLessThanOrEqual(signalBox.y + signalBox.height);
-      }
+      await expectSignalHitArea(signal);
     }
-    measurements.push({ viewport, layout: wide ? "columns" : "rows", signals: boxes });
+    await page.evaluate(() => window.scrollTo({ top: 0, behavior: "instant" }));
+    measurements.push({ viewport, layout: wide ? "columns" : "rows", signals: boxes, spacing });
     if ([390, 768, 895, 896, 1440].includes(viewport.width)) {
       await page.screenshot({ path: info.outputPath(`${state}-ledger-${viewport.width}.png`), fullPage: true, clip: ledgerBox });
       if ([390, 768, 1440].includes(viewport.width)) {
@@ -130,4 +142,30 @@ export async function expectStaticTransmission(ledger: Locator) {
   ).length);
   expect(moving).toBe(0);
   expect(await ledger.evaluate((section) => section.getAnimations({ subtree: true }).filter((animation) => animation.playState === "running").length)).toBe(0);
+}
+
+/** Hit-test the surface, including padding and copy, rather than the text box. */
+export async function expectSignalHitArea(signal: Locator) {
+  // Center the surface away from sticky navigation and the development toolbar.
+  await signal.evaluate((article) => article.scrollIntoView({ block: "center", behavior: "instant" }));
+  const result = await signal.evaluate((article) => {
+    const box = article.getBoundingClientRect();
+    const link = article.querySelector("a");
+    const hits = [];
+    for (const x of [box.left + 2, box.left + box.width / 2, box.right - 2]) {
+      for (const y of [box.top + 2, box.top + box.height / 2, box.bottom - 2]) {
+        const hit = document.elementFromPoint(x, y);
+        hits.push({ matches: hit?.closest("a") === link, x, y, hit: hit?.outerHTML.slice(0, 160) });
+      }
+    }
+    const style = getComputedStyle(article);
+    const divider = parseFloat(style.borderLeftWidth) ? [Math.floor(box.left), box.top + box.height / 2]
+      : parseFloat(style.borderTopWidth) ? [box.left + box.width / 2, Math.floor(box.top)] : null;
+    return { width: box.width, height: box.height, hits,
+      dividerHasLink: divider ? !!document.elementFromPoint(...divider as [number, number])?.closest("a") : false };
+  });
+  expect(result.width).toBeGreaterThanOrEqual(44);
+  expect(result.height).toBeGreaterThanOrEqual(44);
+  expect(result.hits.every((hit) => hit.matches), JSON.stringify(result)).toBe(true);
+  expect(result.dividerHasLink).toBe(false);
 }

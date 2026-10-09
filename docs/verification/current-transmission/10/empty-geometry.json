@@ -1,0 +1,457 @@
+[
+  {
+    "viewport": {
+      "width": 320,
+      "height": 740
+    },
+    "layout": "rows",
+    "signals": [
+      {
+        "x": 20,
+        "y": 3090.125,
+        "width": 280,
+        "height": 192.96875,
+        "label": "Now Building",
+        "topDivider": "0px",
+        "leftDivider": "0px",
+        "topStyle": "none",
+        "leftStyle": "none"
+      },
+      {
+        "x": 20,
+        "y": 3283.09375,
+        "width": 280,
+        "height": 171.578125,
+        "label": "Latest Dispatch",
+        "topDivider": "1px",
+        "leftDivider": "0px",
+        "topStyle": "solid",
+        "leftStyle": "none"
+      },
+      {
+        "x": 20,
+        "y": 3454.671875,
+        "width": 280,
+        "height": 193.96875,
+        "label": "Next Experiment",
+        "topDivider": "1px",
+        "leftDivider": "0px",
+        "topStyle": "solid",
+        "leftStyle": "none"
+      }
+    ],
+    "spacing": [
+      {
+        "textTop": 3137.71875,
+        "copyTop": 3184.71875,
+        "labelGap": 10,
+        "copyGap": 12,
+        "singleLine": true
+      },
+      {
+        "textTop": 3331.6875,
+        "copyTop": 3378.6875,
+        "labelGap": 10,
+        "copyGap": 12,
+        "singleLine": true
+      },
+      {
+        "textTop": 3503.265625,
+        "copyTop": 3550.265625,
+        "labelGap": 10,
+        "copyGap": 12,
+        "singleLine": true
+      }
+    ]
+  },
+  {
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "layout": "rows",
+    "signals": [
+      {
+        "x": 20,
+        "y": 2913.734375,
+        "width": 350,
+        "height": 170.578125,
+        "label": "Now Building",
+        "topDivider": "0px",
+        "leftDivider": "0px",
+        "topStyle": "none",
+        "leftStyle": "none"
+      },
+      {
+        "x": 20,
+        "y": 3084.3125,
+        "width": 350,
+        "height": 171.578125,
+        "label": "Latest Dispatch",
+        "topDivider": "1px",
+        "leftDivider": "0px",
+        "topStyle": "solid",
+        "leftStyle": "none"
+      },
+      {
+        "x": 20,
+        "y": 3255.890625,
+        "width": 350,
+        "height": 193.96875,
+        "label": "Next Experiment",
+        "topDivider": "1px",
+        "leftDivider": "0px",
+        "topStyle": "solid",
+        "leftStyle": "none"
+      }
+    ],
+    "spacing": [
+      {
+        "textTop": 2961.328125,
+        "copyTop": 3008.328125,
+        "labelGap": 10,
+        "copyGap": 12,
+        "singleLine": true
+      },
+      {
+        "textTop": 3132.90625,
+        "copyTop": 3179.90625,
+        "labelGap": 10,
+        "copyGap": 12,
+        "singleLine": true
+      },
+      {
+        "textTop": 3304.484375,
+        "copyTop": 3351.484375,
+        "labelGap": 10,
+        "copyGap": 12,
+        "singleLine": true
+      }
+    ]
+  },
+  {
+    "viewport": {
+      "width": 768,
+      "height": 1024
+    },
+    "layout": "rows",
+    "signals": [
+      {
+        "x": 23.03125,
+        "y": 2851.3125,
+        "width": 721.9375,
+        "height": 170.578125,
+        "label": "Now Building",
+        "topDivider": "0px",
+        "leftDivider": "0px",
+        "topStyle": "none",
+        "leftStyle": "none"
+      },
+      {
+        "x": 23.03125,
+        "y": 3021.890625,
+        "width": 721.9375,
+        "height": 171.578125,
+        "label": "Latest Dispatch",
+        "topDivider": "1px",
+        "leftDivider": "0px",
+        "topStyle": "solid",
+        "leftStyle": "none"
+      },
+      {
+        "x": 23.03125,
+        "y": 3193.46875,
+        "width": 721.9375,
+        "height": 171.578125,
+        "label": "Next Experiment",
+        "topDivider": "1px",
+        "leftDivider": "0px",
+        "topStyle": "solid",
+        "leftStyle": "none"
+      }
+    ],
+    "spacing": [
+      {
+        "textTop": 2898.90625,
+        "copyTop": 2945.90625,
+        "labelGap": 10,
+        "copyGap": 12,
+        "singleLine": true
+      },
+      {
+        "textTop": 3070.484375,
+        "copyTop": 3117.484375,
+        "labelGap": 10,
+        "copyGap": 12,
+        "singleLine": true
+      },
+      {
+        "textTop": 3242.0625,
+        "copyTop": 3289.0625,
+        "labelGap": 10,
+        "copyGap": 12,
+        "singleLine": true
+      }
+    ]
+  },
+  {
+    "viewport": {
+      "width": 895,
+      "height": 900
+    },
+    "layout": "rows",
+    "signals": [
+      {
+        "x": 26.84375,
+        "y": 3005.796875,
+        "width": 841.3125,
+        "height": 170.578125,
+        "label": "Now Building",
+        "topDivider": "0px",
+        "leftDivider": "0px",
+        "topStyle": "none",
+        "leftStyle": "none"
+      },
+      {
+        "x": 26.84375,
+        "y": 3176.375,
+        "width": 841.3125,
+        "height": 171.578125,
+        "label": "Latest Dispatch",
+        "topDivider": "1px",
+        "leftDivider": "0px",
+        "topStyle": "solid",
+        "leftStyle": "none"
+      },
+      {
+        "x": 26.84375,
+        "y": 3347.953125,
+        "width": 841.3125,
+        "height": 171.578125,
+        "label": "Next Experiment",
+        "topDivider": "1px",
+        "leftDivider": "0px",
+        "topStyle": "solid",
+        "leftStyle": "none"
+      }
+    ],
+    "spacing": [
+      {
+        "textTop": 3053.390625,
+        "copyTop": 3100.390625,
+        "labelGap": 10,
+        "copyGap": 12,
+        "singleLine": true
+      },
+      {
+        "textTop": 3224.96875,
+        "copyTop": 3271.96875,
+        "labelGap": 10,
+        "copyGap": 12,
+        "singleLine": true
+      },
+      {
+        "textTop": 3396.546875,
+        "copyTop": 3443.546875,
+        "labelGap": 10,
+        "copyGap": 12,
+        "singleLine": true
+      }
+    ]
+  },
+  {
+    "viewport": {
+      "width": 896,
+      "height": 900
+    },
+    "layout": "columns",
+    "signals": [
+      {
+        "x": 26.875,
+        "y": 2043.53125,
+        "width": 280.75,
+        "height": 192.96875,
+        "label": "Now Building",
+        "topDivider": "0px",
+        "leftDivider": "0px",
+        "topStyle": "none",
+        "leftStyle": "none"
+      },
+      {
+        "x": 307.625,
+        "y": 2043.53125,
+        "width": 280.75,
+        "height": 192.96875,
+        "label": "Latest Dispatch",
+        "topDivider": "0px",
+        "leftDivider": "1px",
+        "topStyle": "none",
+        "leftStyle": "solid"
+      },
+      {
+        "x": 588.375,
+        "y": 2043.53125,
+        "width": 280.75,
+        "height": 192.96875,
+        "label": "Next Experiment",
+        "topDivider": "0px",
+        "leftDivider": "1px",
+        "topStyle": "none",
+        "leftStyle": "solid"
+      }
+    ],
+    "spacing": [
+      {
+        "textTop": 2091.125,
+        "copyTop": 2138.125,
+        "labelGap": 10,
+        "copyGap": 12,
+        "singleLine": true
+      },
+      {
+        "textTop": 2091.125,
+        "copyTop": 2138.125,
+        "labelGap": 10,
+        "copyGap": 12,
+        "singleLine": true
+      },
+      {
+        "textTop": 2091.125,
+        "copyTop": 2138.125,
+        "labelGap": 10,
+        "copyGap": 12,
+        "singleLine": true
+      }
+    ]
+  },
+  {
+    "viewport": {
+      "width": 1024,
+      "height": 900
+    },
+    "layout": "columns",
+    "signals": [
+      {
+        "x": 30.71875,
+        "y": 2096.515625,
+        "width": 320.84375,
+        "height": 192.96875,
+        "label": "Now Building",
+        "topDivider": "0px",
+        "leftDivider": "0px",
+        "topStyle": "none",
+        "leftStyle": "none"
+      },
+      {
+        "x": 351.5625,
+        "y": 2096.515625,
+        "width": 320.859375,
+        "height": 192.96875,
+        "label": "Latest Dispatch",
+        "topDivider": "0px",
+        "leftDivider": "1px",
+        "topStyle": "none",
+        "leftStyle": "solid"
+      },
+      {
+        "x": 672.421875,
+        "y": 2096.515625,
+        "width": 320.84375,
+        "height": 192.96875,
+        "label": "Next Experiment",
+        "topDivider": "0px",
+        "leftDivider": "1px",
+        "topStyle": "none",
+        "leftStyle": "solid"
+      }
+    ],
+    "spacing": [
+      {
+        "textTop": 2144.109375,
+        "copyTop": 2191.109375,
+        "labelGap": 10,
+        "copyGap": 12,
+        "singleLine": true
+      },
+      {
+        "textTop": 2144.109375,
+        "copyTop": 2191.109375,
+        "labelGap": 10,
+        "copyGap": 12,
+        "singleLine": true
+      },
+      {
+        "textTop": 2144.109375,
+        "copyTop": 2191.109375,
+        "labelGap": 10,
+        "copyGap": 12,
+        "singleLine": true
+      }
+    ]
+  },
+  {
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    },
+    "layout": "columns",
+    "signals": [
+      {
+        "x": 88,
+        "y": 2298,
+        "width": 421.328125,
+        "height": 170.578125,
+        "label": "Now Building",
+        "topDivider": "0px",
+        "leftDivider": "0px",
+        "topStyle": "none",
+        "leftStyle": "none"
+      },
+      {
+        "x": 509.328125,
+        "y": 2298,
+        "width": 421.328125,
+        "height": 170.578125,
+        "label": "Latest Dispatch",
+        "topDivider": "0px",
+        "leftDivider": "1px",
+        "topStyle": "none",
+        "leftStyle": "solid"
+      },
+      {
+        "x": 930.65625,
+        "y": 2298,
+        "width": 421.34375,
+        "height": 170.578125,
+        "label": "Next Experiment",
+        "topDivider": "0px",
+        "leftDivider": "1px",
+        "topStyle": "none",
+        "leftStyle": "solid"
+      }
+    ],
+    "spacing": [
+      {
+        "textTop": 2345.59375,
+        "copyTop": 2392.59375,
+        "labelGap": 10,
+        "copyGap": 12,
+        "singleLine": true
+      },
+      {
+        "textTop": 2345.59375,
+        "copyTop": 2392.59375,
+        "labelGap": 10,
+        "copyGap": 12,
+        "singleLine": true
+      },
+      {
+        "textTop": 2345.59375,
+        "copyTop": 2392.59375,
+        "labelGap": 10,
+        "copyGap": 12,
+        "singleLine": true
+      }
+    ]
+  }
+]

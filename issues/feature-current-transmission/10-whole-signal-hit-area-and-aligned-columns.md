@@ -1,6 +1,6 @@
 # 10 — Align the columns and make the whole signal the hit area
 
-Status: not started
+Status: implemented and verified locally — 2026-10-09
 
 ## Parent
 
@@ -18,17 +18,21 @@ Move the hit area off the headline's layout: a linked signal's entire surface ac
 
 ## Acceptance criteria
 
-- [ ] In the three-column layout, single-line headlines in linked and non-interactive signals share the same top position, and their supporting text starts at the same position, within 1px. Measured in both the populated and empty-blog states.
-- [ ] The same holds in stacked rows: a linked signal's headline-to-label and copy-to-headline spacing equals a non-interactive signal's, within 1px.
-- [ ] Clicking or tapping anywhere on a linked signal activates its link. Clicking a non-interactive signal does nothing.
-- [ ] Each linked signal's hit area is at least 44 by 44 CSS pixels at every tested width, and stays inside its own signal without overlapping a neighbor or a divider.
-- [ ] The focus ring is drawn around the headline text, not the whole signal, and remains the established Chrome focus treatment.
-- [ ] Each signal still exposes exactly one link (or none); tab order and accessible names are unchanged.
-- [ ] Long-headline and long-summary fixtures still wrap and clamp as before, without horizontal overflow, on both sides of the layout breakpoint.
-- [ ] No ambient animation is introduced; reduced-motion behavior is unchanged.
-- [ ] Desktop, tablet, and phone captures are visually inspected for column alignment and recorded separately from the structural test results.
-- [ ] `npm test`, `npm run lint`, `npm run typecheck`, and `npm run build` pass.
+- [x] In the three-column layout, single-line headlines in linked and non-interactive signals share the same top position, and their supporting text starts at the same position, within 1px. Measured in both the populated and empty-blog states.
+- [x] The same holds in stacked rows: a linked signal's headline-to-label and copy-to-headline spacing equals a non-interactive signal's, within 1px.
+- [x] Clicking or tapping anywhere on a linked signal activates its link. Clicking a non-interactive signal does nothing.
+- [x] Each linked signal's hit area is at least 44 by 44 CSS pixels at every tested width, and stays inside its own signal without overlapping a neighbor or a divider.
+- [x] The focus ring is drawn around the headline text, not the whole signal, and remains the established Chrome focus treatment.
+- [x] Each signal still exposes exactly one link (or none); tab order and accessible names are unchanged.
+- [x] Long-headline and long-summary fixtures still wrap and clamp as before, without horizontal overflow, on both sides of the layout breakpoint.
+- [x] No ambient animation is introduced; reduced-motion behavior is unchanged.
+- [x] Desktop, tablet, and phone captures are visually inspected for column alignment and recorded separately from the structural test results.
+- [x] `npm test`, `npm run lint`, `npm run typecheck`, and `npm run build` pass.
 
 ## Blocked by
 
 - [07 — Render every signal through one component and validate in one place](07-single-signal-component-and-validation-site.md)
+
+## Verification
+
+[Ticket 10 evidence](../../docs/verification/current-transmission/10/README.md) records rendered geometry, pointer and keyboard checks, separate visual inspection, and required repository checks.
