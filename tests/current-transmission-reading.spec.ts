@@ -4,7 +4,7 @@ import { readFileSync, rmSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { buildTransmissionApp, createTransmissionApp, serveTransmissionApp } from "./support/transmission-app";
 import { liveTransmission } from "./support/transmission-editorial";
-import { checkTransmissionLayout, expectStaticTransmission, expectVisibleLinkFocus } from "./support/transmission-reading";
+import { checkTransmissionLayout, expectSignalHitArea, expectStaticTransmission, expectVisibleLinkFocus } from "./support/transmission-reading";
 
 const { nowBuilding, nextExperiment, dispatch: published } = liveTransmission();
 const publishedTitle = published.title;
@@ -15,12 +15,8 @@ test("stacked signals provide readable copy and comfortable link targets", async
   await page.evaluate(() => document.fonts.ready);
   const ledger = page.getByRole("region", { name: "Current Transmission" });
 
-  for (const link of await ledger.getByRole("link").all()) {
-    const target = await link.boundingBox();
-    expect(target!.height).toBeGreaterThanOrEqual(44);
-    expect(target!.width).toBeGreaterThanOrEqual(44);
-  }
   for (const signal of await ledger.getByRole("article").all()) {
+    await expectSignalHitArea(signal);
     const copy = signal.locator("p").nth(1);
     expect(await copy.evaluate((element) => parseFloat(getComputedStyle(element).fontSize))).toBeGreaterThanOrEqual(14);
   }
@@ -182,7 +178,7 @@ test.describe("Reading isolated long authored copy", () => {
     }
   });
 
-  test("following the long dispatch retains every authored sentence and the article's ending", async ({ page }) => {
+  test("following the long dispatch retains every authored sentence and the article's ending", async ({ page }, info) => {
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto("http://127.0.0.1:3023/");
     const ledger = page.getByRole("region", { name: "Current Transmission" });
@@ -190,6 +186,7 @@ test.describe("Reading isolated long authored copy", () => {
     await page.keyboard.press("Tab");
     const dispatch = ledger.getByRole("link", { name: longTitle });
     await expectVisibleLinkFocus(page, dispatch);
+    await page.screenshot({ path: info.outputPath("long-headline-focus-390.png") });
     await page.keyboard.press("Enter");
     await expect(page).toHaveURL("http://127.0.0.1:3023/blog/long-field-notes");
     await expect(page.getByRole("heading", { level: 1 })).toHaveText(longTitle);
