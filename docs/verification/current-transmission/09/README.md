@@ -65,3 +65,9 @@ needed. All existing invalid-build fixtures and content-contract tests pass unch
 
 Work is local on `feat/current-transmission-09-destination-aware-now-building`.
 No commit, push, or deployment was performed.
+
+## CI reverse-focus follow-up
+
+The original integration run above predates the reported CI focus failure. See the
+[CI focus repair](focus-ci-repair.md) for its reproduced failure, retained regression,
+scroll-margin correction, bounded test synchronization, and follow-up check results.

@@ -60,7 +60,7 @@ for (const reducedMotion of ["no-preference", "reduce"] as const) {
       await page.keyboard.press("Tab");
       await expectVisibleLinkFocus(page, dispatch);
       await page.keyboard.press("Tab");
-      await expect(page.getByRole("region", { name: "More projects" }).getByRole("link").first()).toBeFocused();
+      await expectVisibleLinkFocus(page, page.getByRole("region", { name: "More projects" }).getByRole("link").first());
       await page.keyboard.press("Shift+Tab");
       await expectVisibleLinkFocus(page, dispatch);
       await page.keyboard.press("Shift+Tab");
@@ -89,6 +89,31 @@ for (const reducedMotion of ["no-preference", "reduce"] as const) {
       await expect(page).toHaveURL(published.route);
       // The article's own body is covered by the isolated dispatch and long-copy fixtures.
       await expect(page.getByRole("heading", { name: publishedTitle, level: 1 })).toBeVisible();
+    }
+  });
+
+  test(`reverse ledger focus clears the sticky header after manual scrolling with ${reducedMotion} motion`, async ({ page }, info) => {
+    await page.emulateMedia({ reducedMotion });
+    for (const viewport of [{ width: 390, height: 844 }, { width: 1440, height: 900 }]) {
+      await page.setViewportSize(viewport);
+      await page.goto("/");
+      await page.evaluate(() => document.fonts.ready);
+      const ledger = page.getByRole("region", { name: "Current Transmission" });
+      const building = ledger.getByRole("link", { name: nowBuilding.headline });
+      const dispatch = ledger.getByRole("link", { name: publishedTitle });
+      for (const offset of [0, 8]) {
+        await dispatch.focus();
+        await expectVisibleLinkFocus(page, dispatch);
+        // A visitor can scroll the preceding link into the header-covered strip.
+        // Shift+Tab must bring that link and its focus ring clear of the header.
+        await building.evaluate((link, shift) => window.scrollTo({
+          top: link.getBoundingClientRect().top + window.scrollY - shift,
+          behavior: "instant",
+        }), offset);
+        await page.keyboard.press("Shift+Tab");
+        await expectVisibleLinkFocus(page, building);
+      }
+      await page.screenshot({ path: info.outputPath(`reverse-focus-${viewport.width}.png`) });
     }
   });
 }

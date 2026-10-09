@@ -39,6 +39,9 @@ contains the external and internal red-to-green test logs and rendered desktop,
 tablet, and phone previews. Owner review of `Case study →` was requested against
 the rendered fixture; this criterion remains unchecked until the owner responds.
 
+The [CI focus repair record](../../docs/verification/current-transmission/09/focus-ci-repair.md)
+tracks the follow-up for backward keyboard focus beneath the sticky header.
+
 ## Blocked by
 
 - [06 — Decouple the ledger tests from live editorial copy](06-decouple-tests-from-live-copy.md)
