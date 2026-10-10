@@ -139,6 +139,8 @@ test.describe("Current Transmission with an empty blog", () => {
     await expect(ledger.getByText("UPDATED · 02 JAN 2001")).toBeVisible();
     const building = ledger.getByRole("link", { name: edited.nowBuilding.headline });
     await expect(building).toHaveAttribute("href", "/work/telescope");
+    await expect(building).toHaveAccessibleName("HARBOUR LOG");
+    await expect(building).toHaveAccessibleDescription("Case study");
     await expect(building).not.toHaveAttribute("target");
     await expect(building).not.toHaveAttribute("rel");
     await expect(ledger.getByRole("article", { name: edited.nowBuilding.headline }).locator("p").last()).toHaveText("Case study →");

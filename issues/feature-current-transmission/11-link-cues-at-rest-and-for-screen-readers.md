@@ -1,6 +1,6 @@
 # 11 — Show where each link goes, at rest and to screen readers
 
-Status: not started
+Status: implemented and technically verified locally; owner cue review pending
 
 ## Parent
 
@@ -19,16 +19,23 @@ The empty-blog fallback and Next Experiment stay non-interactive and gain no cue
 
 ## Acceptance criteria
 
-- [ ] A populated Latest Dispatch footer shows the publication date and a destination cue, visible without hover at every tested width, and visually subordinate like the existing footer metadata.
-- [ ] The empty-blog fallback footer remains exactly OFF AIR and Next Experiment's remains exactly IN CONCEPT, with no destination cue and no link.
-- [ ] Each ledger link has an accessible description naming its destination kind (repository, case study, or article). The link's accessible name and the heading text are unchanged.
-- [ ] Decorative arrows remain hidden from assistive technology.
-- [ ] The publication date keeps its `<time>` element and ISO `datetime`.
-- [ ] Stacked and three-column layouts keep their geometry: no added rows of height beyond the footer line, no horizontal overflow, footers still aligned to the bottom of their columns.
-- [ ] No ambient animation is introduced; keyboard order, visible focus, and reduced-motion behavior are unchanged.
+- [x] A populated Latest Dispatch footer shows the publication date and a destination cue, visible without hover at every tested width, and visually subordinate like the existing footer metadata.
+- [x] The empty-blog fallback footer remains exactly OFF AIR and Next Experiment's remains exactly IN CONCEPT, with no destination cue and no link.
+- [x] Each ledger link has an accessible description naming its destination kind (repository, case study, or article). The link's accessible name and the heading text are unchanged.
+- [x] Decorative arrows remain hidden from assistive technology.
+- [x] The publication date keeps its `<time>` element and ISO `datetime`.
+- [x] Stacked and three-column layouts keep their geometry: no added rows of height beyond the footer line, no horizontal overflow, footers still aligned to the bottom of their columns.
+- [x] No ambient animation is introduced; keyboard order, visible focus, and reduced-motion behavior are unchanged.
 - [ ] The owner's review of the dispatch cue copy is recorded. Agent inspection alone does not satisfy this criterion.
-- [ ] `npm test`, `npm run lint`, `npm run typecheck`, and `npm run build` pass.
+- [x] `npm test`, `npm run lint`, `npm run typecheck`, and `npm run build` pass.
 
 ## Blocked by
 
 - [09 — Make the Now Building link match its destination](09-destination-aware-now-building-link.md)
+
+## Verification
+
+See the [ticket 11 verification record](../../docs/verification/current-transmission/11/README.md)
+for red/green evidence, checks, and rendered phone/tablet/desktop captures.
+The dispatch draft is `READ →`; its accessible description adds “article”.
+Owner review has not yet been received and remains open.

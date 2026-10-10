@@ -14,20 +14,22 @@ type TransmissionSignalProps = {
 };
 
 function TransmissionSignal({ titleId, label, headline, supportingText, footer, destination }: TransmissionSignalProps) {
+  const footerId = `${titleId}-footer`;
+
   return (
     <article className="transmission__signal" aria-labelledby={titleId}>
       <p className="transmission__label">{label}</p>
       <h3 id={titleId}>
         {destination ? (
           destination.startsWith("/") ? (
-            <Link className="transmission__link" href={destination}>{headline}</Link>
+            <Link className="transmission__link" href={destination} aria-describedby={footerId}>{headline}</Link>
           ) : (
-            <a className="transmission__link" href={destination} target="_blank" rel="noreferrer">{headline}</a>
+            <a className="transmission__link" href={destination} aria-describedby={footerId} target="_blank" rel="noreferrer">{headline}</a>
           )
         ) : headline}
       </h3>
       <p className="transmission__copy">{supportingText}</p>
-      <p className="transmission__footer">{footer}</p>
+      <p id={footerId} className="transmission__footer">{footer}</p>
     </article>
   );
 }
@@ -57,7 +59,7 @@ export default function CurrentTransmission() {
             headline={latestPost?.title ?? "FIRST DISPATCH PENDING"}
             supportingText={latestPost?.summary ?? "Field notes are being prepared."}
             destination={latestPost ? `/blog/${latestPost.slug}` : undefined}
-            footer={latestPost ? <time dateTime={latestPost.date}>{formatCalendarDate(latestPost.date)}</time> : "OFF AIR"}
+            footer={latestPost ? <><time dateTime={latestPost.date}>{formatCalendarDate(latestPost.date)}</time> · <span>READ<span className="visually-hidden"> article</span> <span aria-hidden="true">→</span></span></> : "OFF AIR"}
           />
           <TransmissionSignal
             titleId="experiment-title"
