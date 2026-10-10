@@ -9,6 +9,53 @@ import { checkTransmissionLayout, expectSignalHitArea, expectStaticTransmission,
 const { nowBuilding, nextExperiment, dispatch: published } = liveTransmission();
 const publishedTitle = published.title;
 
+test("dispatch destination cue is visible at rest on one footer line", async ({ page }, info) => {
+  await page.goto("/");
+  const ledger = page.getByRole("region", { name: "Current Transmission" });
+  const dispatch = ledger.getByRole("article", { name: publishedTitle });
+  const footer = dispatch.locator("p").last();
+  for (const width of [320, 390, 768, 895, 896, 1024, 1440]) {
+    await page.setViewportSize({ width, height: 900 });
+    await page.mouse.move(0, 0);
+    await page.evaluate(() => document.fonts.ready);
+    await expect(footer).toContainText("· READ");
+    await expect(footer.getByText("READ", { exact: false })).toBeVisible();
+    const geometry = await footer.evaluate((element) => ({
+      height: element.getBoundingClientRect().height,
+      lineHeight: parseFloat(getComputedStyle(element).lineHeight),
+    }));
+    expect(geometry.height).toBeLessThanOrEqual(geometry.lineHeight + 1);
+    const footerBottoms = await ledger.getByRole("article").evaluateAll((articles) => articles.map((article) => {
+      const footer = article.querySelector("p:last-child")!;
+      const style = getComputedStyle(article);
+      const bottom = footer.getBoundingClientRect().bottom;
+      return { bottom, inset: article.getBoundingClientRect().bottom - bottom - parseFloat(style.paddingBottom) };
+    }));
+    for (const item of footerBottoms) {
+      expect(Math.abs(item.inset)).toBeLessThanOrEqual(1);
+      if (width >= 896) expect(Math.abs(item.bottom - footerBottoms[0].bottom)).toBeLessThanOrEqual(1);
+    }
+    expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(width);
+    if ([390, 768, 1440].includes(width)) {
+      await ledger.screenshot({ path: info.outputPath(`link-cues-${width}.png`) });
+    }
+  }
+});
+
+test("ledger links describe destinations without changing headline names", async ({ page }) => {
+  await page.goto("/");
+  const ledger = page.getByRole("region", { name: "Current Transmission" });
+  const building = ledger.getByRole("link", { name: nowBuilding.headline, exact: true });
+  await expect(building).toHaveAccessibleName(nowBuilding.headline);
+  await expect(building).toHaveAccessibleDescription(nowBuilding.destination.startsWith("/") ? "Case study" : "Repository");
+  const dispatch = ledger.getByRole("link", { name: publishedTitle, exact: true });
+  await expect(dispatch).toHaveAccessibleName(publishedTitle);
+  await expect(dispatch).toHaveAccessibleDescription(/READ article$/);
+  const snapshot = await ledger.ariaSnapshot();
+  expect(snapshot).not.toMatch(/[→↗]/);
+  await expect(ledger.getByRole("heading", { level: 3 })).toHaveText([nowBuilding.headline, publishedTitle, nextExperiment.headline]);
+});
+
 test("stacked signals provide readable copy and comfortable link targets", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto("/");

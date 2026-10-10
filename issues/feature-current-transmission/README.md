@@ -53,7 +53,8 @@ record unchanged refactor tests, date regressions, and all 317 tests plus lint,
 type checking, and the default production build passing. Ticket 09 is implemented
 and technically verified locally; owner review of its internal cue is pending.
 See its [verification record](../../docs/verification/current-transmission/09/README.md).
-Tickets 10–11 are not started.
+Ticket 11 is implemented and technically verified locally; owner review of `READ →` remains pending.
+See its [verification record](../../docs/verification/current-transmission/11/README.md).
 
 | Ticket | Covers | Blocked by |
 | --- | --- | --- |
