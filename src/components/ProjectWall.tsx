@@ -1,11 +1,7 @@
-import GrooveboxTile from "@/components/tiles/GrooveboxTile";
-import SoundCityTile from "@/components/tiles/SoundCityTile";
-import TelescopeTile from "@/components/tiles/TelescopeTile";
-import TerminalTile from "@/components/tiles/TerminalTile";
 import ProjectWallMotion from "@/components/tiles/ProjectWallMotion";
 import TileMotion from "@/components/tiles/TileMotion";
 import { listEnrichedWallProjects } from "@/content/projects/catalog";
-import type { EnrichedProject } from "@/content/projects/enrichment";
+import { showcase } from "@/components/showcase/registry";
 import { displayFaceClass } from "@/fonts";
 
 export default async function ProjectWall() {
@@ -18,37 +14,22 @@ export default async function ProjectWall() {
         <p>04 of 04 · four night machines</p>
       </div>
       <ProjectWallMotion>
-        {projects.map((project, index) => (
-          <li key={project.slug}>
-            {project.tile ? (
+        {projects.map((project, index) => {
+          const { Tile } = showcase.get(project.slug);
+          if (!project.tile) throw new Error(`Showcase "${project.slug}": missing tile identity`);
+          return (
+            <li key={project.slug}>
               <TileMotion slug={project.slug}>
-                {renderTile(project, index)}
+                <Tile
+                  project={project}
+                  index={index}
+                  displayClassName={displayFaceClass(project.tile.displayFace)}
+                />
               </TileMotion>
-            ) : null}
-          </li>
-        ))}
+            </li>
+          );
+        })}
       </ProjectWallMotion>
     </section>
   );
-}
-
-function renderTile(project: EnrichedProject, index: number) {
-  switch (project.slug) {
-    case "elevated-bpm":
-      return (
-        <GrooveboxTile
-          project={project}
-          index={index}
-          displayClassName={displayFaceClass(project.tile?.displayFace)}
-        />
-      );
-    case "terminal-one":
-      return <TerminalTile project={project} index={index} />;
-    case "telescope":
-      return <TelescopeTile project={project} index={index} />;
-    case "sound-city":
-      return <SoundCityTile project={project} index={index} />;
-    default:
-      return null;
-  }
 }
