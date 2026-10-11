@@ -19,6 +19,7 @@ export function generateStaticParams() {
 
 export default async function Image({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
+  if (!listCaseStudySlugs().includes(slug)) notFound();
   const project = getProject(slug);
   if (!project) notFound();
 

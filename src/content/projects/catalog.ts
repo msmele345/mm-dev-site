@@ -17,6 +17,7 @@ const projects: readonly Project[] = [
   soundCity,
 ];
 
+/** Published routes survive wall rotation; draft copy is an independent review flag. */
 const CASE_STUDY_SLUGS = [
   "elevated-bpm",
   "terminal-one",
@@ -53,6 +54,9 @@ export function listWallProjects(): readonly Project[] {
     const project = getProject(slug);
     if (!project) {
       throw new Error(`Featured selection "${slug}": unknown project; use an authored catalogue slug`);
+    }
+    if (!listCaseStudySlugs().includes(slug)) {
+      throw new Error(`Featured selection "${slug}": no published case-study destination; publish it before featuring`);
     }
     return project;
   });
