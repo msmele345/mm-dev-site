@@ -11,25 +11,29 @@ export default async function ProjectWall() {
     <section className="project-wall" id="work" aria-labelledby="work-title">
       <div className="project-wall__bar">
         <h2 id="work-title">Project wall</h2>
-        <p>04 of 04 · four night machines</p>
+        <p>{projects.length} featured {projects.length === 1 ? "project" : "projects"}</p>
       </div>
-      <ProjectWallMotion>
-        {projects.map((project, index) => {
-          const { Tile } = showcase.get(project.slug);
-          if (!project.tile) throw new Error(`Showcase "${project.slug}": missing tile identity`);
-          return (
-            <li key={project.slug}>
-              <TileMotion slug={project.slug}>
-                <Tile
-                  project={project}
-                  index={index}
-                  displayClassName={displayFaceClass(project.tile.displayFace)}
-                />
-              </TileMotion>
-            </li>
-          );
-        })}
-      </ProjectWallMotion>
+      {projects.length === 0 ? (
+        <p className="project-wall__empty">No featured projects right now.</p>
+      ) : (
+        <ProjectWallMotion>
+          {projects.map((project, index) => {
+            const { Tile } = showcase.get(project.slug);
+            if (!project.tile) throw new Error(`Showcase "${project.slug}": missing tile identity`);
+            return (
+              <li key={project.slug}>
+                <TileMotion slug={project.slug}>
+                  <Tile
+                    project={project}
+                    index={index}
+                    displayClassName={displayFaceClass(project.tile.displayFace)}
+                  />
+                </TileMotion>
+              </li>
+            );
+          })}
+        </ProjectWallMotion>
+      )}
     </section>
   );
 }

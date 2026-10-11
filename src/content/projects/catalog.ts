@@ -23,6 +23,7 @@ const CASE_STUDY_SLUGS = [
   "telescope",
   "sound-city",
 ] as const;
+/** Edit this ordered selection to rotate the wall; retain authored records and published slugs. */
 const WALL_SLUGS = [
   "elevated-bpm",
   "terminal-one",
@@ -43,9 +44,18 @@ export function listCaseStudySlugs(): readonly string[] {
 }
 
 export function listWallProjects(): readonly Project[] {
-  return WALL_SLUGS.map((slug) => getProject(slug)).filter(
-    (project): project is Project => project !== undefined,
-  );
+  const selected = new Set<string>();
+  return WALL_SLUGS.map((slug) => {
+    if (selected.has(slug)) {
+      throw new Error(`Featured selection "${slug}": duplicate slug; select each project only once`);
+    }
+    selected.add(slug);
+    const project = getProject(slug);
+    if (!project) {
+      throw new Error(`Featured selection "${slug}": unknown project; use an authored catalogue slug`);
+    }
+    return project;
+  });
 }
 
 /**

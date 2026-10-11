@@ -484,8 +484,12 @@ body {
   scroll-margin-top: 4.5rem;
 }
 
-.project-wall__grid > li:empty {
-  display: none;
+.project-wall__empty {
+  max-width: 79rem;
+  margin: 0 auto;
+  color: var(--color-mute);
+  font-size: 0.875rem;
+  line-height: 1.75;
 }
 
 /* ── More-projects rail ──
