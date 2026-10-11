@@ -1,0 +1,24 @@
+
+/* Test-only identity: appended to an isolated app's globals.css. */
+.signal-loom-tile__loom { position: relative; display: grid; grid-template-columns: repeat(8, 1fr); gap: 0.5rem; overflow: hidden; min-height: 17rem; padding: 2.5rem 1rem 1rem; background: var(--tile-panel); border: 1px dashed var(--tile-accent); }
+.signal-loom-tile__loom p { position: absolute; top: 0.8rem; left: 1rem; margin: 0; color: var(--tile-mute); font-size: 0.62rem; letter-spacing: 0.15em; }
+.signal-loom-tile__thread { background: linear-gradient(var(--tile-accent), var(--tile-ink)); transform-origin: top; animation: loom-weave 4s ease-in-out infinite; animation-delay: calc(var(--thread) * -300ms); }
+.tile-motion[data-crescendo="true"] .signal-loom-tile__thread { animation-duration: 0.8s; }
+.signal-loom-tile__meta { display: grid; gap: 0.75rem; }
+.signal-loom-tile__meta strong { color: var(--tile-ink); font-family: var(--font-display), sans-serif; font-size: clamp(1.8rem, 5vw, 3.4rem); font-weight: 400; letter-spacing: 0.04em; line-height: 0.9; text-transform: uppercase; text-wrap: balance; }
+.signal-loom-tile__index, .signal-loom-tile__go { color: var(--tile-accent); font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; }
+.signal-loom-tile__pitch { color: var(--tile-mute); font-size: clamp(0.75rem, 1.2vw, 0.9rem); line-height: 1.6; }
+.case--signal-loom { --case-display: var(--font-display), sans-serif; }
+.case-motif--signal-loom { display: grid; align-content: end; padding: 1.25rem; background: repeating-linear-gradient(90deg, color-mix(in srgb, var(--case-accent) 22%, transparent) 0 2px, transparent 2px 1.5rem), var(--case-panel); }
+.case-motif--signal-loom p { margin: 0; color: var(--case-mute); font-size: 0.7rem; letter-spacing: 0.15em; }
+.case-motif--signal-loom .case-motif__weave { color: var(--case-accent); font-family: var(--font-display), sans-serif; font-size: clamp(3rem, 10vw, 5.5rem); letter-spacing: 0.04em; line-height: 0.9; }
+
+@keyframes loom-weave {
+  0%, 100% { transform: scaleY(0.45); opacity: 0.5; }
+  50% { transform: scaleY(1); opacity: 1; }
+}
+
+/* Static state: a deliberate frozen weave, each thread at its own length. */
+@media (prefers-reduced-motion: reduce) {
+  .signal-loom-tile__thread { transform: scaleY(calc(0.4 + var(--thread) * 0.08)); opacity: 1; }
+}

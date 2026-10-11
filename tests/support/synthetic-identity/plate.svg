@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="540" viewBox="0 0 960 540" role="img" aria-labelledby="title desc">
+  <title id="title">Signal Loom draft plate</title>
+  <desc id="desc">Eight vertical threads crossed by a single weft on a violet ground.</desc>
+  <rect width="960" height="540" fill="#120a1f"/>
+  <g stroke="#ff5ad1" stroke-width="6">
+    <path d="M120 60V480M220 60V480M320 60V480M420 60V480M520 60V480M620 60V480M720 60V480M820 60V480"/>
+  </g>
+  <path d="M60 270H900" stroke="#f6efff" stroke-width="10"/>
+  <text x="42" y="44" fill="#a394bd" font-family="monospace" font-size="18" letter-spacing="5">DRAFT PLATE · WARP / WEFT</text>
+</svg>

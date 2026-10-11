@@ -1,9 +1,11 @@
+// Relative, not "@/": next.config.ts loads the catalogue (and so this module)
+// for its readiness check, without relying on the path alias.
 import {
   fetchRepoStats,
   parseRepoRef,
   type GithubClientOptions,
   type RepoStats,
-} from "@/lib/github";
+} from "../../lib/github";
 import type { Project, ProjectCore } from "./schema";
 
 /**

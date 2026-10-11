@@ -1,12 +1,44 @@
 import type { NextConfig } from "next";
 import createMDX from "@next/mdx";
+import { readdirSync, statSync } from "node:fs";
+import { join } from "node:path";
 import { currentTransmission } from "./src/content/current-transmission";
+import { listCaseStudySlugs, listProjects, listWallProjects } from "./src/content/projects/catalog";
+import { validateShowcaseContent } from "./src/content/projects/readiness";
 import { validateTransmissionEditorial } from "./src/lib/current-transmission";
 
-// The sole editorial enforcement point: Next loads this config for both dev
+// The editorial enforcement point: Next loads this config for both dev
 // and build, before type checking or page rendering. Mistyped editorial edits
 // therefore fail with the exact content field ahead of generic type diagnostics.
 validateTransmissionEditorial(currentTransmission);
+
+// The same enforcement point for the showcase: an incomplete or contradictory
+// catalogue, publication list, or featured selection stops dev and build with
+// the offending slug and field. Local files only — a missing remote or an
+// unreachable GitHub is never a readiness failure (ADR 0004). A published
+// project with no registered presentation fails where its art is resolved.
+validateShowcaseContent({
+  projects: listProjects(),
+  publishedSlugs: listCaseStudySlugs(),
+  assetExists: publicFileExists,
+});
+// Called for its checks alone: duplicate, unknown, or unpublished featured slugs throw.
+listWallProjects();
+
+/**
+ * Whether a root-relative path names a file under `public/`, matching case
+ * exactly: a mis-cased path resolves on a case-insensitive development disk
+ * and then 404s on the deployed, case-sensitive one.
+ */
+function publicFileExists(src: string): boolean {
+  let directory = join(process.cwd(), "public");
+  for (const segment of src.split("/").filter(Boolean)) {
+    if (!statSync(directory, { throwIfNoEntry: false })?.isDirectory()) return false;
+    if (!readdirSync(directory).includes(segment)) return false;
+    directory = join(directory, segment);
+  }
+  return statSync(directory, { throwIfNoEntry: false })?.isFile() ?? false;
+}
 
 /**
  * Seed the per-build enrichment cache key (ADR 0004).

@@ -2,16 +2,8 @@ import { expect, test } from "@playwright/test";
 import { readFileSync, rmSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import type { ChildProcess } from "node:child_process";
-import { addPreparedFixtureProject, writeFeaturedSelection, createShowcaseApp } from "./support/showcase-app";
+import { addPreparedFixtureProject, writeFeaturedSelection, writePublishedSelection, createShowcaseApp } from "./support/showcase-app";
 import { buildTransmissionApp, serveTransmissionApp, runTransmissionBuild } from "./support/transmission-app";
-
-function writePublishedSelection(dir: string, slugs: readonly string[]) {
-  const file = join(dir, "src/content/projects/catalog.ts");
-  const source = readFileSync(file, "utf8");
-  const selection = /const CASE_STUDY_SLUGS = \[[\s\S]*?\] as const;/;
-  if (!selection.test(source)) throw new Error("Publication fixture could not find CASE_STUDY_SLUGS");
-  writeFileSync(file, source.replace(selection, `const CASE_STUDY_SLUGS = ${JSON.stringify(slugs)} as const;`));
-}
 
 test("build rejects a featured project without a published case study", async () => {
   test.setTimeout(180_000);

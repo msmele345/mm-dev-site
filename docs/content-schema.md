@@ -21,7 +21,7 @@ That review does not block shipping.
 | `slug` | yes | Route segment (`/work/[slug]`). |
 | `pitch` | yes | One- or two-sentence hook. |
 | `draft` | yes | `true` until the owner edits the copy. |
-| `tile` | featured only | Identity for a chameleon tile / themed case study. Omit on the more-projects rail (issue 08). |
+| `tile` | yes | Identity for a chameleon tile / themed case study. More-projects rail entries are a separate `RailProject` record with no tile (issue 08). |
 | `tile.motif` | with tile | What the tile *is* — `groovebox faceplate`, `trading terminal`, `star field`, `club flyer`. |
 | `tile.displayFace` | with tile | Display typeface name. Case studies load the matching `next/font`. |
 | `tile.palette` | with tile | `ground`, `panel`, `ink`, `mute`, `accent`. Optional `steps` quad for sequencer LEDs. |
@@ -46,3 +46,28 @@ That review does not block shipping.
 Issue 03a ships elevated-bpm on the wall and at `/work/elevated-bpm`.
 terminal-one is authored against the schema but not yet on the wall or
 routed — those land in issue 05.
+
+## Readiness
+
+`next.config.ts` validates the catalogue before `next dev` or `next build` does
+anything else (`src/content/projects/readiness.ts`). Every authored record needs:
+
+- a unique lowercase kebab-case `slug`, a nonblank `title` and `pitch`, and a
+  boolean `draft`
+- at least one nonblank `stack` label
+- a `tile` with a nonblank `motif` and `displayFace` and a hex-colour palette
+  (`steps`, when present, is four hex colours)
+- `problem` → `build` → `result` story sections with nonblank headings and bodies
+- at least one screenshot or labeled draft plate whose `src` is a file under
+  `public/` (case-sensitive), with nonblank `alt` and `caption`
+- `links.repo` / `links.demo` either absent or absolute `https://` URLs
+
+Published slugs must name an authored project once, and a featured slug must be
+published. Errors name the slug and field, e.g.
+`Project "telescope": screenshots[0].alt must be a non-empty string`.
+A published project also needs a presentation in
+`src/components/showcase/registry.ts`; without one the build stops with
+`Showcase "<slug>": missing presentation registration`.
+
+`draft: true` and draft plates stay publishable, and a missing remote or
+unavailable GitHub statistics never fail readiness (ADR 0004).
