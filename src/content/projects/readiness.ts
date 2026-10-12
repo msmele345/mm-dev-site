@@ -3,6 +3,10 @@ import type { Project, StoryKind } from "./schema";
 /**
  * Readiness for the authored catalogue and its published case studies.
  *
+ * Every authored record needs a unique route slug. The content rules apply once
+ * a record is published (a featured project must be published), so an
+ * unfinished record can rest in the catalogue without blocking the build.
+ *
  * Checks local content only — never a remote, a token, or GitHub (ADR 0004).
  * Runs before type checking, so every value is treated as unknown: a blanked
  * or mistyped field must name its project and field, not surface as a generic
@@ -114,7 +118,7 @@ function validateProject(project: Fields, label: string, assetExists: ShowcaseCo
 
 /** Reject incomplete or contradictory local configuration with the slug and field named. */
 export function validateShowcaseContent({ projects, publishedSlugs, assetExists }: ShowcaseContent): void {
-  const authored = new Set<string>();
+  const authored = new Map<string, Fields>();
   projects.forEach((entry, index) => {
     const project = fieldsOf(entry) ?? {};
     const slug = project.slug;
@@ -125,8 +129,7 @@ export function validateShowcaseContent({ projects, publishedSlugs, assetExists 
     if (authored.has(slug)) {
       throw new Error(`${label}: duplicate catalogue slug; every authored project needs its own slug`);
     }
-    authored.add(slug);
-    validateProject(project, label, assetExists);
+    authored.set(slug, project);
   });
 
   const published = new Set<string>();
@@ -135,8 +138,10 @@ export function validateShowcaseContent({ projects, publishedSlugs, assetExists 
       throw new Error(`Published case study "${slug}": duplicate slug; publish each case study only once`);
     }
     published.add(slug);
-    if (!authored.has(slug)) {
+    const project = authored.get(slug);
+    if (!project) {
       throw new Error(`Published case study "${slug}": unknown project; use an authored catalogue slug`);
     }
+    validateProject(project, `Project "${slug}"`, assetExists);
   }
 }

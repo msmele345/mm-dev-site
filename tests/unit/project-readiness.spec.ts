@@ -128,3 +128,10 @@ test("published references must name an authored project exactly once", () => {
   expect(() => validateShowcaseContent(content([readyProject()], { publishedSlugs: ["signal-loom", "signal-loom"] })))
     .toThrow('Published case study "signal-loom": duplicate slug; publish each case study only once');
 });
+
+test("an unfinished record may rest in the catalogue until it is published", () => {
+  const unfinished = readyProject({ title: "", story: [], screenshots: [], tile: undefined, links: { demo: "#" } });
+  expect(() => validateShowcaseContent(content([unfinished], { publishedSlugs: [] }))).not.toThrow();
+  expect(() => validateShowcaseContent(content([unfinished])))
+    .toThrow('Project "signal-loom": title must be a non-empty string');
+});

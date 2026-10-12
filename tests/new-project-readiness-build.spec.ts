@@ -7,7 +7,7 @@ import {
   writeFeaturedSelection,
   writePublishedSelection,
 } from "./support/showcase-app";
-import { runTransmissionBuild } from "./support/transmission-app";
+import { buildTransmissionApp, runTransmissionBuild } from "./support/transmission-app";
 
 const PRODUCTION = ["elevated-bpm", "terminal-one", "telescope", "sound-city"];
 const FEATURED = [...PRODUCTION, "signal-loom"];
@@ -102,3 +102,18 @@ for (const { name, error, project, publish, register, featured = FEATURED, publi
     }
   });
 }
+
+test("an unfinished record that is neither published nor featured does not block the build", async ({}, info) => {
+  test.setTimeout(180_000);
+  const dir = createShowcaseApp();
+  try {
+    addSyntheticIdentity(dir, {
+      project: { ...syntheticProject(), title: "", pitch: "", story: [], screenshots: [], stack: [] },
+      publish: false,
+      register: false,
+    });
+    writeFileSync(info.outputPath("build.log"), await buildTransmissionApp(dir));
+  } finally {
+    rmSync(dir, { recursive: true, force: true });
+  }
+});

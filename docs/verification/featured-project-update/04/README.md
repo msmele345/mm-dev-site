@@ -19,8 +19,10 @@ build. A missing presentation registration is not a config-time check: it fails
 where the artwork is resolved, while prerendering the home page (featured) or
 `/work/<slug>` (published). The fixture covers the featured route.
 
-The rules apply to every authored record, not only published or featured ones, so
-an unfinished record cannot sit in the catalogue. `tile.displayFace` is checked
+Slug format and uniqueness apply to every authored record. The content rules
+apply once a record is published (featuring requires publication), so an
+unfinished, unpublished record can rest in the catalogue; a fixture build proves
+it does not block. `tile.displayFace` is checked
 for presence only; a face `src/fonts.ts` does not load falls back to the chrome
 display face, as it does for three of the four production projects.
 
@@ -73,7 +75,7 @@ repository's own Turbopack production build passes with the check in place.
 ## Required checks
 
 - Lint, typecheck, production build, and `git diff --check`: passed.
-- Full suite: 395 passed.
+- Full suite: 397 passed.
 - An earlier full run, started straight after a production build, had two
   failures — `chrome-shell` (primary nav not visible) and
   `published-case-studies` (360s timeout). Neither reproduced in isolation or in

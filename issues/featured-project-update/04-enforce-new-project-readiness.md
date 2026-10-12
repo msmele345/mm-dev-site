@@ -47,6 +47,6 @@ while incomplete or contradictory local configuration stops the build clearly.
   byte-identical to production.
 - The production catalogue, selection, registry, and `public/` are unchanged.
 - Lint, typecheck, production build, and diff whitespace checks passed. Full suite:
-  395 passed. An earlier full run had two transient failures (`chrome-shell` nav
+  397 passed. An earlier full run had two transient failures (`chrome-shell` nav
   visibility, `published-case-studies` timeout) that did not reproduce.
 - Standards and spec reviews ran; their fixes are listed in the verification README.

@@ -5,9 +5,9 @@ project (ADR 0004). Every later surface — chameleon tiles, case studies,
 build-time enrichment, the more-projects rail — consumes this field set.
 
 Author a file in `src/content/projects/` that `satisfies Project` from
-`src/content/projects/schema.ts`. The type is the schema. Two files already
-validate it: `elevated-bpm.ts` and `terminal-one.ts`. Adding the second
-required no schema change.
+`src/content/projects/schema.ts`. The type is the schema. The initial catalogue contains
+elevated-bpm, terminal-one, telescope, and sound-city.
+See the [project update guide](project-update-guide.md) for onboarding and rotation.
 
 Copy is drafted from each source repo's CONCEPT / PRD / README. Files with
 `draft: true` render a "Draft copy — pending review" flag on the case study.
@@ -21,9 +21,9 @@ That review does not block shipping.
 | `slug` | yes | Route segment (`/work/[slug]`). |
 | `pitch` | yes | One- or two-sentence hook. |
 | `draft` | yes | `true` until the owner edits the copy. |
-| `tile` | yes | Identity for a chameleon tile / themed case study. More-projects rail entries are a separate `RailProject` record with no tile (issue 08). |
+| `tile` | once published | Identity for a chameleon tile / themed case study. More-projects rail entries are a separate `RailProject` record with no tile (issue 08). |
 | `tile.motif` | with tile | What the tile *is* — `groovebox faceplate`, `trading terminal`, `star field`, `club flyer`. |
-| `tile.displayFace` | with tile | Display typeface name. Case studies load the matching `next/font`. |
+| `tile.displayFace` | with tile | Display typeface name. Follow `src/fonts.ts` and CSS conventions; this field does not automatically load a font. |
 | `tile.palette` | with tile | `ground`, `panel`, `ink`, `mute`, `accent`. Optional `steps` quad for sequencer LEDs. |
 | `story` | yes | Ordered sections. v1 uses `problem` → `build` → `result`. |
 | `story[].kind` | yes | `problem` \| `build` \| `result`. |
@@ -43,17 +43,19 @@ That review does not block shipping.
 - `listCaseStudySlugs()` — routes that should exist today
 - `listWallProjects()` — cards on the home project wall
 
-Issue 03a ships elevated-bpm on the wall and at `/work/elevated-bpm`.
-terminal-one is authored against the schema but not yet on the wall or
-routed — those land in issue 05.
+The `projects` array is the authored catalogue. `CASE_STUDY_SLUGS` selects published
+routes; `WALL_SLUGS` selects homepage membership and order independently. All four
+initial projects are published and featured. Removing a wall slug retains its route.
 
 ## Readiness
 
 `next.config.ts` validates the catalogue before `next dev` or `next build` does
-anything else (`src/content/projects/readiness.ts`). Every authored record needs:
+anything else (`src/content/projects/readiness.ts`). Every authored record needs
+a unique lowercase kebab-case `slug`. An unfinished record may otherwise rest in
+the catalogue; once its slug is published (featuring requires publication) it
+also needs:
 
-- a unique lowercase kebab-case `slug`, a nonblank `title` and `pitch`, and a
-  boolean `draft`
+- a nonblank `title` and `pitch`, and a boolean `draft`
 - at least one nonblank `stack` label
 - a `tile` with a nonblank `motif` and `displayFace` and a hex-colour palette
   (`steps`, when present, is four hex colours)

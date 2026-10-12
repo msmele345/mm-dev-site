@@ -71,7 +71,7 @@ test.describe("onboarding a synthetic bespoke identity through the real build", 
     await expect(wall.locator('[data-tile-slug="telescope"] .enrichment')).toContainText("222 commits");
 
     await page.emulateMedia({ reducedMotion: "reduce" });
-    for (const width of [390, 1440]) {
+    for (const width of [390, 768, 1440]) {
       await page.setViewportSize({ width, height: 900 });
       await page.evaluate(() => document.fonts.ready);
       await wall.screenshot({ path: info.outputPath(`wall-${width}.png`), animations: "disabled", style: ".site-header { visibility: hidden; }" });
@@ -231,4 +231,37 @@ test.describe("onboarding a synthetic bespoke identity through the real build", 
     await expect(article.locator(".case__links a")).toHaveCount(0);
     await expect(article.locator(".enrichment")).toHaveCount(0);
   });
+
+  // Follow docs/project-update-guide.md on the same onboarded app copy.
+  for (const { operation, slugs } of [
+    { operation: "reorder", slugs: ["telescope", "signal-loom"] },
+    { operation: "replace", slugs: ["telescope", "sound-city"] },
+    { operation: "re-feature", slugs: ["signal-loom", "telescope", "sound-city"] },
+    { operation: "remove", slugs: ["telescope", "sound-city"] },
+  ]) {
+    test(`guide walkthrough: ${operation} and rebuild retain the synthetic published identity`, async ({ page, request }, info) => {
+      test.setTimeout(240_000);
+      await stopServer();
+      writeFeaturedSelection(dir, slugs);
+      writeFileSync(info.outputPath("build.log"), await buildTransmissionApp(dir));
+      server = await serveTransmissionApp(dir, 3036);
+      await page.goto(origin);
+      const wall = page.getByRole("region", { name: "Project wall" });
+      await expect(wall.locator(".project-wall__bar p")).toHaveText(`${slugs.length} featured projects`);
+      await expect(wall.getByRole("link")).toHaveCount(slugs.length);
+      expect(await wall.getByRole("link").evaluateAll((links) => links.map((link) => link.getAttribute("href")))).toEqual(slugs.map((slug) => `/work/${slug}`));
+      await expect(wall.locator('[class$="__index"]')).toHaveText(slugs.length === 2 ? ["01", "02"] : ["01", "02", "03"]);
+      expect((await page.goto(`${origin}/work/signal-loom`))?.status()).toBe(200);
+      await expect(page.getByRole("heading", { level: 1 })).toHaveText("Signal Loom");
+      await expect(page.locator(".case-motif--signal-loom")).toBeVisible();
+      await expect(page.locator(".case__story-list > li")).toHaveCount(3);
+      await expect(page.locator('link[rel="canonical"]')).toHaveAttribute("href", /\/work\/signal-loom$/);
+      await expect(page.locator('meta[property="og:title"]')).toHaveAttribute("content", /Signal Loom/);
+      const image = await request.get(`${origin}/work/signal-loom/opengraph-image`);
+      expect(image.status()).toBe(200);
+      expect(image.headers()["content-type"]).toContain("image/png");
+      expect(await (await request.get(`${origin}/sitemap.xml`)).text()).toContain("/work/signal-loom</loc>");
+    });
+  }
+
 });
