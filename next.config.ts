@@ -1,27 +1,11 @@
 import type { NextConfig } from "next";
 import createMDX from "@next/mdx";
 import { currentTransmission } from "./src/content/current-transmission";
+import { listAuthoredFileRecords, listCaseStudySlugs, listProjects } from "./src/content/projects/catalog";
+import selection from "./src/content/projects/selection.json";
+import { validateShowcaseContent } from "./src/content/projects/readiness";
+import { collectShowcaseFilesystemFacts } from "./src/content/projects/filesystem-facts";
 import { validateTransmissionEditorial } from "./src/lib/current-transmission";
-
-// The sole editorial enforcement point: Next loads this config for both dev
-// and build, before type checking or page rendering. Mistyped editorial edits
-// therefore fail with the exact content field ahead of generic type diagnostics.
-validateTransmissionEditorial(currentTransmission);
-
-/**
- * Seed the per-build enrichment cache key (ADR 0004).
- *
- * Next's Data Cache survives between builds — Vercel restores it across
- * deployments — so build-time GitHub stats would freeze at whatever the first
- * build fetched, and the scheduled rebuild would keep rebaking them. Every
- * enrichment request carries this value as a header, which changes the cache
- * key once per build while leaving the pages statically prerendered.
- *
- * Set here, in the parent build process, so every static-generation worker
- * inherits the same value and a repo is still fetched only once per build.
- */
-process.env.ENRICHMENT_BUILD_ID ??=
-  process.env.VERCEL_DEPLOYMENT_ID ?? String(Date.now());
 
 const nextConfig: NextConfig = {
   // Blog posts are in-repo .mdx files (ADR 0005).
@@ -48,4 +32,25 @@ const withMDX = createMDX({
   },
 });
 
-export default withMDX(nextConfig);
+export default function config(): NextConfig {
+  // The editorial enforcement point: Next loads this config for both dev
+  // and build, before type checking or page rendering. Mistyped editorial edits
+  // therefore fail with the exact content field ahead of generic type diagnostics.
+  validateTransmissionEditorial(currentTransmission);
+
+  // Keep readiness aligned with the command by deriving the same filesystem facts.
+  const projects = listProjects();
+  validateShowcaseContent({
+    projects,
+    publishedSlugs: listCaseStudySlugs(),
+    featuredSlugs: selection.featured,
+    ...collectShowcaseFilesystemFacts(process.cwd(), listAuthoredFileRecords()),
+  });
+
+  // Seed the per-build enrichment cache key (ADR 0004). Next's Data Cache
+  // survives between builds, so each build needs a new value to refresh GitHub
+  // stats. Setting it here lets all static-generation workers share one key.
+  process.env.ENRICHMENT_BUILD_ID ??=
+    process.env.VERCEL_DEPLOYMENT_ID ?? String(Date.now());
+  return withMDX(nextConfig);
+}

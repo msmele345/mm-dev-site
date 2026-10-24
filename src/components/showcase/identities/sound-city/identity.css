@@ -1,0 +1,93 @@
+/* sound-city: club flyer identity (ADR 0002), imported by its Tile and Artwork.
+   Shared tile shell, wall, and motion contract stay in globals.css. */
+
+/* Case study: the hero reuses the tile's visual grammar without carrying
+   motion onto a long-form reading surface. */
+.case--sound-city {
+  --case-display: var(--font-display), sans-serif;
+}
+
+.case-motif__venue,
+.case-motif__bill {
+  margin: 0;
+  color: var(--case-accent);
+  font-size: 0.75rem;
+  letter-spacing: 0.13em;
+}
+
+.case-motif--sound-city {
+  display: grid;
+  align-content: center;
+  padding: 1.25rem;
+  background:
+    repeating-linear-gradient(112deg, transparent 0 9px, color-mix(in srgb, var(--case-ink) 2%, transparent) 10px 11px),
+    var(--case-panel);
+  border-width: 4px;
+}
+
+.case-motif__tonight {
+  margin: 0.4rem 0 0;
+  color: var(--case-ink);
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(5rem, 19vw, 10rem);
+  letter-spacing: -0.03em;
+  line-height: 0.72;
+}
+
+.case-motif__bill {
+  margin-top: 1.4rem;
+  padding-top: 0.65rem;
+  border-top: 4px solid var(--case-accent);
+  color: var(--case-ink);
+}
+
+.sound-city-tile__poster { position: relative; overflow: hidden; min-height: 17rem; padding: 1rem; background: var(--tile-panel); border: 4px solid var(--tile-accent); }
+
+.sound-city-tile__grain { position: absolute; inset: 0; opacity: 0.2; background: repeating-linear-gradient(113deg, transparent 0 8px, color-mix(in srgb, var(--tile-ink) 9%, transparent) 9px 10px); }
+
+.sound-city-tile__stamp { position: relative; margin: 0; color: var(--tile-accent); font-size: 0.62rem; letter-spacing: 0.15em; }
+
+.sound-city-tile__tonight { position: relative; margin: 1.2rem 0 0; color: var(--tile-ink); font-family: var(--font-display), sans-serif; font-size: clamp(5rem, 18vw, 9rem); letter-spacing: -0.03em; line-height: 0.68; transform-origin: left center; }
+
+.sound-city-tile__lineup { position: relative; margin: 1.6rem 0 0; padding-top: 0.65rem; border-top: 4px solid var(--tile-accent); color: var(--tile-ink); font-size: 0.72rem; letter-spacing: 0.16em; line-height: 1.6; }
+
+.sound-city-tile__meter { position: absolute; right: 1rem; bottom: 1rem; display: flex; gap: 0.2rem; align-items: end; height: 3rem; }
+
+.sound-city-tile__meter span { width: 0.18rem; height: var(--bar-height); background: var(--tile-accent); transform-origin: bottom; animation: club-idle 3.6s ease-in-out infinite; animation-delay: calc(var(--bar) * -180ms); }
+
+.tile-motion[data-crescendo="true"] .sound-city-tile__tonight { animation: flyer-crescendo 0.7s ease-in-out infinite; }
+
+.tile-motion[data-crescendo="true"] .sound-city-tile__meter span { animation-name: club-crescendo; animation-duration: 0.55s; }
+
+.sound-city-tile__meta { display: grid; gap: 0.75rem; }
+
+.sound-city-tile__meta strong { color: var(--tile-ink); font-family: var(--font-display), sans-serif; font-size: clamp(1.8rem, 5vw, 3.4rem); font-weight: 400; letter-spacing: 0.04em; line-height: 0.9; text-transform: uppercase; text-wrap: balance; }
+
+.sound-city-tile__index,
+.sound-city-tile__go { color: var(--tile-accent); font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; }
+
+.sound-city-tile__pitch { color: var(--tile-mute); font-size: clamp(0.75rem, 1.2vw, 0.9rem); line-height: 1.6; }
+
+@keyframes club-idle {
+  0%, 100% { transform: scaleY(0.55); opacity: 0.55; }
+  50% { transform: scaleY(1); opacity: 0.9; }
+}
+
+@keyframes club-crescendo {
+  0%, 100% { transform: scaleY(0.35); opacity: 0.5; }
+  45% { transform: scaleY(1.25); opacity: 1; }
+}
+
+@keyframes flyer-crescendo {
+  0%, 100% { transform: scaleX(1); opacity: 1; }
+  50% { transform: scaleX(1.025); opacity: 0.82; }
+}
+
+/* Static state: deliberate frozen art under reduced motion. */
+@media (prefers-reduced-motion: reduce) {
+  .sound-city-tile__tonight,
+  .sound-city-tile__meter span {
+    transform: none;
+    opacity: 1;
+  }
+}

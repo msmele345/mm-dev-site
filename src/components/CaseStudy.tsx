@@ -1,3 +1,4 @@
+import { showcase } from "@/components/showcase/registry";
 import Image from "next/image";
 import type { CSSProperties } from "react";
 import ProjectStats from "@/components/ProjectStats";
@@ -13,7 +14,9 @@ export default function CaseStudy({
   project,
   displayClassName,
 }: CaseStudyProps) {
+  const { CaseStudyArtwork } = showcase.get(project.slug);
   const tile = project.tile;
+  if (!tile) throw new Error(`Showcase "${project.slug}": missing tile identity`);
   const palette = tile?.palette;
 
   return (
@@ -31,7 +34,7 @@ export default function CaseStudy({
         </p>
         <h1>{project.title}</h1>
         <p className="case__pitch">{project.pitch}</p>
-        {tile ? <CaseStudyMotif project={project} /> : null}
+        <CaseStudyArtwork project={project} />
       </header>
 
       <section className="case__story" aria-labelledby="case-story">
@@ -96,86 +99,6 @@ export default function CaseStudy({
         </ul>
       </section>
     </article>
-  );
-}
-
-function CaseStudyMotif({ project }: { project: EnrichedProject }) {
-  const palette = project.tile?.palette;
-  if (!palette) return null;
-
-  if (project.slug === "terminal-one") {
-    return (
-      <div className="case-motif case-motif--terminal" aria-hidden="true">
-        <p className="case-motif__tape">SPY +0.42 · QQQ -0.18 · NVDA +1.08</p>
-        <p className="case-motif__readout">RANK / 87.4</p>
-        <ol className="case-motif__reels">
-          <li>CALL</li>
-          <li>30Δ</li>
-          <li>45D</li>
-        </ol>
-      </div>
-    );
-  }
-
-  if (project.slug === "telescope") {
-    return (
-      <div className="case-motif case-motif--telescope" aria-hidden="true">
-        <span className="case-motif__star case-motif__star--one" />
-        <span className="case-motif__star case-motif__star--two" />
-        <span className="case-motif__star case-motif__star--three" />
-        <span className="case-motif__star case-motif__star--four" />
-        <span className="case-motif__line case-motif__line--one" />
-        <span className="case-motif__line case-motif__line--two" />
-        <span className="case-motif__line case-motif__line--three" />
-        <p>ORION · LOCAL SKY · 22:14</p>
-      </div>
-    );
-  }
-
-  if (project.slug === "sound-city") {
-    return (
-      <div className="case-motif case-motif--sound-city" aria-hidden="true">
-        <p className="case-motif__venue">CHICAGO / SOURCE VERIFIED</p>
-        <p className="case-motif__tonight">TONIGHT</p>
-        <p className="case-motif__bill">HOUSE · TECHNO · AFTER DARK</p>
-      </div>
-    );
-  }
-
-  return <FaceplateMotif palette={palette} />;
-}
-
-function FaceplateMotif({ palette }: { palette: TilePalette }) {
-  const steps = palette.steps ?? [
-    palette.accent,
-    palette.accent,
-    palette.accent,
-    palette.ink,
-  ];
-
-  return (
-    <div className="faceplate" aria-hidden="true">
-      <div className="faceplate__screw" />
-      <div className="faceplate__screw faceplate__screw--right" />
-      <p className="faceplate__brand">EB-01</p>
-      <ol className="faceplate__steps">
-        {Array.from({ length: 16 }, (_, index) => (
-          <li
-            key={index}
-            className="faceplate__step"
-            style={{
-              color: steps[Math.floor(index / 4) % steps.length],
-            }}
-            data-lit={index % 4 === 0 || index === 13 ? "true" : "false"}
-          />
-        ))}
-      </ol>
-      <ol className="faceplate__pads">
-        {["KICK", "CLAP", "CH", "OH"].map((label) => (
-          <li key={label}>{label}</li>
-        ))}
-      </ol>
-    </div>
   );
 }
 

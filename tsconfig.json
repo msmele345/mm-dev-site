@@ -26,12 +26,14 @@
       ]
     },
     "allowJs": true,
+    "allowImportingTsExtensions": true,
     "skipLibCheck": true
   },
   "include": [
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
+    "scripts/project.mjs",
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts"
   ],

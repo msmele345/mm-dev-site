@@ -18,6 +18,11 @@ npm run typecheck
 npm run build
 ```
 
+## Updating projects
+
+Use the [project update guide](docs/project-update-guide.md) to prepare a new identity
+or add, remove, replace, and reorder featured projects while preserving published URLs.
+
 ## Project stats (enrichment)
 
 Featured projects show live GitHub stats — commit count, last-push date, and

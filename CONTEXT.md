@@ -47,7 +47,7 @@ These are established decisions, not defaults to reconsider during individual is
 - No runtime GitHub API dependency
 - No headless CMS for v1
 - No light/dark theme toggle for v1
-- Four fully themed featured projects, followed by a lighter more-projects rail
+- A curated, ordered selection of fully themed featured projects (initially four), followed by an independently curated lighter more-projects rail
 
 See [`docs/adr/`](docs/adr/) for the decisions and their rationale.
 

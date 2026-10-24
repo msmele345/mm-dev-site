@@ -13,7 +13,7 @@ Domain vocabulary for the site. Issues, ADRs, and code use these terms.
   blog post.
 - **Wordmark** — the MITCH MELE brand mark set in the display face; appears in nav,
   tab title, and OG images.
-- **Project wall** — the home-page section holding the four chameleon tiles.
+- **Project wall** — the home-page section holding the ordered featured selection of chameleon tiles.
 - **Case study** — a project's full page, continuing its tile identity: problem → build
   → result story, screenshots, stack badges, repo + demo links.
 - **More-projects rail** — compact high-contrast list below the project wall for

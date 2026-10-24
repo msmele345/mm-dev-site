@@ -12,7 +12,7 @@ Work the **frontier**: start a ticket only when all its blockers are complete. T
 | [04 — Enforce new-project readiness across registration, publication, and featuring](04-enforce-new-project-readiness.md) | 02, 03 |
 | [05 — Deliver the reusable project-update guide and verify complete maintenance flows](05-reusable-project-update-guide.md) | 04 |
 
-All implementation acceptance criteria remain unchecked. Completing the planning work is not evidence that feature behavior has been implemented.
+Implementation status and verified acceptance criteria are recorded in each ticket. Completing the planning work is not evidence that feature behavior has been implemented.
 
 The production four-project selection is retained by this work. Adding Birdsview as a real featured project is a separate task. Current Transmission does not block these tickets.
 

@@ -1,0 +1,122 @@
+/* terminal-one: trading terminal identity (ADR 0002), imported by its Tile and Artwork.
+   Shared tile shell, wall, and motion contract stay in globals.css. */
+
+/* Case study: the hero reuses the tile's visual grammar without carrying
+   motion onto a long-form reading surface. */
+.case--terminal-one {
+  --case-display: var(--font-body), monospace;
+}
+
+.case-motif--terminal {
+  padding: 1.25rem;
+  background:
+    linear-gradient(color-mix(in srgb, var(--case-accent) 5%, transparent) 1px, transparent 1px) 0 0 / 100% 1.5rem,
+    var(--case-panel);
+  box-shadow: inset 0 0 3rem color-mix(in srgb, var(--case-accent) 8%, transparent);
+  font-family: var(--font-body), monospace;
+}
+
+.case-motif__tape,
+.case-motif__readout {
+  margin: 0;
+  color: var(--case-accent);
+  font-size: 0.75rem;
+  letter-spacing: 0.13em;
+}
+
+.case-motif__readout {
+  margin-top: 2rem;
+  color: var(--case-ink);
+  font-size: clamp(1.5rem, 5vw, 3rem);
+  font-variant-numeric: tabular-nums;
+}
+
+.case-motif__reels {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+  margin: 1.25rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.case-motif__reels li {
+  display: grid;
+  min-height: 4rem;
+  place-items: center;
+  border: 1px solid var(--case-mute);
+  background: var(--case-ground);
+  color: var(--case-ink);
+  font-size: clamp(0.8rem, 2vw, 1.1rem);
+}
+
+.terminal-tile { font-family: var(--font-body), monospace; }
+
+.terminal-tile__screen {
+  position: relative;
+  overflow: hidden;
+  min-height: 17rem;
+  padding: 1rem;
+  background:
+    linear-gradient(color-mix(in srgb, var(--tile-accent) 4%, transparent) 1px, transparent 1px) 0 0 / 100% 1.35rem,
+    var(--tile-panel);
+  border: 1px solid color-mix(in srgb, var(--tile-accent) 28%, transparent);
+  box-shadow: inset 0 0 3rem color-mix(in srgb, var(--tile-accent) 7%, transparent);
+}
+
+.terminal-tile__ticker {
+  width: max-content;
+  margin: 0;
+  color: var(--tile-accent);
+  font-size: 0.66rem;
+  letter-spacing: 0.12em;
+  white-space: nowrap;
+  animation: terminal-tape 4.8s linear infinite;
+}
+
+.terminal-tile__mast { display: flex; justify-content: space-between; gap: 1rem; margin-top: 2rem; color: var(--tile-mute); font-size: 0.58rem; letter-spacing: 0.12em; }
+
+.terminal-tile__score { margin: 1.35rem 0 0; color: var(--tile-ink); font-size: clamp(3rem, 9vw, 5.5rem); font-variant-numeric: tabular-nums; line-height: 0.8; }
+
+.terminal-tile__signal { margin: 0.7rem 0 0; color: var(--tile-accent); font-size: 0.62rem; letter-spacing: 0.12em; }
+
+.terminal-tile__reels { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.4rem; margin: 1.25rem 0 0; padding: 0; list-style: none; }
+
+.terminal-tile__reels li { display: grid; min-height: 3.4rem; place-items: center; overflow: hidden; background: var(--tile-ground); border: 1px solid var(--tile-mute); }
+
+.terminal-tile__reels span { color: var(--tile-ink); font-size: 0.72rem; }
+
+.tile-motion[data-crescendo="true"] .terminal-tile__ticker { animation-duration: 3.5s; }
+
+.tile-motion[data-crescendo="true"] .terminal-tile__reels span { animation: terminal-reel 0.72s ease-in-out infinite; animation-delay: calc(var(--reel) * 80ms); }
+
+.terminal-tile__meta { display: grid; gap: 0.75rem; }
+
+.terminal-tile__meta strong { color: var(--tile-ink); font-family: var(--font-display), sans-serif; font-size: clamp(1.8rem, 5vw, 3.4rem); font-weight: 400; letter-spacing: 0.04em; line-height: 0.9; text-transform: uppercase; text-wrap: balance; }
+
+.terminal-tile__meta strong { font-family: var(--font-body), monospace; font-size: clamp(1.3rem, 3vw, 2rem); }
+
+.terminal-tile__index,
+.terminal-tile__go { color: var(--tile-accent); font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; }
+
+.terminal-tile__pitch { color: var(--tile-mute); font-size: clamp(0.75rem, 1.2vw, 0.9rem); line-height: 1.6; }
+
+@keyframes terminal-tape {
+  from { transform: translateX(0); }
+  to { transform: translateX(-28%); }
+}
+
+@keyframes terminal-reel {
+  0%, 100% { transform: translateY(0); opacity: 1; }
+  45% { transform: translateY(-115%); opacity: 0; }
+  55% { transform: translateY(115%); opacity: 0; }
+}
+
+/* Static state: deliberate frozen art under reduced motion. */
+@media (prefers-reduced-motion: reduce) {
+  .terminal-tile__ticker,
+  .terminal-tile__reels span {
+    transform: none;
+    opacity: 1;
+  }
+}

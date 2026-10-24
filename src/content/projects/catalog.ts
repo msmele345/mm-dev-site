@@ -1,37 +1,32 @@
-import { elevatedBpm } from "./elevated-bpm";
+import { authoredProjectFiles, authoredProjects } from "./authored.generated";
 import {
   siteEnricher,
   type Enriched,
   type EnrichedProject,
 } from "./enrichment";
-import { soundCity } from "./sound-city";
-import { terminalOne } from "./terminal-one";
-import { telescope } from "./telescope";
 import { listRailProjects } from "./rail";
 import type { Project, RailProject } from "./schema";
+import selection from "./selection.json";
 
-const projects: readonly Project[] = [
-  elevatedBpm,
-  terminalOne,
-  telescope,
-  soundCity,
-];
+/** Every `authored/<slug>.ts` record, registered by the generated barrel (ADR 0007). */
+const projects: readonly Project[] = authoredProjects;
 
-const CASE_STUDY_SLUGS = [
-  "elevated-bpm",
-  "terminal-one",
-  "telescope",
-  "sound-city",
-] as const;
-const WALL_SLUGS = [
-  "elevated-bpm",
-  "terminal-one",
-  "telescope",
-  "sound-city",
-] as const;
+/**
+ * Publication and featuring are plain data in `selection.json` (see the
+ * project update guide): `published` lists the case-study routes, and
+ * `featured` is the ordered Project wall selection.
+ */
+const { published: CASE_STUDY_SLUGS, featured: WALL_SLUGS }: {
+  published: readonly string[];
+  featured: readonly string[];
+} = selection;
 
 export function listProjects(): readonly Project[] {
   return projects;
+}
+
+export function listAuthoredFileRecords(): readonly { fileSlug: string; recordSlug: string }[] {
+  return authoredProjectFiles.map(({ fileSlug, project }) => ({ fileSlug, recordSlug: project.slug }));
 }
 
 export function getProject(slug: string): Project | undefined {
@@ -43,9 +38,21 @@ export function listCaseStudySlugs(): readonly string[] {
 }
 
 export function listWallProjects(): readonly Project[] {
-  return WALL_SLUGS.map((slug) => getProject(slug)).filter(
-    (project): project is Project => project !== undefined,
-  );
+  const selected = new Set<string>();
+  return WALL_SLUGS.map((slug) => {
+    if (selected.has(slug)) {
+      throw new Error(`Featured selection "${slug}": duplicate slug; select each project only once`);
+    }
+    selected.add(slug);
+    const project = getProject(slug);
+    if (!project) {
+      throw new Error(`Featured selection "${slug}": unknown project; use an authored catalogue slug`);
+    }
+    if (!listCaseStudySlugs().includes(slug)) {
+      throw new Error(`Featured selection "${slug}": no published case-study destination; publish it before featuring`);
+    }
+    return project;
+  });
 }
 
 /**
