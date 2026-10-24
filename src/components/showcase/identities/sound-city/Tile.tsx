@@ -1,7 +1,8 @@
 import Link from "next/link";
 import type { CSSProperties } from "react";
 import type { EnrichedProject } from "@/content/projects/enrichment";
-import TileMeta, { tilePaletteStyle } from "./TileMeta";
+import TileMeta, { tilePaletteStyle } from "@/components/tiles/TileMeta";
+import "./identity.css";
 
 export default function SoundCityTile({
   project,

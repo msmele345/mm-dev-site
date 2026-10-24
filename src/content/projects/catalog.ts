@@ -1,22 +1,15 @@
-import { elevatedBpm } from "./elevated-bpm";
+import { authoredProjects } from "./authored.generated";
 import {
   siteEnricher,
   type Enriched,
   type EnrichedProject,
 } from "./enrichment";
-import { soundCity } from "./sound-city";
-import { terminalOne } from "./terminal-one";
-import { telescope } from "./telescope";
 import { listRailProjects } from "./rail";
 import type { Project, RailProject } from "./schema";
 import selection from "./selection.json";
 
-const projects: readonly Project[] = [
-  elevatedBpm,
-  terminalOne,
-  telescope,
-  soundCity,
-];
+/** Every `authored/<slug>.ts` record, registered by the generated barrel (ADR 0007). */
+const projects: readonly Project[] = authoredProjects;
 
 /**
  * Publication and featuring are plain data in `selection.json` (see the

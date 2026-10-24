@@ -3,6 +3,7 @@ import type { CSSProperties } from "react";
 import ProjectStats from "@/components/ProjectStats";
 import type { EnrichedProject } from "@/content/projects/enrichment";
 import type { TilePalette } from "@/content/projects/schema";
+import "./identity.css";
 
 type GrooveboxTileProps = {
   project: EnrichedProject;
@@ -16,7 +17,7 @@ const PAD_LABELS = ["KICK", "CLAP", "CH", "OH"] as const;
 /**
  * elevated-bpm's chameleon tile: a groovebox faceplate (ADR 0002) —
  * step-sequencer LEDs, 909-style pads, the project name as hardware
- * silkscreen. Motion states (ADR 0006) live in globals.css:
+ * silkscreen. Motion states (ADR 0006) live in identity.css:
  * ambient = slow LED pulse, crescendo = the sequencer runs, static =
  * frozen lit pattern under prefers-reduced-motion.
  */

@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
+    "registration": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/registration.mjs",
     "test": "playwright test"
   },
   "dependencies": {

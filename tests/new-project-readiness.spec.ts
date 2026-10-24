@@ -6,6 +6,7 @@ import {
   addSyntheticIdentity,
   createShowcaseApp,
   syntheticProject,
+  writeAuthoredRecord,
   writeFeaturedSelection,
 } from "./support/showcase-app";
 import { buildTransmissionApp, serveTransmissionApp } from "./support/transmission-app";
@@ -205,10 +206,7 @@ test.describe("onboarding a synthetic bespoke identity through the real build", 
   test("reviewed copy with no repository or demo still builds a complete tile and case study", async ({ page }) => {
     test.setTimeout(240_000);
     await stopServer();
-    writeFileSync(
-      join(dir, "src/content/projects/signal-loom.ts"),
-      `import type { Project } from "./schema";\nexport const signalLoom: Project = ${JSON.stringify({ ...project, draft: false, links: {} }, null, 2)};\n`,
-    );
+    writeAuthoredRecord(dir, "signal-loom", { ...project, draft: false, links: {} });
     await buildTransmissionApp(dir);
     server = await serveTransmissionApp(dir, 3036);
 

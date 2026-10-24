@@ -1,5 +1,5 @@
 
-/* Test-only identity: appended to an isolated app's globals.css. */
+/* Test-only identity: copied into an isolated app's identities/signal-loom/. */
 .signal-loom-tile__loom { position: relative; display: grid; grid-template-columns: repeat(8, 1fr); gap: 0.5rem; overflow: hidden; min-height: 17rem; padding: 2.5rem 1rem 1rem; background: var(--tile-panel); border: 1px dashed var(--tile-accent); }
 .signal-loom-tile__loom p { position: absolute; top: 0.8rem; left: 1rem; margin: 0; color: var(--tile-mute); font-size: 0.62rem; letter-spacing: 0.15em; }
 .signal-loom-tile__thread { background: linear-gradient(var(--tile-accent), var(--tile-ink)); transform-origin: top; animation: loom-weave 4s ease-in-out infinite; animation-delay: calc(var(--thread) * -300ms); }

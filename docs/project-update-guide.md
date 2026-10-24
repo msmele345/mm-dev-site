@@ -8,10 +8,10 @@ Keep public slugs stable: never reuse an outgoing project's slug for a new ident
 
 | Surface | Source | Purpose |
 |---|---|---|
-| Authored catalogue | `src/content/projects/<slug>.ts`, imported into `projects` in `src/content/projects/catalog.ts` | Curated copy and identity, including retained projects. Creating a file alone does not load it. |
+| Authored catalogue | `src/content/projects/authored/<slug>.ts` | Curated copy and identity, including retained projects. Loaded through the generated `authored.generated.ts`. |
 | Featured selection | `featured` in `src/content/projects/selection.json` | Homepage membership and order; drives count, numbering, and reading order. |
 | Published case studies | `published` in `src/content/projects/selection.json` | Available `/work/<slug>` pages, metadata, social images, and sitemap entries. |
-| Presentation registration | `src/components/showcase/registry.ts` | Explicit `Tile` and `CaseStudyArtwork` components for a slug. |
+| Presentation identity | `src/components/showcase/identities/<slug>/` (`Tile.tsx`, `Artwork.tsx`, `identity.css`) | Explicit tile and case-study artwork for a slug. Registered through the generated `identities.generated.ts`. |
 
 A featured project must be authored, registered, and published. A published project
 need not be featured.
@@ -20,20 +20,38 @@ need not be featured.
 `{ "published": [...], "featured": [...] }`, so edit it by hand or with a tool that
 reads, validates, and rewrites it; `catalog.ts` imports it and needs no edits.
 Published routes survive wall rotation: edit the ordered `featured` list to rotate
-the wall, and retain the authored records and `published` slugs it leaves behind. `draft: true` shows the copy-review flag; it does not unpublish
-a route. Clearly labeled draft plates are also valid for publication. Owner approval
+the wall, and retain the authored records and `published` slugs it leaves behind.
+`draft: true` shows the copy-review flag; it does not unpublish a route. Clearly labeled draft plates are also valid for publication. Owner approval
 of copy and visuals remains a separate review item.
 
 Current Transmission (`src/content/current-transmission.ts`) and the more-projects
 rail (`src/content/projects/rail.ts`) are independently curated. Wall updates do not
 promote Now Building, edit the ledger, or move removed projects to the rail.
 
+### Generated registration
+
+`src/content/projects/authored.generated.ts` and
+`src/components/showcase/identities.generated.ts` are generated from the `authored/`
+and `identities/` listings (ADR 0007). **Never edit them by hand.** After adding,
+renaming, or removing an authored file or identity directory, run:
+
+```bash
+npm run registration
+```
+
+Commit the regenerated files with the change; they are reviewed like any source. The
+command is safe to repeat: an unchanged tree reports `Registration is already current.`
+It refuses an identity directory missing `Tile.tsx` or `Artwork.tsx` and names the slug
+and file. Names derive from the slug: `authored/your-project.ts` exports
+`yourProject`, and both identity components are default exports. File and directory
+names must equal the record's `slug` and start with a letter.
+
 ## Prepare a new project
 
 - [ ] Read the source repository's CONCEPT, PRD, README, or equivalent. Record the
   source paths and revisions in the update's review notes; avoid unsupported outcomes.
 - [ ] Choose a unique lowercase kebab-case slug and author a record using the outline below.
-- [ ] Import the record and add it once to `projects` in `catalog.ts`.
+- [ ] Save it as `src/content/projects/authored/<slug>.ts` and run `npm run registration`.
 - [ ] Add at least one image under `public/projects/<slug>/`; its content `src` starts
   with `/projects/`, not `/public/`. Check filename case, useful alt text, and caption.
 - [ ] Complete the artwork checklist below, then register the presentation.
@@ -42,12 +60,13 @@ promote Now Building, edit the ledger, or move removed projects to the rail.
 
 ### Reusable content outline
 
-Create `src/content/projects/your-project.ts`. Replace all example copy and provide
+Create `src/content/projects/authored/your-project.ts`. Keep the schema import
+type-only so plain `node` can load the file. Replace all example copy and provide
 an actual local image before building. The full contract is in
 [content-schema.md](content-schema.md) and `src/content/projects/schema.ts`.
 
 ```ts
-import type { Project } from "./schema";
+import type { Project } from "../schema";
 
 export const yourProject = {
   title: "Your Project",
@@ -84,8 +103,9 @@ a readiness check. Palette values must be hex colours; optional `steps` contains
 
 ### Artwork and registration checklist
 
-- [ ] Create a bespoke tile under `src/components/tiles/` and case-study artwork under
-  `src/components/showcase/`. A content record does not generate an identity.
+- [ ] Create `src/components/showcase/identities/<slug>/` with a default-export
+  `Tile.tsx` and a default-export `Artwork.tsx`. A content record does not generate
+  an identity.
 - [ ] Follow `ShowcasePresentation` in `src/components/showcase/registration.ts`:
   `Tile` receives `project`, `index`, and optional `displayClassName`;
   `CaseStudyArtwork` receives `project`.
@@ -93,15 +113,18 @@ a readiness check. Palette values must be hex colours; optional `steps` contains
   conventions, and the supplied index. Keep decorative art hidden from assistive technology.
 - [ ] Use the shared motion wrapper provided by the wall. Styles should respect
   `data-crescendo`, `data-in-view`, `data-anim`, and reduced motion. Inspect the existing
-  tiles and `tests/support/synthetic-identity/` for complete examples.
+  identities and `tests/support/synthetic-identity/signal-loom/` for complete examples.
 - [ ] Supply deliberate static art, visible keyboard focus, touch activation, and
   off-screen animation pausing. Never make essential information depend on motion.
-- [ ] Add namespaced styles in `src/app/globals.css`. Check the actual rendered font;
+- [ ] Add namespaced styles in the identity's own plain `identity.css`, imported by
+  both components. Shared Chrome, wall, tile-shell, and motion styles stay in
+  `src/app/globals.css`; identity styles load after it. Check the actual rendered font;
   `displayFace` is not an automatic font loader. Follow `src/fonts.ts` and existing
   CSS font conventions if introducing a face.
-- [ ] Import both components into `registry.ts` and add
-  `{ slug: "your-project", Tile: YourProjectTile, CaseStudyArtwork: YourProjectArtwork }`.
-  No project-specific dispatch belongs in `ProjectWall.tsx` or `CaseStudy.tsx`.
+- [ ] Run `npm run registration`; it adds
+  `{ slug: "your-project", Tile: YourProjectTile, CaseStudyArtwork: YourProjectArtwork }`
+  to `identities.generated.ts`. No project-specific dispatch belongs in
+  `ProjectWall.tsx` or `CaseStudy.tsx`.
 - [ ] Review the tile and case-study artwork together, including image alt text and captions.
 
 The real dev/build path checks unique valid catalogue slugs and full readiness for
@@ -121,8 +144,8 @@ do not hide entries or substitute another project's art to make the build pass.
 ## Remove a featured project
 
 - [ ] Remove only its entry from `featured`.
-- [ ] Retain its record in `projects`, slug in `published`, registration,
-  components, styles, fonts, and local images needed by its published page.
+- [ ] Retain its `authored/` record, slug in `published`, identity directory
+  (components and `identity.css`), fonts, and local images needed by its published page.
 - [ ] Rebuild and visit the old URL directly; check its metadata, social image, and sitemap.
   Removing every selection keeps the Work anchor and heading, reports zero featured
   projects, and displays “No featured projects right now.” without placeholder cards.
@@ -151,9 +174,10 @@ npm test -- tests/featured-selection-rotation.spec.ts tests/published-case-studi
 ```
 
 The first test file executes the guide's extension points in a temporary app copy:
-`addSyntheticIdentity` in `tests/support/showcase-app.ts` writes Signal Loom's record,
-imports it into the catalogue, copies its tile/art/styles/image, registers it, and
-publishes it. The initial featured selection is `["signal-loom", "telescope"]`.
+`addSyntheticIdentity` in `tests/support/showcase-app.ts` writes Signal Loom's
+`authored/signal-loom.ts` record, copies its image and its `identities/signal-loom/`
+directory (tile, artwork, and `identity.css`), runs the registration generator, and
+adds the slug to `published` in `selection.json`. The initial featured selection is `["signal-loom", "telescope"]`.
 It verifies content, keyboard/touch/motion, and screenshots at 390, 768, and 1440px.
 It also rebuilds with no external links. The same app then follows this sequence,
 stopping its server and rebuilding before each visit:

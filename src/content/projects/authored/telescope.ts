@@ -1,4 +1,4 @@
-import type { Project } from "./schema";
+import type { Project } from "../schema";
 
 export const telescope = {
   title: "Telescope",

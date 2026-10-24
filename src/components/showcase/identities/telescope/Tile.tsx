@@ -1,7 +1,8 @@
 import Link from "next/link";
 import type { CSSProperties } from "react";
 import type { EnrichedProject } from "@/content/projects/enrichment";
-import TileMeta, { tilePaletteStyle } from "./TileMeta";
+import TileMeta, { tilePaletteStyle } from "@/components/tiles/TileMeta";
+import "./identity.css";
 
 const STARS = [
   [9, 22, 2], [18, 68, 3], [28, 38, 2], [36, 77, 2],

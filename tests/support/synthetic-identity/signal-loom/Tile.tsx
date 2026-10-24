@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { CSSProperties } from "react";
 import TileMeta, { tilePaletteStyle } from "@/components/tiles/TileMeta";
 import type { EnrichedProject } from "@/content/projects/enrichment";
+import "./identity.css";
 
 /**
  * Test-only bespoke tile for the synthetic "signal-loom" identity. It is copied

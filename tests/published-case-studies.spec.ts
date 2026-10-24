@@ -1,6 +1,5 @@
 import { expect, test } from "@playwright/test";
-import { readFileSync, rmSync, writeFileSync } from "node:fs";
-import { join } from "node:path";
+import { rmSync } from "node:fs";
 import type { ChildProcess } from "node:child_process";
 import { addPreparedFixtureProject, writeFeaturedSelection, writePublishedSelection, createShowcaseApp } from "./support/showcase-app";
 import { buildTransmissionApp, serveTransmissionApp, runTransmissionBuild } from "./support/transmission-app";
@@ -59,9 +58,7 @@ test("unfeaturing and rebuilding retains published identity, metadata, images an
   }
   try {
     // A fully authored, reviewed record is still unavailable unless explicitly published.
-    addPreparedFixtureProject(dir);
-    const catalogue = join(dir, "src/content/projects/catalog.ts");
-    writeFileSync(catalogue, readFileSync(catalogue, "utf8").replace('slug: "orbit-lab",', 'slug: "orbit-lab", draft: false,'));
+    addPreparedFixtureProject(dir, { draft: false });
     writePublishedSelection(dir, published);
     await buildTransmissionApp(dir);
     server = await serveTransmissionApp(dir, 3035);

@@ -1,5 +1,7 @@
-import { appendFileSync, copyFileSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { copyFileSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
+import { telescope } from "@/content/projects/authored/telescope";
+import { AUTHORED_DIR, IDENTITIES_DIR, camelCase, syncRegistration } from "@/lib/generate-registration";
 import { createTransmissionApp } from "./transmission-app";
 
 // Reuse the isolated production-app harness: copied sources, local GitHub
@@ -24,18 +26,31 @@ export function writeFeaturedSelection(dir: string, slugs: readonly string[]) {
   updateSelection(dir, () => ({ featured: slugs }));
 }
 
+/** Write an authored record the way an owner would: its own file, exported under the camelCase slug. */
+export function writeAuthoredRecord(dir: string, file: string, project: unknown) {
+  writeFileSync(
+    join(dir, AUTHORED_DIR, `${file}.ts`),
+    `import type { Project } from "../schema";\nexport const ${camelCase(file)}: Project = ${JSON.stringify(project, null, 2)};\n`,
+  );
+}
+
 /** A fifth prepared identity for selection geometry, not the later bespoke-art onboarding proof. */
-export function addPreparedFixtureProject(dir: string) {
-  const catalogue = join(dir, "src/content/projects/catalog.ts");
-  let source = readFileSync(catalogue, "utf8");
-  source = source.replace("  elevatedBpm,", '  { ...telescope, slug: "orbit-lab", title: "Orbit Lab", pitch: "A prepared fifth project for layout verification.", links: {} },\n  elevatedBpm,');
-  writeFileSync(catalogue, source);
+export function addPreparedFixtureProject(dir: string, overrides: Record<string, unknown> = {}) {
+  writeAuthoredRecord(dir, "orbit-lab", {
+    ...telescope,
+    slug: "orbit-lab",
+    title: "Orbit Lab",
+    pitch: "A prepared fifth project for layout verification.",
+    links: {},
+    ...overrides,
+  });
+  // Prepared, not bespoke: the identity directory re-exports telescope's art.
+  const identity = join(dir, IDENTITIES_DIR, "orbit-lab");
+  mkdirSync(identity);
+  writeFileSync(join(identity, "Tile.tsx"), 'export { default } from "../telescope/Tile";\n');
+  writeFileSync(join(identity, "Artwork.tsx"), 'export { default } from "../telescope/Artwork";\n');
+  syncRegistration(dir);
   updateSelection(dir, ({ published }) => ({ published: ["orbit-lab", ...published] }));
-  const registry = join(dir, "src/components/showcase/registry.ts");
-  writeFileSync(registry, readFileSync(registry, "utf8").replace(
-    "createShowcaseRegistry([",
-    'createShowcaseRegistry([\n  { slug: "orbit-lab", Tile: TelescopeTile, CaseStudyArtwork: TelescopeArtwork },',
-  ));
 }
 
 export function writePublishedSelection(dir: string, slugs: readonly string[]) {
@@ -77,43 +92,31 @@ export function syntheticProject() {
   };
 }
 
-function replaceOnce(file: string, anchor: string, replacement: string) {
-  const source = readFileSync(file, "utf8");
-  if (!source.includes(anchor)) throw new Error(`Synthetic identity fixture could not find "${anchor}" in ${file}`);
-  writeFileSync(file, source.replace(anchor, replacement));
-}
-
 /**
  * Onboard a brand-new bespoke identity into an isolated app through the
- * documented extension points only: a content record, a published slug, tile
- * and case-study artwork with their styles, local imagery, and one registry
- * line. `publish`/`register` let a test leave a step out.
+ * documented extension points only: an authored record, local imagery, an
+ * identity directory (tile, case-study artwork, and their stylesheet), the
+ * generated registration, and a published slug. `publish`/`register` let a
+ * test leave a step out. Files keep the `signal-loom` name even when a test
+ * overrides the record's slug, so a broken slug never clobbers a real project.
  */
 export function addSyntheticIdentity(
   dir: string,
   { project = syntheticProject() as unknown, publish = true, register = true } = {},
 ) {
-  writeFileSync(
-    join(dir, "src/content/projects/signal-loom.ts"),
-    `import type { Project } from "./schema";\nexport const signalLoom: Project = ${JSON.stringify(project, null, 2)};\n`,
-  );
-  const catalogue = join(dir, "src/content/projects/catalog.ts");
-  replaceOnce(catalogue, 'import { elevatedBpm } from "./elevated-bpm";', 'import { elevatedBpm } from "./elevated-bpm";\nimport { signalLoom } from "./signal-loom";');
-  replaceOnce(catalogue, "  soundCity,\n];", "  soundCity,\n  signalLoom,\n];");
+  writeAuthoredRecord(dir, "signal-loom", project);
+  mkdirSync(join(dir, "public/projects/signal-loom"), { recursive: true });
+  copyFileSync(join(SYNTHETIC_SOURCES, "plate.svg"), join(dir, "public/projects/signal-loom/plate.svg"));
+  if (register) {
+    const identity = join(dir, IDENTITIES_DIR, "signal-loom");
+    mkdirSync(identity);
+    for (const file of ["Tile.tsx", "Artwork.tsx", "identity.css"]) {
+      copyFileSync(join(SYNTHETIC_SOURCES, "signal-loom", file), join(identity, file));
+    }
+  }
+  syncRegistration(dir);
   if (publish) {
     const slug = (project as { slug: string }).slug;
     updateSelection(dir, ({ published }) => ({ published: [slug, ...published] }));
-  }
-
-  mkdirSync(join(dir, "public/projects/signal-loom"), { recursive: true });
-  copyFileSync(join(SYNTHETIC_SOURCES, "plate.svg"), join(dir, "public/projects/signal-loom/plate.svg"));
-  copyFileSync(join(SYNTHETIC_SOURCES, "SignalLoomTile.tsx"), join(dir, "src/components/tiles/SignalLoomTile.tsx"));
-  copyFileSync(join(SYNTHETIC_SOURCES, "SignalLoomArtwork.tsx"), join(dir, "src/components/showcase/SignalLoomArtwork.tsx"));
-  appendFileSync(join(dir, "src/app/globals.css"), readFileSync(join(SYNTHETIC_SOURCES, "signal-loom.css"), "utf8"));
-
-  if (register) {
-    const registry = join(dir, "src/components/showcase/registry.ts");
-    replaceOnce(registry, 'import { createShowcaseRegistry } from "./registration";', 'import SignalLoomTile from "@/components/tiles/SignalLoomTile";\nimport { SignalLoomArtwork } from "./SignalLoomArtwork";\nimport { createShowcaseRegistry } from "./registration";');
-    replaceOnce(registry, "createShowcaseRegistry([", 'createShowcaseRegistry([\n  { slug: "signal-loom", Tile: SignalLoomTile, CaseStudyArtwork: SignalLoomArtwork },');
   }
 }
