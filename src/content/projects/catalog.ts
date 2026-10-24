@@ -1,4 +1,4 @@
-import { authoredProjects } from "./authored.generated";
+import { authoredProjectFiles, authoredProjects } from "./authored.generated";
 import {
   siteEnricher,
   type Enriched,
@@ -23,6 +23,10 @@ const { published: CASE_STUDY_SLUGS, featured: WALL_SLUGS }: {
 
 export function listProjects(): readonly Project[] {
   return projects;
+}
+
+export function listAuthoredFileRecords(): readonly { fileSlug: string; recordSlug: string }[] {
+  return authoredProjectFiles.map(({ fileSlug, project }) => ({ fileSlug, recordSlug: project.slug }));
 }
 
 export function getProject(slug: string): Project | undefined {

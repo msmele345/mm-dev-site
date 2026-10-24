@@ -1,5 +1,5 @@
 import { expect, test } from "@playwright/test";
-import { rmSync, writeFileSync } from "node:fs";
+import { readFileSync, rmSync, writeFileSync } from "node:fs";
 import {
   addSyntheticIdentity,
   createShowcaseApp,
@@ -113,6 +113,52 @@ test("an unfinished record that is neither published nor featured does not block
       register: false,
     });
     writeFileSync(info.outputPath("build.log"), await buildTransmissionApp(dir));
+  } finally {
+    rmSync(dir, { recursive: true, force: true });
+  }
+});
+
+test("a published identity with an unfinished marker fails the build", async ({}, info) => {
+  test.setTimeout(180_000);
+  const dir = createShowcaseApp();
+  try {
+    addSyntheticIdentity(dir);
+    const tile = `${dir}/src/components/showcase/identities/signal-loom/Tile.tsx`;
+    writeFileSync(tile, `${readFileSync(tile, "utf8")}\n/* onboarding:unfinished */\n`);
+    const result = await runTransmissionBuild(dir);
+    writeFileSync(info.outputPath("build.log"), result.output);
+    expect(result.exitCode).toBe(1);
+    expect(result.output).toContain('Showcase "signal-loom": presentation contains onboarding:unfinished marker');
+  } finally {
+    rmSync(dir, { recursive: true, force: true });
+  }
+});
+
+test("a published project with stale generated registration fails the build", async ({}, info) => {
+  test.setTimeout(180_000);
+  const dir = createShowcaseApp();
+  try {
+    addSyntheticIdentity(dir);
+    const barrel = `${dir}/src/components/showcase/identities.generated.ts`;
+    writeFileSync(barrel, `${readFileSync(barrel, "utf8")}\n// stale\n`);
+    const result = await runTransmissionBuild(dir);
+    writeFileSync(info.outputPath("build.log"), result.output);
+    expect(result.exitCode).toBe(1);
+    expect(result.output).toContain('Showcase "signal-loom": does not match authored files and identity directories; run npm run registration');
+  } finally {
+    rmSync(dir, { recursive: true, force: true });
+  }
+});
+
+test("an authored filename that disagrees with its record slug fails the build", async ({}, info) => {
+  test.setTimeout(180_000);
+  const dir = createShowcaseApp();
+  try {
+    addSyntheticIdentity(dir, { project: { ...syntheticProject(), slug: "signal-loon" } });
+    const result = await runTransmissionBuild(dir);
+    writeFileSync(info.outputPath("build.log"), result.output);
+    expect(result.exitCode).toBe(1);
+    expect(result.output).toContain('Project "signal-loon": authored/signal-loom.ts filename must match record slug "signal-loon"');
   } finally {
     rmSync(dir, { recursive: true, force: true });
   }

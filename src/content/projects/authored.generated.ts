@@ -11,3 +11,10 @@ export const authoredProjects: readonly Project[] = [
   telescope,
   terminalOne,
 ];
+
+export const authoredProjectFiles: readonly { fileSlug: string; project: Project }[] = [
+  { fileSlug: "elevated-bpm", project: elevatedBpm },
+  { fileSlug: "sound-city", project: soundCity },
+  { fileSlug: "telescope", project: telescope },
+  { fileSlug: "terminal-one", project: terminalOne },
+];

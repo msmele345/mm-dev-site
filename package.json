@@ -9,6 +9,7 @@
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
     "registration": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/registration.mjs",
+    "project": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/project.mjs",
     "test": "playwright test"
   },
   "dependencies": {

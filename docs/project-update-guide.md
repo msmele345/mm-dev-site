@@ -131,8 +131,14 @@ The real dev/build path checks unique valid catalogue slugs and full readiness f
 published projects. Unpublished records may remain unfinished. It rejects malformed
 published content, duplicate/unknown references,
 unresolved local images, missing published registrations, and unpublished featured
-projects. Errors name the slug and field or relationship. Fix the named source;
+projects. Errors name the slug and field or relationship, and the build lists every
+blocking finding at once. Fix the named source;
 do not hide entries or substitute another project's art to make the build pass.
+
+Run `npm run project -- check your-project` at any point. It is read-only and reports
+the project's stage (authored, published, featured), each publication gate (content
+ready, presentation registered, presentation finished), and every finding, including
+for unpublished work the build lets through. See `docs/content-schema.md`.
 
 ## Feature an existing project
 

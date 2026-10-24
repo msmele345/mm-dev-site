@@ -86,7 +86,10 @@ export function renderRegistration(listing: RegistrationListing): { authored: st
     'import type { Project } from "./schema";\n' +
     authoredSlugs.map((slug) => `import { ${camelCase(slug)} } from "./authored/${slug}";\n`).join("") +
     "\n" +
-    list("export const authoredProjects: readonly Project[]", authoredSlugs.map(camelCase));
+    list("export const authoredProjects: readonly Project[]", authoredSlugs.map(camelCase)) +
+    "\nexport const authoredProjectFiles: readonly { fileSlug: string; project: Project }[] = [\n" +
+    authoredSlugs.map((slug) => `  { fileSlug: "${slug}", project: ${camelCase(slug)} },\n`).join("") +
+    "];\n";
 
   const presentation =
     header(IDENTITIES_DIR) +

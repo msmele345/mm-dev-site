@@ -1,5 +1,5 @@
 import { expect, test } from "@playwright/test";
-import { validateShowcaseContent, type ShowcaseContent } from "@/content/projects/readiness";
+import { collectShowcaseFindings, validateShowcaseContent, type ShowcaseContent } from "@/content/projects/readiness";
 import type { Project } from "@/content/projects/schema";
 
 function readyProject(overrides: Record<string, unknown> = {}): Project {
@@ -134,4 +134,69 @@ test("an unfinished record may rest in the catalogue until it is published", () 
   expect(() => validateShowcaseContent(content([unfinished], { publishedSlugs: [] }))).not.toThrow();
   expect(() => validateShowcaseContent(content([unfinished])))
     .toThrow('Project "signal-loom": title must be a non-empty string');
+});
+
+test("collects independent content and selection findings in one pass", () => {
+  const findings = collectShowcaseFindings(content([
+    readyProject({ title: "", slug: "signal-loom" }),
+    readyProject({ slug: "signal-loom" }),
+  ], { publishedSlugs: ["ghost", "signal-loom", "signal-loom"] }));
+
+  expect(findings.map(({ slug, subject, message }) => ({ slug, subject, message }))).toEqual([
+    { slug: "signal-loom", subject: "title", message: "must be a non-empty string" },
+    { slug: "signal-loom", subject: "slug", message: "duplicate catalogue slug; every authored project needs its own slug" },
+    { slug: "ghost", subject: "published", message: "unknown project; use an authored catalogue slug" },
+    { slug: "signal-loom", subject: "published", message: "duplicate slug; publish each case study only once" },
+  ]);
+});
+
+test("validation reports every collected finding together", () => {
+  expect(() => validateShowcaseContent(content([readyProject({ title: "", pitch: "" })])))
+    .toThrow('Project "signal-loom": title must be a non-empty string\nProject "signal-loom": pitch must be a non-empty string');
+});
+
+test("build validation allows incomplete unpublished work while the collector reports it", () => {
+  const draft = readyProject({ title: "" });
+  const input = content([draft], {
+    publishedSlugs: [],
+    identityDirectories: [{ slug: "signal-loom", complete: true, unfinished: true }],
+    generatedRegistrationMatches: true,
+  });
+  expect(collectShowcaseFindings(input).some((finding) => finding.subject === "title" && !finding.blocksBuild)).toBe(true);
+  expect(() => validateShowcaseContent(input)).not.toThrow();
+});
+
+test("published readiness gates are independent", () => {
+  const project = readyProject();
+  const unregistered = collectShowcaseFindings(content([project], {
+    identityDirectories: [{ slug: "signal-loom", complete: false, unfinished: false }],
+  }));
+  expect(unregistered.some((finding) => finding.gate === "presentation-registered")).toBe(true);
+
+  const unfinished = collectShowcaseFindings(content([project], {
+    identityDirectories: [{ slug: "signal-loom", complete: true, unfinished: true }],
+  }));
+  expect(unfinished.some((finding) => finding.gate === "presentation-finished")).toBe(true);
+
+  const contentUnready = collectShowcaseFindings(content([readyProject({ pitch: "" })], {
+    identityDirectories: [{ slug: "signal-loom", complete: true, unfinished: false }],
+  }));
+  expect(contentUnready.some((finding) => finding.gate === "content")).toBe(true);
+  expect(contentUnready.some((finding) => finding.gate === "presentation-registered")).toBe(false);
+});
+
+test("featured-selection rules join the same finding collection", () => {
+  const findings = collectShowcaseFindings(content([readyProject({ pitch: "" })], {
+    publishedSlugs: [],
+    featuredSlugs: ["signal-loom", "signal-loom", "ghost"],
+  }));
+
+  expect(findings.map(({ slug, subject, message }) => ({ slug, subject, message }))).toEqual([
+    { slug: "signal-loom", subject: "pitch", message: "must be a non-empty string" },
+    { slug: "signal-loom", subject: "featured", message: "no published case-study destination; publish it before featuring" },
+    { slug: "signal-loom", subject: "featured", message: "duplicate slug; select each project only once" },
+    { slug: "ghost", subject: "featured", message: "unknown project; use an authored catalogue slug" },
+    { slug: "ghost", subject: "featured", message: "no published case-study destination; publish it before featuring" },
+  ]);
+  expect(findings.filter(({ subject }) => subject === "featured").every(({ blocksBuild }) => blocksBuild)).toBe(true);
 });

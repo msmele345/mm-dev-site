@@ -42,5 +42,6 @@ identities ship.
   wall, and motion rules stay in `globals.css` and identities refine them.
 - Authored files keep type-only imports so plain `node` can load them, and the
   generator uses only Node built-ins, for later onboarding tooling.
-- Stale barrels are not yet detected by the build; readiness reports them in a later
-  enhancement.
+- Stale barrels are detected: readiness compares both barrels with the generator's
+  output, and a mismatch is a finding that fails the build for published projects
+  and appears in `npm run project -- check <slug>`.

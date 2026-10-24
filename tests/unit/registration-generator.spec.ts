@@ -33,6 +33,11 @@ export const authoredProjects: readonly Project[] = [
   elevatedBpm,
   terminalOne,
 ];
+
+export const authoredProjectFiles: readonly { fileSlug: string; project: Project }[] = [
+  { fileSlug: "elevated-bpm", project: elevatedBpm },
+  { fileSlug: "terminal-one", project: terminalOne },
+];
 `);
   expect(identities).toBe(`// Generated from src/components/showcase/identities/ by \`npm run registration\`; do not edit.
 import type { ShowcasePresentation } from "./registration";
@@ -66,6 +71,7 @@ test("output is a pure function of the listing, whatever order the disk returns"
 test("an empty listing still renders valid, headed barrels", () => {
   const { authored, identities } = renderRegistration({ authored: [], identities: [] });
   expect(authored).toContain("export const authoredProjects: readonly Project[] = [];\n");
+  expect(authored).toContain("export const authoredProjectFiles: readonly { fileSlug: string; project: Project }[] = [\n];\n");
   expect(identities).toContain("export const identities: readonly ShowcasePresentation[] = [];\n");
   expect(authored.startsWith("// Generated from")).toBe(true);
 });
