@@ -9,6 +9,7 @@ import { terminalOne } from "./terminal-one";
 import { telescope } from "./telescope";
 import { listRailProjects } from "./rail";
 import type { Project, RailProject } from "./schema";
+import selection from "./selection.json";
 
 const projects: readonly Project[] = [
   elevatedBpm,
@@ -17,20 +18,15 @@ const projects: readonly Project[] = [
   soundCity,
 ];
 
-/** Published routes survive wall rotation; draft copy is an independent review flag. */
-const CASE_STUDY_SLUGS = [
-  "elevated-bpm",
-  "terminal-one",
-  "telescope",
-  "sound-city",
-] as const;
-/** Edit this ordered selection to rotate the wall; retain authored records and published slugs. */
-const WALL_SLUGS = [
-  "elevated-bpm",
-  "terminal-one",
-  "telescope",
-  "sound-city",
-] as const;
+/**
+ * Publication and featuring are plain data in `selection.json` (see the
+ * project update guide): `published` lists the case-study routes, and
+ * `featured` is the ordered Project wall selection.
+ */
+const { published: CASE_STUDY_SLUGS, featured: WALL_SLUGS }: {
+  published: readonly string[];
+  featured: readonly string[];
+} = selection;
 
 export function listProjects(): readonly Project[] {
   return projects;

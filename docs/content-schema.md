@@ -43,9 +43,17 @@ That review does not block shipping.
 - `listCaseStudySlugs()` — routes that should exist today
 - `listWallProjects()` — cards on the home project wall
 
-The `projects` array is the authored catalogue. `CASE_STUDY_SLUGS` selects published
-routes; `WALL_SLUGS` selects homepage membership and order independently. All four
-initial projects are published and featured. Removing a wall slug retains its route.
+The `projects` array is the authored catalogue. Publication and featuring are plain
+data in `src/content/projects/selection.json`, the only surface for either:
+
+```json
+{ "published": ["elevated-bpm", "..."], "featured": ["elevated-bpm", "..."] }
+```
+
+`published` selects case-study routes; `featured` selects homepage membership and
+order independently. All four initial projects are published and featured. Published
+routes survive wall rotation: removing a `featured` slug retains its route, and
+`draft` copy is an independent review flag, not a publication switch.
 
 ## Readiness
 

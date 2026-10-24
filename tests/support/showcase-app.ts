@@ -8,12 +8,20 @@ export function createShowcaseApp() {
   return createTransmissionApp();
 }
 
+type Selection = { published: readonly string[]; featured: readonly string[] };
+
+/** Read-validate-write the copied selection data, as an owner editing it by hand would. */
+function updateSelection(dir: string, change: (selection: Selection) => Partial<Selection>) {
+  const file = join(dir, "src/content/projects/selection.json");
+  const selection = JSON.parse(readFileSync(file, "utf8")) as Selection;
+  if (!Array.isArray(selection.published) || !Array.isArray(selection.featured)) {
+    throw new Error(`Selection fixture ${file} must list "published" and "featured" slugs`);
+  }
+  writeFileSync(file, `${JSON.stringify({ ...selection, ...change(selection) }, null, 2)}\n`);
+}
+
 export function writeFeaturedSelection(dir: string, slugs: readonly string[]) {
-  const file = join(dir, "src/content/projects/catalog.ts");
-  const source = readFileSync(file, "utf8");
-  const selection = /const WALL_SLUGS = \[[\s\S]*?\] as const;/;
-  if (!selection.test(source)) throw new Error("Featured selection fixture could not find WALL_SLUGS");
-  writeFileSync(file, source.replace(selection, `const WALL_SLUGS = ${JSON.stringify(slugs)} as const;`));
+  updateSelection(dir, () => ({ featured: slugs }));
 }
 
 /** A fifth prepared identity for selection geometry, not the later bespoke-art onboarding proof. */
@@ -21,8 +29,8 @@ export function addPreparedFixtureProject(dir: string) {
   const catalogue = join(dir, "src/content/projects/catalog.ts");
   let source = readFileSync(catalogue, "utf8");
   source = source.replace("  elevatedBpm,", '  { ...telescope, slug: "orbit-lab", title: "Orbit Lab", pitch: "A prepared fifth project for layout verification.", links: {} },\n  elevatedBpm,');
-  source = source.replace("const CASE_STUDY_SLUGS = [", 'const CASE_STUDY_SLUGS = [\n  "orbit-lab",');
   writeFileSync(catalogue, source);
+  updateSelection(dir, ({ published }) => ({ published: ["orbit-lab", ...published] }));
   const registry = join(dir, "src/components/showcase/registry.ts");
   writeFileSync(registry, readFileSync(registry, "utf8").replace(
     "createShowcaseRegistry([",
@@ -31,11 +39,7 @@ export function addPreparedFixtureProject(dir: string) {
 }
 
 export function writePublishedSelection(dir: string, slugs: readonly string[]) {
-  const file = join(dir, "src/content/projects/catalog.ts");
-  const source = readFileSync(file, "utf8");
-  const selection = /const CASE_STUDY_SLUGS = \[[\s\S]*?\] as const;/;
-  if (!selection.test(source)) throw new Error("Publication fixture could not find CASE_STUDY_SLUGS");
-  writeFileSync(file, source.replace(selection, `const CASE_STUDY_SLUGS = ${JSON.stringify(slugs)} as const;`));
+  updateSelection(dir, () => ({ published: slugs }));
 }
 
 const SYNTHETIC_SOURCES = join(process.cwd(), "tests/support/synthetic-identity");
@@ -97,7 +101,8 @@ export function addSyntheticIdentity(
   replaceOnce(catalogue, 'import { elevatedBpm } from "./elevated-bpm";', 'import { elevatedBpm } from "./elevated-bpm";\nimport { signalLoom } from "./signal-loom";');
   replaceOnce(catalogue, "  soundCity,\n];", "  soundCity,\n  signalLoom,\n];");
   if (publish) {
-    replaceOnce(catalogue, "const CASE_STUDY_SLUGS = [", `const CASE_STUDY_SLUGS = [\n  ${JSON.stringify((project as { slug: string }).slug)},`);
+    const slug = (project as { slug: string }).slug;
+    updateSelection(dir, ({ published }) => ({ published: [slug, ...published] }));
   }
 
   mkdirSync(join(dir, "public/projects/signal-loom"), { recursive: true });

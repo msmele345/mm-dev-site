@@ -9,12 +9,18 @@ Keep public slugs stable: never reuse an outgoing project's slug for a new ident
 | Surface | Source | Purpose |
 |---|---|---|
 | Authored catalogue | `src/content/projects/<slug>.ts`, imported into `projects` in `src/content/projects/catalog.ts` | Curated copy and identity, including retained projects. Creating a file alone does not load it. |
-| Featured selection | `WALL_SLUGS` in `catalog.ts` | Homepage membership and order; drives count, numbering, and reading order. |
-| Published case studies | `CASE_STUDY_SLUGS` in `catalog.ts` | Available `/work/<slug>` pages, metadata, social images, and sitemap entries. |
+| Featured selection | `featured` in `src/content/projects/selection.json` | Homepage membership and order; drives count, numbering, and reading order. |
+| Published case studies | `published` in `src/content/projects/selection.json` | Available `/work/<slug>` pages, metadata, social images, and sitemap entries. |
 | Presentation registration | `src/components/showcase/registry.ts` | Explicit `Tile` and `CaseStudyArtwork` components for a slug. |
 
 A featured project must be authored, registered, and published. A published project
-need not be featured. `draft: true` shows the copy-review flag; it does not unpublish
+need not be featured.
+
+`selection.json` is the only publication and featuring surface. It is plain data,
+`{ "published": [...], "featured": [...] }`, so edit it by hand or with a tool that
+reads, validates, and rewrites it; `catalog.ts` imports it and needs no edits.
+Published routes survive wall rotation: edit the ordered `featured` list to rotate
+the wall, and retain the authored records and `published` slugs it leaves behind. `draft: true` shows the copy-review flag; it does not unpublish
 a route. Clearly labeled draft plates are also valid for publication. Owner approval
 of copy and visuals remains a separate review item.
 
@@ -31,7 +37,7 @@ promote Now Building, edit the ledger, or move removed projects to the rail.
 - [ ] Add at least one image under `public/projects/<slug>/`; its content `src` starts
   with `/projects/`, not `/public/`. Check filename case, useful alt text, and caption.
 - [ ] Complete the artwork checklist below, then register the presentation.
-- [ ] Add the slug once to `CASE_STUDY_SLUGS`. Build and visit the case study directly.
+- [ ] Add the slug once to `published` in `selection.json`. Build and visit the case study directly.
 - [ ] When ready for the wall, follow “Feature an existing project.”
 
 ### Reusable content outline
@@ -108,14 +114,14 @@ do not hide entries or substitute another project's art to make the build pass.
 ## Feature an existing project
 
 - [ ] Confirm its catalogue record, presentation, assets, and published route exist.
-- [ ] Insert its slug once at the intended position in `WALL_SLUGS`.
+- [ ] Insert its slug once at the intended position in `featured` in `selection.json`.
 - [ ] Rebuild and check membership, count, indices, and destination using the evidence
   checklist below. Already prepared projects need no new bespoke UI code.
 
 ## Remove a featured project
 
-- [ ] Remove only its entry from `WALL_SLUGS`.
-- [ ] Retain its record in `projects`, slug in `CASE_STUDY_SLUGS`, registration,
+- [ ] Remove only its entry from `featured`.
+- [ ] Retain its record in `projects`, slug in `published`, registration,
   components, styles, fonts, and local images needed by its published page.
 - [ ] Rebuild and visit the old URL directly; check its metadata, social image, and sitemap.
   Removing every selection keeps the Work anchor and heading, reports zero featured
@@ -124,14 +130,14 @@ do not hide entries or substitute another project's art to make the build pass.
 ## Replace a featured project
 
 - [ ] Prepare and publish the incoming identity first.
-- [ ] Replace the outgoing slug in `WALL_SLUGS` with the incoming slug at the desired position.
+- [ ] Replace the outgoing slug in `featured` with the incoming slug at the desired position.
 - [ ] Retain all outgoing publication dependencies as described under removal.
 - [ ] Rebuild; open both URLs and verify each retains its own identity. Never overwrite
   the outgoing record or reuse its public slug for the incoming project.
 
 ## Reorder the wall
 
-- [ ] Move existing entries within `WALL_SLUGS`; change no project slugs or stored indices.
+- [ ] Move existing entries within `featured`; change no project slugs or stored indices.
 - [ ] Rebuild; check visible sequence, contiguous numbering, count, and keyboard order.
   Odd selections keep the final tile in normal grid order; five is not a maximum.
 
@@ -152,7 +158,7 @@ It verifies content, keyboard/touch/motion, and screenshots at 390, 768, and 144
 It also rebuilds with no external links. The same app then follows this sequence,
 stopping its server and rebuilding before each visit:
 
-| Operation | `WALL_SLUGS` |
+| Operation | `featured` |
 |---|---|
 | Reorder | `["telescope", "signal-loom"]` |
 | Replace | `["telescope", "sound-city"]` |
