@@ -1,7 +1,7 @@
 import { expect, test } from "@playwright/test";
 import { execFileSync, spawnSync } from "node:child_process";
 import { createHash } from "node:crypto";
-import { cpSync, mkdtempSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
+import { chmodSync, cpSync, existsSync, mkdtempSync, mkdirSync, readFileSync, readdirSync, readlinkSync, rmSync, symlinkSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, relative } from "node:path";
 
@@ -34,7 +34,7 @@ function writeProject(root: string, record = project(), file = authored) {
 
 function fixture(): string {
   const root = mkdtempSync(join(tmpdir(), "showcase-check-"));
-  for (const file of ["scripts/project.mjs", "scripts/registration.mjs", "src/content/projects/project-command.ts", "src/content/projects/readiness.ts", "src/content/projects/filesystem-facts.ts", "src/content/projects/schema.ts", "src/lib/generate-registration.ts"]) {
+  for (const file of ["scripts/project.mjs", "scripts/registration.mjs", "src/content/projects/project-command.ts", "src/content/projects/project-create.ts", "src/content/projects/readiness.ts", "src/content/projects/filesystem-facts.ts", "src/content/projects/schema.ts", "src/lib/generate-registration.ts"]) {
     mkdirSync(join(root, file, ".."), { recursive: true });
     cpSync(join(source, file), join(root, file));
   }
@@ -54,7 +54,11 @@ function fixture(): string {
 }
 
 function check(root: string, checkedSlug = slug) {
-  return spawnSync("npm", ["run", "project", "--", "check", checkedSlug], { cwd: root, encoding: "utf8" });
+  return command(root, "check", checkedSlug);
+}
+
+function command(root: string, ...args: string[]) {
+  return spawnSync("npm", ["run", "project", "--", ...args], { cwd: root, encoding: "utf8" });
 }
 
 function hash(root: string): string {
@@ -62,13 +66,292 @@ function hash(root: string): string {
   const visit = (directory: string) => {
     for (const entry of readdirSync(directory, { withFileTypes: true }).sort((a, b) => a.name.localeCompare(b.name))) {
       const path = join(directory, entry.name);
-      if (entry.isDirectory()) visit(path);
-      else digest.update(relative(root, path)).update(readFileSync(path));
+      digest.update(relative(root, path));
+      if (entry.isSymbolicLink()) digest.update("symlink").update(readlinkSync(path));
+      else if (entry.isDirectory()) { digest.update("directory"); visit(path); }
+      else digest.update("file").update(readFileSync(path));
     }
   };
   visit(root);
   return digest.digest("hex");
 }
+
+test("create prepares an unpublished project with unfinished presentation", () => {
+  const root = fixture();
+  try {
+    const selection = readFileSync(join(root, "src/content/projects/selection.json"), "utf8");
+    const result = spawnSync("npm", ["run", "project", "--", "create", "nova-loom", "--title", "Nova Loom"], { cwd: root, encoding: "utf8" });
+    expect(result.status, result.stderr).toBe(0);
+    expect(readFileSync(join(root, "src/content/projects/selection.json"), "utf8")).toBe(selection);
+    const report = check(root, "nova-loom");
+    expect(report.status, report.stderr).toBe(0);
+    expect(report.stdout).toContain("Stage: authored");
+    expect(report.stdout).toContain("Content ready: no");
+    expect(report.stdout).toContain("Presentation registered: yes");
+    expect(report.stdout).toContain("Presentation finished: no");
+    expect(report.stdout).toContain("pitch: must be a non-empty string");
+    expect(report.stdout).toContain("screenshots: must include at least one image");
+    const record = JSON.parse(execFileSync(process.execPath, ["--disable-warning=MODULE_TYPELESS_PACKAGE_JSON", "--input-type=module", "-e", 'import { novaLoom } from "./src/content/projects/authored/nova-loom.ts"; console.log(JSON.stringify(novaLoom))'], { cwd: root, encoding: "utf8" }));
+    expect(record).toEqual({
+      slug: "nova-loom", title: "Nova Loom", draft: true, pitch: "",
+      tile: { motif: "", displayFace: "", palette: { ground: "", panel: "", ink: "", mute: "", accent: "" } },
+      story: [
+        { kind: "problem", heading: "", body: "" },
+        { kind: "build", heading: "", body: "" },
+        { kind: "result", heading: "", body: "" },
+      ], links: {}, stack: [], screenshots: [],
+    });
+    for (const file of ["Tile.tsx", "Artwork.tsx", "identity.css"]) {
+      const content = readFileSync(join(root, "src/components/showcase/identities/nova-loom", file), "utf8");
+      expect(content).toContain("onboarding:unfinished");
+      if (file !== "identity.css") expect(content).toContain("UNFINISHED");
+    }
+    expect(readFileSync(join(root, "src/components/showcase/identities/nova-loom/Tile.tsx"), "utf8")).toContain("TileMeta");
+    expect(readFileSync(join(root, "src/components/showcase/identities/nova-loom/Tile.tsx"), "utf8")).toContain('aria-hidden="true"');
+    expect(readFileSync(join(root, "public/projects/nova-loom/.gitkeep"), "utf8")).toBe("");
+  } finally { rmSync(root, { recursive: true, force: true }); }
+});
+
+test("create dry run shows new files and both registration diffs without creating directories", () => {
+  const root = fixture();
+  try {
+    const before = hash(root);
+    const result = command(root, "create", "nova-loom", "--title", "Nova Loom", "--dry-run");
+    expect(result.status, result.stderr).toBe(0);
+    for (const path of ["src/content/projects/authored/nova-loom.ts", "src/components/showcase/identities/nova-loom/Tile.tsx", "src/components/showcase/identities/nova-loom/Artwork.tsx", "src/components/showcase/identities/nova-loom/identity.css", "public/projects/nova-loom/.gitkeep", "docs/project-review/nova-loom.md"]) expect(result.stdout).toContain(path);
+    expect(result.stdout).toContain('import { novaLoom } from "./authored/nova-loom"');
+    expect(result.stdout).toContain('import NovaLoomTile from "./identities/nova-loom/Tile"');
+    expect(hash(root)).toBe(before);
+    expect(existsSync(join(root, "src/components/showcase/identities/nova-loom"))).toBe(false);
+    expect(existsSync(join(root, "public/projects/nova-loom"))).toBe(false);
+  } finally { rmSync(root, { recursive: true, force: true }); }
+});
+
+test("create retries safely and never overwrites edited work", () => {
+  const root = fixture();
+  try {
+    const args = ["create", "nova-loom", "--title", "Nova Loom"];
+    const created = command(root, ...args);
+    expect(created.status, created.stderr).toBe(0);
+    const before = hash(root);
+    const repeat = command(root, ...args);
+    expect(repeat.status, repeat.stderr).toBe(0);
+    expect(repeat.stdout).toContain("already exists");
+    expect(hash(root)).toBe(before);
+
+    rmSync(join(root, "src/components/showcase/identities/nova-loom/Artwork.tsx"));
+    const resumed = command(root, ...args);
+    expect(resumed.status, resumed.stderr).toBe(0);
+    expect(hash(root)).toBe(before);
+
+    rmSync(join(root, "src/content/projects/authored/nova-loom.ts"));
+    rmSync(join(root, "src/content/projects/authored.generated.ts"));
+    rmSync(join(root, "src/components/showcase/identities.generated.ts"));
+    const resumedBeforeRegistration = command(root, ...args);
+    expect(resumedBeforeRegistration.status, resumedBeforeRegistration.stderr).toBe(0);
+    expect(hash(root)).toBe(before);
+
+    writeFileSync(join(root, "src/components/showcase/identities/nova-loom/Tile.tsx"), "owner edits\n");
+    const edited = hash(root);
+    const conflict = command(root, ...args);
+    expect(conflict.status).not.toBe(0);
+    expect(conflict.stderr).toContain("different content");
+    expect(hash(root)).toBe(edited);
+  } finally { rmSync(root, { recursive: true, force: true }); }
+});
+
+test("an identical create and current sync need no write access", () => {
+  const root = fixture();
+  const directories = [
+    "src/content/projects/authored", "src/content/projects", "src/components/showcase/identities/nova-loom",
+    "src/components/showcase", "public/projects/nova-loom", "docs/project-review",
+  ];
+  try {
+    const created = command(root, "create", "nova-loom", "--title", "Nova Loom");
+    expect(created.status, created.stderr).toBe(0);
+    for (const dir of directories) chmodSync(join(root, dir), 0o555);
+    const before = hash(root);
+    const repeat = command(root, "create", "nova-loom", "--title", "Nova Loom");
+    expect(repeat.status, repeat.stderr).toBe(0);
+    expect(repeat.stdout).toContain("already exists");
+    const sync = command(root, "sync");
+    expect(sync.status, sync.stderr).toBe(0);
+    expect(sync.stdout).toContain("already current");
+    expect(hash(root)).toBe(before);
+  } finally {
+    for (const dir of directories) if (existsSync(join(root, dir))) chmodSync(join(root, dir), 0o755);
+    rmSync(root, { recursive: true, force: true });
+  }
+});
+
+test("create validates arguments, identifier names, and title before changing the checkout", () => {
+  const root = fixture();
+  try {
+    const before = hash(root);
+    for (const args of [
+      ["create", "UPPER", "--title", "Title"], ["create", "../outside", "--title", "Title"],
+      ["create", "1-project", "--title", "Title"], ["create", "class", "--title", "Title"],
+      ["create", "const", "--title", "Title"], ["create", "await", "--title", "Title"],
+      ["create", "default", "--title", "Title"], ["create", "authored-projects", "--title", "Title"],
+      ["create", "nova-loom", "--title", "   "], ["create", "nova-loom"],
+      ["create", "nova-loom", "--title", "Title", "--title", "Again"],
+      ["create", "nova-loom", "--title", "Title", "--source", "--dry-run"],
+      ["create", "nova-loom", "--title", "Title", "--unknown"],
+    ]) {
+      const result = command(root, ...args);
+      expect(result.status, args.join(" ")).not.toBe(0);
+      expect(hash(root), args.join(" ")).toBe(before);
+    }
+    expect(existsSync(join(root, "src/components/showcase/identities/nova-loom"))).toBe(false);
+    expect(existsSync(join(root, "public/projects/nova-loom"))).toBe(false);
+  } finally { rmSync(root, { recursive: true, force: true }); }
+});
+
+test("create stops for occupied files, directories, slugs, and symlinks without side effects", () => {
+  const root = fixture();
+  try {
+    const assertRefusal = () => {
+      const before = hash(root);
+      const result = command(root, "create", "nova-loom", "--title", "Nova Loom");
+      expect(result.status).not.toBe(0);
+      expect(hash(root)).toBe(before);
+      expect(existsSync(join(root, "src/content/projects/authored/nova-loom.ts"))).toBe(false);
+    };
+    mkdirSync(join(root, "src/components/showcase/identities/nova-loom"));
+    writeFileSync(join(root, "src/components/showcase/identities/nova-loom/extra.txt"), "owner work");
+    assertRefusal();
+    rmSync(join(root, "src/components/showcase/identities/nova-loom"), { recursive: true });
+
+    mkdirSync(join(root, "public/projects/nova-loom"));
+    writeFileSync(join(root, "public/projects/nova-loom/.gitkeep"), "owner work");
+    assertRefusal();
+    rmSync(join(root, "public/projects/nova-loom"), { recursive: true });
+
+    symlinkSync("/nonexistent/identity", join(root, "src/components/showcase/identities/nova-loom"));
+    assertRefusal();
+    rmSync(join(root, "src/components/showcase/identities/nova-loom"));
+
+    writeFileSync(join(root, "src/content/projects/selection.json"), JSON.stringify({ published: ["nova-loom"], featured: [] }));
+    assertRefusal();
+    writeFileSync(join(root, "src/content/projects/selection.json"), JSON.stringify({ published: [], featured: [] }));
+    writeProject(root, project({ slug: "nova-loom" }), "src/content/projects/authored/other-name.ts");
+    assertRefusal();
+  } finally { rmSync(root, { recursive: true, force: true }); }
+});
+
+test("create rejects a generated identifier collision before writes", () => {
+  const root = fixture();
+  try {
+    writeProject(root, project({ slug: "alpha1" }), "src/content/projects/authored/alpha1.ts");
+    const before = hash(root);
+    const result = command(root, "create", "alpha-1", "--title", "Alpha One");
+    expect(result.status).not.toBe(0);
+    expect(result.stderr).toContain('both generate the name "alpha1"');
+    expect(hash(root)).toBe(before);
+  } finally { rmSync(root, { recursive: true, force: true }); }
+});
+
+test("create refuses when the prospective application has a build-blocking finding", () => {
+  const root = fixture();
+  try {
+    writeProject(root, project({ pitch: "" }));
+    writeFileSync(join(root, "src/content/projects/selection.json"), JSON.stringify({ published: [slug], featured: [] }));
+    const before = hash(root);
+    const result = command(root, "create", "nova-loom", "--title", "Nova Loom");
+    expect(result.status).not.toBe(0);
+    expect(result.stderr).toContain("signal-loom pitch: must be a non-empty string");
+    expect(hash(root)).toBe(before);
+    expect(existsSync(join(root, "src/components/showcase/identities/nova-loom"))).toBe(false);
+    expect(existsSync(join(root, "public/projects/nova-loom"))).toBe(false);
+  } finally { rmSync(root, { recursive: true, force: true }); }
+});
+
+test("create records the source path and exact revision without importing copy", () => {
+  const root = fixture();
+  try {
+    const revision = execFileSync("git", ["-C", source, "rev-parse", "--verify", "HEAD"], { encoding: "utf8" }).trim();
+    const result = command(root, "create", "nova-loom", "--title", 'Nova "Loom"', "--source", source);
+    expect(result.status, result.stderr).toBe(0);
+    const notes = readFileSync(join(root, "docs/project-review/nova-loom.md"), "utf8");
+    expect(notes).toContain(source);
+    expect(notes).toContain(revision);
+    const report = check(root, "nova-loom");
+    expect(report.status, report.stderr).toBe(0);
+    expect(report.stdout).toContain("pitch: must be a non-empty string");
+
+    const before = hash(root);
+    const invalid = command(root, "create", "another-project", "--title", "Another", "--source", "/no/such/repository");
+    expect(invalid.status).not.toBe(0);
+    expect(invalid.stderr).toContain("readable Git revision");
+    expect(hash(root)).toBe(before);
+  } finally { rmSync(root, { recursive: true, force: true }); }
+});
+
+test("an identical create preserves its original source revision when the source advances", () => {
+  const root = fixture();
+  const sourceRepo = mkdtempSync(join(tmpdir(), "project-source-"));
+  const git = (...args: string[]) => execFileSync("git", ["-C", sourceRepo, "-c", "user.name=Fixture", "-c", "user.email=fixture@example.test", "-c", "commit.gpgsign=false", ...args], { stdio: "ignore" });
+  try {
+    git("init", "-q");
+    git("commit", "--allow-empty", "-qm", "First revision");
+    const args = ["create", "nova-loom", "--title", "Nova Loom", "--source", sourceRepo];
+    const created = command(root, ...args);
+    expect(created.status, created.stderr).toBe(0);
+    const notes = readFileSync(join(root, "docs/project-review/nova-loom.md"), "utf8");
+    git("commit", "--allow-empty", "-qm", "Second revision");
+    const before = hash(root);
+    const repeat = command(root, ...args);
+    expect(repeat.status, repeat.stderr).toBe(0);
+    expect(repeat.stdout).toContain("already exists");
+    expect(readFileSync(join(root, "docs/project-review/nova-loom.md"), "utf8")).toBe(notes);
+    expect(hash(root)).toBe(before);
+
+    const alteredNotes = notes.replace(/Source revision: `[a-f0-9]{40,64}`/, `Source revision: \`${"0".repeat(40)}\``);
+    writeFileSync(join(root, "docs/project-review/nova-loom.md"), alteredNotes);
+    const altered = hash(root);
+    const invalidRetry = command(root, ...args);
+    expect(invalidRetry.status).not.toBe(0);
+    expect(invalidRetry.stderr).toContain("readable Git revision");
+    expect(hash(root)).toBe(altered);
+  } finally {
+    rmSync(root, { recursive: true, force: true });
+    rmSync(sourceRepo, { recursive: true, force: true });
+  }
+});
+
+test("an existing review note cannot make a nonexistent source repository valid", () => {
+  const root = fixture();
+  try {
+    const sourceRepo = join(root, "missing-source-repository");
+    mkdirSync(join(root, "docs/project-review"), { recursive: true });
+    writeFileSync(join(root, "docs/project-review/nova-loom.md"), `# "Nova Loom" review notes\n\nSource repository: ${JSON.stringify(sourceRepo)}\n\nSource revision: \`${"0".repeat(40)}\`\n\n- [ ] Review source-grounded copy.\n- [ ] Review tile and case-study artwork.\n`);
+    const before = hash(root);
+    const result = command(root, "create", "nova-loom", "--title", "Nova Loom", "--source", sourceRepo);
+    expect(result.status).not.toBe(0);
+    expect(result.stderr).toContain("readable Git revision");
+    expect(hash(root)).toBe(before);
+  } finally { rmSync(root, { recursive: true, force: true }); }
+});
+
+test("sync previews and regenerates registration, then becomes a no-op", () => {
+  const root = fixture();
+  try {
+    writeProject(root, project({ slug: "new-project" }), "src/content/projects/authored/new-project.ts");
+    const before = hash(root);
+    const preview = command(root, "sync", "--dry-run");
+    expect(preview.status, preview.stderr).toBe(0);
+    expect(preview.stdout).toContain('+import { newProject } from "./authored/new-project"');
+    expect(hash(root)).toBe(before);
+    const changed = command(root, "sync");
+    expect(changed.status, changed.stderr).toBe(0);
+    expect(changed.stdout).toContain("authored.generated.ts");
+    const synced = hash(root);
+    const repeat = command(root, "sync");
+    expect(repeat.status, repeat.stderr).toBe(0);
+    expect(repeat.stdout).toContain("already current");
+    expect(hash(root)).toBe(synced);
+  } finally { rmSync(root, { recursive: true, force: true }); }
+});
 
 test("check reports authored, published, and featured stages with independent gates and leaves files unchanged", () => {
   const root = fixture();

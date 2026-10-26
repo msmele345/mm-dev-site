@@ -5,14 +5,21 @@ import { pathToFileURL } from "node:url";
 import { collectShowcaseFilesystemFacts } from "./filesystem-facts.ts";
 import { collectShowcaseFindings, ROUTE_SLUG } from "./readiness.ts";
 import { camelCase } from "../../lib/generate-registration.ts";
+import { createProject, syncProjects } from "./project-create.ts";
 import type { Project } from "./schema";
 
 const root = process.cwd();
 
 export async function runProjectCommand(args: readonly string[]): Promise<number> {
   const [operation, slug] = args;
-  if (operation !== "check") {
-    console.error("Usage: npm run project -- check <slug>");
+  if (operation === "sync") {
+    if (args.length > 2 || (args[1] !== undefined && args[1] !== "--dry-run")) {
+      throw new Error("Usage: npm run project -- sync [--dry-run]");
+    }
+    return syncProjects(root, args[1] === "--dry-run");
+  }
+  if (operation !== "check" && operation !== "create") {
+    console.error("Usage: npm run project -- check <slug> | create <slug> --title <title> [--source <path>] [--dry-run] | sync [--dry-run]");
     return 1;
   }
   if (!slug || !ROUTE_SLUG.test(slug)) {
@@ -20,6 +27,7 @@ export async function runProjectCommand(args: readonly string[]): Promise<number
     return 1;
   }
 
+  if (operation === "check" && args.length !== 2) throw new Error("Usage: npm run project -- check <slug>");
   const selection = readSelection();
   const authoredFiles = await readdir(join(root, "src/content/projects/authored"));
   const projectFiles = authoredFiles.filter((file) => file.endsWith(".ts") && !file.endsWith(".d.ts"));
@@ -33,6 +41,9 @@ export async function runProjectCommand(args: readonly string[]): Promise<number
     return { fileSlug, recordSlug: project.slug, project };
   }));
   const projects = authoredPairs.map(({ project }) => project);
+  if (operation === "create") {
+    return createProject({ root, slug, options: args.slice(2), selection, authoredPairs });
+  }
   const project = projects.find((entry) => entry.slug === slug);
   if (!project) {
     console.error(`Project "${slug}": unknown project; author src/content/projects/authored/${slug}.ts first.`);
