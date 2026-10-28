@@ -76,6 +76,157 @@ function hash(root: string): string {
   return digest.digest("hex");
 }
 
+test("publish appends a ready draft case study once without changing other editorial surfaces", () => {
+  const root = fixture();
+  try {
+    const selectionPath = join(root, "src/content/projects/selection.json");
+    writeProject(root, project({ slug: "other-project" }), "src/content/projects/authored/other-project.ts");
+    cpSync(join(root, identity), join(root, "src/components/showcase/identities/other-project"), { recursive: true });
+    execFileSync(process.execPath, ["scripts/registration.mjs"], { cwd: root });
+    const selection = { published: ["other-project"], featured: ["other-project"], editorialNote: "Keep this owner setting." };
+    writeFileSync(selectionPath, JSON.stringify(selection));
+    mkdirSync(join(root, "src/content/transmission"), { recursive: true });
+    writeFileSync(join(root, "src/content/transmission/current.ts"), "Owner's current transmission.\n");
+    writeFileSync(join(root, "src/content/projects/more.ts"), "Owner's more-projects rail.\n");
+    const before = hash(root);
+    const result = command(root, "publish", slug);
+    expect(result.status, result.stderr).toBe(0);
+    expect(result.stdout).toContain(`Published project "${slug}"`);
+    expect(JSON.parse(readFileSync(selectionPath, "utf8"))).toEqual({ ...selection, published: ["other-project", slug] });
+    const publishedHash = hash(root);
+    const report = check(root);
+    expect(report.status, report.stderr).toBe(0);
+    expect(report.stdout).toContain("Stage: published");
+    expect(report.stdout).not.toContain("Findings:");
+    const readiness = spawnSync(process.execPath, ["--disable-warning=MODULE_TYPELESS_PACKAGE_JSON", "--input-type=module", "-e", `
+      import { readFileSync } from "node:fs";
+      import { signalLoom } from "./src/content/projects/authored/signal-loom.ts";
+      import { otherProject } from "./src/content/projects/authored/other-project.ts";
+      import { collectShowcaseFilesystemFacts } from "./src/content/projects/filesystem-facts.ts";
+      import { validateShowcaseContent } from "./src/content/projects/readiness.ts";
+      const projects = [signalLoom, otherProject];
+      const selection = JSON.parse(readFileSync("src/content/projects/selection.json", "utf8"));
+      const facts = collectShowcaseFilesystemFacts(process.cwd(), projects.map(project => ({ fileSlug: project.slug, recordSlug: project.slug })));
+      validateShowcaseContent({ projects, publishedSlugs: selection.published, featuredSlugs: selection.featured, ...facts });
+    `], { cwd: root, encoding: "utf8" });
+    expect(readiness.status, readiness.stderr).toBe(0);
+    const repeat = command(root, "publish", slug);
+    expect(repeat.status, repeat.stderr).toBe(0);
+    expect(repeat.stdout).toContain("already published");
+    expect(hash(root)).toBe(publishedHash);
+    writeFileSync(selectionPath, JSON.stringify(selection));
+    expect(hash(root)).toBe(before);
+  } finally { rmSync(root, { recursive: true, force: true }); }
+});
+
+test("publish dry run previews the published change and leaves the checkout unchanged", () => {
+  const root = fixture();
+  try {
+    const before = hash(root);
+    const result = command(root, "publish", slug, "--dry-run");
+    expect(result.status, result.stderr).toBe(0);
+    expect(result.stdout).toContain("src/content/projects/selection.json");
+    expect(result.stdout).toContain('- published: []');
+    expect(result.stdout).toContain('+ published: ["signal-loom"]');
+    expect(hash(root)).toBe(before);
+    expect(check(root).stdout).toContain("Stage: authored");
+  } finally { rmSync(root, { recursive: true, force: true }); }
+});
+
+test("publish lists every blocking readiness finding without writes, including in dry run", () => {
+  const root = fixture();
+  try {
+    writeProject(root, project({ title: "", pitch: "", screenshots: [{ src: "/projects/signal-loom/missing.svg", alt: "", caption: "" }] }));
+    rmSync(join(root, identity, "Artwork.tsx"));
+    writeFileSync(join(root, identity, "identity.css"), "/* onboarding:unfinished */\n");
+    const before = hash(root);
+    for (const options of [[], ["--dry-run"]]) {
+      const result = command(root, "publish", slug, ...options);
+      expect(result.status).not.toBe(0);
+      for (const finding of [
+        "title: must be a non-empty string", "pitch: must be a non-empty string",
+        'screenshots[0].src: "/projects/signal-loom/missing.svg" does not resolve',
+        "screenshots[0].alt: must be a non-empty string", "screenshots[0].caption: must be a non-empty string",
+        "presentation: missing presentation registration", "presentation: contains onboarding:unfinished marker",
+        "generated registration:",
+      ]) expect(result.stderr).toContain(`${slug} ${finding}`);
+      expect(hash(root)).toBe(before);
+    }
+  } finally { rmSync(root, { recursive: true, force: true }); }
+});
+
+for (const gate of ["incomplete content", "missing asset", "mis-cased asset", "missing presentation", "unfinished presentation", "stale registration"]) {
+  test(`publish refuses ${gate} as the sole closed publication gate`, () => {
+    const root = fixture();
+    try {
+      let finding: string;
+      if (gate === "incomplete content") {
+        writeProject(root, project({ pitch: "" }));
+        finding = "pitch: must be a non-empty string";
+      } else if (gate === "missing asset" || gate === "mis-cased asset") {
+        writeProject(root, project({ screenshots: [{ src: gate === "missing asset" ? "/projects/signal-loom/missing.svg" : "/projects/signal-loom/Plate.svg", alt: "Loom threads.", caption: "Draft plate." }] }));
+        finding = "does not resolve to a file in public/";
+      } else if (gate === "missing presentation") {
+        rmSync(join(root, identity), { recursive: true });
+        execFileSync(process.execPath, ["scripts/registration.mjs"], { cwd: root });
+        finding = "presentation: missing presentation registration";
+      } else if (gate === "unfinished presentation") {
+        mkdirSync(join(root, identity, "nested"));
+        writeFileSync(join(root, identity, "nested/detail.css"), "/* onboarding:unfinished */\n");
+        finding = "presentation: contains onboarding:unfinished marker";
+      } else {
+        writeFileSync(join(root, "src/components/showcase/identities.generated.ts"), "// stale\n");
+        finding = "generated registration:";
+      }
+      const before = hash(root);
+      const result = command(root, "publish", slug);
+      expect(result.status).not.toBe(0);
+      expect(result.stderr).toContain(finding);
+      expect(hash(root)).toBe(before);
+    } finally { rmSync(root, { recursive: true, force: true }); }
+  });
+}
+
+test("publish preflights the full prospective build while allowing incomplete unpublished work", () => {
+  const root = fixture();
+  try {
+    writeProject(root, project({ slug: "other-project", pitch: "" }), "src/content/projects/authored/other-project.ts");
+    cpSync(join(root, identity), join(root, "src/components/showcase/identities/other-project"), { recursive: true });
+    execFileSync(process.execPath, ["scripts/registration.mjs"], { cwd: root });
+    writeFileSync(join(root, "src/content/projects/selection.json"), JSON.stringify({ published: ["other-project"], featured: [] }));
+    const before = hash(root);
+    const refused = command(root, "publish", slug);
+    expect(refused.status).not.toBe(0);
+    expect(refused.stderr).toContain("other-project pitch: must be a non-empty string");
+    expect(hash(root)).toBe(before);
+    writeFileSync(join(root, "src/content/projects/selection.json"), JSON.stringify({ published: [], featured: [] }));
+    const allowed = command(root, "publish", slug);
+    expect(allowed.status, allowed.stderr).toBe(0);
+    expect(JSON.parse(readFileSync(join(root, "src/content/projects/selection.json"), "utf8"))).toEqual({ published: [slug], featured: [] });
+  } finally { rmSync(root, { recursive: true, force: true }); }
+});
+
+test("publish rejects invalid arguments, unknown projects, and malformed selection without writes", () => {
+  const root = fixture();
+  try {
+    const before = hash(root);
+    for (const args of [
+      ["publish"], ["publish", "../outside"], ["publish", "UPPER"], ["publish", "missing-project"],
+      ["publish", slug, "--unknown"], ["publish", slug, "extra"], ["publish", slug, "--dry-run", "--dry-run"],
+    ]) {
+      const result = command(root, ...args);
+      expect(result.status, args.join(" ")).not.toBe(0);
+      expect(hash(root)).toBe(before);
+    }
+    writeFileSync(join(root, "src/content/projects/selection.json"), JSON.stringify({ published: "bad", featured: [] }));
+    const malformed = hash(root);
+    const result = command(root, "publish", slug);
+    expect(result.status).not.toBe(0);
+    expect(result.stderr).toContain("selection.json: published must be an array");
+    expect(hash(root)).toBe(malformed);
+  } finally { rmSync(root, { recursive: true, force: true }); }
+});
+
 test("create prepares an unpublished project with unfinished presentation", () => {
   const root = fixture();
   try {
