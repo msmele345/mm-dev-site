@@ -1,4 +1,4 @@
-import { readFileSync } from "node:fs";
+import { readFileSync, writeFileSync } from "node:fs";
 import { readdir } from "node:fs/promises";
 import { join } from "node:path";
 import { pathToFileURL } from "node:url";
@@ -18,8 +18,8 @@ export async function runProjectCommand(args: readonly string[]): Promise<number
     }
     return syncProjects(root, args[1] === "--dry-run");
   }
-  if (operation !== "check" && operation !== "create") {
-    console.error("Usage: npm run project -- check <slug> | create <slug> --title <title> [--source <path>] [--dry-run] | sync [--dry-run]");
+  if (operation !== "check" && operation !== "create" && operation !== "publish") {
+    console.error("Usage: npm run project -- check <slug> | create <slug> --title <title> [--source <path>] [--dry-run] | publish <slug> [--dry-run] | sync [--dry-run]");
     return 1;
   }
   if (!slug || !ROUTE_SLUG.test(slug)) {
@@ -28,6 +28,9 @@ export async function runProjectCommand(args: readonly string[]): Promise<number
   }
 
   if (operation === "check" && args.length !== 2) throw new Error("Usage: npm run project -- check <slug>");
+  if (operation === "publish" && (args.length > 3 || (args[2] !== undefined && args[2] !== "--dry-run"))) {
+    throw new Error("Usage: npm run project -- publish <slug> [--dry-run]");
+  }
   const selection = readSelection();
   const authoredFiles = await readdir(join(root, "src/content/projects/authored"));
   const projectFiles = authoredFiles.filter((file) => file.endsWith(".ts") && !file.endsWith(".d.ts"));
@@ -50,6 +53,23 @@ export async function runProjectCommand(args: readonly string[]): Promise<number
     return 1;
   }
   const facts = collectShowcaseFilesystemFacts(root, authoredPairs);
+  if (operation === "publish") {
+    const published = selection.published.includes(slug) ? selection.published : [...selection.published, slug];
+    const blocking = collectShowcaseFindings({ projects, publishedSlugs: published, featuredSlugs: selection.featured, ...facts })
+      .filter((finding) => finding.blocksBuild);
+    if (blocking.length) {
+      throw new Error(blocking.map((finding) => `${finding.slug} ${finding.subject}: ${finding.message}`).join("\n"));
+    }
+    if (selection.published.includes(slug)) console.log(`Project "${slug}" is already published.`);
+    else if (args[2] === "--dry-run") {
+      console.log("--- src/content/projects/selection.json\n+++ src/content/projects/selection.json");
+      console.log(`- published: ${JSON.stringify(selection.published)}\n+ published: ${JSON.stringify(published)}`);
+    } else {
+      writeFileSync(join(root, "src/content/projects/selection.json"), `${JSON.stringify({ ...selection, published }, null, 2)}\n`);
+      console.log(`Published project "${slug}".`);
+    }
+    return 0;
+  }
   const findings = collectShowcaseFindings({ projects, publishedSlugs: selection.published, featuredSlugs: selection.featured, ...facts });
   const projectFindings = findings.filter((finding) => finding.slug === slug);
   const published = selection.published.includes(slug);
