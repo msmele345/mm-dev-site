@@ -18,8 +18,8 @@ export async function runProjectCommand(args: readonly string[]): Promise<number
     }
     return syncProjects(root, args[1] === "--dry-run");
   }
-  if (operation !== "check" && operation !== "create" && operation !== "publish") {
-    console.error("Usage: npm run project -- check <slug> | create <slug> --title <title> [--source <path>] [--dry-run] | publish <slug> [--dry-run] | sync [--dry-run]");
+  if (operation !== "check" && operation !== "create" && operation !== "publish" && operation !== "feature") {
+    console.error("Usage: npm run project -- check <slug> | create <slug> --title <title> [--source <path>] [--dry-run] | publish <slug> [--dry-run] | feature <slug> --position <n> [--dry-run] | sync [--dry-run]");
     return 1;
   }
   if (!slug || !ROUTE_SLUG.test(slug)) {
@@ -31,6 +31,7 @@ export async function runProjectCommand(args: readonly string[]): Promise<number
   if (operation === "publish" && (args.length > 3 || (args[2] !== undefined && args[2] !== "--dry-run"))) {
     throw new Error("Usage: npm run project -- publish <slug> [--dry-run]");
   }
+  const featureOptions = operation === "feature" ? parseFeatureOptions(args.slice(2)) : undefined;
   const selection = readSelection();
   const authoredFiles = await readdir(join(root, "src/content/projects/authored"));
   const projectFiles = authoredFiles.filter((file) => file.endsWith(".ts") && !file.endsWith(".d.ts"));
@@ -70,6 +71,36 @@ export async function runProjectCommand(args: readonly string[]): Promise<number
     }
     return 0;
   }
+  if (featureOptions) {
+    const { position, dryRun } = featureOptions;
+    const currentIndex = selection.featured.indexOf(slug);
+    const maximumPosition = selection.featured.length + (currentIndex === -1 ? 1 : 0);
+    const outsideRange = position < 1 || position > maximumPosition;
+    const range = `Valid range: 1..${maximumPosition}.`;
+    if (currentIndex !== -1 && position !== currentIndex + 1) {
+      throw new Error(`Project "${slug}" already occupies position ${currentIndex + 1}; feature does not move entries.${outsideRange ? ` ${range}` : ""}`);
+    }
+    if (outsideRange) throw new Error(`Position ${position} is outside the resulting selection. ${range}`);
+    const featured = [...selection.featured];
+    if (currentIndex === -1) featured.splice(position - 1, 0, slug);
+    const blocking = collectShowcaseFindings({ projects, publishedSlugs: selection.published, featuredSlugs: featured, ...facts })
+      .filter((finding) => finding.blocksBuild);
+    if (blocking.length) {
+      throw new Error(blocking.map((finding) => `${finding.slug} ${finding.subject}: ${finding.message}`).join("\n"));
+    }
+    if (currentIndex !== -1) {
+      console.log(`Project "${slug}" already occupies position ${position}. No changes.`);
+      console.log(`Project wall order: ${JSON.stringify(featured)}`);
+    } else if (dryRun) {
+      console.log("--- src/content/projects/selection.json\n+++ src/content/projects/selection.json");
+      console.log(`- featured: ${JSON.stringify(selection.featured)}\n+ featured: ${JSON.stringify(featured)}`);
+    } else {
+      writeFileSync(join(root, "src/content/projects/selection.json"), `${JSON.stringify({ ...selection, featured }, null, 2)}\n`);
+      console.log(`Featured project "${slug}" at position ${position}.`);
+      console.log(`Project wall order: ${JSON.stringify(featured)}`);
+    }
+    return 0;
+  }
   const findings = collectShowcaseFindings({ projects, publishedSlugs: selection.published, featuredSlugs: selection.featured, ...facts });
   const projectFindings = findings.filter((finding) => finding.slug === slug);
   const published = selection.published.includes(slug);
@@ -96,6 +127,24 @@ export async function runProjectCommand(args: readonly string[]): Promise<number
     for (const finding of catalogueFindings) console.log(`- "${finding.slug}" ${finding.subject}: ${finding.message}`);
   }
   return 0;
+}
+
+function parseFeatureOptions(options: readonly string[]): { position: number; dryRun: boolean } {
+  const usage = "Usage: npm run project -- feature <slug> --position <n> [--dry-run]";
+  let position: number | undefined;
+  let dryRun = false;
+  for (let index = 0; index < options.length; index++) {
+    if (options[index] === "--dry-run" && !dryRun) dryRun = true;
+    else if (options[index] === "--position" && position === undefined) {
+      const value = options[++index];
+      if (value === undefined || !/^-?(0|[1-9][0-9]*)$/.test(value) || !Number.isSafeInteger(Number(value))) {
+        throw new Error(`--position must be a safe integer in decimal form. ${usage}`);
+      }
+      position = Number(value);
+    } else throw new Error(usage);
+  }
+  if (position === undefined) throw new Error(usage);
+  return { position, dryRun };
 }
 
 function readSelection(): { published: string[]; featured: string[] } {
