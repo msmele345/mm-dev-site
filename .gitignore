@@ -4,6 +4,7 @@
 # testing
 /playwright-report
 /test-results
+/.project-evidence
 
 # next.js
 /.next/

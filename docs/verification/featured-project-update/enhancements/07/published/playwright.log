@@ -1,0 +1,16 @@
+(node:21552) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:21553) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 2 tests using 1 worker
+
+(node:21565) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 tests/project-verification.spec.ts:12:5 › published case study, imagery, metadata, fallback and responsive captures (571ms)
+  -  2 tests/project-verification.spec.ts:73:5 › featured membership, indices, keyboard, touch and shared motion
+
+  1 skipped
+  1 passed (1.4s)
+
+Exit: 0; signal: null

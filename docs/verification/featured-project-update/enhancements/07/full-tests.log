@@ -1,0 +1,905 @@
+
+> mm-dev-site@0.1.0 test
+> playwright test --workers=2
+
+[WebServer] (node:18325) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:18348) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:18349) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 472 tests using 2 workers
+
+(node:18377) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:18376) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:18387) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+  ✓    2 tests/chrome-shell.spec.ts:6:5 › home carries the site metadata (224ms)
+  ✓    1 tests/content-schema-and-case-study.spec.ts:3:5 › elevated-bpm case study lives at its own route (473ms)
+  ✓    3 tests/chrome-shell.spec.ts:16:5 › nav carries the wordmark and primary links (264ms)
+[WebServer] (node:18392) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+  ✓    4 tests/content-schema-and-case-study.spec.ts:11:5 › unpublished case studies return 404 (194ms)
+  ✓    5 tests/chrome-shell.spec.ts:32:5 › hero introduces Mitch with personality (231ms)
+  ✓    6 tests/content-schema-and-case-study.spec.ts:17:5 › case study renders from the curated content file (212ms)
+  ✓    7 tests/chrome-shell.spec.ts:46:5 › contact links to GitHub and email in lime (231ms)
+[WebServer] (node:18424) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+  ✓    8 tests/content-schema-and-case-study.spec.ts:47:5 › case study continues the groovebox identity (220ms)
+  ✓    9 tests/chrome-shell.spec.ts:63:5 › footer closes the page (234ms)
+  ✓   10 tests/current-transmission-build.spec.ts:18:7 › the production build rejects an executable Now Building destination with its field named (364ms)
+  ✓   12 tests/current-transmission-build.spec.ts:18:7 › the production build rejects a missing supporting sentence with its field named (307ms)
+  ✓   13 tests/current-transmission-build.spec.ts:18:7 › the production build rejects a whitespace-only working title with its field named (310ms)
+  ✓   14 tests/current-transmission-build.spec.ts:18:7 › the production build rejects a wrong headline type with its field named (309ms)
+  ✓   11 tests/chrome-shell.spec.ts:72:5 › keyboard navigation shows lime focus rings (1.6s)
+  ✓   15 tests/current-transmission-build.spec.ts:18:7 › the production build rejects a malformed editorial date with its field named (375ms)
+  ✓   16 tests/chrome-shell.spec.ts:108:5 › blog link resolves to a real page (361ms)
+  ✓   17 tests/current-transmission-build.spec.ts:18:7 › the production build rejects an impossible editorial date with its field named (435ms)
+  ✓   18 tests/chrome-shell.spec.ts:115:5 › mobile layout keeps every chrome piece in view (203ms)
+  ✓   19 tests/current-transmission-build.spec.ts:18:7 › the production build rejects a protocol-relative destination with its field named (306ms)
+  ✓   21 tests/current-transmission-build.spec.ts:18:7 › the production build rejects a non-HTTPS external destination with its field named (294ms)
+  ✓   22 tests/current-transmission-build.spec.ts:18:7 › the production build rejects a Next Experiment destination with its field named (319ms)
+  ✓   20 tests/current-transmission-dispatch.spec.ts:56:7 › Latest Dispatch from isolated published posts › uses the blog's date and descending-slug tie order and links to the complete article (326ms)
+  ✓   24 tests/current-transmission-dispatch.spec.ts:92:7 › Latest Dispatch from isolated published posts › adding a newer post and rebuilding updates only the dispatch (3.6s)
+[WebServer] (node:19047) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:19048) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   25 tests/current-transmission-hit-area.spec.ts:8:7 › signal surfaces activate their destinations at 390px (1.6s)
+[WebServer] (node:19071) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:19072) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   26 tests/current-transmission-hit-area.spec.ts:8:7 › signal surfaces activate their destinations at 768px (1.3s)
+  ✓   23 tests/current-transmission-build.spec.ts:35:5 › valid editorial edits and unchanged rebuilds reach the static homepage with an empty blog (12.8s)
+[WebServer] (node:19080) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:19082) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   27 tests/current-transmission-hit-area.spec.ts:8:7 › signal surfaces activate their destinations at 895px (1.2s)
+  ✓   28 tests/current-transmission-reading.spec.ts:12:5 › dispatch destination cue is visible at rest on one footer line (464ms)
+  ✓   30 tests/current-transmission-reading.spec.ts:45:5 › ledger links describe destinations without changing headline names (215ms)
+  ✓   31 tests/current-transmission-reading.spec.ts:59:5 › stacked signals provide readable copy and comfortable link targets (263ms)
+[WebServer] (node:19093) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:19094) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   29 tests/current-transmission-hit-area.spec.ts:8:7 › signal surfaces activate their destinations at 896px (1.3s)
+  ✓   32 tests/current-transmission-reading.spec.ts:72:5 › the published ledger changes directly from full-width rows to equal columns (1.2s)
+[WebServer] (node:19130) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:19131) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   33 tests/current-transmission-hit-area.spec.ts:8:7 › signal surfaces activate their destinations at 1440px (1.2s)
+[WebServer] (node:19173) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   34 tests/current-transmission-reading.spec.ts:82:7 › published signals keep their reading order, visible link focus, and static content with no-preference motion (3.5s)
+[WebServer] (node:19176) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   36 tests/current-transmission-reading.spec.ts:138:7 › reverse ledger focus clears the sticky header after manual scrolling with no-preference motion (2.8s)
+[WebServer] (node:19197) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   35 tests/current-transmission.spec.ts:25:7 › Current Transmission with an empty blog › places the three editorial signals after the Project wall and before More projects (486ms)
+  ✓   38 tests/current-transmission.spec.ts:61:7 › Current Transmission with an empty blog › renders the curated drafts, a stable manual date, and honest footer states (135ms)
+  ✓   37 tests/current-transmission-reading.spec.ts:82:7 › published signals keep their reading order, visible link focus, and static content with reduce motion (1.1s)
+[WebServer] (node:19201) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   40 tests/current-transmission-reading.spec.ts:138:7 › reverse ledger focus clears the sticky header after manual scrolling with reduce motion (653ms)
+  ✓   39 tests/current-transmission.spec.ts:85:7 › Current Transmission with an empty blog › the empty-blog ledger stays complete on both sides of the breakpoint and across phone, tablet, and desktop (965ms)
+  ✓   41 tests/current-transmission-reading.spec.ts:164:5 › the final published homepage keeps the Project wall ahead of its actual pre-ledger baseline (290ms)
+  ✓   42 tests/current-transmission.spec.ts:93:9 › Current Transmission with an empty blog › keeps only Now Building in the ledger tab sequence with no-preference motion (1.9s)
+  ✓   44 tests/current-transmission.spec.ts:93:9 › Current Transmission with an empty blog › keeps only Now Building in the ledger tab sequence with reduce motion (385ms)
+  ✓   43 tests/current-transmission-reading.spec.ts:207:7 › Reading isolated long authored copy › long headlines wrap in every layout while summaries remain two-line excerpts (1.1s)
+  ✓   45 tests/current-transmission.spec.ts:125:7 › Current Transmission with an empty blog › editing the manual record and rebuilding preserves an old calendar date and the empty state (5.9s)
+  ✓   46 tests/current-transmission-reading.spec.ts:228:7 › Reading isolated long authored copy › following the long dispatch retains every authored sentence and the article's ending (1.0s)
+  ✓   48 tests/custom-domain.spec.ts:20:7 › robots.txt › invites crawlers in and points them at the sitemap (50ms)
+  ✓   49 tests/custom-domain.spec.ts:35:7 › sitemap.xml › serves a sitemap document as XML (37ms)
+  ✓   50 tests/custom-domain.spec.ts:45:7 › sitemap.xml › lists every page at its custom-domain URL (7ms)
+  ✓   51 tests/custom-domain.spec.ts:53:7 › sitemap.xml › names no origin but the canonical one (6ms)
+[WebServer] (node:19327) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   52 tests/custom-domain.spec.ts:62:7 › sitemap.xml › lists only pages that actually resolve (177ms)
+[WebServer] (node:19328) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   47 tests/current-transmission.spec.ts:190:5 › the production dispatch previews the published post and opens its complete article by keyboard (477ms)
+[WebServer] (node:19339) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   53 tests/featured-selection-build.spec.ts:10:7 › the real build rejects duplicate featured references with a named error (304ms)
+  ✓   55 tests/featured-selection-build.spec.ts:10:7 › the real build rejects unknown featured references with a named error (289ms)
+  ✓   56 tests/featured-selection.spec.ts:7:5 › removing selections leaves one numbered project and an honest singular count (5.9s)
+  ✓   54 tests/featured-selection-rotation.spec.ts:96:9 › featured rotation through rebuilt homepages › baseline: exact membership, responsive reading order, static art, and keyboard destinations (6.4s)
+  ✓   58 tests/featured-selection-rotation.spec.ts:96:9 › featured rotation through rebuilt homepages › remove: exact membership, responsive reading order, static art, and keyboard destinations (4.0s)
+  ✓   57 tests/featured-selection.spec.ts:33:5 › empty selection preserves Work navigation without cards or motion wrappers (5.8s)
+  ✓   60 tests/github-build-time-enrichment.spec.ts:14:5 › the tile carries the project's live github stats (201ms)
+[WebServer] (node:19664) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   61 tests/github-build-time-enrichment.spec.ts:28:5 › the case study reports commits, last push, and language mix (281ms)
+  ✓   62 tests/github-build-time-enrichment.spec.ts:51:5 › enrichment wears the chrome's lime, not the project's palette (236ms)
+[WebServer] (node:19678) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   63 tests/github-build-time-enrichment.spec.ts:66:5 › live stats are additive — curated content still carries the page (186ms)
+  ✓   64 tests/github-build-time-enrichment.spec.ts:80:5 › stats add no keyboard traps inside the tile (195ms)
+  ✓   65 tests/groovebox-tile-and-motion.spec.ts:9:5 › wall renders the groovebox faceplate tile from the content file (277ms)
+[WebServer] (node:19699) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   66 tests/groovebox-tile-and-motion.spec.ts:41:5 › ambient state idles by default (219ms)
+  ✓   67 tests/groovebox-tile-and-motion.spec.ts:52:5 › hover triggers the crescendo (230ms)
+  ✓   68 tests/groovebox-tile-and-motion.spec.ts:65:5 › keyboard focus triggers the crescendo with a lime focus ring (224ms)
+  ✓   59 tests/featured-selection-rotation.spec.ts:96:9 › featured rotation through rebuilt homepages › replace: exact membership, responsive reading order, static art, and keyboard destinations (4.0s)
+  ✓   69 tests/groovebox-tile-and-motion.spec.ts:81:5 › reduced motion renders the deliberate static state (204ms)
+  ✓   71 tests/groovebox-tile-and-motion.spec.ts:98:5 › ambient animation pauses off-screen and resumes on re-entry (1.1s)
+  ✓   72 tests/home-spacing.spec.ts:4:5 › the Project wall follows the hero cue without an oversized empty band (1.0s)
+  ✓   73 tests/mdx-blog.spec.ts:10:7 › blog index › lists the seed post with title, date, and summary (166ms)
+  ✓   74 tests/mdx-blog.spec.ts:23:7 › blog index › keeps the ink-black chrome (146ms)
+[WebServer] (node:19771) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   75 tests/mdx-blog.spec.ts:31:7 › post page › renders the seed post with its metadata (177ms)
+  ✓   76 tests/mdx-blog.spec.ts:44:7 › post page › links the seed post to the Elevated BPM repository (161ms)
+[WebServer] (node:19774) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   77 tests/mdx-blog.spec.ts:52:7 › post page › carries correct document metadata (173ms)
+  ✓   78 tests/mdx-blog.spec.ts:65:7 › post page › styles code blocks with syntax highlighting (161ms)
+[WebServer] (node:19778) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   79 tests/mdx-blog.spec.ts:76:7 › post page › exposes the blog palette as design tokens (180ms)
+  ✓   80 tests/mdx-blog.spec.ts:110:7 › post page › runs the interactive embed (802ms)
+  ✓   81 tests/more-projects-rail.spec.ts:26:5 › the rail sits below the project wall as a curated, lighter tier (201ms)
+  ✓   82 tests/more-projects-rail.spec.ts:63:5 › the rail shows its selection in the curated order (164ms)
+  ✓   83 tests/more-projects-rail.spec.ts:71:5 › rail repos carry their build-time GitHub stats (191ms)
+  ✓   70 tests/featured-selection-rotation.spec.ts:96:9 › featured rotation through rebuilt homepages › reorder: exact membership, responsive reading order, static art, and keyboard destinations (4.9s)
+  ✓   84 tests/more-projects-rail.spec.ts:82:5 › every rail card links out to its repository (193ms)
+  ✓   86 tests/more-projects-rail.spec.ts:91:5 › the rail is keyboard-navigable in reading order (186ms)
+  ✓   87 tests/more-projects-rail.spec.ts:104:5 › the rail reflows to a single column on a narrow viewport (195ms)
+  ✓   88 tests/new-project-readiness-build.spec.ts:88:7 › the real build rejects a blank title with the slug and problem named (296ms)
+  ✓   89 tests/new-project-readiness-build.spec.ts:88:7 › the real build rejects a missing pitch with the slug and problem named (299ms)
+  ✓   90 tests/new-project-readiness-build.spec.ts:88:7 › the real build rejects an empty stack with the slug and problem named (301ms)
+  ✓   91 tests/new-project-readiness-build.spec.ts:88:7 › the real build rejects a blank narrative body with the slug and problem named (302ms)
+  ✓   92 tests/new-project-readiness-build.spec.ts:88:7 › the real build rejects a missing image description with the slug and problem named (403ms)
+  ✓   93 tests/new-project-readiness-build.spec.ts:88:7 › the real build rejects an unresolved local image with the slug and problem named (320ms)
+  ✓   94 tests/new-project-readiness-build.spec.ts:88:7 › the real build rejects a mis-cased local image with the slug and problem named (310ms)
+  ✓   95 tests/new-project-readiness-build.spec.ts:88:7 › the real build rejects a non-HTTPS repository link with the slug and problem named (295ms)
+  ✓   96 tests/new-project-readiness-build.spec.ts:88:7 › the real build rejects a placeholder demo link with the slug and problem named (302ms)
+  ✓   85 tests/featured-selection-rotation.spec.ts:96:9 › featured rotation through rebuilt homepages › pair: exact membership, responsive reading order, static art, and keyboard destinations (3.6s)
+  ✓   97 tests/new-project-readiness-build.spec.ts:88:7 › the real build rejects an invalid route slug with the slug and problem named (315ms)
+  ✓   99 tests/new-project-readiness-build.spec.ts:88:7 › the real build rejects a duplicate catalogue slug with the slug and problem named (313ms)
+  ✓  100 tests/new-project-readiness-build.spec.ts:88:7 › the real build rejects a published slug nobody authored with the slug and problem named (324ms)
+  ✓  101 tests/new-project-readiness-build.spec.ts:88:7 › the real build rejects a case study published twice with the slug and problem named (330ms)
+  ✓  102 tests/new-project-readiness-build.spec.ts:88:7 › the real build rejects a featured project that was never published with the slug and problem named (308ms)
+  ✓  103 tests/new-project-readiness-build.spec.ts:88:7 › the real build rejects a missing presentation registration with the slug and problem named (305ms)
+  ✓   98 tests/featured-selection-rotation.spec.ts:96:9 › featured rotation through rebuilt homepages › single: exact membership, responsive reading order, static art, and keyboard destinations (3.7s)
+  ✓  104 tests/new-project-readiness-build.spec.ts:106:5 › an unfinished record that is neither published nor featured does not block the build (5.6s)
+  ✓  106 tests/new-project-readiness-build.spec.ts:121:5 › a published identity with an unfinished marker fails the build (299ms)
+  ✓  105 tests/featured-selection-rotation.spec.ts:96:9 › featured rotation through rebuilt homepages › empty: exact membership, responsive reading order, static art, and keyboard destinations (3.9s)
+  ✓  107 tests/new-project-readiness-build.spec.ts:137:5 › a published project with stale generated registration fails the build (296ms)
+  ✓  109 tests/new-project-readiness-build.spec.ts:153:5 › an authored filename that disagrees with its record slug fails the build (293ms)
+  ✓  108 tests/featured-selection-rotation.spec.ts:96:9 › featured rotation through rebuilt homepages › add: exact membership, responsive reading order, static art, and keyboard destinations (5.2s)
+  ✓  111 tests/polish-and-audit.spec.ts:37:9 › responsive › home never scrolls sideways, 320px to 1536px (251ms)
+[WebServer] (node:20740) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  112 tests/polish-and-audit.spec.ts:37:9 › responsive › case study never scrolls sideways, 320px to 1536px (240ms)
+  ✓  113 tests/polish-and-audit.spec.ts:37:9 › responsive › blog index never scrolls sideways, 320px to 1536px (194ms)
+  ✓  110 tests/new-project-readiness.spec.ts:46:7 › onboarding a synthetic bespoke identity through the real build › the shared wall and case-study shells gain no project-specific branch (1ms)
+[WebServer] (node:20744) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  114 tests/polish-and-audit.spec.ts:37:9 › responsive › post never scrolls sideways, 320px to 1536px (215ms)
+[WebServer] (node:20747) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  115 tests/new-project-readiness.spec.ts:54:7 › onboarding a synthetic bespoke identity through the real build › the featured tile renders its own curated content and bespoke art without enrichment (322ms)
+  ✓  116 tests/polish-and-audit.spec.ts:88:7 › responsive › every case-study hero fits the narrowest phone (321ms)
+[WebServer] (node:20749) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  117 tests/new-project-readiness.spec.ts:82:7 › onboarding a synthetic bespoke identity through the real build › the published case study renders the full authored record, local imagery, and destinations (218ms)
+  ✓  118 tests/polish-and-audit.spec.ts:113:9 › landmarks and headings › home carries one landmark set and a gapless heading order (193ms)
+[WebServer] (node:20753) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  120 tests/polish-and-audit.spec.ts:113:9 › landmarks and headings › case study carries one landmark set and a gapless heading order (193ms)
+  ✓  121 tests/polish-and-audit.spec.ts:113:9 › landmarks and headings › blog index carries one landmark set and a gapless heading order (176ms)
+[WebServer] (node:20757) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  122 tests/polish-and-audit.spec.ts:113:9 › landmarks and headings › post carries one landmark set and a gapless heading order (169ms)
+  ✓  123 tests/polish-and-audit.spec.ts:144:9 › motion › home runs no animation under prefers-reduced-motion (185ms)
+[WebServer] (node:20760) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  124 tests/polish-and-audit.spec.ts:144:9 › motion › case study runs no animation under prefers-reduced-motion (174ms)
+  ✓  125 tests/polish-and-audit.spec.ts:144:9 › motion › blog index runs no animation under prefers-reduced-motion (144ms)
+[WebServer] (node:20763) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  119 tests/new-project-readiness.spec.ts:130:7 › onboarding a synthetic bespoke identity through the real build › the tile keeps keyboard and touch access, static art, and the shared motion contract (1.3s)
+  ✓  126 tests/polish-and-audit.spec.ts:144:9 › motion › post runs no animation under prefers-reduced-motion (166ms)
+  ✓  128 tests/polish-and-audit.spec.ts:188:7 › motion › every wall tile animates only transform and opacity (309ms)
+  ✓  129 tests/polish-and-audit.spec.ts:266:7 › keyboard › the whole home page is reachable by Tab, crescendo included (235ms)
+  ✓  130 tests/polish-and-audit.spec.ts:315:7 › keyboard › focusing a tile by keyboard crescendos it and rings it in lime (203ms)
+  ✓  131 tests/polish-and-audit.spec.ts:334:9 › keyboard › home never parks focus under the sticky header (374ms)
+[WebServer] (node:20811) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  132 tests/polish-and-audit.spec.ts:334:9 › keyboard › case study never parks focus under the sticky header (280ms)
+  ✓  133 tests/polish-and-audit.spec.ts:334:9 › keyboard › blog index never parks focus under the sticky header (254ms)
+[WebServer] (node:20816) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  134 tests/polish-and-audit.spec.ts:334:9 › keyboard › post never parks focus under the sticky header (431ms)
+[WebServer] (node:20818) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  135 tests/polish-and-audit.spec.ts:371:7 › images › every case-study plate is described and reserves its space (515ms)
+[WebServer] (node:20830) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  136 tests/polish-and-audit.spec.ts:401:7 › contrast › faceplate silkscreen clears AA on the hardware it is printed on (291ms)
+[WebServer] (node:20834) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:20836) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  137 tests/polish-and-audit.spec.ts:487:7 › code › every code token clears AA on the code panel (149ms)
+  ✓  138 tests/polish-and-audit.spec.ts:558:7 › touch › wall tiles and the sequencer opt out of the double-tap zoom delay (259ms)
+[WebServer] (node:20838) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  139 tests/polish-and-audit.spec.ts:580:7 › chrome metadata › the browser UI is told the page is ink-black (177ms)
+  ✓  127 tests/new-project-readiness.spec.ts:206:7 › onboarding a synthetic bespoke identity through the real build › reviewed copy with no repository or demo still builds a complete tile and case study (3.9s)
+  ✓  141 tests/new-project-readiness.spec.ts:240:9 › onboarding a synthetic bespoke identity through the real build › guide walkthrough: reorder and rebuild retain the synthetic published identity (3.5s)
+  ✓  140 tests/project-create-build.spec.ts:8:5 › a created unfinished project leaves the production app buildable and unpublished (6.4s)
+  -  143 tests/project-verification.spec.ts:12:5 › published case study, imagery, metadata, fallback and responsive captures
+  -  144 tests/project-verification.spec.ts:73:5 › featured membership, indices, keyboard, touch and shared motion
+  ✓  142 tests/new-project-readiness.spec.ts:240:9 › onboarding a synthetic bespoke identity through the real build › guide walkthrough: replace and rebuild retain the synthetic published identity (3.4s)
+  ✓  146 tests/new-project-readiness.spec.ts:240:9 › onboarding a synthetic bespoke identity through the real build › guide walkthrough: re-feature and rebuild retain the synthetic published identity (3.2s)
+  ✓  147 tests/new-project-readiness.spec.ts:240:9 › onboarding a synthetic bespoke identity through the real build › guide walkthrough: remove and rebuild retain the synthetic published identity (3.7s)
+  ✓  148 tests/published-case-studies.spec.ts:7:5 › build rejects a featured project without a published case study (299ms)
+  ✓  149 tests/published-case-studies.spec.ts:20:5 › unfeaturing and rebuilding retains published identity, metadata, images and sitemap (9.5s)
+[WebServer] (node:22067) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  150 tests/remaining-three-tiles.spec.ts:3:5 › terminal-one publishes its sourced case study (214ms)
+  ✓  151 tests/remaining-three-tiles.spec.ts:21:5 › telescope publishes its sourced case study (181ms)
+[WebServer] (node:22075) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  152 tests/remaining-three-tiles.spec.ts:43:5 › sound-city publishes its sourced case study (176ms)
+[WebServer] (node:22077) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  153 tests/remaining-three-tiles.spec.ts:65:5 › each case study carries its project identity into the hero (314ms)
+  ✓  154 tests/remaining-three-tiles.spec.ts:83:5 › the project wall presents all four chameleon tiles (199ms)
+  ✓  155 tests/remaining-three-tiles.spec.ts:102:5 › ambient tiles hand off a single crescendo (295ms)
+  ✓  156 tests/remaining-three-tiles.spec.ts:145:5 › reduced motion freezes all four tiles into deliberate static art (193ms)
+[WebServer] (node:22082) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  157 tests/remaining-three-tiles.spec.ts:164:5 › github enrichment appears on every new tile and case study (374ms)
+[WebServer] (node:22085) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  158 tests/remaining-three-tiles.spec.ts:187:5 › each new case study includes a reviewable screenshot set (285ms)
+  ✓  159 tests/remaining-three-tiles.spec.ts:195:5 › tap-and-hold owns the mobile crescendo and off-screen motion pauses (1.8s)
+  ✓  160 tests/rss-and-og-images.spec.ts:40:9 › Canonical URLs › the home identifies its own custom-domain URL (184ms)
+  ✓  161 tests/rss-and-og-images.spec.ts:40:9 › Canonical URLs › the blog index identifies its own custom-domain URL (147ms)
+[WebServer] (node:22110) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  162 tests/rss-and-og-images.spec.ts:40:9 › Canonical URLs › the post identifies its own custom-domain URL (158ms)
+[WebServer] (node:22113) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  163 tests/rss-and-og-images.spec.ts:40:9 › Canonical URLs › the case study identifies its own custom-domain URL (163ms)
+  ✓  164 tests/rss-and-og-images.spec.ts:52:7 › RSS feed › serves a parseable RSS document as an RSS content type (27ms)
+  ✓  165 tests/rss-and-og-images.spec.ts:65:7 › RSS feed › carries every published post as a dated item with an absolute link (4ms)
+  ✓  166 tests/rss-and-og-images.spec.ts:77:7 › RSS feed › is discoverable from the blog — in the head and on the page (150ms)
+  ✓  167 tests/rss-and-og-images.spec.ts:92:9 › Open Graph images › the home declares a large-image card with its own title (180ms)
+  ✓  168 tests/rss-and-og-images.spec.ts:106:9 › Open Graph images › the home card renders as a 1200x630 png (321ms)
+  ✓  169 tests/rss-and-og-images.spec.ts:92:9 › Open Graph images › the blog index declares a large-image card with its own title (158ms)
+  ✓  170 tests/rss-and-og-images.spec.ts:106:9 › Open Graph images › the blog index card renders as a 1200x630 png (199ms)
+[WebServer] (node:22126) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  145 tests/project-verify-chain.spec.ts:22:5 › the public onboarding chain rebuilds and verifies published and featured Signal Loom without changing production (23.6s)
+  ✓  171 tests/rss-and-og-images.spec.ts:92:9 › Open Graph images › the post declares a large-image card with its own title (170ms)
+  ✓  173 tests/unit/calendar-date.spec.ts:20:7 › formats 2026-01-02 with a padded day and a fixed three-letter month (1ms)
+  ✓  174 tests/unit/calendar-date.spec.ts:20:7 › formats 2026-02-02 with a padded day and a fixed three-letter month (0ms)
+  ✓  175 tests/unit/calendar-date.spec.ts:20:7 › formats 2026-03-02 with a padded day and a fixed three-letter month (0ms)
+  ✓  176 tests/unit/calendar-date.spec.ts:20:7 › formats 2026-04-02 with a padded day and a fixed three-letter month (0ms)
+  ✓  177 tests/unit/calendar-date.spec.ts:20:7 › formats 2026-05-02 with a padded day and a fixed three-letter month (0ms)
+  ✓  178 tests/unit/calendar-date.spec.ts:20:7 › formats 2026-06-02 with a padded day and a fixed three-letter month (0ms)
+  ✓  179 tests/unit/calendar-date.spec.ts:20:7 › formats 2026-07-02 with a padded day and a fixed three-letter month (0ms)
+  ✓  180 tests/unit/calendar-date.spec.ts:20:7 › formats 2026-08-02 with a padded day and a fixed three-letter month (0ms)
+  ✓  181 tests/unit/calendar-date.spec.ts:20:7 › formats 2026-09-02 with a padded day and a fixed three-letter month (0ms)
+  ✓  182 tests/unit/calendar-date.spec.ts:20:7 › formats 2026-10-02 with a padded day and a fixed three-letter month (0ms)
+  ✓  183 tests/unit/calendar-date.spec.ts:20:7 › formats 2026-11-02 with a padded day and a fixed three-letter month (0ms)
+  ✓  184 tests/unit/calendar-date.spec.ts:20:7 › formats 2026-12-02 with a padded day and a fixed three-letter month (0ms)
+  ✓  185 tests/unit/calendar-date.spec.ts:25:5 › keeps the authored calendar day when the runtime is behind UTC (1ms)
+  ✓  186 tests/unit/current-transmission.spec.ts:5:5 › rejects a missing editorial update date with its exact field error (1ms)
+  ✓  187 tests/unit/current-transmission.spec.ts:19:9 › rejects missing updatedOn with its exact field error (0ms)
+  ✓  188 tests/unit/current-transmission.spec.ts:19:9 › rejects empty updatedOn with its exact field error (1ms)
+  ✓  189 tests/unit/current-transmission.spec.ts:19:9 › rejects whitespace-only updatedOn with its exact field error (0ms)
+  ✓  190 tests/unit/current-transmission.spec.ts:19:9 › rejects number updatedOn with its exact field error (1ms)
+  ✓  191 tests/unit/current-transmission.spec.ts:19:9 › rejects null updatedOn with its exact field error (0ms)
+  ✓  192 tests/unit/current-transmission.spec.ts:19:9 › rejects boolean updatedOn with its exact field error (0ms)
+  ✓  193 tests/unit/current-transmission.spec.ts:19:9 › rejects array updatedOn with its exact field error (0ms)
+  ✓  194 tests/unit/current-transmission.spec.ts:19:9 › rejects object updatedOn with its exact field error (0ms)
+  ✓  195 tests/unit/current-transmission.spec.ts:19:9 › rejects missing nowBuilding.headline with its exact field error (0ms)
+  ✓  196 tests/unit/current-transmission.spec.ts:19:9 › rejects empty nowBuilding.headline with its exact field error (0ms)
+  ✓  197 tests/unit/current-transmission.spec.ts:19:9 › rejects whitespace-only nowBuilding.headline with its exact field error (0ms)
+  ✓  198 tests/unit/current-transmission.spec.ts:19:9 › rejects number nowBuilding.headline with its exact field error (0ms)
+  ✓  199 tests/unit/current-transmission.spec.ts:19:9 › rejects null nowBuilding.headline with its exact field error (0ms)
+  ✓  200 tests/unit/current-transmission.spec.ts:19:9 › rejects boolean nowBuilding.headline with its exact field error (0ms)
+  ✓  201 tests/unit/current-transmission.spec.ts:19:9 › rejects array nowBuilding.headline with its exact field error (0ms)
+  ✓  202 tests/unit/current-transmission.spec.ts:19:9 › rejects object nowBuilding.headline with its exact field error (0ms)
+  ✓  203 tests/unit/current-transmission.spec.ts:19:9 › rejects missing nowBuilding.supportingText with its exact field error (0ms)
+  ✓  204 tests/unit/current-transmission.spec.ts:19:9 › rejects empty nowBuilding.supportingText with its exact field error (0ms)
+  ✓  205 tests/unit/current-transmission.spec.ts:19:9 › rejects whitespace-only nowBuilding.supportingText with its exact field error (0ms)
+  ✓  206 tests/unit/current-transmission.spec.ts:19:9 › rejects number nowBuilding.supportingText with its exact field error (0ms)
+  ✓  207 tests/unit/current-transmission.spec.ts:19:9 › rejects null nowBuilding.supportingText with its exact field error (0ms)
+  ✓  208 tests/unit/current-transmission.spec.ts:19:9 › rejects boolean nowBuilding.supportingText with its exact field error (0ms)
+  ✓  209 tests/unit/current-transmission.spec.ts:19:9 › rejects array nowBuilding.supportingText with its exact field error (0ms)
+  ✓  210 tests/unit/current-transmission.spec.ts:19:9 › rejects object nowBuilding.supportingText with its exact field error (0ms)
+  ✓  211 tests/unit/current-transmission.spec.ts:19:9 › rejects missing nowBuilding.destination with its exact field error (0ms)
+  ✓  212 tests/unit/current-transmission.spec.ts:19:9 › rejects empty nowBuilding.destination with its exact field error (0ms)
+  ✓  213 tests/unit/current-transmission.spec.ts:19:9 › rejects whitespace-only nowBuilding.destination with its exact field error (0ms)
+  ✓  214 tests/unit/current-transmission.spec.ts:19:9 › rejects number nowBuilding.destination with its exact field error (0ms)
+  ✓  215 tests/unit/current-transmission.spec.ts:19:9 › rejects null nowBuilding.destination with its exact field error (0ms)
+  ✓  216 tests/unit/current-transmission.spec.ts:19:9 › rejects boolean nowBuilding.destination with its exact field error (0ms)
+  ✓  217 tests/unit/current-transmission.spec.ts:19:9 › rejects array nowBuilding.destination with its exact field error (0ms)
+  ✓  218 tests/unit/current-transmission.spec.ts:19:9 › rejects object nowBuilding.destination with its exact field error (0ms)
+  ✓  219 tests/unit/current-transmission.spec.ts:19:9 › rejects missing nextExperiment.headline with its exact field error (0ms)
+  ✓  220 tests/unit/current-transmission.spec.ts:19:9 › rejects empty nextExperiment.headline with its exact field error (0ms)
+  ✓  221 tests/unit/current-transmission.spec.ts:19:9 › rejects whitespace-only nextExperiment.headline with its exact field error (0ms)
+  ✓  222 tests/unit/current-transmission.spec.ts:19:9 › rejects number nextExperiment.headline with its exact field error (0ms)
+  ✓  223 tests/unit/current-transmission.spec.ts:19:9 › rejects null nextExperiment.headline with its exact field error (0ms)
+  ✓  224 tests/unit/current-transmission.spec.ts:19:9 › rejects boolean nextExperiment.headline with its exact field error (0ms)
+  ✓  225 tests/unit/current-transmission.spec.ts:19:9 › rejects array nextExperiment.headline with its exact field error (0ms)
+  ✓  226 tests/unit/current-transmission.spec.ts:19:9 › rejects object nextExperiment.headline with its exact field error (0ms)
+  ✓  227 tests/unit/current-transmission.spec.ts:19:9 › rejects missing nextExperiment.supportingText with its exact field error (0ms)
+  ✓  228 tests/unit/current-transmission.spec.ts:19:9 › rejects empty nextExperiment.supportingText with its exact field error (0ms)
+  ✓  229 tests/unit/current-transmission.spec.ts:19:9 › rejects whitespace-only nextExperiment.supportingText with its exact field error (0ms)
+  ✓  230 tests/unit/current-transmission.spec.ts:19:9 › rejects number nextExperiment.supportingText with its exact field error (0ms)
+  ✓  231 tests/unit/current-transmission.spec.ts:19:9 › rejects null nextExperiment.supportingText with its exact field error (0ms)
+  ✓  232 tests/unit/current-transmission.spec.ts:19:9 › rejects boolean nextExperiment.supportingText with its exact field error (0ms)
+  ✓  233 tests/unit/current-transmission.spec.ts:19:9 › rejects array nextExperiment.supportingText with its exact field error (0ms)
+  ✓  234 tests/unit/current-transmission.spec.ts:19:9 › rejects object nextExperiment.supportingText with its exact field error (0ms)
+  ✓  235 tests/unit/current-transmission.spec.ts:27:5 › rejects an impossible editorial calendar date with its exact field error (0ms)
+  ✓  236 tests/unit/current-transmission.spec.ts:33:5 › accepts the public manual-content record without changing its authored strings (0ms)
+  ✓  237 tests/unit/current-transmission.spec.ts:38:5 › rejects a Next Experiment destination instead of silently discarding it (0ms)
+  ✓  238 tests/unit/current-transmission.spec.ts:45:7 › rejects even an undefined Next Experiment destination property (0ms)
+  ✓  239 tests/unit/current-transmission.spec.ts:45:7 › rejects even an null Next Experiment destination property (0ms)
+  ✓  240 tests/unit/current-transmission.spec.ts:45:7 › rejects even an empty Next Experiment destination property (0ms)
+  ✓  241 tests/unit/current-transmission.spec.ts:45:7 › rejects even an wrong type Next Experiment destination property (0ms)
+  ✓  242 tests/unit/current-transmission.spec.ts:55:7 › rejects malformed or impossible editorial date "2026-2-01" (0ms)
+  ✓  243 tests/unit/current-transmission.spec.ts:55:7 › rejects malformed or impossible editorial date "26-02-01" (0ms)
+  ✓  244 tests/unit/current-transmission.spec.ts:55:7 › rejects malformed or impossible editorial date "2026/02/01" (0ms)
+  ✓  245 tests/unit/current-transmission.spec.ts:55:7 › rejects malformed or impossible editorial date "2026-02-01T00:00:00Z" (0ms)
+  ✓  246 tests/unit/current-transmission.spec.ts:55:7 › rejects malformed or impossible editorial date " 2026-02-01" (0ms)
+  ✓  247 tests/unit/current-transmission.spec.ts:55:7 › rejects malformed or impossible editorial date "2026-02-01 " (0ms)
+  ✓  248 tests/unit/current-transmission.spec.ts:55:7 › rejects malformed or impossible editorial date "2026-02-29" (0ms)
+  ✓  249 tests/unit/current-transmission.spec.ts:55:7 › rejects malformed or impossible editorial date "1900-02-29" (0ms)
+  ✓  250 tests/unit/current-transmission.spec.ts:55:7 › rejects malformed or impossible editorial date "2100-02-29" (0ms)
+  ✓  251 tests/unit/current-transmission.spec.ts:55:7 › rejects malformed or impossible editorial date "2026-04-31" (0ms)
+  ✓  252 tests/unit/current-transmission.spec.ts:55:7 › rejects malformed or impossible editorial date "2026-13-01" (0ms)
+  ✓  253 tests/unit/current-transmission.spec.ts:55:7 › rejects malformed or impossible editorial date "2026-00-01" (0ms)
+  ✓  254 tests/unit/current-transmission.spec.ts:55:7 › rejects malformed or impossible editorial date "2026-01-00" (0ms)
+  ✓  255 tests/unit/current-transmission.spec.ts:55:7 › rejects malformed or impossible editorial date "2026-01-32" (0ms)
+  ✓  256 tests/unit/current-transmission.spec.ts:63:7 › accepts a real editorial calendar date 2001-01-02 without expiry or rewriting (0ms)
+  ✓  257 tests/unit/current-transmission.spec.ts:63:7 › accepts a real editorial calendar date 2000-02-29 without expiry or rewriting (0ms)
+  ✓  258 tests/unit/current-transmission.spec.ts:63:7 › accepts a real editorial calendar date 2024-02-29 without expiry or rewriting (0ms)
+  ✓  259 tests/unit/current-transmission.spec.ts:69:7 › accepts safe Now Building destination / (0ms)
+  ✓  260 tests/unit/current-transmission.spec.ts:69:7 › accepts safe Now Building destination /work/telescope (0ms)
+  ✓  261 tests/unit/current-transmission.spec.ts:69:7 › accepts safe Now Building destination /work/telescope?view=full#notes (0ms)
+  ✓  262 tests/unit/current-transmission.spec.ts:69:7 › accepts safe Now Building destination /blog/field%20notes (0ms)
+  ✓  263 tests/unit/current-transmission.spec.ts:69:7 › accepts safe Now Building destination https://example.com/atlas (0ms)
+  ✓  264 tests/unit/current-transmission.spec.ts:69:7 › accepts safe Now Building destination https://offline.invalid/notes?view=full#entry (0ms)
+  ✓  265 tests/unit/current-transmission.spec.ts:69:7 › accepts safe Now Building destination HTTPS://example.com/atlas (0ms)
+  ✓  266 tests/unit/current-transmission.spec.ts:75:7 › rejects unsafe Now Building destination "javascript:alert(1)" with its exact field error (0ms)
+  ✓  267 tests/unit/current-transmission.spec.ts:75:7 › rejects unsafe Now Building destination "JaVaScRiPt:alert(1)" with its exact field error (0ms)
+[WebServer] (node:22128) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  268 tests/unit/current-transmission.spec.ts:75:7 › rejects unsafe Now Building destination "data:text/html,hello" with its exact field error (0ms)
+  ✓  269 tests/unit/current-transmission.spec.ts:75:7 › rejects unsafe Now Building destination "vbscript:msgbox(1)" with its exact field error (0ms)
+  ✓  270 tests/unit/current-transmission.spec.ts:75:7 › rejects unsafe Now Building destination "//example.com/atlas" with its exact field error (0ms)
+  ✓  271 tests/unit/current-transmission.spec.ts:75:7 › rejects unsafe Now Building destination "http://example.com/atlas" with its exact field error (0ms)
+  ✓  272 tests/unit/current-transmission.spec.ts:75:7 › rejects unsafe Now Building destination "ftp://example.com/atlas" with its exact field error (0ms)
+  ✓  273 tests/unit/current-transmission.spec.ts:75:7 › rejects unsafe Now Building destination "mailto:me@example.com" with its exact field error (0ms)
+  ✓  274 tests/unit/current-transmission.spec.ts:75:7 › rejects unsafe Now Building destination "work/telescope" with its exact field error (0ms)
+  ✓  275 tests/unit/current-transmission.spec.ts:75:7 › rejects unsafe Now Building destination "#notes" with its exact field error (0ms)
+  ✓  276 tests/unit/current-transmission.spec.ts:75:7 › rejects unsafe Now Building destination "?view=full" with its exact field error (0ms)
+  ✓  277 tests/unit/current-transmission.spec.ts:75:7 › rejects unsafe Now Building destination "/\\example.com" with its exact field error (0ms)
+  ✓  278 tests/unit/current-transmission.spec.ts:75:7 › rejects unsafe Now Building destination "\\\\example.com" with its exact field error (0ms)
+  ✓  279 tests/unit/current-transmission.spec.ts:75:7 › rejects unsafe Now Building destination "https:\\example.com" with its exact field error (0ms)
+  ✓  280 tests/unit/current-transmission.spec.ts:75:7 › rejects unsafe Now Building destination "https:example.com" with its exact field error (0ms)
+  ✓  281 tests/unit/current-transmission.spec.ts:75:7 › rejects unsafe Now Building destination "https:/example.com" with its exact field error (0ms)
+  ✓  282 tests/unit/current-transmission.spec.ts:75:7 › rejects unsafe Now Building destination "https:///example.com" with its exact field error (0ms)
+  ✓  283 tests/unit/current-transmission.spec.ts:75:7 › rejects unsafe Now Building destination "https://" with its exact field error (0ms)
+  ✓  284 tests/unit/current-transmission.spec.ts:75:7 › rejects unsafe Now Building destination "https://user:password@example.com" with its exact field error (0ms)
+  ✓  285 tests/unit/current-transmission.spec.ts:75:7 › rejects unsafe Now Building destination "https://example.com\n/atlas" with its exact field error (0ms)
+  ✓  286 tests/unit/current-transmission.spec.ts:75:7 › rejects unsafe Now Building destination " https://example.com" with its exact field error (0ms)
+  ✓  287 tests/unit/current-transmission.spec.ts:75:7 › rejects unsafe Now Building destination "https://example.com " with its exact field error (0ms)
+  ✓  288 tests/unit/current-transmission.spec.ts:75:7 › rejects unsafe Now Building destination "/\u0000example.com" with its exact field error (0ms)
+  ✓  289 tests/unit/current-transmission.spec.ts:75:7 › rejects unsafe Now Building destination "/example.com" with its exact field error (0ms)
+  ✓  290 tests/unit/current-transmission.spec.ts:75:7 › rejects unsafe Now Building destination "https://[invalid]/" with its exact field error (0ms)
+  ✓  291 tests/unit/current-transmission.spec.ts:83:7 › rejects a missing editorial record with its exact field error (0ms)
+  ✓  292 tests/unit/current-transmission.spec.ts:87:9 › rejects missing nowBuilding with its exact field error (0ms)
+  ✓  293 tests/unit/current-transmission.spec.ts:87:9 › rejects missing nextExperiment with its exact field error (0ms)
+  ✓  294 tests/unit/current-transmission.spec.ts:83:7 › rejects a null editorial record with its exact field error (0ms)
+  ✓  295 tests/unit/current-transmission.spec.ts:87:9 › rejects null nowBuilding with its exact field error (0ms)
+  ✓  296 tests/unit/current-transmission.spec.ts:87:9 › rejects null nextExperiment with its exact field error (0ms)
+  ✓  297 tests/unit/current-transmission.spec.ts:83:7 › rejects a number editorial record with its exact field error (0ms)
+  ✓  298 tests/unit/current-transmission.spec.ts:87:9 › rejects number nowBuilding with its exact field error (0ms)
+  ✓  299 tests/unit/current-transmission.spec.ts:87:9 › rejects number nextExperiment with its exact field error (0ms)
+  ✓  300 tests/unit/current-transmission.spec.ts:83:7 › rejects a string editorial record with its exact field error (0ms)
+  ✓  301 tests/unit/current-transmission.spec.ts:87:9 › rejects string nowBuilding with its exact field error (0ms)
+  ✓  302 tests/unit/current-transmission.spec.ts:87:9 › rejects string nextExperiment with its exact field error (0ms)
+  ✓  303 tests/unit/current-transmission.spec.ts:83:7 › rejects a array editorial record with its exact field error (0ms)
+  ✓  304 tests/unit/current-transmission.spec.ts:87:9 › rejects array nowBuilding with its exact field error (0ms)
+  ✓  305 tests/unit/current-transmission.spec.ts:87:9 › rejects array nextExperiment with its exact field error (0ms)
+  ✓  306 tests/unit/current-transmission.spec.ts:93:5 › accepts long manual copy and preserves every authored character (0ms)
+  ✓  307 tests/unit/enrichment.spec.ts:45:5 › layers live stats onto curated content without changing it (2ms)
+  ✓  308 tests/unit/enrichment.spec.ts:64:5 › a project without a remote renders from curated content alone (0ms)
+  ✓  309 tests/unit/enrichment.spec.ts:75:5 › an api failure warns and falls back to curated content (0ms)
+  ✓  310 tests/unit/enrichment.spec.ts:91:5 › a missing token warns once instead of failing the build (0ms)
+  ✓  311 tests/unit/enrichment.spec.ts:105:5 › fetches each repo once per build, however many surfaces show it (0ms)
+  ✓  312 tests/unit/feed.spec.ts:26:5 › declares a channel a validator will accept (1ms)
+  ✓  313 tests/unit/feed.spec.ts:41:5 › carries every post as an item with an absolute permalink (0ms)
+  ✓  314 tests/unit/feed.spec.ts:61:5 › dates every item in RFC 822, the format RSS requires (0ms)
+  ✓  315 tests/unit/feed.spec.ts:67:5 › stamps lastBuildDate from the newest post so it is stable per build (0ms)
+  ✓  316 tests/unit/feed.spec.ts:76:5 › escapes markup in titles and summaries instead of emitting it (0ms)
+  ✓  317 tests/unit/feed.spec.ts:87:5 › escapes a slug that would otherwise break every item in the feed (0ms)
+  ✓  318 tests/unit/feed.spec.ts:99:5 › credits the author on the channel and every item (0ms)
+  ✓  319 tests/unit/feed.spec.ts:107:5 › stays a valid empty feed when nothing is published (0ms)
+  ✓  320 tests/unit/github-client.spec.ts:4:5 › resolves a curated github link into an owner/repo ref (0ms)
+  ✓  321 tests/unit/github-client.spec.ts:11:5 › tolerates trailing slashes and .git suffixes on the curated link (0ms)
+  ✓  322 tests/unit/github-client.spec.ts:22:5 › has no ref for a project without a remote (0ms)
+  ✓  323 tests/unit/github-client.spec.ts:26:5 › has no ref for a link that is not a github repository (0ms)
+  ✓  324 tests/unit/github-client.spec.ts:65:5 › reports commit count, last push, and language mix for a repo (3ms)
+  ✓  325 tests/unit/github-client.spec.ts:82:5 › reports no stats when the api rejects the request (0ms)
+  ✓  326 tests/unit/github-client.spec.ts:92:5 › reports no stats when the network fails, without throwing (0ms)
+  ✓  327 tests/unit/github-client.spec.ts:101:5 › gives up on a hung request instead of stalling the build (23ms)
+  ✓  328 tests/unit/github-client.spec.ts:115:5 › sends the token when one is configured, and omits it when not (1ms)
+  ✓  329 tests/unit/github-client.spec.ts:135:5 › keys every request to the build, so a rebuild never reuses stale stats (0ms)
+  ✓  330 tests/unit/github-client.spec.ts:156:5 › counts a repo whose commit list fits on one page (0ms)
+  ✓  331 tests/unit/github-client.spec.ts:170:5 › reports no stats for an empty repo, which github refuses to list (0ms)
+  ✓  332 tests/unit/github-client.spec.ts:180:5 › counts commits whatever order github orders the link query in (0ms)
+  ✓  333 tests/unit/github-client.spec.ts:195:5 › refuses to guess a count when the link header has no last page (0ms)
+  ✓  334 tests/unit/github-client.spec.ts:213:5 › ignores an empty api base url instead of building relative urls (0ms)
+  ✓  335 tests/unit/og-card.spec.ts:12:5 › the home card carries the wordmark and the site's own lime (0ms)
+  ✓  336 tests/unit/og-card.spec.ts:21:5 › a post card leads with its title and dates the eyebrow (0ms)
+  ✓  337 tests/unit/og-card.spec.ts:36:5 › a September post card uses the shared padded calendar-date format (0ms)
+  ✓  338 tests/unit/og-card.spec.ts:48:5 › a case-study card nods to the tile by borrowing its accent (0ms)
+  ✓  339 tests/unit/og-card.spec.ts:59:5 › a project without a tile identity falls back to the chrome's lime (0ms)
+  ✓  340 tests/unit/og-card.spec.ts:74:5 › shrinks the title so a long one still fits the card (0ms)
+  ✓  341 tests/unit/og-card.spec.ts:84:5 › the blog index gets its own card rather than the home wordmark (0ms)
+  ✓  342 tests/unit/posts.spec.ts:21:5 › caches only the production post catalogue (2ms)
+  ✓  343 tests/unit/posts.spec.ts:39:5 › parses frontmatter posts and sorts them newest-first (1ms)
+  ✓  344 tests/unit/posts.spec.ts:60:5 › rejects a post whose frontmatter breaks the metadata contract (1ms)
+  ✓  345 tests/unit/posts.spec.ts:75:5 › rejects an impossible calendar date (0ms)
+  ✓  346 tests/unit/posts.spec.ts:88:5 › rejects an impossible calendar date written as a YAML string (0ms)
+  ✓  347 tests/unit/posts.spec.ts:101:5 › ignores files that are not mdx posts (0ms)
+(node:22129) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/showcase-check-S9T1Ht/src/lib/generate-registration.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/showcase-check-S9T1Ht/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:22129) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+  ✓  172 tests/rss-and-og-images.spec.ts:106:9 › Open Graph images › the post card renders as a 1200x630 png (597ms)
+[WebServer] (node:22141) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  349 tests/rss-and-og-images.spec.ts:92:9 › Open Graph images › the case study declares a large-image card with its own title (178ms)
+  ✓  348 tests/unit/project-command.spec.ts:79:5 › verify reports authored gates and review provenance without requiring publication or changing source (243ms)
+(node:22208) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/showcase-check-ohiTOy/src/lib/generate-registration.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/showcase-check-ohiTOy/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:22208) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (node:22244) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  351 tests/unit/project-command.spec.ts:99:5 › verify retains diagnostics for closed publication gates and rejects extra arguments without source writes (378ms)
+(node:22320) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/showcase-check-M122VL/src/lib/generate-registration.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/showcase-check-M122VL/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:22320) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+  ✓  350 tests/rss-and-og-images.spec.ts:106:9 › Open Graph images › the case study card renders as a 1200x630 png (579ms)
+[WebServer] (node:22367) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  353 tests/rss-and-og-images.spec.ts:123:7 › Open Graph images › addresses each card directly, so every one can be baked at build time (158ms)
+  ✓  352 tests/unit/project-command.spec.ts:116:5 › feature inserts a published project into an empty wall and preserves other editorial surfaces (441ms)
+[WebServer] (node:22397) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+(node:22398) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/showcase-check-Umx9G8/src/lib/generate-registration.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/showcase-check-Umx9G8/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:22398) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+  ✓  354 tests/rss-and-og-images.spec.ts:135:7 › Open Graph images › gives each case study its own tile-coloured card (227ms)
+  ✓  356 tests/unit/project-readiness.spec.ts:42:5 › a complete record with no remote, draft copy, and a labeled draft plate is ready (1ms)
+  ✓  357 tests/unit/project-readiness.spec.ts:105:7 › a blank title names the project and field (1ms)
+  ✓  358 tests/unit/project-readiness.spec.ts:105:7 › a missing pitch names the project and field (0ms)
+  ✓  359 tests/unit/project-readiness.spec.ts:105:7 › a missing draft flag names the project and field (0ms)
+  ✓  360 tests/unit/project-readiness.spec.ts:105:7 › an incomplete step quad names the project and field (0ms)
+  ✓  361 tests/unit/project-readiness.spec.ts:105:7 › an empty stack names the project and field (0ms)
+  ✓  362 tests/unit/project-readiness.spec.ts:105:7 › a blank stack label names the project and field (0ms)
+  ✓  363 tests/unit/project-readiness.spec.ts:105:7 › a missing tile identity names the project and field (0ms)
+  ✓  364 tests/unit/project-readiness.spec.ts:105:7 › a blank motif names the project and field (0ms)
+  ✓  365 tests/unit/project-readiness.spec.ts:105:7 › a blank display face names the project and field (0ms)
+  ✓  366 tests/unit/project-readiness.spec.ts:105:7 › a non-hex palette colour names the project and field (0ms)
+  ✓  367 tests/unit/project-readiness.spec.ts:105:7 › a non-hex step colour names the project and field (0ms)
+  ✓  368 tests/unit/project-readiness.spec.ts:105:7 › a missing narrative section names the project and field (0ms)
+  ✓  369 tests/unit/project-readiness.spec.ts:105:7 › a reordered narrative names the project and field (0ms)
+  ✓  370 tests/unit/project-readiness.spec.ts:105:7 › a blank story heading names the project and field (0ms)
+  ✓  371 tests/unit/project-readiness.spec.ts:105:7 › a blank story body names the project and field (0ms)
+  ✓  372 tests/unit/project-readiness.spec.ts:105:7 › no reviewable image names the project and field (0ms)
+  ✓  373 tests/unit/project-readiness.spec.ts:105:7 › a blank image description names the project and field (0ms)
+  ✓  374 tests/unit/project-readiness.spec.ts:105:7 › a blank caption names the project and field (0ms)
+  ✓  375 tests/unit/project-readiness.spec.ts:105:7 › a remote image source names the project and field (0ms)
+  ✓  376 tests/unit/project-readiness.spec.ts:105:7 › an escaping image source names the project and field (0ms)
+  ✓  377 tests/unit/project-readiness.spec.ts:105:7 › a non-HTTPS repository names the project and field (0ms)
+  ✓  378 tests/unit/project-readiness.spec.ts:105:7 › a placeholder demo names the project and field (0ms)
+  ✓  379 tests/unit/project-readiness.spec.ts:105:7 › an executable demo names the project and field (0ms)
+  ✓  380 tests/unit/project-readiness.spec.ts:105:7 › a blank repository names the project and field (0ms)
+  ✓  381 tests/unit/project-readiness.spec.ts:105:7 › a route slug with spaces names the project and field (0ms)
+  ✓  382 tests/unit/project-readiness.spec.ts:105:7 › a nested route slug names the project and field (0ms)
+  ✓  383 tests/unit/project-readiness.spec.ts:110:5 › a record with no usable slug is identified by its catalogue position (0ms)
+  ✓  384 tests/unit/project-readiness.spec.ts:115:5 › duplicate catalogue slugs name the repeated project (0ms)
+  ✓  385 tests/unit/project-readiness.spec.ts:120:5 › an unresolved local image names the project, field, and path (0ms)
+  ✓  386 tests/unit/project-readiness.spec.ts:125:5 › published references must name an authored project exactly once (0ms)
+  ✓  387 tests/unit/project-readiness.spec.ts:132:5 › an unfinished record may rest in the catalogue until it is published (0ms)
+  ✓  388 tests/unit/project-readiness.spec.ts:139:5 › collects independent content and selection findings in one pass (0ms)
+  ✓  389 tests/unit/project-readiness.spec.ts:153:5 › validation reports every collected finding together (0ms)
+  ✓  390 tests/unit/project-readiness.spec.ts:158:5 › build validation allows incomplete unpublished work while the collector reports it (0ms)
+  ✓  391 tests/unit/project-readiness.spec.ts:169:5 › published readiness gates are independent (0ms)
+  ✓  392 tests/unit/project-readiness.spec.ts:188:5 › featured-selection rules join the same finding collection (0ms)
+  ✓  393 tests/unit/project-stats.spec.ts:21:5 › renders nothing at all when a project has no live stats (2ms)
+  ✓  394 tests/unit/project-stats.spec.ts:26:5 › shows commit count, last-push date, and language mix on a case study (5ms)
+  ✓  395 tests/unit/project-stats.spec.ts:38:5 › shows the same three stats in compact form on a tile (0ms)
+  ✓  396 tests/unit/project-stats.spec.ts:47:5 › keeps the date stable regardless of the build machine's timezone (1ms)
+  ✓  397 tests/unit/project-stats.spec.ts:57:5 › never rounds a present language away to nothing (0ms)
+  ✓  398 tests/unit/project-stats.spec.ts:67:5 › counts a single commit in the singular (0ms)
+  ✓  399 tests/unit/project-stats.spec.ts:74:5 › leaves out the language row when github detected none (0ms)
+  ✓  400 tests/unit/rail.spec.ts:12:5 › the rail shows a curated selection, not every written entry (0ms)
+  ✓  401 tests/unit/rail.spec.ts:27:5 › every entry is written once and carries what a card needs (2ms)
+  ✓  402 tests/unit/rail.spec.ts:39:5 › a card with a remote links out and names its destination (1ms)
+  ✓  403 tests/unit/rail.spec.ts:59:5 › a card with no remote renders complete, with no link and no stats (1ms)
+  ✓  404 tests/unit/rail.spec.ts:77:5 › an unlinked card with nothing to explain simply omits the note (0ms)
+  ✓  405 tests/unit/rail.spec.ts:91:5 › stats ride along when the build found them (0ms)
+  ✓  406 tests/unit/registration-generator.spec.ts:18:5 › barrels are sorted by slug, headed as generated, and named from the slug (0ms)
+  ✓  407 tests/unit/registration-generator.spec.ts:56:5 › output is a pure function of the listing, whatever order the disk returns (0ms)
+  ✓  408 tests/unit/registration-generator.spec.ts:71:5 › an empty listing still renders valid, headed barrels (0ms)
+  ✓  409 tests/unit/registration-generator.spec.ts:80:7 › an identity missing Tile.tsx is refused with the slug and file named (1ms)
+  ✓  410 tests/unit/registration-generator.spec.ts:80:7 › an identity missing Artwork.tsx is refused with the slug and file named (0ms)
+  ✓  411 tests/unit/registration-generator.spec.ts:87:5 › names that cannot become a slug-derived export are refused, never mangled (0ms)
+  ✓  412 tests/unit/registration-generator.spec.ts:111:5 › syncing an unchanged tree twice is byte-identical and the second run changes nothing (4ms)
+  ✓  413 tests/unit/registration-generator.spec.ts:125:5 › an incomplete identity stops the sync before either barrel is written (2ms)
+  ✓  414 tests/unit/registration-generator.spec.ts:136:5 › the checked-in barrels are exactly what the generator produces (0ms)
+(node:22469) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:22480) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:22506) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  355 tests/unit/project-command.spec.ts:151:5 › feature dry run previews both orders without changing the checkout in either option order (513ms)
+(node:22507) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  415 tests/unit/registration-generator.spec.ts:142:5 › every authored record loads under plain node and exports its camelCase slug (191ms)
+  ✓  417 tests/unit/showcase-registration.spec.ts:6:5 › missing showcase references identify the project instead of selecting fallback art (0ms)
+  ✓  418 tests/unit/showcase-registration.spec.ts:11:5 › conflicting showcase registrations name the duplicated project (0ms)
+  ✓  419 tests/unit/showcase-registration.spec.ts:16:7 › missing Tile names the project and artwork reference (0ms)
+  ✓  420 tests/unit/showcase-registration.spec.ts:16:7 › missing CaseStudyArtwork names the project and artwork reference (0ms)
+  ✓  421 tests/unit/sitemap.spec.ts:19:5 › lists the site's own surfaces: home, the blog, every post, every case study (0ms)
+  ✓  422 tests/unit/sitemap.spec.ts:31:5 › addresses every surface absolutely, at the canonical origin (0ms)
+  ✓  423 tests/unit/sitemap.spec.ts:37:5 › dates a post by its own publication date, not by the build clock (0ms)
+  ✓  424 tests/unit/sitemap.spec.ts:44:5 › lists a slug once even when it is named twice (0ms)
+  ✓  425 tests/unit/sitemap.spec.ts:50:5 › stays honest when there is nothing published yet (0ms)
+(node:22508) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/showcase-check-xithZ0/src/lib/generate-registration.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/showcase-check-xithZ0/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:22508) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+  ✓  426 tests/unit/social-metadata.spec.ts:5:5 › keeps the large-image card on every page that overrides its social copy (0ms)
+  ✓  427 tests/unit/social-metadata.spec.ts:18:5 › mirrors title and description across both social vocabularies (0ms)
+  ✓  428 tests/unit/social-metadata.spec.ts:33:5 › defaults to a website and takes an article when asked (0ms)
+  ✓  416 tests/unit/project-command.spec.ts:168:5 › feature rejects invalid arguments and positions without writes (4.0s)
+(node:23490) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/showcase-check-5PIW13/src/lib/generate-registration.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/showcase-check-5PIW13/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:23490) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+  ✓  429 tests/unit/project-command.spec.ts:195:5 › feature repeats the same position without writes and refuses to move an existing entry (1.5s)
+(node:23843) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/showcase-check-4gumUv/src/lib/generate-registration.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/showcase-check-4gumUv/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:23843) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(node:23844) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/showcase-check-4gumUv/src/lib/generate-registration.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/showcase-check-4gumUv/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:23844) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+  ✓  430 tests/unit/project-command.spec.ts:222:7 › feature inserts at position 1 and preserves the exact surrounding order (830ms)
+(node:24020) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/showcase-check-1W0h40/src/lib/generate-registration.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/showcase-check-1W0h40/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:24020) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(node:24021) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/showcase-check-1W0h40/src/lib/generate-registration.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/showcase-check-1W0h40/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:24021) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+  ✓  431 tests/unit/project-command.spec.ts:222:7 › feature inserts at position 2 and preserves the exact surrounding order (826ms)
+(node:24197) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/showcase-check-8ICDem/src/lib/generate-registration.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/showcase-check-8ICDem/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:24197) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(node:24198) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/showcase-check-8ICDem/src/lib/generate-registration.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/showcase-check-8ICDem/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:24198) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+  ✓  432 tests/unit/project-command.spec.ts:222:7 › feature inserts at position 3 and preserves the exact surrounding order (833ms)
+(node:24374) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/showcase-check-pqCUBt/src/lib/generate-registration.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/showcase-check-pqCUBt/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:24374) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+  ✓  433 tests/unit/project-command.spec.ts:262:5 › feature refuses unpublished projects with the established publication relationship (347ms)
+(node:24445) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/showcase-check-XuSFdW/src/lib/generate-registration.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/showcase-check-XuSFdW/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:24445) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+  ✓  434 tests/unit/project-command.spec.ts:275:5 › feature preflights every readiness finding for new and same-position requests before writing (633ms)
+(node:24586) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/showcase-check-Fh6EL5/src/lib/generate-registration.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/showcase-check-Fh6EL5/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:24586) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(node:24587) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/showcase-check-Fh6EL5/src/lib/generate-registration.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/showcase-check-Fh6EL5/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:24587) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+  ✓  435 tests/unit/project-command.spec.ts:299:5 › feature preflights unrelated published work while allowing incomplete unpublished work (862ms)
+(node:24767) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/showcase-check-fuLUCK/src/lib/generate-registration.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/showcase-check-fuLUCK/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:24767) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+  ✓  436 tests/unit/project-command.spec.ts:323:5 › feature refuses invalid selection state including duplicate same-position requests without writes (2.3s)
+(node:25331) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/showcase-check-Qkncr8/src/lib/generate-registration.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/showcase-check-Qkncr8/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:25331) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(node:25332) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/showcase-check-Qkncr8/src/lib/generate-registration.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/showcase-check-Qkncr8/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:25332) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+  ✓  437 tests/unit/project-command.spec.ts:349:5 › publish appends a ready draft case study once without changing other editorial surfaces (605ms)
+(node:25439) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/showcase-check-0E0FWr/src/lib/generate-registration.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/showcase-check-0E0FWr/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:25439) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+  ✓  438 tests/unit/project-command.spec.ts:392:5 › publish dry run previews the published change and leaves the checkout unchanged (343ms)
+(node:25511) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/showcase-check-zh7FVW/src/lib/generate-registration.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/showcase-check-zh7FVW/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:25511) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+  ✓  439 tests/unit/project-command.spec.ts:406:5 › publish lists every blocking readiness finding without writes, including in dry run (346ms)
+(node:25594) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/showcase-check-Oe44Y5/src/lib/generate-registration.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/showcase-check-Oe44Y5/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:25594) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+  ✓  440 tests/unit/project-command.spec.ts:429:7 › publish refuses incomplete content as the sole closed publication gate (203ms)
+(node:25631) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/showcase-check-1boRqI/src/lib/generate-registration.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/showcase-check-1boRqI/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:25631) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+  ✓  441 tests/unit/project-command.spec.ts:429:7 › publish refuses missing asset as the sole closed publication gate (202ms)
+(node:25668) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/showcase-check-kZ8KVQ/src/lib/generate-registration.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/showcase-check-kZ8KVQ/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:25668) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+  ✓  442 tests/unit/project-command.spec.ts:429:7 › publish refuses mis-cased asset as the sole closed publication gate (201ms)
+(node:25720) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/showcase-check-1LCRft/src/lib/generate-registration.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/showcase-check-1LCRft/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:25720) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(node:25723) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/showcase-check-1LCRft/src/lib/generate-registration.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/showcase-check-1LCRft/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:25723) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+  ✓  443 tests/unit/project-command.spec.ts:429:7 › publish refuses missing presentation as the sole closed publication gate (255ms)
+(node:25760) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/showcase-check-qFLn9O/src/lib/generate-registration.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/showcase-check-qFLn9O/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:25760) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+  ✓  444 tests/unit/project-command.spec.ts:429:7 › publish refuses unfinished presentation as the sole closed publication gate (201ms)
+(node:25798) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/showcase-check-xiSVTl/src/lib/generate-registration.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/showcase-check-xiSVTl/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:25798) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+  ✓  445 tests/unit/project-command.spec.ts:429:7 › publish refuses stale registration as the sole closed publication gate (204ms)
+(node:25836) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/showcase-check-363RUc/src/lib/generate-registration.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/showcase-check-363RUc/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:25836) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(node:25837) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/showcase-check-363RUc/src/lib/generate-registration.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/showcase-check-363RUc/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:25837) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+  ✓  446 tests/unit/project-command.spec.ts:460:5 › publish preflights the full prospective build while allowing incomplete unpublished work (395ms)
+(node:25908) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/showcase-check-UZZ1ZI/src/lib/generate-registration.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/showcase-check-UZZ1ZI/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:25908) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+  ✓  447 tests/unit/project-command.spec.ts:479:5 › publish rejects invalid arguments, unknown projects, and malformed selection without writes (1.2s)
+(node:26210) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/showcase-check-4kGuhG/src/lib/generate-registration.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/showcase-check-4kGuhG/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:26210) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(node:26281) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  448 tests/unit/project-command.spec.ts:500:5 › create prepares an unpublished project with unfinished presentation (427ms)
+(node:26282) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/showcase-check-z9mvCW/src/lib/generate-registration.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/showcase-check-z9mvCW/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:26282) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+  ✓  449 tests/unit/project-command.spec.ts:536:5 › create dry run shows new files and both registration diffs without creating directories (212ms)
+(node:26318) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/showcase-check-wBYAsN/src/lib/generate-registration.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/showcase-check-wBYAsN/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:26318) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+  ✓  450 tests/unit/project-command.spec.ts:551:5 › create retries safely and never overwrites edited work (787ms)
+(node:26510) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/showcase-check-2d7OYN/src/lib/generate-registration.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/showcase-check-2d7OYN/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:26510) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+  ✓  451 tests/unit/project-command.spec.ts:584:5 › an identical create and current sync need no write access (496ms)
+(node:26624) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/showcase-check-gAYz5z/src/lib/generate-registration.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/showcase-check-gAYz5z/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:26624) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+  ✓  452 tests/unit/project-command.spec.ts:608:5 › create validates arguments, identifier names, and title before changing the checkout (1.9s)
+(node:27080) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/showcase-check-aQ6h6s/src/lib/generate-registration.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/showcase-check-aQ6h6s/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:27080) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+  ✓  453 tests/unit/project-command.spec.ts:631:5 › create stops for occupied files, directories, slugs, and symlinks without side effects (772ms)
+(node:27256) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/showcase-check-vuDksF/src/lib/generate-registration.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/showcase-check-vuDksF/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:27256) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+  ✓  454 tests/unit/project-command.spec.ts:663:5 › create rejects a generated identifier collision before writes (204ms)
+(node:27292) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/showcase-check-GmWfaQ/src/lib/generate-registration.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/showcase-check-GmWfaQ/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:27292) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+  ✓  455 tests/unit/project-command.spec.ts:675:5 › create refuses when the prospective application has a build-blocking finding (204ms)
+(node:27328) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/showcase-check-4vjVde/src/lib/generate-registration.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/showcase-check-4vjVde/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:27328) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+  ✓  456 tests/unit/project-command.spec.ts:690:5 › create records the source path and exact revision without importing copy (509ms)
+(node:27485) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/showcase-check-VycZf0/src/lib/generate-registration.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/showcase-check-VycZf0/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:27485) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+  ✓  457 tests/unit/project-command.spec.ts:711:5 › an identical create preserves its original source revision when the source advances (548ms)
+(node:27688) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/showcase-check-waVnUz/src/lib/generate-registration.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/showcase-check-waVnUz/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:27688) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+  ✓  458 tests/unit/project-command.spec.ts:743:5 › an existing review note cannot make a nonexistent source repository valid (208ms)
+(node:27744) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/showcase-check-60uxnj/src/lib/generate-registration.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/showcase-check-60uxnj/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:27744) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+  ✓  459 tests/unit/project-command.spec.ts:757:5 › sync previews and regenerates registration, then becomes a no-op (486ms)
+(node:27850) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/showcase-check-yRemNk/src/lib/generate-registration.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/showcase-check-yRemNk/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:27850) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+  ✓  460 tests/unit/project-command.spec.ts:777:5 › check reports authored, published, and featured stages with independent gates and leaves files unchanged (490ms)
+(node:27956) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/showcase-check-LpdT8w/src/lib/generate-registration.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/showcase-check-LpdT8w/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:27956) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+  ✓  461 tests/unit/project-command.spec.ts:806:5 › incomplete unpublished work reports every field and gate, and fixing one field removes only its finding (342ms)
+(node:28027) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/showcase-check-5FOso1/src/lib/generate-registration.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/showcase-check-5FOso1/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:28027) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+  ✓  462 tests/unit/project-command.spec.ts:830:5 › published unfeatured project reports missing presentation and stale registration separately (202ms)
+(node:28063) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/showcase-check-gJqcYA/src/lib/generate-registration.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/showcase-check-gJqcYA/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:28063) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(node:28064) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/showcase-check-gJqcYA/src/lib/generate-registration.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/showcase-check-gJqcYA/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:28064) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+  ✓  463 tests/unit/project-command.spec.ts:847:5 › check reports mismatched authored names even with unrelated files in the directory (251ms)
+(node:28100) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/showcase-check-pMlBOF/src/lib/generate-registration.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/showcase-check-pMlBOF/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:28100) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(node:28101) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/showcase-check-pMlBOF/src/lib/generate-registration.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/showcase-check-pMlBOF/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:28101) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+  ✓  464 tests/unit/project-command.spec.ts:862:5 › an identity directory named for no record is reported beside the project it should serve (257ms)
+(node:28137) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/showcase-check-YUNtKn/src/lib/generate-registration.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/showcase-check-YUNtKn/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:28137) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+  ✓  465 tests/unit/project-command.spec.ts:877:5 › invalid registration names remain visible beside the authored relationship finding (204ms)
+(node:28177) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/showcase-check-QwbIId/src/lib/generate-registration.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/showcase-check-QwbIId/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:28177) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+  ✓  466 tests/unit/project-command.spec.ts:890:5 › a source file without its expected record export fails with a file-specific message (203ms)
+(node:28213) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/showcase-check-Xf24yl/src/lib/generate-registration.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/showcase-check-Xf24yl/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:28213) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(node:28249) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/showcase-check-Xf24yl/src/lib/generate-registration.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/showcase-check-Xf24yl/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:28249) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+  ✓  467 tests/unit/project-command.spec.ts:903:5 › an unpublished authored addition can be incomplete without blocking the published project unless registration is stale (395ms)
+(node:28285) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/showcase-check-i02IRS/src/lib/generate-registration.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/showcase-check-i02IRS/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:28285) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+  ✓  468 tests/unit/project-command.spec.ts:919:5 › a featured project reports each closed gate under its featured stage (204ms)
+(node:28321) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/showcase-check-ft2TeY/src/lib/generate-registration.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/showcase-check-ft2TeY/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:28321) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+  ✓  469 tests/unit/project-command.spec.ts:938:5 › a featured project that was never published names the missing relationship (199ms)
+(node:28357) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/showcase-check-wtFTfN/src/lib/generate-registration.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/showcase-check-wtFTfN/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:28357) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+  ✓  470 tests/unit/project-command.spec.ts:949:5 › draft copy, a labeled draft plate, no remote links, and unreachable enrichment are valid (200ms)
+(node:28393) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/showcase-check-9ZJbkP/src/lib/generate-registration.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/showcase-check-9ZJbkP/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:28393) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+  ✓  471 tests/unit/project-command.spec.ts:966:5 › check rejects invalid slugs, unknown projects, and malformed selection without changing files (480ms)
+(node:28499) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/showcase-check-igPAIo/src/lib/generate-registration.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/showcase-check-igPAIo/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:28499) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+  ✓  472 tests/unit/project-command.spec.ts:986:5 › the entrypoint explains how to enable native TypeScript stripping (79ms)
+
+  2 skipped
+  470 passed (2.3m)

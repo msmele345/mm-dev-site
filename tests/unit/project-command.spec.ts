@@ -34,7 +34,7 @@ function writeProject(root: string, record = project(), file = authored) {
 
 function fixture(): string {
   const root = mkdtempSync(join(tmpdir(), "showcase-check-"));
-  for (const file of ["scripts/project.mjs", "scripts/registration.mjs", "src/content/projects/project-command.ts", "src/content/projects/project-create.ts", "src/content/projects/readiness.ts", "src/content/projects/filesystem-facts.ts", "src/content/projects/schema.ts", "src/lib/generate-registration.ts"]) {
+  for (const file of ["scripts/project.mjs", "scripts/registration.mjs", "src/content/projects/project-command.ts", "src/content/projects/project-create.ts", "src/content/projects/project-verify.ts", "src/content/projects/readiness.ts", "src/content/projects/filesystem-facts.ts", "src/content/projects/schema.ts", "src/lib/generate-registration.ts"]) {
     mkdirSync(join(root, file, ".."), { recursive: true });
     cpSync(join(source, file), join(root, file));
   }
@@ -75,6 +75,43 @@ function hash(root: string): string {
   visit(root);
   return digest.digest("hex");
 }
+
+test("verify reports authored gates and review provenance without requiring publication or changing source", () => {
+  const root = fixture();
+  try {
+    mkdirSync(join(root, "docs/project-review"), { recursive: true });
+    writeFileSync(join(root, "docs/project-review/signal-loom.md"), "Source repository: /source/loom\nSource revision: abc123\n");
+    writeProject(root, project({ pitch: "" }));
+    const before = hash(join(root, "src"));
+    const result = command(root, "verify", slug);
+    expect(result.status, result.stderr).toBe(0);
+    expect(result.stdout).toContain("Evidence report:");
+    const report = readFileSync(result.stdout.trim().split("Evidence report: ")[1], "utf8");
+    expect(report).toContain("Stage: authored");
+    expect(report).toContain("Content ready: no");
+    expect(report).toContain("abc123");
+    expect(report).toContain("Browser checks: not required for authored work");
+    expect(report).toContain("- [ ] Owner artwork approval");
+    expect(hash(join(root, "src"))).toBe(before);
+  } finally { rmSync(root, { recursive: true, force: true }); }
+});
+
+test("verify retains diagnostics for closed publication gates and rejects extra arguments without source writes", () => {
+  const root = fixture();
+  try {
+    writeProject(root, project({ pitch: "" }));
+    writeFileSync(join(root, "src/content/projects/selection.json"), JSON.stringify({ published: [slug], featured: [] }));
+    const before = hash(join(root, "src"));
+    const result = command(root, "verify", slug);
+    expect(result.status).toBe(1);
+    const report = readFileSync(result.stdout.trim().split("Evidence report: ")[1], "utf8");
+    expect(report).toContain("Result: failed");
+    expect(report).toContain("pitch");
+    expect(report).toContain("Browser checks: skipped because publication gates failed");
+    expect(command(root, "verify", slug, "--dry-run").status).toBe(1);
+    expect(hash(join(root, "src"))).toBe(before);
+  } finally { rmSync(root, { recursive: true, force: true }); }
+});
 
 test("feature inserts a published project into an empty wall and preserves other editorial surfaces", () => {
   const root = fixture();

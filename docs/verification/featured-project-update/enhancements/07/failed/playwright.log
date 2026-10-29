@@ -1,0 +1,57 @@
+(node:22107) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:22111) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 2 tests using 1 worker
+
+(node:22116) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 tests/project-verification.spec.ts:12:5 › published case study, imagery, metadata, fallback and responsive captures (478ms)
+  ✘  2 tests/project-verification.spec.ts:73:5 › featured membership, indices, keyboard, touch and shared motion (154ms)
+
+
+  1) tests/project-verification.spec.ts:73:5 › featured membership, indices, keyboard, touch and shared motion
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 1
+
+      Array [
+        "/work/elevated-bpm",
+    -   "/work/signal-loom",
+    +   "/work/telescope",
+        "/work/terminal-one",
+        "/work/telescope",
+        "/work/sound-city",
+      ]
+
+      80 |   expect(await tiles.evaluateAll((elements) => elements.map((element) => element.getAttribute("data-tile-slug")))).toEqual(selection.featured);
+      81 |   await expect(wall.locator(".project-wall__bar p")).toHaveText(`${selection.featured.length} featured project${selection.featured.length === 1 ? "" : "s"}`);
+    > 82 |   expect(await wall.getByRole("link").evaluateAll((links) => links.map((link) => link.getAttribute("href")))).toEqual(selection.featured.map((entry) => `/work/${entry}`));
+         |                                                                                                               ^
+      83 |   await expect(wall.locator('[class$="__index"]')).toHaveText(selection.featured.map((_, index) => String(index + 1).padStart(2, "0")));
+      84 |   const motion = wall.locator(`[data-tile-slug="${slug}"]`);
+      85 |   const link = motion.getByRole("link");
+        at /private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/project-verify-app-3fHxmw/tests/project-verification.spec.ts:82:111
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../transmission-app-WMAKzz/.project-evidence/signal-loom-Hz5OE2/browser/project-verification-featu-f791f-ard-touch-and-shared-motion/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../transmission-app-WMAKzz/.project-evidence/signal-loom-Hz5OE2/browser/project-verification-featu-f791f-ard-touch-and-shared-motion/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../transmission-app-WMAKzz/.project-evidence/signal-loom-Hz5OE2/browser/project-verification-featu-f791f-ard-touch-and-shared-motion/trace.zip
+    Usage:
+
+        npx playwright show-trace ../transmission-app-WMAKzz/.project-evidence/signal-loom-Hz5OE2/browser/project-verification-featu-f791f-ard-touch-and-shared-motion/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    tests/project-verification.spec.ts:73:5 › featured membership, indices, keyboard, touch and shared motion
+  1 passed (1.4s)
+
+Exit: 1; signal: null

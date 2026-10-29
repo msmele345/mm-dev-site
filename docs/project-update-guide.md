@@ -46,16 +46,82 @@ and file. Names derive from the slug: `authored/your-project.ts` exports
 `yourProject`, and both identity components are default exports. File and directory
 names must equal the record's `slug` and start with a letter.
 
+## Command workflow
+
+Use Node 22.22 or newer with native TypeScript stripping. Run commands from the
+repository root. Publication and featuring are separate decisions.
+
+```bash
+npm run project -- create your-project --title "Your Project" --source ../your-project --dry-run
+npm run project -- create your-project --title "Your Project" --source ../your-project
+npm run project -- check your-project
+# Author the copy, local images, Tile.tsx, Artwork.tsx, and identity.css.
+# Remove onboarding:unfinished only when the bespoke presentation is finished.
+npm run project -- sync --dry-run
+npm run project -- sync
+npm run project -- check your-project
+npm run project -- publish your-project --dry-run
+npm run project -- publish your-project
+npm run project -- verify your-project
+npm run project -- feature your-project --position 2 --dry-run
+npm run project -- feature your-project --position 2
+npm run project -- verify your-project
+```
+
+| Operation | Expected output and recovery |
+|---|---|
+| `create` | Reports unpublished/unfeatured files and registration updates. Empty copy and unfinished art intentionally close gates. Source path/revision go into `docs/project-review/<slug>.md`. Identical retries make no changes; collisions stop before writes. Preserve edited work and finish it rather than rerunning creation over it. |
+| `check` | Reports `Stage`, `Content ready`, `Presentation registered`, `Presentation finished`, and all findings. Incomplete authored work is allowed; exit zero means the report ran, not that publication gates passed. Fix the named fields and files. |
+| `sync` | Reports updated generated files or `Registration is already current.` Fix missing identity components before retrying. `npm run registration` remains an alias for regeneration. |
+| `publish` | Reports `Published project`, or that it is already published. All published work is preflighted; fix every blocking finding before retrying. Changes only `published`. |
+| `feature` | Reports the one-based position and exact Project wall order. Requires publication, valid gates, and position 1 through the resulting wall length. Repeating the same position is a no-op; use the manual reorder flow to move an existing entry. |
+| `verify` | Prints `Evidence report: <absolute path>`. Authored work gets gates/findings without requiring publication. Published work gets a fresh build and case-study browser checks; featured work also gets wall and interaction checks. Exit nonzero means verification failed; follow the report's diagnostic links, fix source, and retry. |
+
+`create`, `sync`, `publish`, and `feature` accept `--dry-run` and preflight before
+writing. `check` and `verify` do not edit project files or `selection.json`.
+
+### Verification evidence
+
+Each verification run writes a unique `.project-evidence/<slug>-<run>/README.md`
+alongside logs, browser results, and captures. This ignored directory survives normal
+`npm test` output cleanup. Retain or copy the run directory for review, including
+failed runs; relative links resolve within it.
+
+Verification builds a temporary snapshot of the real application using webpack (the
+shared dependency symlink requires it), then runs the slug-parameterized
+`tests/project-verification.spec.ts` through `playwright.project.config.ts`.
+It does not use a running development server or a previously built site. GitHub
+requests target an unavailable local endpoint, so the same browser checks prove
+curated-content fallback without depending on a token or external service. Optional
+links are checked against the authored record; absent controls must be omitted.
+
+Published checks cover narrative, registered artwork, images/alt text/captions,
+canonical and Open Graph metadata, social-image responses, sitemap membership,
+overflow, and case-study captures at 390, 768, and 1440px. Featured checks add exact
+wall membership/order/count/indices/destinations, keyboard reading order and Enter
+activation, visible focus, touch press/release/navigation, reduced-motion art,
+ambient/crescendo exclusivity, off-screen pause, and wall captures at those widths.
+Touch evidence uses browser emulation. Captures support review and do not approve
+visual quality, factual claims, or physical-device behavior.
+
+The report includes stage/gates, source review notes, Git changed paths (branch
+changes relative to `main` plus checkout changes; explicitly unavailable in copies
+without Git), commands, results, and artifact links. It leaves owner copy review,
+artwork approval, physical-device review, deployment, and production curation
+unchecked. Review and annotate those items separately when the owner supplies evidence.
+
 ## Prepare a new project
 
 - [ ] Read the source repository's CONCEPT, PRD, README, or equivalent. Record the
   source paths and revisions in the update's review notes; avoid unsupported outcomes.
-- [ ] Choose a unique lowercase kebab-case slug and author a record using the outline below.
-- [ ] Save it as `src/content/projects/authored/<slug>.ts` and run `npm run registration`.
+- [ ] Choose a unique lowercase kebab-case slug and run `create` as above.
+- [ ] Complete `src/content/projects/authored/<slug>.ts` using the outline below;
+  `check` lists all remaining gates.
 - [ ] Add at least one image under `public/projects/<slug>/`; its content `src` starts
   with `/projects/`, not `/public/`. Check filename case, useful alt text, and caption.
 - [ ] Complete the artwork checklist below, then register the presentation.
-- [ ] Add the slug once to `published` in `selection.json`. Build and visit the case study directly.
+- [ ] Run `publish` and then `verify` as above. You may also add the slug once to
+  `published` in `selection.json`, build, and visit the case study directly.
 - [ ] When ready for the wall, follow “Feature an existing project.”
 
 ### Reusable content outline
@@ -181,11 +247,17 @@ for unpublished work the build lets through. See `docs/content-schema.md`.
 Run from the repository root:
 
 ```bash
-npm test -- tests/new-project-readiness.spec.ts --workers=1
+npm test -- tests/project-verify-chain.spec.ts tests/new-project-readiness.spec.ts --workers=1
 npm test -- tests/featured-selection-rotation.spec.ts tests/published-case-studies.spec.ts --workers=1
 ```
 
-The first test file executes the guide's extension points in a temporary app copy:
+The chain test executes `create`, authors Signal Loom over the starters, removes
+the unfinished marker by replacing the art, then runs `check`, `publish`, `feature`,
+and `verify` through real builds. It verifies both present and absent optional links,
+retains failed-browser diagnostics, and hashes source/public files to prove that
+verification and the rehearsal preserve the production showcase.
+
+The existing readiness test executes the guide's extension points in a temporary app copy:
 `addSyntheticIdentity` in `tests/support/showcase-app.ts` writes Signal Loom's
 `authored/signal-loom.ts` record, copies its image and its `identities/signal-loom/`
 directory (tile, artwork, and `identity.css`), runs the registration generator, and

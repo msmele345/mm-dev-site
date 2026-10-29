@@ -1,0 +1,180 @@
+{
+  "config": {
+    "argv": [
+      "/Users/mitchmele/.nvm/versions/node/v22.22.0/bin/node",
+      "/private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/transmission-app-WMAKzz/node_modules/@playwright/test/cli.js",
+      "test",
+      "--config",
+      "playwright.project.config.ts"
+    ],
+    "configFile": "/private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/project-verify-app-bOwLaj/playwright.project.config.ts",
+    "rootDir": "/private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/project-verify-app-bOwLaj/tests",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/transmission-app-WMAKzz/.project-evidence/signal-loom-YNDCmp/browser",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "",
+        "name": "",
+        "testDir": "/private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/project-verify-app-bOwLaj/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "project-verification.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/transmission-app-WMAKzz/.project-evidence/signal-loom-YNDCmp/results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.62.1",
+    "workers": 1,
+    "webServer": {
+      "command": "node node_modules/next/dist/bin/next start --hostname 127.0.0.1 --port 54172",
+      "url": "http://127.0.0.1:54172",
+      "reuseExistingServer": false,
+      "timeout": 30000
+    }
+  },
+  "suites": [
+    {
+      "title": "project-verification.spec.ts",
+      "file": "project-verification.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "published case study, imagery, metadata, fallback and responsive captures",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 571,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-29T00:54:57.441Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9ec71115eb0f376f197b-91b0c7c93df1314ea088",
+          "file": "project-verification.spec.ts",
+          "line": 12,
+          "column": 5
+        },
+        {
+          "title": "featured membership, indices, keyboard, touch and shared motion",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "Project is not featured",
+                  "location": {
+                    "file": "/private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/project-verify-app-bOwLaj/tests/project-verification.spec.ts",
+                    "line": 74,
+                    "column": 8
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 47,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-29T00:54:58.102Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "Project is not featured",
+                      "location": {
+                        "file": "/private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/project-verify-app-bOwLaj/tests/project-verification.spec.ts",
+                        "line": 74,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "9ec71115eb0f376f197b-edd9c6af4116b227f941",
+          "file": "project-verification.spec.ts",
+          "line": 73,
+          "column": 5
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-29T00:54:56.818Z",
+    "duration": 1361.624,
+    "expected": 1,
+    "skipped": 1,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}
