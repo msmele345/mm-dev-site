@@ -143,7 +143,13 @@ for unpublished work the build lets through. See `docs/content-schema.md`.
 ## Feature an existing project
 
 - [ ] Confirm its catalogue record, presentation, assets, and published route exist.
-- [ ] Insert its slug once at the intended position in `featured` in `selection.json`.
+- [ ] Preview the intended one-based position with
+  `npm run project -- feature your-project --position 2 --dry-run`.
+- [ ] Run the same command without `--dry-run` to insert its slug once into
+  `featured` in `selection.json`, then review the reported Project wall order.
+  You can also edit the selection by hand. Repeating the same command makes no
+  changes; requesting a different position for an existing entry stops and reports
+  its current position. Use the manual reorder flow below to move entries.
 - [ ] Rebuild and check membership, count, indices, and destination using the evidence
   checklist below. Already prepared projects need no new bespoke UI code.
 

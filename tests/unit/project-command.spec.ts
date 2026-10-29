@@ -76,6 +76,239 @@ function hash(root: string): string {
   return digest.digest("hex");
 }
 
+test("feature inserts a published project into an empty wall and preserves other editorial surfaces", () => {
+  const root = fixture();
+  try {
+    const selectionPath = join(root, "src/content/projects/selection.json");
+    const selection = { published: [slug], featured: [], editorialNote: "Keep this owner setting." };
+    writeFileSync(selectionPath, JSON.stringify(selection));
+    mkdirSync(join(root, "src/content/transmission"), { recursive: true });
+    writeFileSync(join(root, "src/content/transmission/current.ts"), "Owner's current transmission.\n");
+    writeFileSync(join(root, "src/content/projects/more.ts"), "Owner's more-projects rail.\n");
+    const before = hash(root);
+    const result = command(root, "feature", slug, "--position", "1");
+    expect(result.status, result.stderr).toBe(0);
+    expect(result.stdout).toContain(`Featured project "${slug}" at position 1.`);
+    expect(result.stdout).toContain('Project wall order: ["signal-loom"]');
+    expect(JSON.parse(readFileSync(selectionPath, "utf8"))).toEqual({ ...selection, featured: [slug] });
+    const report = check(root);
+    expect(report.status, report.stderr).toBe(0);
+    expect(report.stdout).toContain("Stage: featured");
+    expect(report.stdout).not.toContain("Findings:");
+    const readiness = spawnSync(process.execPath, ["--disable-warning=MODULE_TYPELESS_PACKAGE_JSON", "--input-type=module", "-e", `
+      import { readFileSync } from "node:fs";
+      import { signalLoom } from "./src/content/projects/authored/signal-loom.ts";
+      import { collectShowcaseFilesystemFacts } from "./src/content/projects/filesystem-facts.ts";
+      import { validateShowcaseContent } from "./src/content/projects/readiness.ts";
+      const projects = [signalLoom];
+      const selection = JSON.parse(readFileSync("src/content/projects/selection.json", "utf8"));
+      const facts = collectShowcaseFilesystemFacts(process.cwd(), projects.map(project => ({ fileSlug: project.slug, recordSlug: project.slug })));
+      validateShowcaseContent({ projects, publishedSlugs: selection.published, featuredSlugs: selection.featured, ...facts });
+    `], { cwd: root, encoding: "utf8" });
+    expect(readiness.status, readiness.stderr).toBe(0);
+    writeFileSync(selectionPath, JSON.stringify(selection));
+    expect(hash(root)).toBe(before);
+  } finally { rmSync(root, { recursive: true, force: true }); }
+});
+
+test("feature dry run previews both orders without changing the checkout in either option order", () => {
+  const root = fixture();
+  try {
+    writeFileSync(join(root, "src/content/projects/selection.json"), JSON.stringify({ published: [slug], featured: [] }));
+    const before = hash(root);
+    for (const options of [["--position", "1", "--dry-run"], ["--dry-run", "--position", "1"]]) {
+      const result = command(root, "feature", slug, ...options);
+      expect(result.status, result.stderr).toBe(0);
+      expect(result.stdout).toContain("src/content/projects/selection.json");
+      expect(result.stdout).toContain('- featured: []');
+      expect(result.stdout).toContain('+ featured: ["signal-loom"]');
+      expect(hash(root)).toBe(before);
+    }
+    expect(check(root).stdout).toContain("Stage: published");
+  } finally { rmSync(root, { recursive: true, force: true }); }
+});
+
+test("feature rejects invalid arguments and positions without writes", () => {
+  const root = fixture();
+  try {
+    writeFileSync(join(root, "src/content/projects/selection.json"), JSON.stringify({ published: [slug], featured: [] }));
+    const before = hash(root);
+    for (const args of [
+      ["feature"], ["feature", "../outside", "--position", "1"], ["feature", "UPPER", "--position", "1"],
+      ["feature", "missing-project", "--position", "1"], ["feature", slug],
+      ["feature", slug, "--position"], ["feature", slug, "--position", "--dry-run"],
+      ["feature", slug, "--position", "1", "--unknown"], ["feature", slug, "--position", "1", "extra"],
+      ["feature", slug, "--position", "1", "--position", "1"],
+      ["feature", slug, "--position", "1", "--dry-run", "--dry-run"],
+      ...["0", "-1", "1.5", "NaN", "Infinity", "1e0", "0x1", "+1", "01", " 1", "1 ", "", "9007199254740992"].map(position => ["feature", slug, "--position", position]),
+    ]) {
+      const result = command(root, ...args);
+      expect(result.status, args.join(" ")).not.toBe(0);
+      expect(hash(root), args.join(" ")).toBe(before);
+    }
+    for (const position of ["0", "-1", "2", "9007199254740991"]) {
+      const result = command(root, "feature", slug, "--position", position);
+      expect(result.status).not.toBe(0);
+      expect(result.stderr).toContain("Valid range: 1..1");
+      expect(hash(root)).toBe(before);
+    }
+  } finally { rmSync(root, { recursive: true, force: true }); }
+});
+
+test("feature repeats the same position without writes and refuses to move an existing entry", () => {
+  const root = fixture();
+  try {
+    writeFileSync(join(root, "src/content/projects/selection.json"), JSON.stringify({ published: [slug], featured: [slug] }));
+    const before = hash(root);
+    for (const options of [[], ["--dry-run"]]) {
+      const repeat = command(root, "feature", slug, "--position", "1", ...options);
+      expect(repeat.status, repeat.stderr).toBe(0);
+      expect(repeat.stdout).toContain(`Project "${slug}" already occupies position 1. No changes.`);
+      expect(repeat.stdout).toContain('Project wall order: ["signal-loom"]');
+      expect(hash(root)).toBe(before);
+      for (const position of ["0", "-1", "2", "9007199254740991"]) {
+        const move = command(root, "feature", slug, "--position", position, ...options);
+        expect(move.status).not.toBe(0);
+        expect(move.stderr).toContain(`Project "${slug}" already occupies position 1`);
+        expect(move.stderr).toContain("Valid range: 1..1");
+        expect(hash(root)).toBe(before);
+      }
+    }
+  } finally { rmSync(root, { recursive: true, force: true }); }
+});
+
+for (const { position, order } of [
+  { position: "1", order: [slug, "other-project", "third-project"] },
+  { position: "2", order: ["other-project", slug, "third-project"] },
+  { position: "3", order: ["other-project", "third-project", slug] },
+]) {
+  test(`feature inserts at position ${position} and preserves the exact surrounding order`, () => {
+    const root = fixture();
+    try {
+      for (const otherSlug of ["other-project", "third-project"]) {
+        writeProject(root, project({ slug: otherSlug }), `src/content/projects/authored/${otherSlug}.ts`);
+        cpSync(join(root, identity), join(root, "src/components/showcase/identities", otherSlug), { recursive: true });
+      }
+      execFileSync(process.execPath, ["scripts/registration.mjs"], { cwd: root });
+      const selectionPath = join(root, "src/content/projects/selection.json");
+      const selection = { published: ["third-project", slug, "other-project"], featured: ["other-project", "third-project"] };
+      writeFileSync(selectionPath, JSON.stringify(selection));
+      const before = hash(root);
+      const preview = command(root, "feature", slug, "--position", position, "--dry-run");
+      expect(preview.status, preview.stderr).toBe(0);
+      expect(preview.stdout).toContain('- featured: ["other-project","third-project"]');
+      expect(preview.stdout).toContain(`+ featured: ${JSON.stringify(order)}`);
+      expect(hash(root)).toBe(before);
+      const result = command(root, "feature", slug, "--position", position);
+      expect(result.status, result.stderr).toBe(0);
+      expect(result.stdout).toContain(`Featured project "${slug}" at position ${position}.`);
+      expect(result.stdout).toContain(`Project wall order: ${JSON.stringify(order)}`);
+      expect(JSON.parse(readFileSync(selectionPath, "utf8"))).toEqual({ ...selection, featured: order });
+      const featuredHash = hash(root);
+      const repeat = command(root, "feature", slug, "--position", position);
+      expect(repeat.status, repeat.stderr).toBe(0);
+      expect(repeat.stdout).toContain(`already occupies position ${position}. No changes.`);
+      expect(hash(root)).toBe(featuredHash);
+      for (const options of [[], ["--dry-run"]]) {
+        const requestedPosition = position === "1" ? "2" : "1";
+        const move = command(root, "feature", slug, "--position", requestedPosition, ...options);
+        expect(move.status).not.toBe(0);
+        expect(move.stderr).toContain(`Project "${slug}" already occupies position ${position}`);
+        expect(hash(root)).toBe(featuredHash);
+      }
+      writeFileSync(selectionPath, JSON.stringify(selection));
+      expect(hash(root)).toBe(before);
+    } finally { rmSync(root, { recursive: true, force: true }); }
+  });
+}
+
+test("feature refuses unpublished projects with the established publication relationship", () => {
+  const root = fixture();
+  try {
+    const before = hash(root);
+    for (const options of [[], ["--dry-run"]]) {
+      const result = command(root, "feature", slug, "--position", "1", ...options);
+      expect(result.status).not.toBe(0);
+      expect(result.stderr).toContain(`${slug} featured: no published case-study destination; publish it before featuring`);
+      expect(hash(root)).toBe(before);
+    }
+  } finally { rmSync(root, { recursive: true, force: true }); }
+});
+
+test("feature preflights every readiness finding for new and same-position requests before writing", () => {
+  const root = fixture();
+  try {
+    writeProject(root, project({ title: "", pitch: "", screenshots: [{ src: "/projects/signal-loom/Plate.svg", alt: "", caption: "" }] }));
+    rmSync(join(root, identity, "Artwork.tsx"));
+    writeFileSync(join(root, identity, "identity.css"), "/* onboarding:unfinished */\n");
+    for (const featured of [[], [slug]]) {
+      writeFileSync(join(root, "src/content/projects/selection.json"), JSON.stringify({ published: [slug], featured }));
+      const before = hash(root);
+      for (const options of [[], ["--dry-run"]]) {
+        const result = command(root, "feature", slug, "--position", "1", ...options);
+        expect(result.status).not.toBe(0);
+        for (const finding of [
+          "title: must be a non-empty string", "pitch: must be a non-empty string",
+          'screenshots[0].src: "/projects/signal-loom/Plate.svg" does not resolve',
+          "screenshots[0].alt: must be a non-empty string", "screenshots[0].caption: must be a non-empty string",
+          "presentation: missing presentation registration", "presentation: contains onboarding:unfinished marker", "generated registration:",
+        ]) expect(result.stderr).toContain(`${slug} ${finding}`);
+        expect(hash(root)).toBe(before);
+      }
+    }
+  } finally { rmSync(root, { recursive: true, force: true }); }
+});
+
+test("feature preflights unrelated published work while allowing incomplete unpublished work", () => {
+  const root = fixture();
+  try {
+    writeProject(root, project({ slug: "other-project", pitch: "" }), "src/content/projects/authored/other-project.ts");
+    cpSync(join(root, identity), join(root, "src/components/showcase/identities/other-project"), { recursive: true });
+    execFileSync(process.execPath, ["scripts/registration.mjs"], { cwd: root });
+    const selectionPath = join(root, "src/content/projects/selection.json");
+    for (const featured of [[], [slug]]) {
+      writeFileSync(selectionPath, JSON.stringify({ published: [slug, "other-project"], featured }));
+      const before = hash(root);
+      for (const options of [[], ["--dry-run"]]) {
+        const refused = command(root, "feature", slug, "--position", "1", ...options);
+        expect(refused.status).not.toBe(0);
+        expect(refused.stderr).toContain("other-project pitch: must be a non-empty string");
+        expect(hash(root)).toBe(before);
+      }
+    }
+    writeFileSync(selectionPath, JSON.stringify({ published: [slug], featured: [] }));
+    const allowed = command(root, "feature", slug, "--position", "1");
+    expect(allowed.status, allowed.stderr).toBe(0);
+    expect(JSON.parse(readFileSync(selectionPath, "utf8"))).toEqual({ published: [slug], featured: [slug] });
+  } finally { rmSync(root, { recursive: true, force: true }); }
+});
+
+test("feature refuses invalid selection state including duplicate same-position requests without writes", () => {
+  const root = fixture();
+  try {
+    const selectionPath = join(root, "src/content/projects/selection.json");
+    for (const { selection, finding } of [
+      { selection: "{invalid", finding: "selection.json:" },
+      { selection: "null", finding: "expected an object" },
+      { selection: JSON.stringify({ published: "bad", featured: [] }), finding: "published must be an array" },
+      { selection: JSON.stringify({ published: [slug], featured: [1] }), finding: "featured must be an array" },
+      { selection: JSON.stringify({ published: [slug], featured: [slug, slug] }), finding: "featured: duplicate slug" },
+      { selection: JSON.stringify({ published: [slug, slug], featured: [] }), finding: "published: duplicate slug" },
+      { selection: JSON.stringify({ published: [slug, "missing-project"], featured: [] }), finding: "missing-project" },
+      { selection: JSON.stringify({ published: [slug], featured: ["missing-project"] }), finding: "missing-project" },
+    ]) {
+      writeFileSync(selectionPath, selection);
+      const before = hash(root);
+      for (const options of [[], ["--dry-run"]]) {
+        const result = command(root, "feature", slug, "--position", "1", ...options);
+        expect(result.status).not.toBe(0);
+        expect(result.stderr).toContain(finding);
+        expect(hash(root)).toBe(before);
+      }
+    }
+  } finally { rmSync(root, { recursive: true, force: true }); }
+});
+
 test("publish appends a ready draft case study once without changing other editorial surfaces", () => {
   const root = fixture();
   try {
