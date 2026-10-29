@@ -1,0 +1,200 @@
+{
+  "config": {
+    "argv": [
+      "/Users/mitchmele/.nvm/versions/node/v22.22.0/bin/node",
+      "/private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/transmission-app-WMAKzz/node_modules/@playwright/test/cli.js",
+      "test",
+      "--config",
+      "playwright.project.config.ts"
+    ],
+    "configFile": "/private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/project-verify-app-3fHxmw/playwright.project.config.ts",
+    "rootDir": "/private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/project-verify-app-3fHxmw/tests",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/transmission-app-WMAKzz/.project-evidence/signal-loom-Hz5OE2/browser",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "",
+        "name": "",
+        "testDir": "/private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/project-verify-app-3fHxmw/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "project-verification.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/transmission-app-WMAKzz/.project-evidence/signal-loom-Hz5OE2/results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.62.1",
+    "workers": 1,
+    "webServer": {
+      "command": "node node_modules/next/dist/bin/next start --hostname 127.0.0.1 --port 54474",
+      "url": "http://127.0.0.1:54474",
+      "reuseExistingServer": false,
+      "timeout": 30000
+    }
+  },
+  "suites": [
+    {
+      "title": "project-verification.spec.ts",
+      "file": "project-verification.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "published case study, imagery, metadata, fallback and responsive captures",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 478,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-29T00:55:13.415Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9ec71115eb0f376f197b-91b0c7c93df1314ea088",
+          "file": "project-verification.spec.ts",
+          "line": 12,
+          "column": 5
+        },
+        {
+          "title": "featured membership, indices, keyboard, touch and shared motion",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 154,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 1\u001b[39m\n\n\u001b[2m  Array [\u001b[22m\n\u001b[2m    \"/work/elevated-bpm\",\u001b[22m\n\u001b[32m-   \"/work/signal-loom\",\u001b[39m\n\u001b[31m+   \"/work/telescope\",\u001b[39m\n\u001b[2m    \"/work/terminal-one\",\u001b[22m\n\u001b[2m    \"/work/telescope\",\u001b[22m\n\u001b[2m    \"/work/sound-city\",\u001b[22m\n\u001b[2m  ]\u001b[22m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 1\u001b[39m\n\n\u001b[2m  Array [\u001b[22m\n\u001b[2m    \"/work/elevated-bpm\",\u001b[22m\n\u001b[32m-   \"/work/signal-loom\",\u001b[39m\n\u001b[31m+   \"/work/telescope\",\u001b[39m\n\u001b[2m    \"/work/terminal-one\",\u001b[22m\n\u001b[2m    \"/work/telescope\",\u001b[22m\n\u001b[2m    \"/work/sound-city\",\u001b[22m\n\u001b[2m  ]\u001b[22m\n    at /private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/project-verify-app-3fHxmw/tests/project-verification.spec.ts:82:111",
+                    "location": {
+                      "file": "/private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/project-verify-app-3fHxmw/tests/project-verification.spec.ts",
+                      "column": 111,
+                      "line": 82
+                    },
+                    "snippet": "  80 |   expect(await tiles.evaluateAll((elements) => elements.map((element) => element.getAttribute(\"data-tile-slug\")))).toEqual(selection.featured);\n  81 |   await expect(wall.locator(\".project-wall__bar p\")).toHaveText(`${selection.featured.length} featured project${selection.featured.length === 1 ? \"\" : \"s\"}`);\n> 82 |   expect(await wall.getByRole(\"link\").evaluateAll((links) => links.map((link) => link.getAttribute(\"href\")))).toEqual(selection.featured.map((entry) => `/work/${entry}`));\n     |                                                                                                               ^\n  83 |   await expect(wall.locator('[class$=\"__index\"]')).toHaveText(selection.featured.map((_, index) => String(index + 1).padStart(2, \"0\")));\n  84 |   const motion = wall.locator(`[data-tile-slug=\"${slug}\"]`);\n  85 |   const link = motion.getByRole(\"link\");"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/project-verify-app-3fHxmw/tests/project-verification.spec.ts",
+                        "column": 111,
+                        "line": 82
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 1\u001b[39m\n\n\u001b[2m  Array [\u001b[22m\n\u001b[2m    \"/work/elevated-bpm\",\u001b[22m\n\u001b[32m-   \"/work/signal-loom\",\u001b[39m\n\u001b[31m+   \"/work/telescope\",\u001b[39m\n\u001b[2m    \"/work/terminal-one\",\u001b[22m\n\u001b[2m    \"/work/telescope\",\u001b[22m\n\u001b[2m    \"/work/sound-city\",\u001b[22m\n\u001b[2m  ]\u001b[22m\n\n  80 |   expect(await tiles.evaluateAll((elements) => elements.map((element) => element.getAttribute(\"data-tile-slug\")))).toEqual(selection.featured);\n  81 |   await expect(wall.locator(\".project-wall__bar p\")).toHaveText(`${selection.featured.length} featured project${selection.featured.length === 1 ? \"\" : \"s\"}`);\n> 82 |   expect(await wall.getByRole(\"link\").evaluateAll((links) => links.map((link) => link.getAttribute(\"href\")))).toEqual(selection.featured.map((entry) => `/work/${entry}`));\n     |                                                                                                               ^\n  83 |   await expect(wall.locator('[class$=\"__index\"]')).toHaveText(selection.featured.map((_, index) => String(index + 1).padStart(2, \"0\")));\n  84 |   const motion = wall.locator(`[data-tile-slug=\"${slug}\"]`);\n  85 |   const link = motion.getByRole(\"link\");\n    at /private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/project-verify-app-3fHxmw/tests/project-verification.spec.ts:82:111"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-29T00:55:13.982Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/transmission-app-WMAKzz/.project-evidence/signal-loom-Hz5OE2/browser/project-verification-featu-f791f-ard-touch-and-shared-motion/test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/transmission-app-WMAKzz/.project-evidence/signal-loom-Hz5OE2/browser/project-verification-featu-f791f-ard-touch-and-shared-motion/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/transmission-app-WMAKzz/.project-evidence/signal-loom-Hz5OE2/browser/project-verification-featu-f791f-ard-touch-and-shared-motion/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/private/var/folders/n1/sq5n1cnn0pq1qtdb4rlnb5h00000gn/T/project-verify-app-3fHxmw/tests/project-verification.spec.ts",
+                    "column": 111,
+                    "line": 82
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "9ec71115eb0f376f197b-edd9c6af4116b227f941",
+          "file": "project-verification.spec.ts",
+          "line": 73,
+          "column": 5
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-29T00:55:12.812Z",
+    "duration": 1374.8960000000002,
+    "expected": 1,
+    "skipped": 0,
+    "unexpected": 1,
+    "flaky": 0
+  }
+}

@@ -1,0 +1,74 @@
+{
+  "project": {
+    "title": "Signal Loom",
+    "slug": "signal-loom",
+    "pitch": "A synthetic project that weaves loose signals into one readable fabric.",
+    "draft": true,
+    "tile": {
+      "motif": "woven signal",
+      "displayFace": "Bebas Neue",
+      "palette": {
+        "ground": "#120a1f",
+        "panel": "#1d1230",
+        "ink": "#f6efff",
+        "mute": "#a394bd",
+        "accent": "#ff5ad1"
+      }
+    },
+    "story": [
+      {
+        "kind": "problem",
+        "heading": "Loose threads everywhere",
+        "body": "Signals arrive unordered, and nobody can read the pattern they make."
+      },
+      {
+        "kind": "build",
+        "heading": "A loom for signals",
+        "body": "Eight warp threads hold the order while a single weft carries each new signal across."
+      },
+      {
+        "kind": "result",
+        "heading": "Cloth you can read",
+        "body": "The fixture fabric holds its pattern from the first thread to the selvedge."
+      }
+    ],
+    "screenshots": [
+      {
+        "src": "/projects/signal-loom/plate.svg",
+        "alt": "Draft plate of eight violet warp threads crossed by a single pale weft.",
+        "caption": "Draft plate — the loom at rest. Replace with a live capture."
+      }
+    ],
+    "links": {
+      "repo": "https://github.com/msmele345/signal-loom",
+      "demo": "https://signal-loom.example.com"
+    },
+    "stack": [
+      "TypeScript",
+      "Canvas",
+      "Web Audio"
+    ]
+  },
+  "selection": {
+    "published": [
+      "elevated-bpm",
+      "terminal-one",
+      "telescope",
+      "sound-city",
+      "signal-loom"
+    ],
+    "featured": [
+      "elevated-bpm",
+      "terminal-one",
+      "telescope",
+      "sound-city"
+    ]
+  },
+  "stage": "published",
+  "gates": {
+    "contentReady": true,
+    "registered": true,
+    "finished": true
+  },
+  "findings": []
+}

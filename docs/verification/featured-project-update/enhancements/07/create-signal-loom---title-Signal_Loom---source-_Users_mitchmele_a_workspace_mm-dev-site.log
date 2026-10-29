@@ -1,0 +1,16 @@
+
+> mm-dev-site@0.1.0 project
+> node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/project.mjs create signal-loom --title Signal Loom --source /Users/mitchmele/a_workspace/mm-dev-site
+
+Created project "signal-loom" as unpublished and unfeatured.
+Created src/content/projects/authored/signal-loom.ts
+Created src/components/showcase/identities/signal-loom/Tile.tsx
+Created src/components/showcase/identities/signal-loom/Artwork.tsx
+Created src/components/showcase/identities/signal-loom/identity.css
+Created public/projects/signal-loom/.gitkeep
+Created docs/project-review/signal-loom.md
+Updated src/content/projects/authored.generated.ts
+Updated src/components/showcase/identities.generated.ts
+
+(node:21142) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)

@@ -6,6 +6,7 @@ import { collectShowcaseFilesystemFacts } from "./filesystem-facts.ts";
 import { collectShowcaseFindings, ROUTE_SLUG } from "./readiness.ts";
 import { camelCase } from "../../lib/generate-registration.ts";
 import { createProject, syncProjects } from "./project-create.ts";
+import { verifyProject } from "./project-verify.ts";
 import type { Project } from "./schema";
 
 const root = process.cwd();
@@ -18,8 +19,8 @@ export async function runProjectCommand(args: readonly string[]): Promise<number
     }
     return syncProjects(root, args[1] === "--dry-run");
   }
-  if (operation !== "check" && operation !== "create" && operation !== "publish" && operation !== "feature") {
-    console.error("Usage: npm run project -- check <slug> | create <slug> --title <title> [--source <path>] [--dry-run] | publish <slug> [--dry-run] | feature <slug> --position <n> [--dry-run] | sync [--dry-run]");
+  if (operation !== "check" && operation !== "create" && operation !== "publish" && operation !== "feature" && operation !== "verify") {
+    console.error("Usage: npm run project -- check <slug> | verify <slug> | create <slug> --title <title> [--source <path>] [--dry-run] | publish <slug> [--dry-run] | feature <slug> --position <n> [--dry-run] | sync [--dry-run]");
     return 1;
   }
   if (!slug || !ROUTE_SLUG.test(slug)) {
@@ -27,7 +28,7 @@ export async function runProjectCommand(args: readonly string[]): Promise<number
     return 1;
   }
 
-  if (operation === "check" && args.length !== 2) throw new Error("Usage: npm run project -- check <slug>");
+  if ((operation === "check" || operation === "verify") && args.length !== 2) throw new Error(`Usage: npm run project -- ${operation} <slug>`);
   if (operation === "publish" && (args.length > 3 || (args[2] !== undefined && args[2] !== "--dry-run"))) {
     throw new Error("Usage: npm run project -- publish <slug> [--dry-run]");
   }
@@ -110,6 +111,7 @@ export async function runProjectCommand(args: readonly string[]): Promise<number
   const identity = facts.identityDirectories?.find((entry) => entry.slug === slug);
   const registered = Boolean(identity?.complete) && facts.generatedRegistrationMatches !== false;
   const finished = Boolean(identity?.complete) && !identity?.unfinished;
+  if (operation === "verify") return verifyProject(root, { project, selection, stage, gates: { contentReady, registered, finished }, findings });
   console.log(`Project: ${slug}`);
   console.log(`Stage: ${stage}`);
   console.log(`Content ready: ${contentReady ? "yes" : "no"}`);

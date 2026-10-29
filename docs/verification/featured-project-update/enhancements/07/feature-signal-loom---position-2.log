@@ -1,0 +1,9 @@
+
+> mm-dev-site@0.1.0 project
+> node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/project.mjs feature signal-loom --position 2
+
+Featured project "signal-loom" at position 2.
+Project wall order: ["elevated-bpm","signal-loom","terminal-one","telescope","sound-city"]
+
+(node:21606) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
