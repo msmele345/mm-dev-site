@@ -22,6 +22,7 @@ That review does not block shipping.
 | `title` | yes | Display name. |
 | `slug` | yes | Route segment (`/work/[slug]`). |
 | `pitch` | yes | One- or two-sentence hook. |
+| `invitation` | yes | Short verb phrase for the Site intro index ("Make a beat"), grounded in what the project documents it does. Featured tier only; rail entries have none. |
 | `draft` | yes | `true` until the owner edits the copy. |
 | `tile` | once published | Identity for a chameleon tile / themed case study. More-projects rail entries are a separate `RailProject` record with no tile (issue 08). |
 | `tile.motif` | with tile | What the tile *is* — `groovebox faceplate`, `trading terminal`, `star field`, `club flyer`. |
@@ -87,7 +88,7 @@ Every authored record needs a unique lowercase kebab-case `slug` (the `ROUTE_SLU
 pattern exported from `src/content/projects/readiness.ts`). An unfinished record may
 otherwise rest in the catalogue; it is content ready when it has:
 
-- a nonblank `title` and `pitch`, and a boolean `draft`
+- a nonblank `title`, `pitch`, and `invitation`, and a boolean `draft`
 - at least one nonblank `stack` label
 - a `tile` with a nonblank `motif` and `displayFace` and a hex-colour palette
   (`steps`, when present, is four hex colours)

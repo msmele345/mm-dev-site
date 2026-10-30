@@ -57,7 +57,7 @@ function sourceRevision(root: string, source: string, recordedRevision?: string)
 
 function starterProject(slug: string, title: string): Project {
   return {
-    slug, title, draft: true, pitch: "",
+    slug, title, draft: true, pitch: "", invitation: "",
     tile: { motif: "", displayFace: "", palette: { ground: "", panel: "", ink: "", mute: "", accent: "" } },
     story: [
       { kind: "problem", heading: "", body: "" },

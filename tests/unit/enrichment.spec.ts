@@ -6,6 +6,7 @@ const curated = {
   title: "Elevated BPM",
   slug: "elevated-bpm",
   pitch: "A hardware-styled groovebox for making techno.",
+  invitation: "Make a beat",
   draft: true,
   story: [],
   screenshots: [],

@@ -5,6 +5,7 @@ export const terminalOne = {
   slug: "terminal-one",
   pitch:
     "A single-user desktop trading cockpit — NYSE-floor terminal crossed with a late-night slot machine — that monitors positions and runs a deterministic options-trade recommendation engine.",
+  invitation: "Pull the lever",
   draft: true,
   tile: {
     motif: "trading terminal",

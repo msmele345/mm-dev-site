@@ -41,6 +41,7 @@ export function addPreparedFixtureProject(dir: string, overrides: Record<string,
     slug: "orbit-lab",
     title: "Orbit Lab",
     pitch: "A prepared fifth project for layout verification.",
+    invitation: "Check the layout",
     links: {},
     ...overrides,
   });
@@ -65,6 +66,7 @@ export function syntheticProject() {
     title: "Signal Loom",
     slug: "signal-loom",
     pitch: "A synthetic project that weaves loose signals into one readable fabric.",
+    invitation: "Weave a signal",
     draft: true,
     tile: {
       motif: "woven signal",

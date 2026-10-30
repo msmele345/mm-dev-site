@@ -5,6 +5,7 @@ export const elevatedBpm = {
   slug: "elevated-bpm",
   pitch:
     "A hardware-styled groovebox for making techno — playable from the first click, with a goal-checked curriculum woven into the live instrument.",
+  invitation: "Make a beat",
   draft: true,
   tile: {
     motif: "groovebox faceplate",

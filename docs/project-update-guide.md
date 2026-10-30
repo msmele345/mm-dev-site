@@ -138,6 +138,7 @@ export const yourProject = {
   title: "Your Project",
   slug: "your-project",
   pitch: "A concrete explanation of what the project does.",
+  invitation: "Verb phrase for the Site intro index",
   draft: true,
   tile: {
     motif: "Describe the bespoke visual identity",

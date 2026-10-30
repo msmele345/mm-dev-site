@@ -67,7 +67,7 @@ criterion as it is verified. Preserve unrelated checkout changes.
 
 Each project that can be featured carries a short, human **invitation**: the verb
 phrase a visitor sees in the Site intro index ("Make a beat", "Explore the sky",
-"Find a show", "Trade the tape"). It is Curated content, authored alongside the
+"Find a show", "Pull the lever"). It is Curated content, authored alongside the
 project's other presentation copy, grounded in what the project actually does (per
 Content Provenance: no claims beyond each source repository's documentation). A project
 missing a usable invitation fails the build with a slug- and field-specific message,
@@ -75,14 +75,27 @@ exactly like the other required presentation fields.
 
 ### Acceptance criteria
 
-- [ ] Red first: a failing test shows a featured project without an invitation is rejected by the readiness check with the slug and field named.
-- [ ] `invitation` is a required field on `Project`, not `ProjectCore`; rail entries validate without one.
-- [ ] Provenance check: each invitation is verified against its source repository's CONCEPT / PRD / README in `~/a_workspace/` (in particular "Trade the tape" for terminal-one and "Find a show" for sound-city), and the doc that supports it is noted in the PR.
-- [ ] The four production featured projects each have a reviewed invitation that matches its documented behavior (groovebox, trading terminal, star field, club flyer).
-- [ ] Blank, whitespace-only, and missing invitations fail the build; a valid one passes.
-- [ ] Invitations are available wherever the featured selection is listed, in wall order.
-- [ ] The synthetic new-project readiness fixture and the project-update guide's examples still validate (the fixture gains an invitation).
-- [ ] No tile, case-study, or rail rendering changes.
+- [x] Red first: a failing test shows a featured project without an invitation is rejected by the readiness check with the slug and field named.
+- [x] `invitation` is a required field on `Project`, not `ProjectCore`; rail entries validate without one.
+- [ ] Provenance check: each invitation is verified against its source repository's CONCEPT / PRD / README in `~/a_workspace/` (in particular "Trade the tape" for terminal-one and "Find a show" for sound-city), and the doc that supports it is noted in the PR. *(Verified, and "Trade the tape" rejected; see Provenance below. Open until the table is in the PR.)*
+- [ ] The four production featured projects each have a reviewed invitation that matches its documented behavior (groovebox, trading terminal, star field, club flyer). *(Copy matches the docs. Open until the owner signs off on "Pull the lever".)*
+- [x] Blank, whitespace-only, and missing invitations fail the build; a valid one passes.
+- [x] Invitations are available wherever the featured selection is listed, in wall order.
+- [x] The synthetic new-project readiness fixture and the project-update guide's examples still validate (the fixture gains an invitation).
+- [x] No tile, case-study, or rail rendering changes.
+
+### Provenance
+
+"Trade the tape" was the proposed terminal-one invitation. It failed the check: no
+terminal-one doc uses "tape", and the README and PRD D14 say the app is advisory and
+never routes a live order. It is replaced with the documented core interaction.
+
+| Project | Invitation | Supporting doc |
+| --- | --- | --- |
+| elevated-bpm | Make a beat | `CONCEPT.md` — playable groovebox for making techno; "Shareable beats" |
+| terminal-one | Pull the lever | `docs/PRD.md` — D9, D17, FR-15, primary flow "Pull the lever" |
+| telescope | Explore the sky | `docs/PRD.md` — story 4, drag the sky dome to "explore in every direction" |
+| sound-city | Find a show | `PRD.md` — local music finder; find events; "upcoming shows" (story 14) |
 
 ---
 

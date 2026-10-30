@@ -1,12 +1,15 @@
 import { expect, test } from "@playwright/test";
+import { getProject, listWallProjects } from "@/content/projects/catalog";
 import { collectShowcaseFindings, validateShowcaseContent, type ShowcaseContent } from "@/content/projects/readiness";
 import type { Project } from "@/content/projects/schema";
+import selection from "@/content/projects/selection.json";
 
 function readyProject(overrides: Record<string, unknown> = {}): Project {
   return {
     title: "Signal Loom",
     slug: "signal-loom",
     pitch: "A synthetic project that weaves signals.",
+    invitation: "Weave a signal",
     draft: true,
     tile: {
       motif: "woven signal",
@@ -49,6 +52,9 @@ test("a complete record with no remote, draft copy, and a labeled draft plate is
 for (const [name, overrides, error] of [
   ["a blank title", { title: " \t" }, 'Project "signal-loom": title must be a non-empty string'],
   ["a missing pitch", { pitch: undefined }, 'Project "signal-loom": pitch must be a non-empty string'],
+  ["a missing invitation", { invitation: undefined }, 'Project "signal-loom": invitation must be a non-empty string'],
+  ["a blank invitation", { invitation: "" }, 'Project "signal-loom": invitation must be a non-empty string'],
+  ["a whitespace-only invitation", { invitation: " \t\n" }, 'Project "signal-loom": invitation must be a non-empty string'],
   ["a missing draft flag", { draft: undefined }, 'Project "signal-loom": draft must be true or false'],
   [
     "an incomplete step quad",
@@ -106,6 +112,29 @@ for (const [name, overrides, error] of [
     expect(validate(overrides)).toThrow(error);
   });
 }
+
+test("a featured project without an invitation is rejected by slug and field", () => {
+  const input = content([readyProject({ invitation: " " })], { featuredSlugs: ["signal-loom"] });
+  expect(collectShowcaseFindings(input)).toContainEqual(expect.objectContaining({
+    slug: "signal-loom", subject: "invitation", message: "must be a non-empty string", blocksBuild: true,
+  }));
+  expect(() => validateShowcaseContent(input)).toThrow('Project "signal-loom": invitation must be a non-empty string');
+});
+
+test("the production projects carry their reviewed invitations", () => {
+  expect(Object.fromEntries(["elevated-bpm", "terminal-one", "telescope", "sound-city"].map((slug) => [slug, getProject(slug)?.invitation]))).toEqual({
+    "elevated-bpm": "Make a beat",
+    "terminal-one": "Pull the lever",
+    telescope: "Explore the sky",
+    "sound-city": "Find a show",
+  });
+});
+
+test("invitations are available from the featured selection in wall order", () => {
+  const wall = listWallProjects();
+  expect(wall.map((project) => project.slug)).toEqual(selection.featured);
+  for (const project of wall) expect(project.invitation.trim()).not.toBe("");
+});
 
 test("a record with no usable slug is identified by its catalogue position", () => {
   expect(() => validateShowcaseContent(content([readyProject(), readyProject({ slug: "" })], { publishedSlugs: [] })))

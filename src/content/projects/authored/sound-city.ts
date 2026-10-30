@@ -5,6 +5,7 @@ export const soundCity = {
   slug: "sound-city",
   pitch:
     "A dark house and techno finder built on source-verified Chicago event data — from discovery and ingestion through a maintainer review queue before anything becomes public.",
+  invitation: "Find a show",
   draft: true,
   tile: {
     motif: "club flyer",
