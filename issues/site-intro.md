@@ -78,7 +78,7 @@ exactly like the other required presentation fields.
 - [x] Red first: a failing test shows a featured project without an invitation is rejected by the readiness check with the slug and field named.
 - [x] `invitation` is a required field on `Project`, not `ProjectCore`; rail entries validate without one.
 - [ ] Provenance check: each invitation is verified against its source repository's CONCEPT / PRD / README in `~/a_workspace/` (in particular "Trade the tape" for terminal-one and "Find a show" for sound-city), and the doc that supports it is noted in the PR. *(Verified, and "Trade the tape" rejected; see Provenance below. Open until the table is in the PR.)*
-- [ ] The four production featured projects each have a reviewed invitation that matches its documented behavior (groovebox, trading terminal, star field, club flyer). *(Copy matches the docs. Open until the owner signs off on "Pull the lever".)*
+- [x] The four production featured projects each have a reviewed invitation that matches its documented behavior (groovebox, trading terminal, star field, club flyer). *(Owner approved "Pull the lever".)*
 - [x] Blank, whitespace-only, and missing invitations fail the build; a valid one passes.
 - [x] Invitations are available wherever the featured selection is listed, in wall order.
 - [x] The synthetic new-project readiness fixture and the project-update guide's examples still validate (the fixture gains an invitation).
