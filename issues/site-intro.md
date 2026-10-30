@@ -152,15 +152,15 @@ hover and keyboard-focus states in lime and stay legible without relying on moti
 
 ### Acceptance criteria
 
-- [ ] Layout tests (desktop and mobile widths) show left/right placement at desktop, stacked order on mobile, and no horizontal overflow at the project's supported widths, including 320px.
-- [ ] At 1280×800 and 390×844, part of the first tile is visible without scrolling; the empty band between intro and wall stays within the limit the spacing test enforces.
-- [ ] The first-viewport check also passes with a six-project featured fixture, so growth in the selection does not push the wall off screen.
-- [ ] On mobile, index rows show position and invitation only; the project name remains in each link's accessible name.
-- [ ] Headline size is bounded well below the old hero scale and never overflows its container at any width.
-- [ ] Row hover and `:focus-visible` states are distinct, use the lime ring, and meet the contrast thresholds the polish-and-audit spec already measures.
-- [ ] Reduced-motion users get the same layout and states with no animation dependence; any transition is disabled under `prefers-reduced-motion`.
-- [ ] Touch targets for index rows meet the minimum size the audit enforces.
-- [ ] Screenshots at representative widths are captured as evidence and the polish-and-audit spec still passes.
+- [x] Layout tests (desktop and mobile widths) show left/right placement at desktop, stacked order on mobile, and no horizontal overflow at the project's supported widths, including 320px.
+- [x] At 1280×800 and 390×844, part of the first tile is visible without scrolling; the empty band between intro and wall stays within the limit the spacing test enforces.
+- [x] The first-viewport check also passes with a six-project featured fixture, so growth in the selection does not push the wall off screen.
+- [x] On mobile, index rows show position and invitation only; the project name remains in each link's accessible name.
+- [x] Headline size is bounded well below the old hero scale and never overflows its container at any width.
+- [x] Row hover and `:focus-visible` states are distinct, use the lime ring, and meet the contrast thresholds the polish-and-audit spec already measures.
+- [x] Reduced-motion users get the same layout and states with no animation dependence; any transition is disabled under `prefers-reduced-motion`.
+- [x] Touch targets for index rows meet the minimum size the audit enforces. *(The audit enforces no minimum; rows use 44px. See the evidence README.)*
+- [x] Screenshots at representative widths are captured as [evidence](../docs/verification/site-intro/03/README.md) and the polish-and-audit spec still passes.
 
 ---
 

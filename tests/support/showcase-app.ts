@@ -34,24 +34,25 @@ export function writeAuthoredRecord(dir: string, file: string, project: unknown)
   );
 }
 
-/** A fifth prepared identity for selection geometry, not the later bespoke-art onboarding proof. */
+/** An extra prepared identity for selection geometry, not the later bespoke-art onboarding proof. */
 export function addPreparedFixtureProject(dir: string, overrides: Record<string, unknown> = {}) {
-  writeAuthoredRecord(dir, "orbit-lab", {
+  const slug = String(overrides.slug ?? "orbit-lab");
+  writeAuthoredRecord(dir, slug, {
     ...telescope,
-    slug: "orbit-lab",
+    slug,
     title: "Orbit Lab",
-    pitch: "A prepared fifth project for layout verification.",
+    pitch: "A prepared extra project for layout verification.",
     invitation: "Check the layout",
     links: {},
     ...overrides,
   });
   // Prepared, not bespoke: the identity directory re-exports telescope's art.
-  const identity = join(dir, IDENTITIES_DIR, "orbit-lab");
+  const identity = join(dir, IDENTITIES_DIR, slug);
   mkdirSync(identity);
   writeFileSync(join(identity, "Tile.tsx"), 'export { default } from "../telescope/Tile";\n');
   writeFileSync(join(identity, "Artwork.tsx"), 'export { default } from "../telescope/Artwork";\n');
   syncRegistration(dir);
-  updateSelection(dir, ({ published }) => ({ published: ["orbit-lab", ...published] }));
+  updateSelection(dir, ({ published }) => ({ published: [slug, ...published] }));
 }
 
 export function writePublishedSelection(dir: string, slugs: readonly string[]) {
