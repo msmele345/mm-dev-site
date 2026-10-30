@@ -117,16 +117,20 @@ keyboard, screen reader, and no JavaScript.
 
 ### Acceptance criteria
 
-- [ ] Red first: tests for the h1, eyebrow, supporting sentence, and index fail before the component exists.
-- [ ] The component and its CSS namespace are renamed from hero to Site intro; no `HeroHeader` or `.hero*` selectors remain (case-study hero classes excluded), and the section stays labelled by its `<h1>`.
-- [ ] The top line, grid, "2026 Projects", and the "the wall is open" cue no longer render, and the name is not repeated in the intro.
-- [ ] One index row per featured project, in wall order, driven by the same selection as the wall; reordering or rotating the selection changes the index with no other edit.
-- [ ] Eyebrow and supporting sentence render exactly the copy in "Decisions already made"; the sentence does not repeat any invitation.
-- [ ] Rows are real links to `/work/{slug}` with discernible names (invitation plus project name).
-- [ ] The Project wall no longer shows a featured-project count; its "Project wall" `<h2>` is visually hidden and still labels the section.
-- [ ] No count or number-word is hard-coded in copy; an empty selection renders the headline without an empty index.
-- [ ] Existing specs that asserted the old hero (`chrome-shell` "hero introduces Mitch…", `home-spacing`, `current-transmission` ordering) are updated to the new structure, and the Intro still precedes the wall in document order.
-- [ ] Lint, typecheck, and the full suite pass.
+- [x] Red first: tests for the h1, eyebrow, supporting sentence, and index fail before the component exists.
+- [x] The component and its CSS namespace are renamed from hero to Site intro; no `HeroHeader` or `.hero*` selectors remain (case-study hero classes excluded), and the section stays labelled by its `<h1>`.
+- [x] The top line, grid, "2026 Projects", and the "the wall is open" cue no longer render, and the name is not repeated in the intro.
+- [x] One index row per featured project, in wall order, driven by the same selection as the wall; reordering or rotating the selection changes the index with no other edit.
+- [x] Eyebrow and supporting sentence render exactly the copy in "Decisions already made"; the sentence does not repeat any invitation.
+- [x] Rows are real links to `/work/{slug}` with discernible names (invitation plus project name).
+- [x] The Project wall no longer shows a featured-project count; its "Project wall" `<h2>` is visually hidden and still labels the section.
+- [x] No count or number-word is hard-coded in copy; an empty selection renders the headline without an empty index.
+- [x] Existing specs that asserted the old hero (`chrome-shell` "hero introduces Mitch…", `home-spacing`, `current-transmission` ordering) are updated to the new structure, and the Intro still precedes the wall in document order.
+- [x] Lint, typecheck, and the full suite pass.
+
+### Verification
+
+Red: `tests/site-intro.spec.ts` failed 6 of 7 before `SiteIntro` existed (the seventh is a copy guard on the sentence constant). Green: that spec, lint, typecheck, and the full Playwright suite pass. Rows and the wall share `listWallProjects()`; the rotation spec asserts index order across remove, replace, reorder, add, and empty selections.
 
 ---
 

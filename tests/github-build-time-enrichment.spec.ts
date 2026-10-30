@@ -9,7 +9,7 @@ const COMMITS = "1,234";
 const PUSHED_AT = "2026-02-14T02:00:00Z";
 const PUSHED_ON = "14 Feb 2026"; // 02:00 UTC — the day before in the Americas.
 
-const tile = (page: Page) => page.getByRole("link", { name: /elevated bpm/i });
+const tile = (page: Page) => page.locator("#work").getByRole("link", { name: /elevated bpm/i });
 
 test("the tile carries the project's live github stats", async ({ page }) => {
   await page.goto("/");

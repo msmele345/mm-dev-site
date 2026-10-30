@@ -29,18 +29,14 @@ test("nav carries the wordmark and primary links", async ({ page }) => {
   await expect(nav.getByRole("link", { name: "Contact" })).toHaveAttribute("href", "/#contact");
 });
 
-test("hero introduces Mitch with personality", async ({ page }) => {
+test("Site intro opens in the Chrome display face and leads to the work", async ({ page }) => {
   await page.goto("/");
 
-  const heading = page.getByRole("heading", { name: "MITCH MELE", level: 1 });
+  const heading = page.getByRole("heading", { name: "Built to be curious.", level: 1 });
   await expect(heading).toBeVisible();
   await expect(heading).toHaveCSS("font-family", /Bebas Neue/);
 
-  const main = page.getByRole("main");
-  await expect(
-    main.getByText(/Sounds, vibrations, strobe lights, lever pulls, and space explorations. Side projects are supposed to be fun/i),
-  ).toBeVisible();
-  await expect(main.getByText(/elevated bpm/i)).toBeVisible();
+  await expect(page.getByRole("region", { name: "Project wall" }).getByRole("link", { name: /elevated bpm/i })).toBeVisible();
 });
 
 test("contact links to GitHub and email in lime", async ({ page }) => {
@@ -119,7 +115,7 @@ test("mobile layout keeps every chrome piece in view", async ({ page }) => {
   const nav = page.getByRole("navigation", { name: "Primary" });
   await expect(nav).toBeVisible();
   await expect(nav.getByRole("link", { name: "Contact" })).toBeInViewport();
-  await expect(page.getByRole("heading", { name: "MITCH MELE", level: 1 })).toBeInViewport();
+  await expect(page.getByRole("heading", { name: "Built to be curious.", level: 1 })).toBeInViewport();
   await expect(page.locator("#contact")).toBeAttached();
   await expect(page.getByRole("contentinfo")).toBeAttached();
 });

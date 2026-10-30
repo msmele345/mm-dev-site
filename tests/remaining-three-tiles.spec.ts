@@ -102,9 +102,10 @@ test("the project wall presents all four chameleon tiles", async ({ page }) => {
 test("ambient tiles hand off a single crescendo", async ({ page }) => {
   await page.goto("/");
 
-  const terminal = page.getByRole("link", { name: /terminal one/i });
-  const telescope = page.getByRole("link", { name: /telescope/i });
-  const soundCity = page.getByRole("link", { name: /sound city/i });
+  const wall = page.getByRole("region", { name: "Project wall" });
+  const terminal = wall.getByRole("link", { name: /terminal one/i });
+  const telescope = wall.getByRole("link", { name: /telescope/i });
+  const soundCity = wall.getByRole("link", { name: /sound city/i });
 
   await expect(terminal.locator(".terminal-tile__ticker")).toHaveCSS(
     "animation-name",
@@ -170,7 +171,7 @@ test("github enrichment appears on every new tile and case study", async ({ page
 
   await page.goto("/");
   for (const project of projects) {
-    const tile = page.getByRole("link", { name: project.name });
+    const tile = page.getByRole("region", { name: "Project wall" }).getByRole("link", { name: project.name });
     await expect(tile.locator(".enrichment--tile")).toContainText(
       `${project.commits} commits`,
     );
@@ -205,7 +206,7 @@ test("tap-and-hold owns the mobile crescendo and off-screen motion pauses", asyn
   expect(widths.content).toBe(widths.viewport);
 
   const motion = page.locator('[data-tile-slug="sound-city"]');
-  const tile = page.getByRole("link", { name: /sound city/i });
+  const tile = page.getByRole("region", { name: "Project wall" }).getByRole("link", { name: /sound city/i });
   const meter = tile.locator(".sound-city-tile__meter span").first();
   await motion.scrollIntoViewIfNeeded();
   await expect(motion).toHaveAttribute("data-in-view", "true");

@@ -4,7 +4,7 @@ import type { ChildProcess } from "node:child_process";
 import { createShowcaseApp, writeFeaturedSelection } from "./support/showcase-app";
 import { buildTransmissionApp, serveTransmissionApp } from "./support/transmission-app";
 
-test("removing selections leaves one numbered project and an honest singular count", async ({ page }) => {
+test("removing selections leaves one numbered project", async ({ page }) => {
   test.setTimeout(180_000);
   const dir = createShowcaseApp();
   let server: ChildProcess | undefined;
@@ -14,7 +14,8 @@ test("removing selections leaves one numbered project and an honest singular cou
     server = await serveTransmissionApp(dir, 3031);
     await page.goto("http://127.0.0.1:3031/");
     const wall = page.getByRole("region", { name: "Project wall" });
-    await expect(wall.locator(".project-wall__bar p")).toHaveText("1 featured project");
+    await expect(page.getByRole("navigation", { name: "Featured projects" }).getByRole("link")).toHaveCount(1);
+    await expect(page.getByRole("navigation", { name: "Featured projects" }).getByRole("link")).toHaveAttribute("href", "/work/telescope");
     await expect(wall.getByRole("link")).toHaveCount(1);
     await expect(wall.getByRole("link")).toHaveAttribute("href", "/work/telescope");
     await expect(wall.locator(".telescope-tile__index")).toHaveText("01");
@@ -40,12 +41,14 @@ test("empty selection preserves Work navigation without cards or motion wrappers
     server = await serveTransmissionApp(dir, 3031);
     await page.goto("http://127.0.0.1:3031/");
     const wall = page.getByRole("region", { name: "Project wall" });
-    await expect(wall.locator(".project-wall__bar p")).toHaveText("0 featured projects");
+    await expect(page.getByRole("heading", { level: 1 })).toHaveText("Built to be curious.");
+    await expect(page.getByRole("navigation", { name: "Featured projects" })).toHaveCount(0);
     await expect(wall.getByText("No featured projects right now.")).toBeVisible();
     await expect(wall.locator("ul, li, .tile-motion")).toHaveCount(0);
     await page.getByRole("navigation", { name: "Primary" }).getByRole("link", { name: "Work", exact: true }).click();
     await expect(page).toHaveURL("http://127.0.0.1:3031/#work");
-    await expect(wall.getByRole("heading", { name: "Project wall" })).toBeInViewport();
+    await expect(wall).toBeInViewport();
+    await expect.poll(() => page.evaluate(() => window.scrollY)).toBeGreaterThan(0);
   } finally {
     if (server && server.exitCode === null) {
       const exited = new Promise((resolve) => server!.once("exit", resolve));

@@ -9,10 +9,7 @@ export default async function ProjectWall() {
 
   return (
     <section className="project-wall" id="work" aria-labelledby="work-title">
-      <div className="project-wall__bar">
-        <h2 id="work-title">Project wall</h2>
-        <p>{projects.length} featured {projects.length === 1 ? "project" : "projects"}</p>
-      </div>
+      <h2 id="work-title" className="visually-hidden">Project wall</h2>
       {projects.length === 0 ? (
         <p className="project-wall__empty">No featured projects right now.</p>
       ) : (
