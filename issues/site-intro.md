@@ -12,6 +12,10 @@ Work against these tickets in order, on a branch named `feat/site-intro` cut fro
 Follow the repository TDD cadence (red, green, refactor) and tick each acceptance
 criterion as it is verified. Preserve unrelated checkout changes.
 
+**Tickets 01–03 ship as a single PR.** 01 has no visible output and 02 removes the
+`.hero*` styles before 03 lays out the replacement, so merging either alone leaves
+`main` with an unstyled intro. 04 may ride in the same PR or follow it.
+
 | Ticket | Blocked by |
 | --- | --- |
 | [01 — Give each featured project a curated invitation](#01--give-each-featured-project-a-curated-invitation) | None |
@@ -21,7 +25,23 @@ criterion as it is verified. Preserve unrelated checkout changes.
 
 ## Decisions already made
 
+- **Eyebrow:** "Software engineer · Side projects · 2026".
 - **Headline:** "Built to be curious." It becomes the page `<h1>`.
+- **Supporting sentence:** "Every project here started as a question I couldn't leave
+  alone." It says *why* the projects exist, not *what* they are (the index already
+  says what), so it must not repeat the invitations.
+- **Index rows link to case studies** (`/work/{slug}`), not to tiles. The wall already
+  shares the opening view, so an in-page jump adds little; the index is navigation.
+  No tile ids or `scroll-margin` work is needed.
+- **Project wall bar:** the "N featured projects" count is removed and the
+  "Project wall" `<h2>` becomes visually hidden (it still labels the section). The
+  index now introduces the wall; three visible listings of the same projects in one
+  viewport is noise.
+- **Invitation lives on `Project`** (the featured tier), not `ProjectCore`. Rail
+  entries never need one.
+- **Mobile index is compact:** below the desktop breakpoint each row shows position
+  and invitation only; the project name stays in the row's accessible name via
+  visually hidden text. This keeps the first tile in view as the featured count grows.
 - **Name:** stays in the Chrome wordmark and page metadata only; the intro no longer
   repeats it.
 - **Index rows** derive from the same curated featured selection as the Project wall,
@@ -56,6 +76,8 @@ exactly like the other required presentation fields.
 ### Acceptance criteria
 
 - [ ] Red first: a failing test shows a featured project without an invitation is rejected by the readiness check with the slug and field named.
+- [ ] `invitation` is a required field on `Project`, not `ProjectCore`; rail entries validate without one.
+- [ ] Provenance check: each invitation is verified against its source repository's CONCEPT / PRD / README in `~/a_workspace/` (in particular "Trade the tape" for terminal-one and "Find a show" for sound-city), and the doc that supports it is noted in the PR.
 - [ ] The four production featured projects each have a reviewed invitation that matches its documented behavior (groovebox, trading terminal, star field, club flyer).
 - [ ] Blank, whitespace-only, and missing invitations fail the build; a valid one passes.
 - [ ] Invitations are available wherever the featured selection is listed, in wall order.
@@ -75,8 +97,9 @@ exactly like the other required presentation fields.
 The home page opens with a **Site intro** instead of the hero: an eyebrow, the headline
 "Built to be curious." as the page `<h1>`, one muted supporting sentence, and an index
 with one row per featured project in wall order. Each row shows its position, the
-invitation, and the project name, and moves the visitor to that project's tile on the
-Project wall. The old hero content and classes are gone. Works end to end with
+invitation, and the project name, and links to that project's case study. The
+Project wall bar drops its count and visually hides its heading. The old hero content
+and classes are gone. Works end to end with
 keyboard, screen reader, and no JavaScript.
 
 ### Acceptance criteria
@@ -85,7 +108,9 @@ keyboard, screen reader, and no JavaScript.
 - [ ] The component and its CSS namespace are renamed from hero to Site intro; no `HeroHeader` or `.hero*` selectors remain (case-study hero classes excluded), and the section stays labelled by its `<h1>`.
 - [ ] The top line, grid, "2026 Projects", and the "the wall is open" cue no longer render, and the name is not repeated in the intro.
 - [ ] One index row per featured project, in wall order, driven by the same selection as the wall; reordering or rotating the selection changes the index with no other edit.
-- [ ] Rows are real links with discernible names (invitation plus project name) that land on the matching tile; each wall tile has a stable, slug-based target and the sticky header does not cover it.
+- [ ] Eyebrow and supporting sentence render exactly the copy in "Decisions already made"; the sentence does not repeat any invitation.
+- [ ] Rows are real links to `/work/{slug}` with discernible names (invitation plus project name).
+- [ ] The Project wall no longer shows a featured-project count; its "Project wall" `<h2>` is visually hidden and still labels the section.
 - [ ] No count or number-word is hard-coded in copy; an empty selection renders the headline without an empty index.
 - [ ] Existing specs that asserted the old hero (`chrome-shell` "hero introduces Mitch…", `home-spacing`, `current-transmission` ordering) are updated to the new structure, and the Intro still precedes the wall in document order.
 - [ ] Lint, typecheck, and the full suite pass.
@@ -112,6 +137,8 @@ hover and keyboard-focus states in lime and stay legible without relying on moti
 
 - [ ] Layout tests (desktop and mobile widths) show left/right placement at desktop, stacked order on mobile, and no horizontal overflow at the project's supported widths, including 320px.
 - [ ] At 1280×800 and 390×844, part of the first tile is visible without scrolling; the empty band between intro and wall stays within the limit the spacing test enforces.
+- [ ] The first-viewport check also passes with a six-project featured fixture, so growth in the selection does not push the wall off screen.
+- [ ] On mobile, index rows show position and invitation only; the project name remains in each link's accessible name.
 - [ ] Headline size is bounded well below the old hero scale and never overflows its container at any width.
 - [ ] Row hover and `:focus-visible` states are distinct, use the lime ring, and meet the contrast thresholds the polish-and-audit spec already measures.
 - [ ] Reduced-motion users get the same layout and states with no animation dependence; any transition is disabled under `prefers-reduced-motion`.
