@@ -59,7 +59,7 @@ criterion as it is verified. Preserve unrelated checkout changes.
 
 ## 01 — Give each featured project a curated invitation
 
-**Status:** ready-for-agent
+**Status:** implemented and verified locally — 2026-10-31; provenance note pending the PR
 
 **Blocked by:** None (can start immediately)
 
@@ -97,11 +97,17 @@ never routes a live order. It is replaced with the documented core interaction.
 | telescope | Explore the sky | `docs/PRD.md` — story 4, drag the sky dome to "explore in every direction" |
 | sound-city | Find a show | `PRD.md` — local music finder; find events; "upcoming shows" (story 14) |
 
+### Verification
+
+`tests/unit/project-readiness.spec.ts` covers the readiness rules. Full suite on
+2026-10-31: 493 passed, 2 skipped (`project-verification`, which only runs through
+`npm run project -- verify <slug>`).
+
 ---
 
 ## 02 — Replace the hero with a Site intro that indexes the Project wall
 
-**Status:** ready-for-agent
+**Status:** implemented and verified locally — 2026-10-31
 
 **Blocked by:** 01
 
@@ -136,7 +142,7 @@ Red: `tests/site-intro.spec.ts` failed 6 of 7 before `SiteIntro` existed (the se
 
 ## 03 — Compose the asymmetric layout so the wall shares the opening view
 
-**Status:** ready-for-agent
+**Status:** implemented and verified locally — 2026-10-31
 
 **Blocked by:** 02
 
@@ -166,7 +172,7 @@ hover and keyboard-focus states in lime and stay legible without relying on moti
 
 ## 04 — Record the decision and update the maintenance guide
 
-**Status:** ready-for-agent
+**Status:** implemented and verified locally — 2026-10-31; closes with ticket 01's PR note
 
 **Blocked by:** 03
 
@@ -180,8 +186,16 @@ established decision actually changed (it should not).
 
 ### Acceptance criteria
 
-- [ ] `docs/hero-header-options.md` status reflects the chosen direction (Option 2 layout with Option 5 index) and links this file.
-- [ ] `docs/project-update-guide.md` adds the invitation to the new-project checklist and the rotate / reorder steps, and notes the index follows the featured selection automatically.
-- [ ] `docs/GLOSSARY.md` defines **Site intro**, and `CONTEXT.md` / `AGENTS.md` references to the "hero" for the home page are corrected if any exist.
-- [ ] A final grep confirms no stale references to the old component name or `.hero*` classes outside the case-study hero.
-- [ ] Tickets 01–03 acceptance criteria are checked off with verification evidence recorded.
+- [x] `docs/hero-header-options.md` status reflects the chosen direction (Option 2 layout with Option 5 index) and links this file.
+- [x] `docs/project-update-guide.md` adds the invitation to the new-project checklist and the rotate / reorder steps, and notes the index follows the featured selection automatically.
+- [x] `docs/GLOSSARY.md` defines **Site intro**, and `CONTEXT.md` / `AGENTS.md` references to the "hero" for the home page are corrected if any exist.
+- [x] A final grep confirms no stale references to the old component name or `.hero*` classes outside the case-study hero.
+- [ ] Tickets 01–03 acceptance criteria are checked off with verification evidence recorded. *(All but ticket 01's provenance item, which stays open until its table is in the PR.)*
+
+### Verification
+
+The grep covered `src`, `scripts`, `tests`, `README.md`, `AGENTS.md`, `CONTEXT.md`, the
+glossary, the project-update guide, and the content schema. No `HeroHeader` or `.hero*`
+reference remains; the word "hero" survives in `src` only in comments on the case-study
+hero. Dated specs, tickets, and verification records keep it as history. Lint and
+typecheck pass, and the full suite result is recorded under ticket 01.

@@ -12,7 +12,7 @@ can carry its own identity.
 
 The site has two visual layers:
 
-1. **Chrome** — the shared navigation, hero, blog, contact, and footer. It uses an
+1. **Chrome** — the shared navigation, Site intro, blog, contact, and footer. It uses an
    ink-black background, white typography, and electric-lime accents.
 2. **Chameleon tiles** — featured-project cards that become miniature versions of the
    projects they represent. Each tile has its own art direction while remaining part
@@ -105,6 +105,8 @@ Work against one selected issue at a time.
 Use the terms defined in [`docs/GLOSSARY.md`](docs/GLOSSARY.md), especially:
 
 - Chrome
+- Site intro
+- Invitation
 - Chameleon tile
 - Project wall
 - Case study

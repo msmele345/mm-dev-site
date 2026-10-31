@@ -9,12 +9,16 @@ Keep public slugs stable: never reuse an outgoing project's slug for a new ident
 | Surface | Source | Purpose |
 |---|---|---|
 | Authored catalogue | `src/content/projects/authored/<slug>.ts` | Curated copy and identity, including retained projects. Loaded through the generated `authored.generated.ts`. |
-| Featured selection | `featured` in `src/content/projects/selection.json` | Homepage membership and order; drives count, numbering, and reading order. |
+| Featured selection | `featured` in `src/content/projects/selection.json` | Homepage membership and order; drives numbering and reading order in the Project wall and the Site intro index. |
 | Published case studies | `published` in `src/content/projects/selection.json` | Available `/work/<slug>` pages, metadata, social images, and sitemap entries. |
 | Presentation identity | `src/components/showcase/identities/<slug>/` (`Tile.tsx`, `Artwork.tsx`, `identity.css`) | Explicit tile and case-study artwork for a slug. Registered through the generated `identities.generated.ts`. |
 
 A featured project must be authored, registered, and published. A published project
 need not be featured.
+
+The Site intro index follows the featured selection automatically. Each row shows the
+project's position, its authored `invitation`, and its title, and links to its case
+study. There is no second list to edit and no project count in the copy.
 
 `selection.json` is the only publication and featuring surface. It is plain data,
 `{ "published": [...], "featured": [...] }`, so edit it by hand or with a tool that
@@ -98,7 +102,8 @@ links are checked against the authored record; absent controls must be omitted.
 Published checks cover narrative, registered artwork, images/alt text/captions,
 canonical and Open Graph metadata, social-image responses, sitemap membership,
 overflow, and case-study captures at 390, 768, and 1440px. Featured checks add exact
-wall membership/order/count/indices/destinations, keyboard reading order and Enter
+wall membership/order/indices/destinations, the Site intro index's order and the
+project's row, keyboard reading order and Enter
 activation, visible focus, touch press/release/navigation, reduced-motion art,
 ambient/crescendo exclusivity, off-screen pause, and wall captures at those widths.
 Touch evidence uses browser emulation. Captures support review and do not approve
@@ -117,6 +122,9 @@ unchecked. Review and annotate those items separately when the owner supplies ev
 - [ ] Choose a unique lowercase kebab-case slug and run `create` as above.
 - [ ] Complete `src/content/projects/authored/<slug>.ts` using the outline below;
   `check` lists all remaining gates.
+- [ ] Write the `invitation`: a short verb phrase for the Site intro index ("Make a
+  beat"), supported by the source documents. A blank one blocks publication and names
+  the slug and field.
 - [ ] Add at least one image under `public/projects/<slug>/`; its content `src` starts
   with `/projects/`, not `/public/`. Check filename case, useful alt text, and caption.
 - [ ] Complete the artwork checklist below, then register the presentation.
@@ -209,7 +217,8 @@ for unpublished work the build lets through. See `docs/content-schema.md`.
 
 ## Feature an existing project
 
-- [ ] Confirm its catalogue record, presentation, assets, and published route exist.
+- [ ] Confirm its catalogue record, invitation, presentation, assets, and published
+  route exist.
 - [ ] Preview the intended one-based position with
   `npm run project -- feature your-project --position 2 --dry-run`.
 - [ ] Run the same command without `--dry-run` to insert its slug once into
@@ -217,8 +226,9 @@ for unpublished work the build lets through. See `docs/content-schema.md`.
   You can also edit the selection by hand. Repeating the same command makes no
   changes; requesting a different position for an existing entry stops and reports
   its current position. Use the manual reorder flow below to move entries.
-- [ ] Rebuild and check membership, count, indices, and destination using the evidence
-  checklist below. Already prepared projects need no new bespoke UI code.
+- [ ] Rebuild and check membership, indices, and destination in the wall and the Site
+  intro index using the evidence checklist below. Already prepared projects need no new
+  bespoke UI code.
 
 ## Remove a featured project
 
@@ -226,21 +236,25 @@ for unpublished work the build lets through. See `docs/content-schema.md`.
 - [ ] Retain its `authored/` record, slug in `published`, identity directory
   (components and `identity.css`), fonts, and local images needed by its published page.
 - [ ] Rebuild and visit the old URL directly; check its metadata, social image, and sitemap.
-  Removing every selection keeps the Work anchor and heading, reports zero featured
-  projects, and displays “No featured projects right now.” without placeholder cards.
+  Its Site intro index row disappears with the selection entry. Removing every selection
+  keeps the Work anchor and visually hidden heading, omits the Site intro index, and
+  displays “No featured projects right now.” without placeholder cards.
 
 ## Replace a featured project
 
-- [ ] Prepare and publish the incoming identity first.
+- [ ] Prepare and publish the incoming identity first, including its invitation.
 - [ ] Replace the outgoing slug in `featured` with the incoming slug at the desired position.
 - [ ] Retain all outgoing publication dependencies as described under removal.
-- [ ] Rebuild; open both URLs and verify each retains its own identity. Never overwrite
+- [ ] Rebuild; confirm the Site intro index shows the incoming invitation at that
+  position, then open both URLs and verify each retains its own identity. Never overwrite
   the outgoing record or reuse its public slug for the incoming project.
 
 ## Reorder the wall
 
-- [ ] Move existing entries within `featured`; change no project slugs or stored indices.
-- [ ] Rebuild; check visible sequence, contiguous numbering, count, and keyboard order.
+- [ ] Move existing entries within `featured`; change no project slugs, invitations, or
+  stored indices.
+- [ ] Rebuild; check visible sequence, contiguous numbering, and keyboard order in the
+  wall and the Site intro index, which reorders with it.
   Odd selections keep the final tile in normal grid order; five is not a maximum.
 
 ## Rehearse safely with the synthetic identity
@@ -286,8 +300,8 @@ The other tests cover zero through five selections and existing URL preservation
 - [ ] Record the operation, incoming/outgoing slugs, intended order, copy sources,
   changed files, and commands/results in review notes.
 - [ ] Run `npm test`, `npm run lint`, `npm run typecheck`, and `npm run build`.
-- [ ] Inspect the rebuilt homepage: exact membership, count, consecutive indices,
-  no duplicate or empty cards, and every tile's destination.
+- [ ] Inspect the rebuilt homepage: exact membership, consecutive indices, no duplicate
+  or empty cards, and every tile's and Site intro index row's destination.
 - [ ] Visit outgoing published URLs directly after rebuilding; verify identity,
   narrative, canonical/OG metadata, `/work/<slug>/opengraph-image`, and `/sitemap.xml`.
 - [ ] Inspect real-browser captures at representative phone (390px), tablet (768px),
