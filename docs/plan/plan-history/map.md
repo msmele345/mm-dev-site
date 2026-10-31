@@ -46,6 +46,9 @@ dev projects. The map is done when any agent could pick up issue 01 and start bu
   add/remove/replace/reorder workflow for the Project wall, with retained published
   case-study URLs. The [approved tickets](../../../issues/featured-project-update/README.md)
   are stored individually with explicit dependencies.
+- [Site intro](../../../issues/site-intro.md) — Replaces the home-page hero with a compact
+  intro that indexes the Project wall, chosen from the
+  [header options](../../hero-header-options.md).
 
 ## Not yet specified — original v1
 

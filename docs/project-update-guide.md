@@ -17,8 +17,9 @@ A featured project must be authored, registered, and published. A published proj
 need not be featured.
 
 The Site intro index follows the featured selection automatically. Each row shows the
-project's position, its authored `invitation`, and its title, and links to its case
-study. There is no second list to edit and no project count in the copy.
+project's position and authored `invitation`, plus its title at desktop widths (below
+them the title stays in the link's accessible name), and links to its case study.
+There is no second list to edit and no project count in the copy.
 
 `selection.json` is the only publication and featuring surface. It is plain data,
 `{ "published": [...], "featured": [...] }`, so edit it by hand or with a tool that
@@ -288,7 +289,7 @@ stopping its server and rebuilding before each visit:
 | Re-feature | `["signal-loom", "telescope", "sound-city"]` |
 | Remove | `["telescope", "sound-city"]` |
 
-Each step checks exact wall links/count/indices and the retained Signal Loom page,
+Each step checks exact wall links/tile count/indices, the Site intro index, and the retained Signal Loom page,
 artwork, narrative, canonical metadata, social image, and sitemap. Fixture builds
 use webpack to support shared dependencies and a local GitHub stand-in; the normal
 production build below still uses the repository's default build pipeline.

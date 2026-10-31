@@ -196,6 +196,6 @@ established decision actually changed (it should not).
 
 The grep covered `src`, `scripts`, `tests`, `README.md`, `AGENTS.md`, `CONTEXT.md`, the
 glossary, the project-update guide, and the content schema. No `HeroHeader` or `.hero*`
-reference remains; the word "hero" survives in `src` only in comments on the case-study
-hero. Dated specs, tickets, and verification records keep it as history. Lint and
+reference remains; in `src` the word "hero" survives only for the case-study hero
+(`.case__hero` and comments on it). Dated specs, tickets, and verification records keep it as history. Lint and
 typecheck pass, and the full suite result is recorded under ticket 01.
