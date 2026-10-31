@@ -59,7 +59,7 @@ criterion as it is verified. Preserve unrelated checkout changes.
 
 ## 01 — Give each featured project a curated invitation
 
-**Status:** implemented and verified locally — 2026-10-31; provenance note pending the PR
+**Status:** implemented and verified locally — 2026-10-31
 
 **Blocked by:** None (can start immediately)
 
@@ -77,7 +77,7 @@ exactly like the other required presentation fields.
 
 - [x] Red first: a failing test shows a featured project without an invitation is rejected by the readiness check with the slug and field named.
 - [x] `invitation` is a required field on `Project`, not `ProjectCore`; rail entries validate without one.
-- [ ] Provenance check: each invitation is verified against its source repository's CONCEPT / PRD / README in `~/a_workspace/` (in particular "Trade the tape" for terminal-one and "Find a show" for sound-city), and the doc that supports it is noted in the PR. *(Verified, and "Trade the tape" rejected; see Provenance below. Open until the table is in the PR.)*
+- [x] Provenance check: each invitation is verified against its source repository's CONCEPT / PRD / README in `~/a_workspace/` (in particular "Trade the tape" for terminal-one and "Find a show" for sound-city), and the doc that supports it is noted in the PR. *(Verified, and "Trade the tape" rejected; see Provenance below. Table is in [PR #28](https://github.com/msmele345/mm-dev-site/pull/28).)*
 - [x] The four production featured projects each have a reviewed invitation that matches its documented behavior (groovebox, trading terminal, star field, club flyer). *(Owner approved "Pull the lever".)*
 - [x] Blank, whitespace-only, and missing invitations fail the build; a valid one passes.
 - [x] Invitations are available wherever the featured selection is listed, in wall order.
@@ -172,7 +172,7 @@ hover and keyboard-focus states in lime and stay legible without relying on moti
 
 ## 04 — Record the decision and update the maintenance guide
 
-**Status:** implemented and verified locally — 2026-10-31; closes with ticket 01's PR note
+**Status:** implemented and verified locally — 2026-10-31
 
 **Blocked by:** 03
 
@@ -190,7 +190,7 @@ established decision actually changed (it should not).
 - [x] `docs/project-update-guide.md` adds the invitation to the new-project checklist and the rotate / reorder steps, and notes the index follows the featured selection automatically.
 - [x] `docs/GLOSSARY.md` defines **Site intro**, and `CONTEXT.md` / `AGENTS.md` references to the "hero" for the home page are corrected if any exist.
 - [x] A final grep confirms no stale references to the old component name or `.hero*` classes outside the case-study hero.
-- [ ] Tickets 01–03 acceptance criteria are checked off with verification evidence recorded. *(All but ticket 01's provenance item, which stays open until its table is in the PR.)*
+- [x] Tickets 01–03 acceptance criteria are checked off with verification evidence recorded.
 
 ### Verification
 
