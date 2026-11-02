@@ -208,7 +208,9 @@ test.describe("Site intro layout", () => {
     };
     const animated = await measure();
     await page.emulateMedia({ reducedMotion: "reduce" });
-    expect(await measure()).toEqual(animated);
+    // Poll: after emulateMedia on a live page, Chromium can briefly keep vw-based values
+    // from the previous viewport after a resize. A real layout difference still fails.
+    await expect.poll(measure).toEqual(animated);
 
     await resize(page, { width: 1280, height: 800 });
     await row.hover();
