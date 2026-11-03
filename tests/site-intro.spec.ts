@@ -261,3 +261,69 @@ test("the first tile stays in the opening view with six featured projects", asyn
     rmSync(dir, { recursive: true, force: true });
   }
 });
+
+test.describe("Site intro type and readout", () => {
+  test.beforeEach(async ({ page }) => {
+    await page.goto("/");
+    await page.evaluate(() => document.fonts.ready);
+    await resize(page, { width: 1280, height: 800 });
+  });
+
+  test("the headline shares the case-study register: mono, uppercase, full-strength copy", async ({ page }) => {
+    const styles = await page.evaluate(() => {
+      const read = (selector: string) => getComputedStyle(document.querySelector(selector)!);
+      const h1 = read(".site-intro h1");
+      return {
+        bodyFace: getComputedStyle(document.body).fontFamily,
+        headlineFace: h1.fontFamily,
+        transform: h1.textTransform,
+        invitationFace: read(".site-intro__invitation").fontFamily,
+        sentence: read(".site-intro__sentence").color,
+        mute: read(".site-intro__eyebrow").color,
+      };
+    });
+    expect(styles.headlineFace).toBe(styles.bodyFace);
+    expect(styles.invitationFace).toBe(styles.bodyFace);
+    expect(styles.transform).toBe("uppercase");
+    expect(styles.sentence).not.toBe(styles.mute);
+  });
+
+  test("rows read as a terminal readout with a leader and a caret hidden from assistive tech", async ({ page }) => {
+    const [first] = listWallProjects();
+    const row = featuredIndex(page).getByRole("link").first();
+    const caret = row.locator(".site-intro__caret");
+    await expect(row.locator(".site-intro__leader")).toHaveAttribute("aria-hidden", "true");
+    await expect(caret).toHaveAttribute("aria-hidden", "true");
+    await expect(row).toHaveAccessibleName(`${first.invitation} ${first.title}`);
+
+    await expect(caret).toBeHidden();
+    await row.hover();
+    await expect(caret).toBeVisible();
+    await expect(caret).toHaveCSS("color", LIME);
+
+    await page.mouse.move(0, 0);
+    await expect(caret).toBeHidden();
+    await page.keyboard.press("Tab");
+    await row.focus();
+    await expect(caret).toBeVisible();
+  });
+
+  test("the optional headline cursor adds no text and holds still under reduced motion", async ({ page }) => {
+    const h1 = page.locator(".site-intro h1");
+    await expect(h1).toHaveText("Built to be curious.");
+    await expect(page.getByRole("region", { name: "Built to be curious." })).toBeVisible();
+    const cursorOn = await page.locator(".site-intro[data-cursor]").count();
+    const after = () => h1.evaluate((el) => {
+      const style = getComputedStyle(el, "::after");
+      return { content: style.content, animation: style.animationName };
+    });
+    if (!cursorOn) {
+      expect((await after()).content).toBe("none");
+      return;
+    }
+    expect((await after()).content).toBe('""');
+    expect((await after()).animation).not.toBe("none");
+    await page.emulateMedia({ reducedMotion: "reduce" });
+    expect((await after()).animation).toBe("none");
+  });
+});

@@ -29,12 +29,13 @@ test("nav carries the wordmark and primary links", async ({ page }) => {
   await expect(nav.getByRole("link", { name: "Contact" })).toHaveAttribute("href", "/#contact");
 });
 
-test("Site intro opens in the Chrome display face and leads to the work", async ({ page }) => {
+test("Site intro opens in the case-study mono register and leads to the work", async ({ page }) => {
   await page.goto("/");
 
   const heading = page.getByRole("heading", { name: "Built to be curious.", level: 1 });
   await expect(heading).toBeVisible();
-  await expect(heading).toHaveCSS("font-family", /Bebas Neue/);
+  await expect(heading).toHaveCSS("font-family", /IBM Plex Mono/);
+  await expect(heading).toHaveCSS("text-transform", "uppercase");
 
   await expect(page.getByRole("region", { name: "Project wall" }).getByRole("link", { name: /elevated bpm/i })).toBeVisible();
 });
