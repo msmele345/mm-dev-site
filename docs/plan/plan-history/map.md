@@ -49,6 +49,11 @@ dev projects. The map is done when any agent could pick up issue 01 and start bu
 - [Site intro](../../../issues/site-intro.md) — Replaces the home-page hero with a compact
   intro that indexes the Project wall, chosen from the
   [header options](../../hero-header-options.md).
+- [Field Guides spec](../../field-guides-spec.md): publishes the owner's
+  self-contained HTML field guides at `/guides/<slug>` with a Chrome Guides index,
+  per [ADR 0008](../../adr/0008-field-guides-as-self-contained-html.md). The
+  [draft tickets](../../../issues/feature-field-guides/README.md) are stored
+  individually with explicit dependencies.
 
 ## Not yet specified — original v1
 

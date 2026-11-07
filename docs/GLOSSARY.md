@@ -32,3 +32,8 @@ Domain vocabulary for the site. Issues, ADRs, and code use these terms.
 - **Crescendo** — a tile's full-energy state on hover/focus (or tap-and-hold /
   dominant-in-view on mobile). One tile at a time. See ADR 0006.
 - **Static state** — the frozen tile art shown under `prefers-reduced-motion`.
+- **Field guide** — a long-form, visual developer guide to a tool or technology,
+  authored as one self-contained HTML file and served as its own page at
+  `/guides/<slug>`, outside the Chrome. It carries its own metadata contract in its
+  `<head>`. See ADR 0008.
+- **Guides index** — the Chrome page at `/guides` that lists published field guides.
