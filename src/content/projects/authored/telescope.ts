@@ -5,6 +5,7 @@ export const telescope = {
   slug: "telescope",
   pitch:
     "A shipped web planetarium that renders roughly 9,000 real stars for a visitor’s location and time — with a beautiful 3D sky and an accessible path into the same astronomy.",
+  invitation: "Explore the sky",
   draft: true,
   tile: {
     motif: "star field",

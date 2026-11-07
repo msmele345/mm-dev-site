@@ -54,7 +54,9 @@ test.describe("onboarding a synthetic bespoke identity through the real build", 
   test("the featured tile renders its own curated content and bespoke art without enrichment", async ({ page }, info) => {
     await page.goto(origin);
     const wall = page.getByRole("region", { name: "Project wall" });
-    await expect(wall.locator(".project-wall__bar p")).toHaveText("2 featured projects");
+    const index = page.getByRole("navigation", { name: "Featured projects" });
+    expect(await index.getByRole("link").evaluateAll((links) => links.map((link) => link.getAttribute("href")))).toEqual(["/work/signal-loom", "/work/telescope"]);
+    await expect(index.getByRole("link").first()).toHaveAccessibleName(`${project.invitation} ${project.title}`);
     expect(await wall.locator("[data-tile-slug]").evaluateAll((tiles) => tiles.map((tile) => tile.getAttribute("data-tile-slug")))).toEqual(["signal-loom", "telescope"]);
 
     const tile = wall.getByRole("link").first();
@@ -245,7 +247,7 @@ test.describe("onboarding a synthetic bespoke identity through the real build", 
       server = await serveTransmissionApp(dir, 3036);
       await page.goto(origin);
       const wall = page.getByRole("region", { name: "Project wall" });
-      await expect(wall.locator(".project-wall__bar p")).toHaveText(`${slugs.length} featured projects`);
+      expect(await page.getByRole("navigation", { name: "Featured projects" }).getByRole("link").evaluateAll((links) => links.map((link) => link.getAttribute("href")))).toEqual(slugs.map((slug) => `/work/${slug}`));
       await expect(wall.getByRole("link")).toHaveCount(slugs.length);
       expect(await wall.getByRole("link").evaluateAll((links) => links.map((link) => link.getAttribute("href")))).toEqual(slugs.map((slug) => `/work/${slug}`));
       await expect(wall.locator('[class$="__index"]')).toHaveText(slugs.length === 2 ? ["01", "02"] : ["01", "02", "03"]);

@@ -69,6 +69,7 @@ export function collectShowcaseFindings(input: ShowcaseContent): ShowcaseFinding
     };
     requireText(project.title, "title");
     requireText(project.pitch, "pitch");
+    requireText(project.invitation, "invitation");
     if (typeof project.draft !== "boolean") add(slug, "draft", "must be true or false", blocksBuild);
     const stack = Array.isArray(project.stack) ? project.stack : [];
     if (stack.length === 0) add(slug, "stack", "must list at least one label", blocksBuild);

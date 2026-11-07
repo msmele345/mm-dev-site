@@ -76,13 +76,14 @@ body {
   outline-offset: 3px;
 }
 
-/* Skip target: ring drawn as a slim top bar so it never collides with hero type. */
+/* Skip target: ring drawn as a slim top bar so it never collides with intro type. */
 #main:focus-visible {
   outline: var(--focus-ring);
   outline-offset: -6px;
 }
 
-.visually-hidden {
+.visually-hidden,
+.site-intro__name {
   position: absolute;
   overflow: hidden;
   width: 1px;
@@ -182,98 +183,162 @@ body {
   transform: scaleX(1);
 }
 
-/* ── Hero ── */
-.hero {
-  position: relative;
-  isolation: isolate;
-  overflow: hidden;
-  padding: 3rem var(--space-page) clamp(1rem, 2vw, 1.5rem);
+/* ── Site intro: case-study register (mono, uppercase, tight) beside a readout index of the Project wall ── */
+.site-intro {
+  padding: clamp(2rem, 5vw, 4rem) var(--space-page) clamp(1rem, 2vw, 1.5rem);
 }
 
-.hero__grid {
-  position: absolute;
-  z-index: -1;
-  inset: 0;
-  background-image: linear-gradient(var(--color-grid) var(--line), transparent var(--line)),
-    linear-gradient(90deg, var(--color-grid) var(--line), transparent var(--line));
-  background-position: center;
-  background-size: 4rem 4rem;
-  mask-image: linear-gradient(to bottom, transparent, black 20%, black 80%, transparent);
-}
-
-.hero__topline {
-  display: flex;
-  justify-content: space-between;
-  gap: 1rem;
-  padding-bottom: 0.9rem;
-  border-bottom: var(--line) solid var(--color-grid);
-  font-size: clamp(0.625rem, 0.9vw, 0.75rem);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-.hero__topline p {
-  margin: 0;
-  color: var(--color-mute);
-}
-
-.hero__topline p:last-child {
-  color: var(--color-lime);
-}
-
-.hero__core {
+.site-intro__inner {
+  display: grid;
+  gap: 1.5rem clamp(2rem, 6vw, 6rem);
   max-width: 79rem;
   margin-inline: auto;
-  padding-block: clamp(2.5rem, 6vw, 5rem) 1.5rem;
 }
 
-.hero__eyebrow {
+.site-intro__eyebrow {
   margin: 0 0 1rem;
-  color: var(--color-lime);
-  font-size: clamp(0.625rem, 1vw, 0.8125rem);
+  color: var(--color-mute);
+  font-size: clamp(0.625rem, 1vw, 0.75rem);
   letter-spacing: 0.16em;
   text-transform: uppercase;
-}
-
-.hero__core h1 {
-  max-width: 10ch;
-  margin: 0;
-  font-family: var(--font-display), sans-serif;
-  font-size: clamp(5rem, 23vw, 22rem);
-  font-weight: 400;
-  letter-spacing: -0.025em;
-  line-height: 0.74;
   text-wrap: balance;
 }
 
-.hero__hook {
-  margin: clamp(1.5rem, 4vw, 3rem) 0 0;
-  color: var(--color-lime);
-  font-family: var(--font-display), sans-serif;
-  font-size: clamp(1.375rem, 3.4vw, 2.75rem);
-  font-weight: 400;
-  letter-spacing: 0.02em;
-  line-height: 1;
-}
-
-.hero__summary {
-  max-width: 42rem;
-  margin: clamp(1.25rem, 3vw, 2.5rem) 0 0;
-  color: var(--color-paper);
-  font-size: clamp(0.8125rem, 1.4vw, 1.0625rem);
-  line-height: 1.75;
-}
-
-.hero__next {
-  margin: clamp(2rem, 5vw, 4rem) 0 0;
-  color: var(--color-mute);
-  font-size: clamp(0.6875rem, 1vw, 0.8125rem);
-  letter-spacing: 0.12em;
+/* Same grammar as .case__hero h1, scaled down so the wall still shares the opening view. */
+.site-intro__core h1 {
+  margin: 0;
+  font-family: var(--font-body), monospace;
+  font-size: clamp(2.5rem, 1.25rem + 5vw, 5.5rem);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 0.85;
   text-transform: uppercase;
+  text-wrap: balance;
 }
 
-.hero__next span {
+/* Underscore cursor (SHOW_CURSOR in SiteIntro). Empty content keeps it out of the accessible name. */
+.site-intro[data-cursor] h1::after {
+  content: "";
+  display: inline-block;
+  width: 0.5em;
+  height: 0.09em;
+  margin-left: 0.1em;
+  background: var(--color-lime);
+  animation: site-intro-blink 1.1s steps(1) infinite;
+}
+
+@keyframes site-intro-blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+.site-intro__sentence {
+  max-width: 34rem;
+  margin: 1.25rem 0 0;
+  color: var(--color-reading-copy);
+  font-size: clamp(0.875rem, 1.4vw, 1.0625rem);
+  line-height: 1.7;
+}
+
+.site-intro__index ol {
+  margin: 0;
+  padding: 0;
+  border-bottom: var(--line) solid var(--color-grid);
+  list-style: none;
+}
+
+.site-intro__index a {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  min-height: 2.75rem;
+  padding-block: 0.375rem;
+  border-top: var(--line) solid var(--color-grid);
+  color: var(--color-paper);
+  text-decoration: none;
+  touch-action: manipulation;
+  transition: border-color 160ms ease;
+}
+
+.site-intro__index a:hover {
+  border-top-color: var(--color-lime);
+}
+
+.site-intro__position,
+.site-intro__name {
+  color: var(--color-mute);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+}
+
+.site-intro__position {
+  font-variant-numeric: tabular-nums;
+}
+
+.site-intro__caret {
+  width: 1ch;
+  margin-right: -0.5rem;
   color: var(--color-lime);
+  font-size: 0.875rem;
+  visibility: hidden;
+  /* Flips instantly. Without this, the global reduced-motion duration turns the
+     default \`transition: all\` into a live visibility transition. */
+  transition: none;
+}
+
+.site-intro__invitation {
+  font-size: clamp(0.875rem, 1.2vw, 1rem);
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  line-height: 1.2;
+  text-transform: uppercase;
+  transition: color 160ms ease;
+}
+
+.site-intro__leader {
+  flex: 1 1 1rem;
+  min-width: 1rem;
+  border-bottom: var(--line) dotted var(--color-grid);
+}
+
+.site-intro__index a:hover .site-intro__invitation,
+.site-intro__index a:focus-visible .site-intro__invitation {
+  color: var(--color-lime);
+}
+
+.site-intro__index a:hover .site-intro__caret,
+.site-intro__index a:focus-visible .site-intro__caret {
+  visibility: visible;
+}
+
+@media (min-width: 56rem) {
+  .site-intro__inner {
+    grid-template-columns: minmax(0, 1fr) minmax(20rem, 30rem);
+    align-items: end;
+  }
+
+  /* Below this width the name is visually hidden but stays in the row's accessible name. */
+  .site-intro__name {
+    position: static;
+    overflow: visible;
+    width: auto;
+    height: auto;
+    clip-path: none;
+    text-align: right;
+    white-space: normal;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-intro__index a,
+  .site-intro__invitation {
+    transition: none;
+  }
+
+  .site-intro[data-cursor] h1::after {
+    animation: none;
+  }
 }
 
 /* ── Current Transmission: quiet editorial chrome ── */
@@ -430,7 +495,6 @@ body {
 }
 
 .chrome-placeholder__bar,
-.project-wall__bar,
 .rail__bar,
 .contact__bar {
   display: flex;
@@ -441,7 +505,6 @@ body {
   margin: 0 auto clamp(1.5rem, 4vw, 3rem);
 }
 
-.project-wall h2,
 .contact h2,
 .chrome-placeholder h1 {
   margin: 0;
@@ -461,7 +524,6 @@ body {
   line-height: 1.75;
 }
 
-.project-wall__bar p,
 .rail__bar p,
 .contact__bar p {
   margin: 0;
@@ -994,10 +1056,6 @@ body {
 
 /* ── Mobile ── */
 @media (max-width: 38rem) {
-  .hero__topline p:last-child {
-    display: none;
-  }
-
   .site-footer__wordmark {
     font-size: clamp(3.5rem, 24vw, 8rem);
   }

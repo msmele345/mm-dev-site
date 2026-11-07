@@ -12,7 +12,7 @@ const identity = `src/components/showcase/identities/${slug}`;
 
 function project(overrides: Record<string, unknown> = {}) {
   return {
-    title: "Signal Loom", slug, pitch: "A signal weaving experiment.", draft: true,
+    title: "Signal Loom", slug, pitch: "A signal weaving experiment.", invitation: "Weave a signal", draft: true,
     tile: { motif: "woven signal", displayFace: "Bebas Neue", palette: {
       ground: "#120a1f", panel: "#1d1230", ink: "#f6efff", mute: "#a394bd", accent: "#ff5ad1",
     } },
@@ -514,7 +514,7 @@ test("create prepares an unpublished project with unfinished presentation", () =
     expect(report.stdout).toContain("screenshots: must include at least one image");
     const record = JSON.parse(execFileSync(process.execPath, ["--disable-warning=MODULE_TYPELESS_PACKAGE_JSON", "--input-type=module", "-e", 'import { novaLoom } from "./src/content/projects/authored/nova-loom.ts"; console.log(JSON.stringify(novaLoom))'], { cwd: root, encoding: "utf8" }));
     expect(record).toEqual({
-      slug: "nova-loom", title: "Nova Loom", draft: true, pitch: "",
+      slug: "nova-loom", title: "Nova Loom", draft: true, pitch: "", invitation: "",
       tile: { motif: "", displayFace: "", palette: { ground: "", panel: "", ink: "", mute: "", accent: "" } },
       story: [
         { kind: "problem", heading: "", body: "" },

@@ -2,8 +2,9 @@
 
 Status: direction selected — Option 2's layout with Option 5's verb index as the
 right-hand column. Implementation is tracked in
-[`issues/site-intro.md`](../issues/site-intro.md). Options 1, 3, and 4 are kept for
-future reference.
+[`issues/site-intro.md`](../issues/site-intro.md), which overrides the option text below
+where they differ: index rows link to case studies rather than tiles, and terminal-one's
+invitation is "Pull the lever". Options 1, 3, and 4 are kept for future reference.
 
 ## Goal
 

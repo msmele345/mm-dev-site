@@ -29,8 +29,7 @@ export default function ContactSection() {
                 </li>
             </ul>
             <p className="contact__note">
-                Say hi about a project, a collab, or the late shift. LinkedIn is on the
-                bench for now.
+                Want to chat about my work or discuss an opportunity? Reach out.
             </p>
         </section>
     )

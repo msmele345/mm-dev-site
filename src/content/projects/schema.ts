@@ -46,6 +46,8 @@ export type ProjectCore = {
 
 /** A featured project: a chameleon tile on the wall and a full case study. */
 export type Project = ProjectCore & {
+  /** The short verb phrase a visitor sees in the Site intro index, e.g. "Make a beat". */
+  invitation: string;
   draft: boolean;
   tile?: TileIdentity;
   story: readonly StorySection[];

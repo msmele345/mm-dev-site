@@ -5,8 +5,14 @@ Domain vocabulary for the site. Issues, ADRs, and code use these terms.
 - **Chameleon tile** — a featured project's card on the home page, rendered as a
   mini-world in that project's own visual identity (groovebox faceplate, trading
   terminal, star field, club flyer). See ADR 0002.
-- **Chrome** — everything around the tiles: nav, hero, blog, footer. Ink-black ground,
-  white type, electric lime accent. See ADR 0003.
+- **Chrome** — everything around the tiles: nav, Site intro, blog, footer. Ink-black
+  ground, white type, electric lime accent. See ADR 0003.
+- **Site intro** — the compact home-page opening: an eyebrow, the page headline, one
+  muted sentence, and an index with one row per featured project, in wall order, linking
+  to its case study. Replaces "hero" for the home page; a case study's own opening
+  artwork is still its hero.
+- **Invitation** — an authored project's short curated verb phrase ("Make a beat"),
+  shown in the Site intro index while the project is featured. Rail entries have none.
 - **Current Transmission** — the compact home-page Chrome ledger immediately after the
   Project wall and before More projects. It carries three signals: manually curated **Now Building** and **Next
   Experiment** entries, plus a **Latest Dispatch** derived from the newest published

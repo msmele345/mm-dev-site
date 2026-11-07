@@ -78,7 +78,9 @@ test("featured membership, indices, keyboard, touch and shared motion", async ({
   const wall = page.getByRole("region", { name: "Project wall" });
   const tiles = wall.locator("[data-tile-slug]");
   expect(await tiles.evaluateAll((elements) => elements.map((element) => element.getAttribute("data-tile-slug")))).toEqual(selection.featured);
-  await expect(wall.locator(".project-wall__bar p")).toHaveText(`${selection.featured.length} featured project${selection.featured.length === 1 ? "" : "s"}`);
+  const siteIndex = page.getByRole("navigation", { name: "Featured projects" });
+  expect(await siteIndex.getByRole("link").evaluateAll((links) => links.map((link) => link.getAttribute("href")))).toEqual(selection.featured.map((entry) => `/work/${entry}`));
+  await expect(siteIndex.getByRole("link", { name: `${project.invitation} ${project.title}` })).toHaveAttribute("href", `/work/${slug}`);
   expect(await wall.getByRole("link").evaluateAll((links) => links.map((link) => link.getAttribute("href")))).toEqual(selection.featured.map((entry) => `/work/${entry}`));
   await expect(wall.locator('[class$="__index"]')).toHaveText(selection.featured.map((_, index) => String(index + 1).padStart(2, "0")));
   const motion = wall.locator(`[data-tile-slug="${slug}"]`);

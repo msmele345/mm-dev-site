@@ -17,7 +17,9 @@ const scenarios = [
 
 async function checkLayout(page: Page, info: TestInfo, slugs: string[]) {
   const wall = page.getByRole("region", { name: "Project wall" });
-  await expect(wall.locator(".project-wall__bar p")).toHaveText(`${slugs.length} featured ${slugs.length === 1 ? "project" : "projects"}`);
+  const index = page.getByRole("navigation", { name: "Featured projects" });
+  await expect(index).toHaveCount(slugs.length ? 1 : 0);
+  expect(await index.getByRole("link").evaluateAll((links) => links.map((link) => link.getAttribute("href")))).toEqual(slugs.map((slug) => `/work/${slug}`));
   await expect(wall.locator(".project-wall__grid > li")).toHaveCount(slugs.length);
   await expect(wall.getByRole("link")).toHaveCount(slugs.length);
   expect(await wall.locator("[data-tile-slug]").evaluateAll((tiles) => tiles.map((tile) => tile.getAttribute("data-tile-slug")))).toEqual(slugs);
@@ -113,7 +115,7 @@ test.describe("featured rotation through rebuilt homepages", () => {
       }
       if (!slugs.length) return;
       // Enter the wall using Tab, then traverse it in configured order.
-      for (let stops = 0; stops < 15; stops++) {
+      for (let stops = 0; stops < 20; stops++) {
         await page.keyboard.press("Tab");
         if (await wall.getByRole("link").first().evaluate((el) => el === document.activeElement)) break;
       }

@@ -3,6 +3,7 @@
 Status: ready for implementation — ticket breakdown approved
 Distribution: local Markdown
 Scope: adding, removing, replacing, and reordering featured Project wall selections
+Superseded in part: [`issues/site-intro.md`](../issues/site-intro.md) removes the visible featured-project count and hides the wall heading visually; references to them below describe the earlier design.
 
 ## Problem Statement
 

@@ -32,6 +32,7 @@ test("every entry is written once and carries what a card needs", () => {
   for (const entry of entries) {
     expect(entry.title).not.toBe("");
     expect(entry.pitch).not.toBe("");
+    expect(entry).not.toHaveProperty("invitation");
     expect(entry.stack.length).toBeGreaterThan(0);
   }
 });

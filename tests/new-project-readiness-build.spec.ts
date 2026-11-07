@@ -29,6 +29,7 @@ type Fixture = {
 const fixtures: Fixture[] = [
   { name: "a blank title", project: { title: "  " }, error: 'Project "signal-loom": title must be a non-empty string' },
   { name: "a missing pitch", project: { pitch: undefined }, error: 'Project "signal-loom": pitch must be a non-empty string' },
+  { name: "a missing invitation", project: { invitation: undefined }, error: 'Project "signal-loom": invitation must be a non-empty string' },
   { name: "an empty stack", project: { stack: [] }, error: 'Project "signal-loom": stack must list at least one label' },
   {
     name: "a blank narrative body",

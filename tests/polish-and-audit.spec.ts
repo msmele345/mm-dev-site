@@ -478,6 +478,32 @@ test.describe("contrast", () => {
   });
 });
 
+test.describe("Site intro contrast", () => {
+  test("index rows clear AA at rest and on hover, and the ring clears 3:1", async ({ page }) => {
+    await page.goto("/");
+    await page.setViewportSize({ width: 1280, height: 800 });
+    const ink = await page.evaluate(() => getComputedStyle(document.body).backgroundColor);
+    const row = page.getByRole("navigation", { name: "Featured projects" }).getByRole("link").first();
+    const colors = () => row.locator("span").evaluateAll((spans) => spans.map((span) => getComputedStyle(span).color));
+    // The muted tokens are translucent: score what actually composites over the ink.
+    const composited = (color: string): Rgb => {
+      const [r, g, b, alpha = 1] = (color.match(/[\d.]+/g) ?? []).map(Number);
+      const ground = parseColor(ink);
+      return [r, g, b].map((channel, i) => channel * alpha + ground[i] * (1 - alpha)) as Rgb;
+    };
+
+    for (const color of await colors()) expect(contrast(composited(color), ink)).toBeGreaterThanOrEqual(4.5);
+    await row.hover();
+    await expect(row.locator(".site-intro__invitation")).toHaveCSS("color", LIME);
+    for (const color of await colors()) expect(contrast(composited(color), ink)).toBeGreaterThanOrEqual(4.5);
+    await page.mouse.move(0, 0);
+    await page.keyboard.press("Tab"); // Puts the browser in keyboard modality so focus() shows the ring.
+    await row.focus();
+    const ring = await row.evaluate((el) => getComputedStyle(el).outlineColor);
+    expect(contrast(composited(ring), ink)).toBeGreaterThanOrEqual(3);
+  });
+});
+
 test.describe("code", () => {
   /**
    * Syntax-highlighting themes are chosen for looks, not for contrast, and

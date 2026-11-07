@@ -1,10 +1,10 @@
 import { expect, test, type Page } from "@playwright/test";
 
-const tile = (page: Page) => page.getByRole("link", { name: /elevated bpm/i });
+const tile = (page: Page) => page.locator("#work").getByRole("link", { name: /elevated bpm/i });
 const glows = (page: Page) => page.locator(".groovebox-tile__step-glow");
 
-// Skip link, wordmark, 3 nav links, then the tile — tab stops before the card.
-const TAB_STOPS_BEFORE_TILE = 10;
+// Skip link, wordmark, 3 nav links, and each Site intro row, then the tile.
+const TAB_STOPS_BEFORE_TILE = 15;
 
 test("wall renders the groovebox faceplate tile from the content file", async ({
   page,
@@ -12,7 +12,7 @@ test("wall renders the groovebox faceplate tile from the content file", async ({
   await page.goto("/");
 
   const wall = page.locator("#work");
-  await expect(wall.getByRole("heading", { name: /project wall/i })).toBeVisible();
+  await expect(wall.getByRole("heading", { name: /project wall/i })).toBeAttached();
 
   const card = tile(page);
   await expect(card).toBeVisible();

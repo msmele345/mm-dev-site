@@ -33,15 +33,15 @@ test.describe("Current Transmission with an empty blog", () => {
     await expect(ledger.getByText("Latest Dispatch", { exact: true })).toBeVisible();
     await expect(ledger.getByText("Next Experiment", { exact: true })).toBeVisible();
     const mainRegions = page.getByRole("main").getByRole("region");
-    await expect(mainRegions.nth(0)).toHaveAccessibleName("MITCH MELE");
+    await expect(mainRegions.nth(0)).toHaveAccessibleName("Built to be curious.");
     await expect(mainRegions.nth(1)).toHaveAccessibleName("Project wall");
     await expect(mainRegions.nth(2)).toHaveAccessibleName("Current Transmission");
     await expect(mainRegions.nth(3)).toHaveAccessibleName("More projects");
-    const hero = await mainRegions.nth(0).boundingBox();
+    const intro = await mainRegions.nth(0).boundingBox();
     const transmission = await ledger.boundingBox();
     const wall = await mainRegions.nth(1).boundingBox();
     const rail = await mainRegions.nth(3).boundingBox();
-    expect(wall!.y).toBeGreaterThanOrEqual(hero!.y + hero!.height - 1);
+    expect(wall!.y).toBeGreaterThanOrEqual(intro!.y + intro!.height - 1);
     expect(transmission!.y).toBeGreaterThanOrEqual(wall!.y + wall!.height - 1);
     expect(rail!.y).toBeGreaterThanOrEqual(transmission!.y + transmission!.height - 1);
     for (const viewport of [{ width: 1440, height: 900 }, { width: 768, height: 1024 }, { width: 390, height: 844 }]) {

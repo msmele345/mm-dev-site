@@ -61,6 +61,7 @@ test("a project without a tile identity falls back to the chrome's lime", () => 
     title: "Untitled",
     slug: "untitled",
     pitch: "A pitch.",
+    invitation: "Try it",
     draft: false,
     story: [],
     screenshots: [],
