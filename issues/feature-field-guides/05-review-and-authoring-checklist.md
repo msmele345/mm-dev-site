@@ -10,7 +10,7 @@ Status: not started
 
 ## What to build
 
-Run the per-guide quality review on `pstack` at its served URL, and fix any problems in
+Run the per-guide quality review on `elevated-bpm` at its served URL, and fix any problems in
 the guide file. Write `docs/field-guide-authoring.md` so the next guide can be published
 without rediscovering the contract. Then record the decision across the planning docs.
 
@@ -19,9 +19,11 @@ without rediscovering the contract. Then record the decision across the planning
 - [ ] **Reduced motion:** with `prefers-reduced-motion: reduce`, the guide shows complete, readable content. Animations and smooth scrolling are off, and revealed sections are visible.
 - [ ] **Phone width:** at 375px there's no horizontal page scroll. The nav, catalog, and diagrams stay usable or reflow deliberately. Note the cost of the fixed blur and grain layers, and fix it if it's a real problem.
 - [ ] **Keyboard:** the way-back link, section nav, search, and filter chips are reachable in a sensible order with visible focus.
-- [ ] **Editorial:** no local-only paths or remarks. Credits, license, and the unofficial note are present. The subject version and date the guide reflects are visible to readers. Claims trace back to the source material.
+- [ ] **Editorial:** the guide has no local-only paths, `.md`, or repository-relative links. The subject version and date it reflects are visible to readers. Claims trace back to the elevated-bpm sources, and the controls it describes match the app live at the demo URL (spec decision 3).
+- [ ] **Template layers:** if the guide kept the template's fixed blur and grain layers, check them for phone performance and record the result.
 - [ ] `docs/field-guide-authoring.md` covers:
-  - copying a draft in and naming the slug
+  - generating a draft with `/field-guide` and naming the slug
+  - passing the skill's `check-guide.mjs` and the site build contract
   - the required and optional meta tags, with an example `<head>`
   - the way-back link
   - the self-contained rule
@@ -33,6 +35,6 @@ without rediscovering the contract. Then record the decision across the planning
 
 ## Blocked by
 
-- [01 — Publish the pstack guide at its own URL](01-publish-pstack-guide.md)
+- [01 — Publish the elevated-bpm guide at its own URL](01-publish-elevated-bpm-guide.md)
 - [03 — Add the Guides index, nav link, and sitemap entries](03-guides-index-nav-and-sitemap.md)
 - [04 — Give guides canonical URLs and sharing cards](04-canonical-and-sharing-cards.md)

@@ -32,10 +32,10 @@ reader. Don't use regular expressions over the whole document.
 - [ ] A guide that loads an external resource fails and names the offending element. This covers `<script src>`, a stylesheet or other resource `<link>`, a CSS `@import` or `url()` pointing to `http(s)`, and an `http(s)` `src` on `<img>`, `<source>`, `<video>`, `<audio>`, or `<iframe>`. `data:` URIs and outbound `<a href>` links pass.
 - [ ] A guide that authors its own `<link rel="canonical">`, `og:*`, or `twitter:*` tag fails, naming the tag.
 - [ ] A file name that isn't a lowercase kebab-case slug fails.
-- [ ] The committed `pstack.html` passes, and so does a minimal valid fixture with only the required fields.
+- [ ] The committed `elevated-bpm.html` passes, and so does a minimal valid fixture with only the required fields.
 - [ ] Unit tests exercise each rule with isolated fixtures. A build test shows an isolated invalid guide failing the real build with the intended message. Real guides aren't edited to create failures.
 - [ ] Red-green evidence is recorded, and `npm test`, `npm run lint`, `npm run typecheck`, and `npm run build` pass.
 
 ## Blocked by
 
-- [01 — Publish the pstack guide at its own URL](01-publish-pstack-guide.md)
+- [01 — Publish the elevated-bpm guide at its own URL](01-publish-elevated-bpm-guide.md)

@@ -14,7 +14,7 @@ check off each acceptance criterion only once it's verified.
 
 | Ticket | Blocked by |
 | --- | --- |
-| [01 — Publish the pstack guide at its own URL](01-publish-pstack-guide.md) | None |
+| [01 — Publish the elevated-bpm guide at its own URL](01-publish-elevated-bpm-guide.md) | None |
 | [02 — Enforce the guide contract through the real build](02-enforce-guide-contract.md) | 01 |
 | [03 — Add the Guides index, nav link, and sitemap entries](03-guides-index-nav-and-sitemap.md) | 02 |
 | [04 — Give guides canonical URLs and sharing cards](04-canonical-and-sharing-cards.md) | 02 |
@@ -28,9 +28,11 @@ broken link on `main`. Ticket 04 may ride in the same PR or follow it before the
 is announced. Ticket 05 must be complete before the guide is linked from anywhere
 public.
 
-The spec lists [owner decisions](../../docs/field-guides-spec.md#owner-decisions-pending)
-with defaults: URL and label, RSS, Current Transmission, and pstack attribution.
-Confirm decisions 1 and 4 before ticket 01 starts.
+The spec records [owner decisions](../../docs/field-guides-spec.md#owner-decisions).
+Resolved on 2026-11-11: the URL is `/guides`, the nav label is "Guides", and the first
+guide is elevated-bpm, regenerated as one file with `/field-guide`. Three decisions are
+still pending, with defaults: RSS, Current Transmission, and v3 release timing. By
+default the guide isn't published until elevated-bpm v3 is live at the demo.
 
 No commits beyond the docs, pushes, deployments, or external issue publication are
 authorized by this planning request.

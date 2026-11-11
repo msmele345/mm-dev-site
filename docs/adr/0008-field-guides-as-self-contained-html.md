@@ -4,11 +4,16 @@ Status: proposed — 2026-11-06
 
 ## Context
 
-The owner writes **field guides**: long-form, visual developer guides to a new tool or
-technology, authored in the sibling `mm-dev-skills` repository. Each guide is one
-complete HTML document. It has its own `<head>`, inline CSS and JavaScript, a fixed
-section nav, a full-screen opening, fixed atmosphere layers, and no external assets
-(`pstack-guide.html` is about 125 KB with no dependencies).
+The owner writes **field guides**: long-form, visual developer guides to a tool or
+technology, produced with the `/field-guide` skill in the sibling `mm-dev-skills`
+repository. Each guide is one complete HTML document. It has its own `<head>`, inline
+CSS and JavaScript, a fixed section nav, a full-screen opening, fixed atmosphere
+layers, and no external assets (`pstack-guide.html`, an example output, is about
+125 KB with no dependencies).
+
+Not every existing guide has this shape. The elevated-bpm guide is five pages sharing
+an external stylesheet, with links into its repository. The owner chose to regenerate
+it as one file instead of widening the format.
 
 The owner wants to publish them on this site. Three ways were considered:
 
@@ -31,7 +36,8 @@ lime palette is also close to ADR 0003's.
 - Field guides are **committed, self-contained HTML files** in
   `src/content/guides/<slug>.html`. The file name is the slug. Publishing works like
   the blog: commit the file and push. The copy in this repository is the published
-  source of truth. `mm-dev-skills` remains the drafting area.
+  source of truth. Guides are drafted with the `/field-guide` skill. A guide is one
+  page; a multi-page guide is regenerated as one file before publishing.
 - Each guide is served **as its own page** at `/guides/<slug>` by a statically
   generated Route Handler. It isn't converted to MDX, isn't wrapped in the Chrome, and
   isn't embedded in an iframe. Unknown slugs return 404.

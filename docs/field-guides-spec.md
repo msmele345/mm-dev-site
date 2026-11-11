@@ -1,6 +1,12 @@
 # Field Guides — Publishing Spec
 
 Status: draft — awaiting owner approval, 2026-11-06
+
+Owner revision — 2026-11-11: the first published guide is **elevated-bpm**, not pstack.
+Its existing multi-page guide in `elevated-bpm/learning/field-guide/` is regenerated as
+one self-contained file with the `/field-guide` skill. The single-file contract is
+unchanged. The URL is `/guides` and the nav label is "Guides". The pstack attribution
+decision is withdrawn.
 Distribution: local only; no issue-tracker publication
 Decision record: [ADR 0008 — Field guides as self-contained HTML, served as-is](adr/0008-field-guides-as-self-contained-html.md)
 
@@ -29,8 +35,13 @@ sharing card.
 | `/guides/<slug>` | The guide's own design | `src/content/guides/<slug>.html`, served as-is |
 | Sharing card per guide | Chrome card system | Guide title, description, subject |
 
-The first published guide is **pstack** (`pstack-guide.html`), after the editorial
-cleanup in ticket 01.
+The first published guide is **elevated-bpm**, a guide to the v3 Deck of the owner's
+own featured project. The source is a five-page guide in
+`~/a_workspace/elevated-bpm/learning/field-guide/` (index plus four chapters), which
+shares an external `../assets/lesson.css` and links to `.md` copies, course pages, and
+repository docs. It doesn't meet the contract as it stands. Ticket 01 regenerates it
+with the `/field-guide` skill (`~/workspace/mm-dev-skills/mmStack/skills/field-guide/`)
+as one self-contained file, `src/content/guides/elevated-bpm.html`.
 
 ## User Stories
 
@@ -40,7 +51,7 @@ cleanup in ticket 01.
 4. As a developer, I want a Guides index listing every published guide, newest first, so that I can see what's available.
 5. As a developer, I want each index entry to show the guide's title, description, subject, and publication date, so that I can choose one quickly.
 6. As a developer, I want to know which version of a tool a guide reflects, and when, so that I can judge whether it's still accurate.
-7. As a developer, I want guides about third-party tools to credit and link the original project, so that I can find the official source.
+7. As a developer, I want each guide to link to the official source for its subject, so that I can check it against the real thing.
 8. As a developer, I want to reach the Guides index from the site's primary nav, so that I can find guides from any Chrome page.
 9. As a visitor sharing a guide, I want a branded preview card with the guide's title and description, so that the link reads well in chat and social feeds.
 10. As a search crawler, I want each guide and the index in the sitemap with canonical URLs, so that guides are indexed once, at the canonical origin.
@@ -51,7 +62,8 @@ cleanup in ticket 01.
 15. As the owner, I want to publish a guide by committing its HTML file, so that publishing is as simple as the blog.
 16. As the owner, I want a guide to stay one portable file, with no sidecar metadata, so that I can keep authoring it the same way.
 17. As the owner, I want the build to fail and name the guide and field when a guide breaks the contract, so that a broken or incomplete guide can't deploy silently.
-18. As the owner, I want local-only notes, such as machine paths and scratch-copy remarks, removed before a guide goes public, so that published copy reads as intended.
+18. As the owner, I want local-only notes and repository-relative links, such as machine paths, `.md` copies, and links into a project's docs, removed before a guide goes public, so that every published link works.
+21. As a visitor reading the elevated-bpm guide, I want links to the project's case study and live demo, so that I can see the project and try the controls the guide describes.
 19. As the owner, I want a written authoring checklist, so that publishing the next guide doesn't require rediscovering the contract.
 20. As a maintainer, I want guides verified through the served page and the build contract, so that tests don't mirror private implementation.
 
@@ -59,9 +71,23 @@ cleanup in ticket 01.
 
 - **Content location:** `src/content/guides/<slug>.html`, alongside
   `src/content/blog/`. The file name is the slug: lowercase kebab-case, with no
-  `-guide` suffix (`pstack-guide.html` becomes `pstack.html`). The repository copy is
-  the published source of truth. Re-importing an updated draft from `mm-dev-skills`
-  is a manual copy followed by the authoring checklist.
+  `-guide` suffix. The repository copy is the published source of truth.
+  Re-importing an updated draft is a manual copy followed by the authoring checklist.
+- **Authoring tool:** guides are produced with the `/field-guide` skill, which outputs
+  one self-contained file from its `TEMPLATE.html` and validates it with
+  `scripts/check-guide.mjs`. The skill's checks and this site's build contract are
+  separate. A guide must pass both.
+- **First guide:** `elevated-bpm`, regenerated from the existing five-page guide.
+  - **Sources:** `learning/field-guide/*.md`, `CONCEPT.md`,
+    `docs/specs/v3-groove-bank-acid.md`, and `GLOSSARY.md` in the elevated-bpm
+    repository. Claims come from these sources and the released app.
+  - **Links:** every link is absolute or an in-page anchor. There are no `.md`
+    copies, links to course pages, or repository-relative links. Link to the case
+    study (`/work/elevated-bpm`), the demo (`https://elevated-bpm-dusky.vercel.app`),
+    and the repository (`https://github.com/msmele345/elevated-bpm`). Outside
+    references such as the Roland and Ableton links may stay.
+  - **Metadata:** `guide:subject` is "Elevated BPM", `guide:subject-version` is
+    "3.0", and `guide:source` is the repository URL.
 - **Serving:** a Route Handler at `src/app/guides/[slug]/route.ts` returns the guide
   with `Content-Type: text/html; charset=utf-8`. It's prerendered at build time with
   `generateStaticParams` over the guides directory, and unknown slugs return the
@@ -101,7 +127,7 @@ cleanup in ticket 01.
 - **Build enforcement:** call the guide validator from `next.config.ts` alongside
   `validateShowcaseContent` and `validateTransmissionEditorial`, so that `next dev`
   and `next build` both fail early. Each error names the file and the field or rule,
-  for example `pstack.html: guide:published needs a valid calendar date (yyyy-mm-dd)`.
+  for example `elevated-bpm.html: guide:published needs a valid calendar date (yyyy-mm-dd)`.
   An exported validator that nothing calls doesn't satisfy this.
 - **Head injection:** after `<head>` opens, the handler adds:
   - the canonical URL (`site.url` + `/guides/<slug>`)
@@ -160,7 +186,7 @@ whole guide documents.
   - `tests/current-transmission-build.spec.ts` and `tests/new-project-readiness-build.spec.ts`
     for real-build enforcement with isolated invalid fixtures
   - `tests/unit/` for contract-level checks
-- **Served guide:** `/guides/pstack` returns 200 as `text/html`. The `<body>` matches
+- **Served guide:** `/guides/elevated-bpm` returns 200 as `text/html`. The `<body>` matches
   the committed file. The way-back link reaches `/guides`. An unknown slug returns 404.
 - **Head injection:** the canonical URL is the canonical origin, the Open Graph and
   Twitter tags carry the guide's title and description, and the image URL resolves to
@@ -195,19 +221,26 @@ whole guide documents.
   `npm run lint`, `npm run typecheck`, and `npm run build`. Check off only verified
   acceptance criteria.
 
-## Owner Decisions Pending
+## Owner Decisions
 
-Defaults below apply unless the owner chooses otherwise before the affected ticket starts.
+Resolved 2026-11-11:
 
-1. **URL and label:** `/guides` and nav label "Guides" (default), or `/field-guides`
-   and "Field Guides." This affects tickets 01 and 03.
-2. **RSS:** guides stay out of `feed.xml` for now (default), or appear as feed items
+- **URL and label:** `/guides`, with the nav label "Guides".
+- **First guide:** elevated-bpm, regenerated as one file with `/field-guide`. The
+  pstack attribution question no longer applies.
+
+Pending. Defaults apply unless the owner chooses otherwise before the affected ticket
+starts:
+
+1. **RSS:** guides stay out of `feed.xml` for now (default), or appear as feed items
    next to posts. This affects ticket 04.
-3. **Current Transmission:** Latest Dispatch stays blog-only (default), or the newest
+2. **Current Transmission:** Latest Dispatch stays blog-only (default), or the newest
    guide can appear there. Changing it would revise the Current Transmission spec.
-4. **pstack attribution:** the guide credits Lauren Tan (original pstack) and Michael
-   Denyer (port), under MIT. The owner confirms the `guide:source` URL and that
-   publishing an unofficial guide to that tool is intended. This affects ticket 01.
+3. **v3 release timing:** the guide describes the elevated-bpm v3 Deck. On
+   2026-11-11, elevated-bpm `develop` was 20 commits ahead of `main`, so v3 may not
+   be live at the demo yet. By default the guide is published only once v3 is live
+   at the demo URL, so the guide and the demo agree. This affects ticket 05 and
+   publishing.
 
 ## Out of Scope
 
@@ -222,10 +255,16 @@ Defaults below apply unless the owner chooses otherwise before the affected tick
 
 ## Further Notes
 
-- `pstack-guide.html` already has a sound reduced-motion rule. It disables smooth
-  scrolling, collapses animation and transition durations, and shows `.reveal`
-  content. It loads no external resources. Remaining risk for it is phone performance
-  from the fixed `blur(80px)` aurora and blended grain layers. Record that during
-  ticket 05's review; it doesn't block publishing.
+- `pstack-guide.html`, an earlier `/field-guide` output, shows the template's
+  baseline. It has a sound reduced-motion rule and loads no external resources. Its
+  main remaining risk is phone performance from the fixed `blur(80px)` aurora and the
+  blended grain layers. Ticket 05 checks the same template layers in the elevated-bpm
+  guide.
+- The existing elevated-bpm pages use the project's own lesson palette rather than
+  the template's ink and lime. Whether the regenerated guide keeps the groovebox
+  palette to match its tile and case study is an authoring choice in ticket 01. Both
+  are allowed (ADR 0008).
+- Adding a link from the elevated-bpm case study to the guide is out of scope here.
+  It would change curated project content.
 - Future guides may vary their palette and layout freely. The Guides index and
   sharing cards provide the shared, consistent frame.
