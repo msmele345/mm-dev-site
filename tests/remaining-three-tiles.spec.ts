@@ -48,7 +48,7 @@ test("sound-city publishes its sourced case study", async ({ page }) => {
   await expect(
     main.getByRole("heading", { name: "Sound City", level: 1 }),
   ).toBeVisible();
-  await expect(main.getByText(/source-verified chicago event data/i)).toBeVisible();
+  await expect(main.getByText(/every listing links to its source/i)).toBeVisible();
   await expect(main.getByRole("img", { name: /chicago review queue/i })).toBeVisible();
   await expect(main.getByRole("listitem").filter({ hasText: /^Drizzle ORM$/ })).toBeVisible();
   await expect(main.getByRole("link", { name: /repository/i })).toHaveAttribute(
