@@ -35,7 +35,7 @@ test("unfeaturing and rebuilding retains published identity, metadata, images an
     expect((await page.goto(`${origin}/work/elevated-bpm`))?.status()).toBe(200);
     await expect(page.getByRole("heading", { level: 1 })).toHaveText("Elevated BPM");
     await expect(page.getByText("Draft copy — pending review")).toBeVisible();
-    await expect(page.getByRole("heading", { name: "The instrument came last" })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Learning techno starts in the wrong place" })).toBeVisible();
     const identity = await page.locator("article.case").evaluate((element) => ({
       className: element.className,
       style: element.getAttribute("style"),

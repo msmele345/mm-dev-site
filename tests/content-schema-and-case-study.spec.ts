@@ -20,13 +20,13 @@ test("case study renders from the curated content file", async ({ page }) => {
   const main = page.getByRole("main");
   await expect(main.getByText(/playable from the first click/i)).toBeVisible();
   await expect(
-    main.getByRole("heading", { name: /the instrument came last/i }),
+    main.getByRole("heading", { name: /learning techno starts in the wrong place/i }),
   ).toBeVisible();
   await expect(
-    main.getByRole("heading", { name: /instrument first, curriculum inside/i }),
+    main.getByRole("heading", { name: /an instrument with lessons inside/i }),
   ).toBeVisible();
   await expect(
-    main.getByRole("heading", { name: /silence to groove/i }),
+    main.getByRole("heading", { name: /from silence to a first groove/i }),
   ).toBeVisible();
 
   await expect(main.getByRole("img", { name: /eb-01 deck/i })).toBeVisible();
