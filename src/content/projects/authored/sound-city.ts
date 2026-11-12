@@ -6,7 +6,7 @@ export const soundCity = {
   pitch:
     "A Chicago house and techno guide that helps you find smaller, underground shows. Every listing links to its source, and a person checks each change before it goes live.",
   invitation: "Find a show",
-  draft: true,
+  draft: false,
   tile: {
     motif: "club flyer",
     displayFace: "Bebas Neue",

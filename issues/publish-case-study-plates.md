@@ -138,15 +138,15 @@ still ship a labeled draft plate.
 
 ## Acceptance criteria
 
-- [ ] Red first: a test fails while any of the four featured case studies still renders "Replace with a live capture", an alt or caption containing "Draft plate", or "Draft copy — pending review".
-- [ ] The eight alts and captions in `src/content/projects/authored/` match the table above, and each still describes only what that SVG draws.
-- [ ] The five SVG titles that say "draft plate" use the names above. The three plates with no title stay untitled.
-- [ ] The telescope and sound-city demo links match the table above, and each loads the right project.
-- [ ] Each project's pitch and story are rewritten in plain English, with every claim traceable to the sibling repository's documents, and approved by Mitch.
-- [ ] `draft` is `false` on elevated-bpm, terminal-one, telescope, and sound-city, flipped after the copy is approved.
-- [ ] The tests listed under "Tests that change" are updated: the banner is expected absent on the featured case studies, and the image-name, copy, and demo-link assertions match the new content.
-- [ ] Readiness still accepts a labeled draft plate on an unfinished record. The synthetic fixtures and the project-update guide template still use one.
-- [ ] `npm test`, `npm run lint`, and `npm run typecheck` pass.
+- [x] Red first: a test fails while any of the four featured case studies still renders "Replace with a live capture", an alt or caption containing "Draft plate", or "Draft copy — pending review".
+- [x] The eight alts and captions in `src/content/projects/authored/` match the table above, and each still describes only what that SVG draws.
+- [x] The five SVG titles that say "draft plate" use the names above. The three plates with no title stay untitled.
+- [x] The telescope and sound-city demo links match the table above, and each loads the right project.
+- [x] Each project's pitch and story are rewritten in plain English, with every claim traceable to the sibling repository's documents, and approved by Mitch.
+- [x] `draft` is `false` on elevated-bpm, terminal-one, telescope, and sound-city, flipped after the copy is approved.
+- [x] The tests listed under "Tests that change" are updated: the banner is expected absent on the featured case studies, and the image-name, copy, and demo-link assertions match the new content.
+- [x] Readiness still accepts a labeled draft plate on an unfinished record. The synthetic fixtures and the project-update guide template still use one.
+- [x] `npm test`, `npm run lint`, and `npm run typecheck` pass.
 
 ## Blocked by
 

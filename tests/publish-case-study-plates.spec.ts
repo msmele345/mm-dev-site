@@ -15,4 +15,11 @@ for (const slug of featured) {
       await expect(img).not.toHaveAttribute("alt", /draft plate/i);
     }
   });
+
+  test(`${slug} is published without the draft-copy banner`, async ({ page }) => {
+    await page.goto(`/work/${slug}`);
+
+    await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
+    await expect(page.getByText("Draft copy — pending review")).toHaveCount(0);
+  });
 }

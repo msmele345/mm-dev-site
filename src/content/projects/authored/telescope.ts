@@ -6,7 +6,7 @@ export const telescope = {
   pitch:
     "A web planetarium that shows roughly 9,000 real stars as they look from your US zip code, right now. Look around, speed up time, and follow a constellation into its mythology.",
   invitation: "Explore the sky",
-  draft: true,
+  draft: false,
   tile: {
     motif: "star field",
     displayFace: "Bebas Neue",

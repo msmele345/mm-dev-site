@@ -6,7 +6,7 @@ export const terminalOne = {
   pitch:
     "A personal desktop app that tracks a stock and options portfolio and suggests options trades, with the reasoning behind each one. Think trading-floor terminal crossed with a late-night slot machine.",
   invitation: "Pull the lever",
-  draft: true,
+  draft: false,
   tile: {
     motif: "trading terminal",
     displayFace: "IBM Plex Mono",

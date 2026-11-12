@@ -41,7 +41,7 @@ test("case study renders from the curated content file", async ({ page }) => {
     "href",
     "https://elevated-bpm-dusky.vercel.app",
   );
-  await expect(main.getByText(/draft copy/i)).toBeVisible();
+  await expect(main.getByText(/draft copy/i)).toHaveCount(0);
 });
 
 test("case study continues the groovebox identity", async ({ page }) => {

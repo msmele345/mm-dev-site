@@ -6,7 +6,7 @@ export const elevatedBpm = {
   pitch:
     "A drum machine and synths in your browser that teach you to make techno. It’s playable from the first click, with short lessons built into the instrument.",
   invitation: "Make a beat",
-  draft: true,
+  draft: false,
   tile: {
     motif: "groovebox faceplate",
     displayFace: "Chakra Petch",

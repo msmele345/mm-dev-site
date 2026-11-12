@@ -15,7 +15,7 @@ test("terminal-one publishes its sourced case study", async ({ page }) => {
     "href",
     "https://github.com/msmele345/terminal-one",
   );
-  await expect(main.getByText(/draft copy/i)).toBeVisible();
+  await expect(main.getByText(/draft copy/i)).toHaveCount(0);
 });
 
 test("telescope publishes its sourced case study", async ({ page }) => {
@@ -37,7 +37,7 @@ test("telescope publishes its sourced case study", async ({ page }) => {
     "href",
     "https://telescope-lake.vercel.app",
   );
-  await expect(main.getByText(/draft copy/i)).toBeVisible();
+  await expect(main.getByText(/draft copy/i)).toHaveCount(0);
 });
 
 test("sound-city publishes its sourced case study", async ({ page }) => {
@@ -59,7 +59,7 @@ test("sound-city publishes its sourced case study", async ({ page }) => {
     "href",
     "https://sound-city-ten.vercel.app",
   );
-  await expect(main.getByText(/draft copy/i)).toBeVisible();
+  await expect(main.getByText(/draft copy/i)).toHaveCount(0);
 });
 
 test("each case study carries its project identity into the hero", async ({ page }) => {
