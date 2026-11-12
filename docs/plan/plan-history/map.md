@@ -49,6 +49,12 @@ dev projects. The map is done when any agent could pick up issue 01 and start bu
 - [Site intro](../../../issues/site-intro.md) — Replaces the home-page hero with a compact
   intro that indexes the Project wall, chosen from the
   [header options](../../hero-header-options.md).
+- [Tie the Site intro to the Project wall](../../../issues/site-intro-project-accents.md) —
+  Gives each index row its project's accent, removes the rule between the intro and the
+  wall, and reduces the headline. Amends ADR 0003 with a narrow index-row exception.
+- [Site intro index drives the wall](../../../issues/site-intro-index-crescendo.md) —
+  Hovering or focusing an index row puts the matching tile into crescendo. Amends
+  ADR 0006. Blocked by the ticket above.
 
 ## Not yet specified — original v1
 

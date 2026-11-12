@@ -1,4 +1,4 @@
-# Publish the case-study plates
+# Publish the featured case studies
 
 ## Parent
 
@@ -9,19 +9,31 @@ Those slices closed with the plates as the screenshots.
 [09 — Polish & audit](09-polish-and-audit.md) left them as SVGs.
 The wayfinder map is complete; this is not a new slice on it.
 
+This ticket began as "Publish the case-study plates" and covered only the plate
+words and the draft flag. It now covers the whole cleanup of the four authored
+records in `src/content/projects/authored/`: placeholders, wrong demo links,
+and a plain-English pass on the copy.
+
 ## What to build
 
-The four featured case studies are about to take traffic. Each one renders two
-SVG plates under the heading "Plates," and every caption currently ends with an
-instruction to the author: "Replace with a live capture." The alt text calls
-each image a "Draft plate." Five of the SVGs repeat that in `<title>`. All four
-records also have `draft: true`, so the page opens with "Draft copy — pending
-review."
+The four featured case studies are about to take traffic. Three things stand
+between the authored records and a published state:
 
-Publish the plates as the finished images. Keep the files, the `src` paths, and
-the "Plates" heading. Rewrite the visitor-facing words so they name what the
-drawing shows. Clear the draft flag on the four featured records so the review
-banner goes with the instruction. Story bodies stay as they are.
+1. **Placeholders.** Every plate caption ends with an instruction to the
+   author ("Replace with a live capture."), every alt calls the image a "Draft
+   plate," and five SVGs repeat that in `<title>`.
+2. **Wrong demo links.** Two records point at `vercel.app` domains that are not
+   the project's deployment.
+3. **Jargon-heavy copy.** Pitches and story sections read like internal design
+   notes. A visitor should understand them without knowing the codebase.
+
+When all three are done, flip `draft` to `false` on the four records so the
+"Draft copy — pending review" banner goes away. The flip is the last step.
+
+Keep the plate files, their `src` paths, the "Plates" heading, the titles,
+slugs, invitations, tile identities, and stack lists.
+
+### 1. Plates
 
 The labeled-draft-plate convention stays valid for a project that is still being
 authored. This ticket covers only the four featured records:
@@ -37,15 +49,89 @@ authored. This ticket covers only the four featured records:
 | sound-city | `queue.svg` | Chicago review queue with Smartbar, Podlasie, and Spybar rows, source evidence, and accept or reject controls. | The review queue and its source trail. |
 | sound-city | `events.svg` | Tonight listing for Chicago with Smartbar at 23:00 and Podlasie Club at 22:00, both source verified. | The Chicago event finder. |
 
-SVG `<title>` values that currently say "draft plate" take the same names:
+SVG `<title>` values that currently say "draft plate" take these names:
 "Terminal One paper and taken ledger", "Telescope local sky",
 "Telescope constellation lesson", "Sound City review queue",
 "Sound City events". `deck.svg`, `arc.svg`, and `console.svg` have no title;
 leave them untitled. `<desc>` text already describes the drawing; leave it
 unless it disagrees with the new alt.
 
-Out of scope: live captures, new image files, tile art, story copy, the
-"Plates" heading, readiness rules, and the draft-plate examples in
+### 2. Demo links
+
+Use each repository's GitHub homepage URL as the source of truth:
+
+| Project | Currently in the record | Correct |
+| --- | --- | --- |
+| telescope | `https://telescope.vercel.app` | `https://telescope-lake.vercel.app` |
+| sound-city | `https://sound-city.vercel.app` (serves an unrelated page titled "Vite App") | `https://sound-city-ten.vercel.app` |
+| elevated-bpm | `https://elevated-bpm-dusky.vercel.app` | unchanged |
+| terminal-one | none | none (desktop app, no demo) |
+
+Confirm each corrected URL loads the right project before committing.
+
+### 3. Plain-English copy
+
+Rewrite `pitch` and the `story` headings and bodies in plain, simple language.
+Say what the project does and why before how it is built. Name a technology
+only where it helps a visitor; the `stack` list already carries the rest.
+
+Rules:
+
+- Ground every claim in the sibling repository's README, CONCEPT, or PRD under
+  `~/a_workspace/`. Drop any claim that cannot be found there.
+- Keep the three-section shape: problem, build, result.
+- Work one project at a time. Mitch reviews each project's copy before the
+  next one starts.
+- `pitch` also renders on the wall tile, the page metadata, and the OG
+  description, so check it reads well in all three.
+
+Known lines to rewrite (a starting list, not a limit):
+
+| Project | Field | Line |
+| --- | --- | --- |
+| elevated-bpm | pitch | "goal-checked curriculum woven into the live instrument" |
+| elevated-bpm | build body | "declarative goals checked against live pattern state"; "one local ProjectState document"; "The DAW is architecture, not UI" |
+| terminal-one | pitch | "deterministic options-trade recommendation engine" |
+| terminal-one | build heading | "Rules engine, neon thin client" |
+| terminal-one | build body | "JWT auth"; "greeks and IV are computed in-house" |
+| terminal-one | result body | "EOD batch plus on-demand lever pulls emit ranked, explainable trades" |
+| telescope | build body | "sky-math, time-controller, star-catalog, and zipcode modules"; "Instanced points" |
+| telescope | result body | "A Hipparcos cross-match raised star-distance coverage from 34% to more than 99%" — verify against the telescope repo or drop |
+| sound-city | pitch | "source-verified Chicago event data — from discovery and ingestion through a maintainer review queue" |
+| sound-city | build body | "route handlers… model city-aware events"; "Refresh targets produce reviewable suggestions" |
+
+### 4. Tests that change
+
+Banner assertions that currently expect "Draft copy" to be visible on a featured
+case study, and must expect it absent:
+
+- `tests/remaining-three-tiles.spec.ts` — three assertions, one per case study
+- `tests/content-schema-and-case-study.spec.ts`
+- `tests/published-case-studies.spec.ts`
+
+Image-name assertions that the new alts break:
+
+- `tests/remaining-three-tiles.spec.ts` — `/local night sky/i` (new alt starts
+  "Local sky at 22:14")
+- `tests/remaining-three-tiles.spec.ts` — `/event review queue/i` (new alt
+  starts "Chicago review queue")
+
+Copy pins that the rewrite may break; update them to the approved copy:
+
+- `tests/remaining-three-tiles.spec.ts` — "9,000 real stars",
+  "source-verified chicago event data"
+- `tests/content-schema-and-case-study.spec.ts` and
+  `tests/published-case-studies.spec.ts` — the elevated-bpm headings "The
+  instrument came last", "Instrument first, curriculum inside", "Silence to
+  groove"
+
+Demo-link assertions for telescope and sound-city in
+`tests/remaining-three-tiles.spec.ts` take the corrected URLs.
+
+## Out of scope
+
+Live captures, new image files, tile art, the "Plates" heading, titles, slugs,
+invitations, stack lists, readiness rules, and the draft-plate examples in
 `docs/project-update-guide.md`, `docs/content-schema.md`, and the synthetic
 fixtures (`signal-loom` and the showcase-app helper). A future project may
 still ship a labeled draft plate.
@@ -55,8 +141,10 @@ still ship a labeled draft plate.
 - [ ] Red first: a test fails while any of the four featured case studies still renders "Replace with a live capture", an alt or caption containing "Draft plate", or "Draft copy — pending review".
 - [ ] The eight alts and captions in `src/content/projects/authored/` match the table above, and each still describes only what that SVG draws.
 - [ ] The five SVG titles that say "draft plate" use the names above. The three plates with no title stay untitled.
-- [ ] `draft` is `false` on elevated-bpm, terminal-one, telescope, and sound-city. Story headings and bodies are unchanged.
-- [ ] `tests/content-schema-and-case-study.spec.ts` and `tests/published-case-studies.spec.ts` expect the review banner to be absent on the featured case studies. Image-name assertions still pass against the new alt text.
+- [ ] The telescope and sound-city demo links match the table above, and each loads the right project.
+- [ ] Each project's pitch and story are rewritten in plain English, with every claim traceable to the sibling repository's documents, and approved by Mitch.
+- [ ] `draft` is `false` on elevated-bpm, terminal-one, telescope, and sound-city, flipped after the copy is approved.
+- [ ] The tests listed under "Tests that change" are updated: the banner is expected absent on the featured case studies, and the image-name, copy, and demo-link assertions match the new content.
 - [ ] Readiness still accepts a labeled draft plate on an unfinished record. The synthetic fixtures and the project-update guide template still use one.
 - [ ] `npm test`, `npm run lint`, and `npm run typecheck` pass.
 
