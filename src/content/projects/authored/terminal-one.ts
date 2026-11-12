@@ -4,7 +4,7 @@ export const terminalOne = {
   title: "Terminal One",
   slug: "terminal-one",
   pitch:
-    "A single-user desktop trading cockpit — NYSE-floor terminal crossed with a late-night slot machine — that monitors positions and runs a deterministic options-trade recommendation engine.",
+    "A personal desktop app that tracks a stock and options portfolio and suggests options trades, with the reasoning behind each one. Think trading-floor terminal crossed with a late-night slot machine.",
   invitation: "Pull the lever",
   draft: true,
   tile: {
@@ -21,18 +21,18 @@ export const terminalOne = {
   story: [
     {
       kind: "problem",
-      heading: "Opinionated, and auditable",
-      body: "Most trading UIs are either a spreadsheet or a slot-machine skin. Neither gives a self-directed options trader a second opinion they can audit line by line — or a record of how those calls actually play out.",
+      heading: "A second opinion you can check",
+      body: "Terminal One is built for one person: a self-directed options trader who wants a fast second opinion they can trust, and a record of how those suggestions actually play out. A suggestion only helps if you can see why it was made.",
     },
     {
       kind: "build",
-      heading: "Rules engine, neon thin client",
-      body: "A Spring Boot service owns the deterministic recommendation engine, JWT auth, and Postgres. The Electron desktop is a neon thin client: Portfolio Console, Slot Machine, Paper/Taken Ledger. Market data is delayed; greeks and IV are computed in-house. It never routes a live order.",
+      heading: "Fixed rules, neon screen",
+      body: "A server does the work. It follows fixed rules rather than AI, so the same market data always produces the same suggestions, and each one lists the signals behind it. The server runs all the time, so the nightly check happens even when the laptop is closed. The desktop app is the neon screen on top, with three views: a portfolio console, a slot machine that runs the engine, and a trade ledger. Prices are 15 minutes delayed, and the app never places a real trade.",
     },
     {
       kind: "result",
       heading: "Pull the lever, keep the ledger",
-      body: "EOD batch plus on-demand lever pulls emit ranked, explainable trades. Paper settlement and a mark-as-taken path build a real track record. Advisory only — not financial advice.",
+      body: "After each market close, and whenever you pull the lever, the app ranks a short list of trade ideas and explains each one. Every idea goes into a paper ledger, a practice record of how it would have done. Trades you actually make can be marked as taken, which builds a real track record next to the practice one. Advisory only. Not financial advice.",
     },
   ],
   screenshots: [

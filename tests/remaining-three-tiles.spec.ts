@@ -8,7 +8,7 @@ test("terminal-one publishes its sourced case study", async ({ page }) => {
   await expect(
     main.getByRole("heading", { name: "Terminal One", level: 1 }),
   ).toBeVisible();
-  await expect(main.getByText(/deterministic recommendation engine/i)).toBeVisible();
+  await expect(main.getByText(/suggests options trades, with the reasoning behind each one/i)).toBeVisible();
   await expect(main.getByRole("img", { name: /portfolio console/i })).toBeVisible();
   await expect(main.getByRole("listitem").filter({ hasText: /^Spring Boot$/ })).toBeVisible();
   await expect(main.getByRole("link", { name: /repository/i })).toHaveAttribute(
