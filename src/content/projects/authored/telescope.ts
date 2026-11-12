@@ -38,18 +38,18 @@ export const telescope = {
   screenshots: [
     {
       src: "/projects/telescope/sky.svg",
-      alt: "Draft plate of Telescope rendering a local night sky above a compass horizon.",
-      caption: "Draft plate — the local sky and horizon. Replace with a live capture.",
+      alt: "Local sky at 22:14 with stars, Orion line art, a horizon, and compass headings.",
+      caption: "The local sky and horizon.",
     },
     {
       src: "/projects/telescope/lesson.svg",
-      alt: "Draft plate of Telescope connecting constellation line art to a mythology lesson.",
-      caption: "Draft plate — constellation discovery flowing into a lesson. Replace with a live capture.",
+      alt: "Orion line art beside a constellation lesson panel and a read the myth control.",
+      caption: "A constellation, then the lesson.",
     },
   ],
   links: {
     repo: "https://github.com/msmele345/telescope",
-    demo: "https://telescope.vercel.app",
+    demo: "https://telescope-lake.vercel.app",
   },
   stack: [
     "Next.js",

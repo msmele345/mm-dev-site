@@ -38,18 +38,18 @@ export const soundCity = {
   screenshots: [
     {
       src: "/projects/sound-city/queue.svg",
-      alt: "Draft plate of the Sound City event review queue with source evidence.",
-      caption: "Draft plate — the event review queue and source trail. Replace with a live capture.",
+      alt: "Chicago review queue with Smartbar, Podlasie, and Spybar rows, source evidence, and accept or reject controls.",
+      caption: "The review queue and its source trail.",
     },
     {
       src: "/projects/sound-city/events.svg",
-      alt: "Draft plate of Sound City listing verified Chicago house and techno events.",
-      caption: "Draft plate — the dense Chicago event finder. Replace with a live capture.",
+      alt: "Tonight listing for Chicago with Smartbar at 23:00 and Podlasie Club at 22:00, both source verified.",
+      caption: "The Chicago event finder.",
     },
   ],
   links: {
     repo: "https://github.com/msmele345/sound-city",
-    demo: "https://sound-city.vercel.app",
+    demo: "https://sound-city-ten.vercel.app",
   },
   stack: ["Next.js", "React", "TypeScript", "Neon Postgres", "Drizzle ORM", "Vercel"],
 } as const satisfies Project;

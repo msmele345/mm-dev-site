@@ -39,13 +39,13 @@ export const elevatedBpm = {
   screenshots: [
     {
       src: "/projects/elevated-bpm/deck.svg",
-      alt: "Draft plate of the EB-01 deck: sixteen step keys in 909 quads and four drum pads.",
-      caption: "Draft plate — the faceplate the tile will become. Replace with a live capture.",
+      alt: "EB-01 deck: sixteen step keys in four colors and pads labeled kick, clap, closed hat, and open hat.",
+      caption: "The faceplate. Sixteen steps and four drum pads.",
     },
     {
       src: "/projects/elevated-bpm/arc.svg",
-      alt: "Draft plate of the lesson arc as numbered hardware pads beside the transport.",
-      caption: "Draft plate — the silence-to-groove arc as hardware stops. Replace with a live capture.",
+      alt: "Lesson arc labeled silence to groove, step 04 of 14, clap on 2 and 4.",
+      caption: "The lesson arc, from silence to a first groove.",
     },
   ],
   links: {

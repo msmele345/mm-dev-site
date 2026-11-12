@@ -38,13 +38,13 @@ export const terminalOne = {
   screenshots: [
     {
       src: "/projects/terminal-one/console.svg",
-      alt: "Draft plate of the Terminal One portfolio console with phosphor tickers.",
-      caption: "Draft plate — console still. Replace with a live capture.",
+      alt: "Portfolio console with AAPL and NVDA quotes, a delayed advisory notice, and a pull lever control.",
+      caption: "The portfolio console. Delayed quotes, advisory only.",
     },
     {
       src: "/projects/terminal-one/ledger.svg",
-      alt: "Draft plate of the Terminal One paper and taken trade ledger.",
-      caption: "Draft plate — the auditable paper and taken ledger. Replace with a live capture.",
+      alt: "Paper and taken ledger with SPY, QQQ, and NVDA rows, rank, state, and a why-this-trade note.",
+      caption: "The paper and taken ledger.",
     },
   ],
   links: {

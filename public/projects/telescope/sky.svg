@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="960" height="540" viewBox="0 0 960 540" role="img" aria-labelledby="title desc">
-  <title id="title">Telescope local sky draft plate</title>
+  <title id="title">Telescope local sky</title>
   <desc id="desc">A deep blue sky chart with stars, Orion line art, a horizon, and compass headings.</desc>
   <defs>
     <radialGradient id="sky" cx="50%" cy="20%" r="80%"><stop stop-color="#172d58"/><stop offset="1" stop-color="#030711"/></radialGradient>
