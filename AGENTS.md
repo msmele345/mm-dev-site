@@ -8,7 +8,7 @@
 See docs/plan/plan-history/map.md for Wayfinder map and Project Plan
 See issues for planned work slices
 See CONTEXT.md for project context and intent
-See plan/GLOSSARY.md for project vocabulary and definitions
+See docs/GLOSSARY.md for project vocabulary and definitions
 
 ## Agent Orientation
 - Domain: personal portfolio + blog. Owner: Mitch Mele (github: msmele345).
