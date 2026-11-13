@@ -1,6 +1,5 @@
-import Link from "next/link";
-import type { CSSProperties } from "react";
 import { listWallProjects } from "@/content/projects/catalog";
+import SiteIntroIndexRow from "@/components/SiteIntroIndexRow";
 
 /** A blinking lime underscore after the headline. Set false to remove it. */
 const SHOW_CURSOR = true;
@@ -21,9 +20,10 @@ export default function SiteIntro() {
                         <ol>
                             {projects.map((project, index) => (
                                 <li key={project.slug}>
-                                    <Link
+                                    <SiteIntroIndexRow
+                                        slug={project.slug}
                                         href={`/work/${project.slug}`}
-                                        style={{ "--project-accent": project.tile!.palette.accent } as CSSProperties}
+                                        accent={project.tile!.palette.accent}
                                     >
                                         <span className="site-intro__position" aria-hidden="true">
                                             {String(index + 1).padStart(2, "0")}
@@ -33,7 +33,7 @@ export default function SiteIntro() {
                                         {" "}
                                         <span className="site-intro__leader" aria-hidden="true" />
                                         <span className="site-intro__name">{project.title}</span>
-                                    </Link>
+                                    </SiteIntroIndexRow>
                                 </li>
                             ))}
                         </ol>

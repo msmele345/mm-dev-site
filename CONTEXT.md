@@ -57,8 +57,8 @@ Chameleon tiles use three states:
 
 - **Static** — frozen, legible artwork for reduced-motion users
 - **Ambient** — subtle idle motion
-- **Crescendo** — the active state triggered by hover, keyboard focus, or the
-  established mobile interaction
+- **Crescendo** — the active state triggered by hover or keyboard focus on the
+  tile or its Site intro index row, or the established mobile interaction
 
 Only one tile should crescendo at a time.
 
