@@ -208,7 +208,7 @@ body {
 .site-intro__core h1 {
   margin: 0;
   font-family: var(--font-body), monospace;
-  font-size: clamp(2.5rem, 1.25rem + 5vw, 5.5rem);
+  font-size: clamp(1.75rem, 0.875rem + 3.5vw, 3.85rem);
   font-weight: 600;
   letter-spacing: -0.03em;
   line-height: 0.85;
@@ -261,8 +261,9 @@ body {
   transition: border-color 160ms ease;
 }
 
-.site-intro__index a:hover {
-  border-top-color: var(--color-lime);
+.site-intro__index a:hover,
+.site-intro__index a:focus-visible {
+  border-top-color: var(--project-accent);
 }
 
 .site-intro__position,
@@ -273,13 +274,14 @@ body {
 }
 
 .site-intro__position {
+  color: var(--project-accent);
   font-variant-numeric: tabular-nums;
 }
 
 .site-intro__caret {
   width: 1ch;
   margin-right: -0.5rem;
-  color: var(--color-lime);
+  color: var(--project-accent);
   font-size: 0.875rem;
   visibility: hidden;
   /* Flips instantly. Without this, the global reduced-motion duration turns the
@@ -304,7 +306,7 @@ body {
 
 .site-intro__index a:hover .site-intro__invitation,
 .site-intro__index a:focus-visible .site-intro__invitation {
-  color: var(--color-lime);
+  color: var(--project-accent);
 }
 
 .site-intro__index a:hover .site-intro__caret,
@@ -492,6 +494,7 @@ body {
 
 .project-wall {
   padding-top: clamp(1.5rem, 4vw, 3rem);
+  border-top: none;
 }
 
 .chrome-placeholder__bar,

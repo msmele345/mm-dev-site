@@ -1,7 +1,8 @@
 import { expect, test, type Page, type TestInfo } from "@playwright/test";
 import { rmSync, writeFileSync } from "node:fs";
 import type { ChildProcess } from "node:child_process";
-import { addPreparedFixtureProject, createShowcaseApp, writeFeaturedSelection } from "./support/showcase-app";
+import { cssColor } from "./support/color";
+import { addPreparedFixtureProject, createShowcaseApp, readFixtureProject, writeFeaturedSelection } from "./support/showcase-app";
 import { buildTransmissionApp, serveTransmissionApp } from "./support/transmission-app";
 
 const scenarios = [
@@ -15,10 +16,12 @@ const scenarios = [
   { name: "add", slugs: ["sound-city", "orbit-lab", "telescope", "elevated-bpm", "terminal-one"] },
 ];
 
-async function checkLayout(page: Page, info: TestInfo, slugs: string[]) {
+async function checkLayout(page: Page, info: TestInfo, slugs: string[], dir: string) {
   const wall = page.getByRole("region", { name: "Project wall" });
   const index = page.getByRole("navigation", { name: "Featured projects" });
   await expect(index).toHaveCount(slugs.length ? 1 : 0);
+  const accents = await index.locator(".site-intro__position").evaluateAll((positions) => positions.map((position) => getComputedStyle(position).color));
+  expect(accents).toEqual(slugs.map((slug) => cssColor(readFixtureProject(dir, slug).tile.palette.accent)));
   expect(await index.getByRole("link").evaluateAll((links) => links.map((link) => link.getAttribute("href")))).toEqual(slugs.map((slug) => `/work/${slug}`));
   await expect(wall.locator(".project-wall__grid > li")).toHaveCount(slugs.length);
   await expect(wall.getByRole("link")).toHaveCount(slugs.length);
@@ -103,7 +106,7 @@ test.describe("featured rotation through rebuilt homepages", () => {
       server = await serveTransmissionApp(dir, 3032);
       await page.emulateMedia({ reducedMotion: "reduce" });
       await page.goto("http://127.0.0.1:3032/");
-      await checkLayout(page, info, slugs);
+      await checkLayout(page, info, slugs, dir);
       const wall = page.getByRole("region", { name: "Project wall" });
       for (const part of await wall.locator("[data-anim]").all()) {
         await expect(part).toHaveCSS("animation-name", "none");

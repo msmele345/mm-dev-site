@@ -5,8 +5,10 @@
 **One-liner:** Site to Showcase Development Work in Galley and Blogging. The gallery is visually stunning and eye catching, just like the projects that it will showcase.
 
 # Project Overview and Plan:
-See @docs/plan/plan-history/map.md for Wayfinder map and Project Plan
-See @issues for planned work slices
+See docs/plan/plan-history/map.md for Wayfinder map and Project Plan
+See issues for planned work slices
+See CONTEXT.md for project context and intent
+See plan/GLOSSARY.md for project vocabulary and definitions
 
 ## Agent Orientation
 - Domain: personal portfolio + blog. Owner: Mitch Mele (github: msmele345).
@@ -23,6 +25,7 @@ See @issues for planned work slices
 1. TDD on any new feature code or bug fixes. Use Test Driven Development whenever possible
 2. Red green refactor. Reference the /tdd skill and follow it
 3. Always check off the tracer bullets from an issue or ticket that were completed in a session.
+4. Before finishing a task, review the relevant context docs and ensure there are no stale or missing references.
 
 
 # Git Strategy and Instructions

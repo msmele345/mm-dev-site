@@ -1,0 +1,22 @@
+[
+  {
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    },
+    "headline": 88,
+    "position": "rgba(245, 243, 237, 0.55)",
+    "wallTopBorder": "1px",
+    "wallTop": 404.953125
+  },
+  {
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "headline": 40,
+    "position": "rgba(245, 243, 237, 0.55)",
+    "wallTopBorder": "1px",
+    "wallTop": 464.96875
+  }
+]
