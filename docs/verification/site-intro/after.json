@@ -1,0 +1,36 @@
+[
+  {
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    },
+    "headline": 61.6,
+    "positions": [
+      "rgb(77, 255, 106)",
+      "rgb(57, 255, 20)",
+      "rgb(121, 201, 255)",
+      "rgb(255, 176, 0)"
+    ],
+    "wallTopBorder": "0px",
+    "railTopBorder": "1px",
+    "contactTopBorder": "1px",
+    "wallTop": 360.046875
+  },
+  {
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "headline": 28,
+    "positions": [
+      "rgb(77, 255, 106)",
+      "rgb(57, 255, 20)",
+      "rgb(121, 201, 255)",
+      "rgb(255, 176, 0)"
+    ],
+    "wallTopBorder": "0px",
+    "railTopBorder": "1px",
+    "contactTopBorder": "1px",
+    "wallTop": 420.765625
+  }
+]

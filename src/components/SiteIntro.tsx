@@ -1,4 +1,5 @@
 import Link from "next/link";
+import type { CSSProperties } from "react";
 import { listWallProjects } from "@/content/projects/catalog";
 
 /** A blinking lime underscore after the headline. Set false to remove it. */
@@ -20,7 +21,10 @@ export default function SiteIntro() {
                         <ol>
                             {projects.map((project, index) => (
                                 <li key={project.slug}>
-                                    <Link href={`/work/${project.slug}`}>
+                                    <Link
+                                        href={`/work/${project.slug}`}
+                                        style={{ "--project-accent": project.tile!.palette.accent } as CSSProperties}
+                                    >
                                         <span className="site-intro__position" aria-hidden="true">
                                             {String(index + 1).padStart(2, "0")}
                                         </span>

@@ -1,4 +1,6 @@
 import { expect, test, type Page } from "@playwright/test";
+import { listWallProjects } from "@/content/projects/catalog";
+import { contrast, cssColor, parseColor, type Rgb } from "./support/color";
 
 /**
  * Issue 09 — the pre-launch pass across every finished surface.
@@ -479,28 +481,31 @@ test.describe("contrast", () => {
 });
 
 test.describe("Site intro contrast", () => {
-  test("index rows clear AA at rest and on hover, and the ring clears 3:1", async ({ page }) => {
+  test("every project accent clears AA at rest and on hover, and the ring clears 3:1", async ({ page }) => {
     await page.goto("/");
     await page.setViewportSize({ width: 1280, height: 800 });
     const ink = await page.evaluate(() => getComputedStyle(document.body).backgroundColor);
-    const row = page.getByRole("navigation", { name: "Featured projects" }).getByRole("link").first();
-    const colors = () => row.locator("span").evaluateAll((spans) => spans.map((span) => getComputedStyle(span).color));
-    // The muted tokens are translucent: score what actually composites over the ink.
+    const rows = page.getByRole("navigation", { name: "Featured projects" }).getByRole("link");
     const composited = (color: string): Rgb => {
       const [r, g, b, alpha = 1] = (color.match(/[\d.]+/g) ?? []).map(Number);
       const ground = parseColor(ink);
       return [r, g, b].map((channel, i) => channel * alpha + ground[i] * (1 - alpha)) as Rgb;
     };
 
-    for (const color of await colors()) expect(contrast(composited(color), ink)).toBeGreaterThanOrEqual(4.5);
-    await row.hover();
-    await expect(row.locator(".site-intro__invitation")).toHaveCSS("color", LIME);
-    for (const color of await colors()) expect(contrast(composited(color), ink)).toBeGreaterThanOrEqual(4.5);
-    await page.mouse.move(0, 0);
-    await page.keyboard.press("Tab"); // Puts the browser in keyboard modality so focus() shows the ring.
-    await row.focus();
-    const ring = await row.evaluate((el) => getComputedStyle(el).outlineColor);
-    expect(contrast(composited(ring), ink)).toBeGreaterThanOrEqual(3);
+    for (const [position, project] of listWallProjects().entries()) {
+      const row = rows.nth(position);
+      const colors = () => row.locator("span").evaluateAll((spans) => spans.map((span) => getComputedStyle(span).color));
+      // The muted tokens are translucent: score what actually composites over the ink.
+      for (const color of await colors()) expect(contrast(composited(color), ink), `${project.slug} at rest`).toBeGreaterThanOrEqual(4.5);
+      await row.hover();
+      await expect(row.locator(".site-intro__invitation")).toHaveCSS("color", cssColor(project.tile!.palette.accent));
+      for (const color of await colors()) expect(contrast(composited(color), ink), `${project.slug} on hover`).toBeGreaterThanOrEqual(4.5);
+      await page.mouse.move(0, 0);
+      await page.keyboard.press("Tab"); // Puts the browser in keyboard modality so focus() shows the ring.
+      await row.focus();
+      const ring = await row.evaluate((el) => getComputedStyle(el).outlineColor);
+      expect(contrast(composited(ring), ink), `${project.slug} focus ring`).toBeGreaterThanOrEqual(3);
+    }
   });
 });
 
@@ -618,35 +623,3 @@ test.describe("chrome metadata", () => {
     expect(contrast(declared, painted)).toBeLessThan(1.1);
   });
 });
-
-/** ── colour maths (WCAG 2.x relative luminance) ── */
-
-type Rgb = [number, number, number];
-
-function parseColor(value: string | Rgb): Rgb {
-  if (Array.isArray(value)) return value;
-  const trimmed = value.trim();
-  const channels = trimmed.match(/-?[\d.]+/g);
-  if (trimmed.startsWith("rgb") && channels) {
-    return [Number(channels[0]), Number(channels[1]), Number(channels[2])];
-  }
-  const hex = trimmed.replace("#", "");
-  const full = hex.length === 3 ? [...hex].map((c) => c + c).join("") : hex;
-  return [0, 2, 4].map((i) => parseInt(full.slice(i, i + 2), 16)) as Rgb;
-}
-
-function luminance(color: string | Rgb): number {
-  const channel = (value: number) => {
-    const c = value / 255;
-    return c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4;
-  };
-  const [r, g, b] = parseColor(color);
-  return 0.2126 * channel(r) + 0.7152 * channel(g) + 0.0722 * channel(b);
-}
-
-function contrast(foreground: string | Rgb, background: string | Rgb): number {
-  const a = luminance(foreground);
-  const b = luminance(background);
-  const [high, low] = a > b ? [a, b] : [b, a];
-  return (high + 0.05) / (low + 0.05);
-}
