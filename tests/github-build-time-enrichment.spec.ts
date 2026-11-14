@@ -71,7 +71,7 @@ test("live stats are additive — curated content still carries the page", async
   const main = page.getByRole("main");
   await expect(main.getByText(/playable from the first click/i)).toBeVisible();
   await expect(
-    main.getByRole("heading", { name: /the instrument came last/i }),
+    main.getByRole("heading", { name: /learning techno starts in the wrong place/i }),
   ).toBeVisible();
   await expect(main.getByRole("heading", { name: /^stack$/i })).toBeVisible();
   await expect(main.getByRole("link", { name: /repository/i })).toBeVisible();

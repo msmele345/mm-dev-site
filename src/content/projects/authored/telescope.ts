@@ -4,9 +4,9 @@ export const telescope = {
   title: "Telescope",
   slug: "telescope",
   pitch:
-    "A shipped web planetarium that renders roughly 9,000 real stars for a visitor’s location and time — with a beautiful 3D sky and an accessible path into the same astronomy.",
+    "A web planetarium that shows roughly 9,000 real stars as they look from your US zip code, right now. Look around, speed up time, and follow a constellation into its mythology.",
   invitation: "Explore the sky",
-  draft: true,
+  draft: false,
   tile: {
     motif: "star field",
     displayFace: "Bebas Neue",
@@ -22,34 +22,34 @@ export const telescope = {
     {
       kind: "problem",
       heading: "The sky without the intimidation",
-      body: "Textbook charts are flat, planetarium software can be heavy, and phone apps often assume the learner already knows what they are seeing. Telescope starts with the sky itself: personal, immediate, and explorable before an account is ever required.",
+      body: "Textbook star charts are flat, planetarium software can feel heavy and intimidating, and phone apps often assume you already know what you’re looking at. Telescope starts with the sky itself: the stars over your town, ready to explore without an account.",
     },
     {
       kind: "build",
-      heading: "Astronomy beneath a thin renderer",
-      body: "Pure, unit-tested sky-math, time-controller, star-catalog, and zipcode modules do the hard work. React Three Fiber renders the result inside a celestial dome; astronomy-engine places the Sun, Moon, and planets. Instanced points keep roughly 9,000 Yale Bright Star Catalog objects fluid.",
+      heading: "Careful math under a 3D sky",
+      body: "The math that works out where each star sits for your place and time lives in small, tested pieces of code, kept apart from the graphics. A 3D scene draws the result as a dome around you, with the Sun, Moon, and planets in their real positions, and stays smooth on mid-range laptops. Enter a US zip code for your own sky, drag to look around, and speed up time to watch the sky turn.",
     },
     {
       kind: "result",
       heading: "A real sky, ready to learn",
-      body: "The shipped product supports location, time travel, constellation lessons, favorites, and a searchable keyboard- and screen-reader-friendly alternative to the 3D scene. A Hipparcos cross-match raised star-distance coverage from 34% to more than 99%.",
+      body: "Click a star to see its name, brightness, and distance, then follow its constellation into its mythology and a lesson. Signing in is optional and lets you save favorites and mark lessons as read. A searchable list that works with a keyboard and screen reader sits alongside the 3D view. Matching the catalog against a second star survey raised the share of stars with a known distance from 34% to over 99%.",
     },
   ],
   screenshots: [
     {
       src: "/projects/telescope/sky.svg",
-      alt: "Draft plate of Telescope rendering a local night sky above a compass horizon.",
-      caption: "Draft plate — the local sky and horizon. Replace with a live capture.",
+      alt: "Local sky at 22:14 with stars, Orion line art, a horizon, and compass headings.",
+      caption: "The local sky and horizon.",
     },
     {
       src: "/projects/telescope/lesson.svg",
-      alt: "Draft plate of Telescope connecting constellation line art to a mythology lesson.",
-      caption: "Draft plate — constellation discovery flowing into a lesson. Replace with a live capture.",
+      alt: "Orion line art beside a constellation lesson panel and a read the myth control.",
+      caption: "A constellation, then the lesson.",
     },
   ],
   links: {
     repo: "https://github.com/msmele345/telescope",
-    demo: "https://telescope.vercel.app",
+    demo: "https://www.my-telescope.dev",
   },
   stack: [
     "Next.js",
