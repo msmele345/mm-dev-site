@@ -62,7 +62,7 @@ Use each repository's GitHub homepage URL as the source of truth:
 
 | Project | Currently in the record | Correct |
 | --- | --- | --- |
-| telescope | `https://telescope.vercel.app` | `https://telescope-lake.vercel.app` |
+| telescope | `https://telescope.vercel.app` | `https://www.my-telescope.dev` (custom domain; GitHub homepage still lists `https://telescope-lake.vercel.app`) |
 | sound-city | `https://sound-city.vercel.app` (serves an unrelated page titled "Vite App") | `https://sound-city-ten.vercel.app` |
 | elevated-bpm | `https://elevated-bpm-dusky.vercel.app` | unchanged |
 | terminal-one | none | none (desktop app, no demo) |

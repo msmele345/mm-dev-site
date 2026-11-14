@@ -49,7 +49,7 @@ export const telescope = {
   ],
   links: {
     repo: "https://github.com/msmele345/telescope",
-    demo: "https://telescope-lake.vercel.app",
+    demo: "https://www.my-telescope.dev",
   },
   stack: [
     "Next.js",

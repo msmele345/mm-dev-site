@@ -35,7 +35,7 @@ test("telescope publishes its sourced case study", async ({ page }) => {
   );
   await expect(main.getByRole("link", { name: /live demo/i })).toHaveAttribute(
     "href",
-    "https://telescope-lake.vercel.app",
+    "https://www.my-telescope.dev",
   );
   await expect(main.getByText(/draft copy/i)).toHaveCount(0);
 });
