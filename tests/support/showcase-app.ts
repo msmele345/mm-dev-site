@@ -55,6 +55,16 @@ export function addPreparedFixtureProject(dir: string, overrides: Record<string,
   updateSelection(dir, ({ published }) => ({ published: [slug, ...published] }));
 }
 
+export function readFixtureProject(dir: string, slug: string): { tile: { palette: { accent: string } } } {
+  const record = readFileSync(join(dir, AUTHORED_DIR, `${slug}.ts`), "utf8");
+  const declaration = record.indexOf(": Project =");
+  const objectStart = record.indexOf("{", declaration === -1 ? record.indexOf("export const") : declaration);
+  const serialized = record.slice(objectStart, record.lastIndexOf("}") + 1)
+    .replace(/([{,]\s*)([a-zA-Z][\w]*):/g, '$1"$2":')
+    .replace(/,(\s*[}\]])/g, "$1");
+  return JSON.parse(serialized);
+}
+
 export function writePublishedSelection(dir: string, slugs: readonly string[]) {
   updateSelection(dir, () => ({ published: slugs }));
 }

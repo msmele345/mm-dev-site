@@ -18,6 +18,11 @@ electric lime, hot magenta, cyan.
   rings, highlights. "Techno flyer meets terminal phosphor."
 - **No dark/light theme toggle** — the ink-black identity is the design.
 - OG images and RSS branding follow the same ink-black + lime system.
+- **Site intro index exception:** each featured index row uses its curated project's
+  `tile.palette.accent` for the position number and for the invitation, caret, and
+  top border on hover and keyboard focus. The focus ring remains lime. The exception
+  is limited to these index rows because they point directly to the Project wall;
+  no other Chrome surface takes a project colour.
 
 ## Consequences
 

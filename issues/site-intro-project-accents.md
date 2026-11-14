@@ -63,19 +63,19 @@ to the Site intro index rows. No other Chrome surface takes a project colour.
 
 ## Acceptance criteria
 
-- [ ] Red first: a test fails while an index row's position number is not the project's `tile.palette.accent`.
-- [ ] Each row's position number renders in its project's accent at rest, for all featured projects and in wall order.
-- [ ] On hover and on keyboard focus, the invitation, caret, and top border use the project's accent. The focus ring is still lime, and hover and focus remain visibly distinct.
-- [ ] `tests/site-intro.spec.ts` "hover and keyboard focus are distinct and lime" is updated to the new behaviour.
-- [ ] Every featured accent meets the contrast thresholds the polish-and-audit spec measures against the ink ground. A project whose accent fails is reported by slug.
-- [ ] Reordering or rotating the featured selection changes the row accents with no other edit (covered in the rotation spec).
-- [ ] No rule renders between the Site intro and the Project wall. The rail and contact rules are unchanged.
-- [ ] The headline is about 25–30% smaller at desktop and mobile widths, never overflows its container, and the existing bounded-headline and first-tile-in-view tests pass, including the six-project fixture.
-- [ ] `tests/home-spacing.spec.ts` passes.
-- [ ] Reduced-motion users get the same colours and states with nothing animating.
-- [ ] ADR 0003 records the index-row exception.
-- [ ] Before and after screenshots at 1440×900 and 390×844 are saved under `docs/verification/site-intro/`.
-- [ ] `npm test`, `npm run lint`, and `npm run typecheck` pass.
+- [x] Red first: a test fails while an index row's position number is not the project's `tile.palette.accent`.
+- [x] Each row's position number renders in its project's accent at rest, for all featured projects and in wall order.
+- [x] On hover and on keyboard focus, the invitation, caret, and top border use the project's accent. The focus ring is still lime, and hover and focus remain visibly distinct.
+- [x] `tests/site-intro.spec.ts` "hover and keyboard focus are distinct and lime" is updated to the new behaviour.
+- [x] Every featured accent meets the contrast thresholds the polish-and-audit spec measures against the ink ground. A project whose accent fails is reported by slug.
+- [x] Reordering or rotating the featured selection changes the row accents with no other edit (covered in the rotation spec).
+- [x] No rule renders between the Site intro and the Project wall. The rail and contact rules are unchanged.
+- [x] The headline is about 25–30% smaller at desktop and mobile widths, never overflows its container, and the existing bounded-headline and first-tile-in-view tests pass, including the six-project fixture.
+- [x] `tests/home-spacing.spec.ts` passes.
+- [x] Reduced-motion users get the same colours and states with nothing animating.
+- [x] ADR 0003 records the index-row exception.
+- [x] Before and after screenshots at 1440×900 and 390×844 are saved under `docs/verification/site-intro/`.
+- [x] `npm test`, `npm run lint`, and `npm run typecheck` pass.
 
 ## Blocked by
 

@@ -29,6 +29,7 @@ Domain vocabulary for the site. Issues, ADRs, and code use these terms.
 - **Enrichment** — build-time layering of live GitHub stats (commits, last push,
   languages) onto curated content. Never a runtime dependency.
 - **Ambient state** — a tile's idle animation: subtle, low-frequency life.
-- **Crescendo** — a tile's full-energy state on hover/focus (or tap-and-hold /
-  dominant-in-view on mobile). One tile at a time. See ADR 0006.
+- **Crescendo** — a tile's full-energy state on hover/focus, on the matching Site intro
+  index row's hover/focus (or tap-and-hold / dominant-in-view on mobile). One tile at a
+  time. See ADR 0006.
 - **Static state** — the frozen tile art shown under `prefers-reduced-motion`.

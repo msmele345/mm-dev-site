@@ -52,18 +52,18 @@ in `docs/GLOSSARY.md` to match.
 
 ## Acceptance criteria
 
-- [ ] Red first: a test fails while hovering an index row leaves the matching tile out of crescendo.
-- [ ] Mouse hover on a row puts the matching tile, and only that tile, into crescendo; leaving the row returns it to ambient.
-- [ ] Keyboard focus on a row does the same; moving focus out of the index clears it.
-- [ ] Moving from a row to a different tile, or from a tile to a different row, never leaves two tiles in crescendo.
-- [ ] Rows still navigate to `/work/{slug}` on click and Enter.
-- [ ] Touch pointers do not trigger crescendo from a row; existing mobile crescendo tests pass unchanged.
-- [ ] Under reduced motion, hovering or focusing a row animates nothing.
-- [ ] With JavaScript disabled, `tests/site-intro.spec.ts` "works by keyboard and without JavaScript" still passes.
-- [ ] Works for every featured project and follows the featured selection through add / remove / replace / reorder with no second list.
-- [ ] The Site intro's headline, eyebrow, sentence, and links are still in the server-rendered HTML.
-- [ ] ADR 0006 and the glossary's **Crescendo** entry name the index row as a trigger.
-- [ ] `npm test`, `npm run lint`, and `npm run typecheck` pass.
+- [x] Red first: a test fails while hovering an index row leaves the matching tile out of crescendo.
+- [x] Mouse hover on a row puts the matching tile, and only that tile, into crescendo; leaving the row returns it to ambient.
+- [x] Keyboard focus on a row does the same; moving focus out of the index clears it.
+- [x] Moving from a row to a different tile, or from a tile to a different row, never leaves two tiles in crescendo.
+- [x] Rows still navigate to `/work/{slug}` on click and Enter.
+- [x] Touch pointers do not trigger crescendo from a row; existing mobile crescendo tests pass unchanged.
+- [x] Under reduced motion, hovering or focusing a row animates nothing.
+- [x] With JavaScript disabled, `tests/site-intro.spec.ts` "works by keyboard and without JavaScript" still passes.
+- [x] Works for every featured project and follows the featured selection through add / remove / replace / reorder with no second list.
+- [x] The Site intro's headline, eyebrow, sentence, and links are still in the server-rendered HTML.
+- [x] ADR 0006 and the glossary's **Crescendo** entry name the index row as a trigger.
+- [x] `npm test`, `npm run lint`, and `npm run typecheck` pass.
 
 ## Blocked by
 

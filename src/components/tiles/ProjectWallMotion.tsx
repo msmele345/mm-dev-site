@@ -1,21 +1,22 @@
 "use client";
 
 import {
-  createContext,
+  useContext,
   useEffect,
   useRef,
-  useState,
   type FocusEvent,
   type PointerEvent,
   type ReactNode,
 } from "react";
+import { CrescendoContext, CrescendoSetContext } from "@/components/CrescendoProvider";
 
-export const CrescendoContext = createContext<string | null>(null);
+// Re-export so existing TileMotion imports keep working.
+export { CrescendoContext };
 
 const HOLD_DELAY_MS = 350;
 
 export default function ProjectWallMotion({ children }: { children: ReactNode }) {
-  const [activeSlug, setActiveSlug] = useState<string | null>(null);
+  const setActiveSlug = useContext(CrescendoSetContext);
   const holdTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(
@@ -57,19 +58,17 @@ export default function ProjectWallMotion({ children }: { children: ReactNode })
   }
 
   return (
-    <CrescendoContext.Provider value={activeSlug}>
-      <ul
-        className="project-wall__grid"
-        onBlurCapture={handleBlur}
-        onFocusCapture={handleFocus}
-        onPointerCancel={() => { cancelHold(); setActiveSlug(null); }}
-        onPointerDown={handlePointerDown}
-        onPointerLeave={() => { cancelHold(); setActiveSlug(null); }}
-        onPointerOver={handlePointerOver}
-        onPointerUp={() => { cancelHold(); setActiveSlug(null); }}
-      >
-        {children}
-      </ul>
-    </CrescendoContext.Provider>
+    <ul
+      className="project-wall__grid"
+      onBlurCapture={handleBlur}
+      onFocusCapture={handleFocus}
+      onPointerCancel={() => { cancelHold(); setActiveSlug(null); }}
+      onPointerDown={handlePointerDown}
+      onPointerLeave={() => { cancelHold(); setActiveSlug(null); }}
+      onPointerOver={handlePointerOver}
+      onPointerUp={() => { cancelHold(); setActiveSlug(null); }}
+    >
+      {children}
+    </ul>
   );
 }

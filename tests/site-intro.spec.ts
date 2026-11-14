@@ -4,6 +4,7 @@ import type { ChildProcess } from "node:child_process";
 import { listWallProjects } from "@/content/projects/catalog";
 import { addPreparedFixtureProject, createShowcaseApp, writeFeaturedSelection } from "./support/showcase-app";
 import { buildTransmissionApp, serveTransmissionApp } from "./support/transmission-app";
+import { contrast, cssColor } from "./support/color";
 
 const EYEBROW = "Software engineer · Side projects · 2026";
 const SENTENCE = "Every project here started as a question I couldn't leave alone.";
@@ -38,6 +39,11 @@ test.describe("Site intro", () => {
       await expect(row).toHaveAttribute("href", `/work/${project.slug}`);
       await expect(row).toHaveAccessibleName(`${project.invitation} ${project.title}`);
       await expect(row).toContainText(String(position + 1).padStart(2, "0"));
+      await expect(row.locator(".site-intro__position")).toHaveCSS("color", cssColor(project.tile!.palette.accent));
+    }
+
+    for (const project of projects) {
+      expect(contrast(project.tile!.palette.accent, INK), `${project.slug} accent contrast`).toBeGreaterThanOrEqual(4.5);
     }
 
     const order = await page.getByRole("region", { name: "Project wall" }).locator("[data-tile-slug]")
@@ -101,6 +107,12 @@ test("the Project wall drops its count and keeps a visually hidden heading as it
 const featuredIndex = (page: Page) => page.getByRole("navigation", { name: "Featured projects" });
 const FIRST_VIEWPORTS = [{ width: 1280, height: 800 }, { width: 390, height: 844 }];
 const LIME = "rgb(198, 255, 0)";
+const INK = "#08090b";
+const EXPECTED_HEADLINE_SIZES = new Map([
+  [320, 28], [375, 28], [390, 28], [414, 28.49], [768, 40.88], [895, 45.325],
+  [896, 45.36], [1024, 49.84], [1280, 58.8], [1536, 61.6], [2560, 61.6],
+]);
+
 /** At least this much of the first tile shows above the fold, past its padding and into the artwork. */
 const MIN_VISIBLE_TILE = 48;
 /** The old hero ran clamp(5rem, 23vw, 22rem); this cap keeps the headline a fraction of that at each width. */
@@ -120,6 +132,21 @@ async function expectFirstTileInOpeningView(page: Page) {
     await page.evaluate(() => window.scrollTo({ top: 0, behavior: "instant" }));
     const tile = await page.locator("[data-tile-slug]").first().boundingBox();
     expect(tile!.y, `first tile at ${viewport.width}x${viewport.height}`).toBeLessThan(viewport.height - MIN_VISIBLE_TILE);
+  }
+}
+
+async function expectBoundedHeadline(page: Page) {
+  for (const [width, fontSize] of EXPECTED_HEADLINE_SIZES) {
+    await resize(page, { width, height: 900 });
+    const measured = await page.locator(".site-intro h1").evaluate((h1) => ({
+      fontSize: parseFloat(getComputedStyle(h1).fontSize),
+      overflow: h1.scrollWidth - h1.clientWidth,
+      page: document.documentElement.scrollWidth - document.documentElement.clientWidth,
+    }));
+    expect(measured.page, `page at ${width}px`).toBeLessThanOrEqual(0);
+    expect(measured.overflow, `headline at ${width}px`).toBeLessThanOrEqual(0);
+    expect(measured.fontSize, `headline scale at ${width}px`).toBeLessThanOrEqual(MAX_HEADLINE_SIZE);
+    expect(measured.fontSize, `reduced headline at ${width}px`).toBeCloseTo(fontSize, 2);
   }
 }
 
@@ -145,17 +172,13 @@ test.describe("Site intro layout", () => {
   });
 
   test("never overflows, and the headline stays bounded inside its container", async ({ page }) => {
-    for (const width of [320, 375, 390, 414, 768, 895, 896, 1024, 1280, 1536, 2560]) {
-      await resize(page, { width, height: 900 });
-      const measured = await page.locator(".site-intro h1").evaluate((h1) => ({
-        fontSize: parseFloat(getComputedStyle(h1).fontSize),
-        overflow: h1.scrollWidth - h1.clientWidth,
-        page: document.documentElement.scrollWidth - document.documentElement.clientWidth,
-      }));
-      expect(measured.page, `page at ${width}px`).toBeLessThanOrEqual(0);
-      expect(measured.overflow, `headline at ${width}px`).toBeLessThanOrEqual(0);
-      expect(measured.fontSize, `headline scale at ${width}px`).toBeLessThanOrEqual(MAX_HEADLINE_SIZE);
-    }
+    await expectBoundedHeadline(page);
+  });
+
+  test("hands off to the wall without a rule while the rail and contact rules remain", async ({ page }) => {
+    await expect(page.locator(".project-wall")).toHaveCSS("border-top-width", "0px");
+    await expect(page.locator(".rail")).toHaveCSS("border-top-width", "1px");
+    await expect(page.locator(".contact")).toHaveCSS("border-top-width", "1px");
   });
 
   test("the first tile shares the opening view", async ({ page }) => {
@@ -178,19 +201,25 @@ test.describe("Site intro layout", () => {
     await expect(row).toHaveAccessibleName(`${first.invitation} ${first.title}`);
   });
 
-  test("hover and keyboard focus are distinct and lime", async ({ page }) => {
+  test("hover and keyboard focus use the project accent and keep a lime focus ring", async ({ page }) => {
     await resize(page, { width: 1280, height: 800 });
     const row = featuredIndex(page).getByRole("link").first();
+    const accent = cssColor(listWallProjects()[0].tile!.palette.accent);
     const outline = () => row.evaluate((el) => getComputedStyle(el).outlineStyle);
 
     await row.hover();
-    await expect(row.locator(".site-intro__invitation")).toHaveCSS("color", LIME);
+    await expect(row.locator(".site-intro__invitation")).toHaveCSS("color", accent);
+    await expect(row.locator(".site-intro__caret")).toHaveCSS("color", accent);
+    await expect(row).toHaveCSS("border-top-color", accent);
     expect(await outline()).toBe("none");
 
     await page.mouse.move(0, 0);
     await expect(row.locator(".site-intro__invitation")).toHaveCSS("color", "rgb(255, 255, 255)");
     await page.keyboard.press("Tab"); // Puts the browser in keyboard modality so focus() shows the ring.
     await row.focus();
+    await expect(row.locator(".site-intro__invitation")).toHaveCSS("color", accent);
+    await expect(row.locator(".site-intro__caret")).toHaveCSS("color", accent);
+    await expect(row).toHaveCSS("border-top-color", accent);
     await expect(row).toHaveCSS("outline-style", "solid");
     await expect(row).toHaveCSS("outline-color", LIME);
     await expect(row).toHaveCSS("outline-width", "2px");
@@ -219,7 +248,7 @@ test.describe("Site intro layout", () => {
       running: el.getAnimations({ subtree: true }).length,
       color: getComputedStyle(el.querySelector(".site-intro__invitation")!).color,
     }));
-    expect(hovered).toEqual({ running: 0, color: LIME });
+    expect(hovered).toEqual({ running: 0, color: cssColor(listWallProjects()[0].tile!.palette.accent) });
 
     await page.mouse.move(0, 0);
     await page.keyboard.press("Tab"); // Puts the browser in keyboard modality so focus() shows the ring.
@@ -238,7 +267,7 @@ test.describe("Site intro layout", () => {
   });
 });
 
-test("the first tile stays in the opening view with six featured projects", async ({ page }) => {
+test("six featured projects keep the bounded headline and first tile in the opening view", async ({ page }) => {
   test.setTimeout(180_000);
   const dir = createShowcaseApp();
   let server: ChildProcess | undefined;
@@ -251,6 +280,7 @@ test("the first tile stays in the opening view with six featured projects", asyn
     server = await serveTransmissionApp(dir, 3045);
     await page.goto("http://127.0.0.1:3045/");
     await expect(featuredIndex(page).getByRole("link")).toHaveCount(slugs.length);
+    await expectBoundedHeadline(page);
     await expectFirstTileInOpeningView(page);
   } finally {
     if (server && server.exitCode === null) {
@@ -299,7 +329,7 @@ test.describe("Site intro type and readout", () => {
     await expect(caret).toBeHidden();
     await row.hover();
     await expect(caret).toBeVisible();
-    await expect(caret).toHaveCSS("color", LIME);
+    await expect(caret).toHaveCSS("color", cssColor(first.tile!.palette.accent));
 
     await page.mouse.move(0, 0);
     await expect(caret).toBeHidden();
