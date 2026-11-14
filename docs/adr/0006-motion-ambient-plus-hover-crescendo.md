@@ -12,7 +12,9 @@ Core Web Vitals — but a static wall isn't "dazzling," and mobile has no hover.
 - **Ambient state (default):** each tile idles with subtle life — a slow LED pulse, one
   drifting star, a faint ticker crawl. Cheap, low-frequency animation.
 - **Crescendo (hover/focus):** the tile goes full-energy — sequencer runs, ticker speeds
-  up, constellation draws itself. Only one tile crescendos at a time.
+  up, constellation draws itself. Triggers are hover or keyboard focus on the tile, or
+  hover or keyboard focus on the matching Site intro index row. Only one tile crescendos
+  at a time, regardless of which surface holds the pointer or focus.
 - **Reduced motion:** `prefers-reduced-motion` freezes tiles to static art. Non-negotiable.
 - **Mobile:** ambient by default; crescendo on tap-and-hold or when a tile is the
   dominant in-view element.
