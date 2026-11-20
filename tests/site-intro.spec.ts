@@ -6,7 +6,7 @@ import { addPreparedFixtureProject, createShowcaseApp, writeFeaturedSelection } 
 import { buildTransmissionApp, serveTransmissionApp } from "./support/transmission-app";
 import { contrast, cssColor } from "./support/color";
 
-const EYEBROW = "Software engineer · Side projects · 2026";
+const EYEBROW = "Software engineer · Side Quests · Experiments * 2026";
 const SENTENCE = "Every project here started as a question I couldn't leave alone.";
 
 test.describe("Site intro", () => {

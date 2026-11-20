@@ -11,9 +11,9 @@ export default function SiteIntro() {
         <section className="site-intro" aria-labelledby="site-title" data-cursor={SHOW_CURSOR || undefined}>
             <div className="site-intro__inner">
                 <div className="site-intro__core">
-                    <p className="site-intro__eyebrow">Software engineer · Side projects · 2026</p>
+                    <p className="site-intro__eyebrow">Software engineer · Side Quests · Experiments * 2026</p>
                     <h1 id="site-title">Built to be curious.</h1>
-                    <p className="site-intro__sentence">Every project here started as a question I couldn&apos;t leave alone.</p>
+                    <p className="site-intro__sentence">Every project here started as a question I couldn&apos;t leave alone. </p>
                 </div>
                 {projects.length > 0 && (
                     <nav className="site-intro__index" aria-label="Featured projects">
