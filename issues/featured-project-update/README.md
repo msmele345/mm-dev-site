@@ -14,6 +14,6 @@ Work the **frontier**: start a ticket only when all its blockers are complete. T
 
 Implementation status and verified acceptance criteria are recorded in each ticket. Completing the planning work is not evidence that feature behavior has been implemented.
 
-The production four-project selection is retained by this work. Adding Birdsview as a real featured project is a separate task. Current Transmission does not block these tickets.
+The production four-project selection is retained by this work. Adding Birdsview as a real featured project is a separate task, now specified in the [Birdsview featured project spec](../../docs/birdsview-featured-project-spec.md). Current Transmission does not block these tickets.
 
 Follow the repository's TDD and feature-branch workflow during implementation. Preserve unrelated checkout changes and record actual verification evidence in the ticket being worked.
