@@ -38,7 +38,7 @@ export const terminalOne = {
   screenshots: [
     {
       src: "/projects/terminal-one/console.svg",
-      alt: "Portfolio console with AAPL and NVDA quotes, a delayed advisory notice, and a pull lever control.",
+      alt: "Portfolio console with AAPL and NVDA quotes, a delayed advisory notice, and a slot-machine lever.",
       caption: "The portfolio console. Delayed quotes, advisory only.",
     },
     {
