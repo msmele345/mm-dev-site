@@ -23,3 +23,17 @@ for (const slug of featured) {
     await expect(page.getByText("Draft copy — pending review")).toHaveCount(0);
   });
 }
+
+test("terminal-one console plate draws a slot-machine lever, not a labeled button", async ({ page, request }) => {
+  const res = await request.get("/projects/terminal-one/console.svg");
+  expect(res.ok()).toBe(true);
+  const svg = await res.text();
+
+  expect(svg).not.toContain("PULL LEVER");
+  expect(svg).toMatch(/<g[^>]*id="lever"/);
+  expect(svg).toMatch(/id="lever-knob"/);
+  expect(svg).toMatch(/id="lever-shaft"/);
+
+  await page.goto("/work/terminal-one");
+  await expect(page.locator(".case__shots img").first()).toHaveAttribute("alt", /slot-machine lever/i);
+});

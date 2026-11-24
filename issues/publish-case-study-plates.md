@@ -42,7 +42,7 @@ authored. This ticket covers only the four featured records:
 | --- | --- | --- | --- |
 | elevated-bpm | `deck.svg` | EB-01 deck: sixteen step keys in four colors and pads labeled kick, clap, closed hat, and open hat. | The faceplate. Sixteen steps and four drum pads. |
 | elevated-bpm | `arc.svg` | Lesson arc labeled silence to groove, step 04 of 14, clap on 2 and 4. | The lesson arc, from silence to a first groove. |
-| terminal-one | `console.svg` | Portfolio console with AAPL and NVDA quotes, a delayed advisory notice, and a pull lever control. | The portfolio console. Delayed quotes, advisory only. |
+| terminal-one | `console.svg` | Portfolio console with AAPL and NVDA quotes, a delayed advisory notice, and a slot-machine lever. | The portfolio console. Delayed quotes, advisory only. |
 | terminal-one | `ledger.svg` | Paper and taken ledger with SPY, QQQ, and NVDA rows, rank, state, and a why-this-trade note. | The paper and taken ledger. |
 | telescope | `sky.svg` | Local sky at 22:14 with stars, Orion line art, a horizon, and compass headings. | The local sky and horizon. |
 | telescope | `lesson.svg` | Orion line art beside a constellation lesson panel and a read the myth control. | A constellation, then the lesson. |
