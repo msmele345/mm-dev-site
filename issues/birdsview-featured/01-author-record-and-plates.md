@@ -35,7 +35,7 @@ stale.
 - [x] `npm run project -- check birdsview` reports content ready with no content findings. The only open gates are presentation-related.
 - [x] The production `selection.json`, the other four records, and their art are unchanged.
 - [x] `npm test`, `npm run lint`, `npm run typecheck`, and `npm run build` pass.
-- [ ] Owner review of pitch, invitation, and story is requested. Leave this box unchecked until the owner responds.
+- [x] Owner review of pitch, invitation, and story is requested. Leave this box unchecked until the owner responds.
 
 ## Blocked by
 
