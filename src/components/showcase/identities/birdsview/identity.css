@@ -1,0 +1,11 @@
+/* onboarding:unfinished */
+.onboarding-birdsview-tile__art { display: grid; min-height: 17rem; place-items: center; background: #171717; color: #fff; border: 1px dashed #fff; }
+.onboarding-birdsview-tile__art [data-anim] { animation: onboarding-birdsview-starter-pulse 4s ease-in-out infinite; }
+.tile-motion[data-crescendo="true"] .onboarding-birdsview-tile__art [data-anim] { animation-duration: 1s; }
+.onboarding-birdsview-tile__meta { display: grid; gap: 0.75rem; }
+.onboarding-birdsview-tile__meta strong { color: #fff; font-family: var(--font-display), sans-serif; font-size: clamp(1.8rem, 5vw, 3.4rem); line-height: 0.9; }
+.onboarding-birdsview-tile__index, .onboarding-birdsview-tile__go { color: #fff; }
+.onboarding-birdsview-tile__pitch { color: #ddd; }
+.onboarding-birdsview-artwork { display: grid; place-items: center; background: #171717; color: #fff; }
+@keyframes onboarding-birdsview-starter-pulse { 0%, 100% { opacity: 0.6; } 50% { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .onboarding-birdsview-tile__art [data-anim] { opacity: 1; } }
