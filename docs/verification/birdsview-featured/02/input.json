@@ -1,0 +1,84 @@
+{
+  "project": {
+    "title": "Birdsview",
+    "slug": "birdsview",
+    "pitch": "An interactive 3D globe in your browser where glowing hotspots fly you down to bird’s-eye views of real cities, natural wonders, and geological sites. Read short facts aloud, take a guided tour, and stamp each stop in a passport saved on your device.",
+    "invitation": "Fly over the world",
+    "draft": true,
+    "tile": {
+      "motif": "painted-miniature globe",
+      "displayFace": "Libre Caslon Display",
+      "palette": {
+        "ground": "#070e16",
+        "panel": "#0b141d",
+        "ink": "#f4eedf",
+        "mute": "#abb8bf",
+        "accent": "#45ffd0"
+      }
+    },
+    "story": [
+      {
+        "kind": "problem",
+        "heading": "Geography taught from flat maps",
+        "body": "Geography is usually taught with flat maps and lists of capitals, which misses the wonder of seeing how a city wraps around its river or how a canyon cuts through a plateau. Most existing globe apps are either dry reference tools or heavy, paywalled software. Birdsview aims for a free, kid-safe globe in the browser that a ten-year-old and a grandparent can explore together, with no accounts, no ads, and no backend."
+      },
+      {
+        "kind": "build",
+        "heading": "A painted-miniature globe built to stay free",
+        "body": "Birdsview opens on a slowly spinning 3D globe dotted with glowing hotspots. Click one and the camera glides down into a bird’s-eye view, where you can orbit and zoom within guardrails while a fact card slides in with trivia written to read aloud. On capable devices, a diorama visual pass warms the light and softens the edges so places read like painted miniatures; slower devices automatically step down to lighter quality tiers you can override anytime. Each browser session runs in either Google Photorealistic 3D Tiles mode—hard-capped to stay within the free daily quota—or open-data satellite mode when that allowance is spent or turned off, never mixing the two."
+      },
+      {
+        "kind": "result",
+        "heading": "Release one in progress",
+        "body": "Birdsview is actively in development as release one takes shape. The curated catalog currently holds 26 locations across all seven continents—spanning cities, natural wonders, and geological sites—along with two guided tours (“Once around the world” and “What shapes the land?”) and a local passport that stamps every stop on your device. Current-time day/night lighting and cloud layers are intentionally deferred beyond release one to keep locations readable across both map modes, and a quiz mode is planned for a later release."
+      }
+    ],
+    "screenshots": [
+      {
+        "src": "/projects/birdsview/globe.svg",
+        "alt": "Stylised Earth globe with an atmosphere rim, electric-mint hotspots labeled Paris and Cairo, a Passport counter, and Take me somewhere tour buttons.",
+        "caption": "The opening globe, glowing hotspots, and guided tour controls."
+      },
+      {
+        "src": "/projects/birdsview/fact-card.svg",
+        "alt": "Stylised aerial landscape behind a Paris fact card with a circular Stamped mark, fact pager, and a Passport panel tracking 4 of 26 places across continents.",
+        "caption": "A bird’s-eye fact card with its arrival stamp beside the local passport."
+      }
+    ],
+    "links": {
+      "demo": "https://birdsview-ochre.vercel.app"
+    },
+    "stack": [
+      "TypeScript",
+      "React 19",
+      "Vite",
+      "CesiumJS",
+      "Zod",
+      "Vitest",
+      "Playwright",
+      "Vercel"
+    ]
+  },
+  "selection": {
+    "published": [
+      "elevated-bpm",
+      "terminal-one",
+      "telescope",
+      "sound-city",
+      "birdsview"
+    ],
+    "featured": [
+      "elevated-bpm",
+      "terminal-one",
+      "telescope",
+      "sound-city"
+    ]
+  },
+  "stage": "published",
+  "gates": {
+    "contentReady": true,
+    "registered": true,
+    "finished": true
+  },
+  "findings": []
+}
