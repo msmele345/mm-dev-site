@@ -1,0 +1,158 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="540" viewBox="0 0 960 540" role="img" aria-labelledby="title desc">
+  <title id="title">Birdsview bird's-eye fact card and passport</title>
+  <desc id="desc">A stylised painted-miniature aerial terrain scene with an open Paris fact card, a circular passport stamp, and a side passport summary by continent.</desc>
+  <defs>
+    <radialGradient id="diorama-sun" cx="56%" cy="32%" r="60%">
+      <stop offset="0%" stop-color="#4e5d52" stop-opacity="0.65"/>
+      <stop offset="55%" stop-color="#1b303a" stop-opacity="0.72"/>
+      <stop offset="100%" stop-color="#070e16" stop-opacity="0.96"/>
+    </radialGradient>
+    <radialGradient id="vignette" cx="50%" cy="50%" r="72%">
+      <stop offset="45%" stop-color="#070e16" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#070e16" stop-opacity="0.92"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Diorama backdrop -->
+  <rect width="960" height="540" fill="#070e16"/>
+  <rect width="960" height="540" fill="url(#diorama-sun)"/>
+
+  <!-- Stylised isometric painted-miniature terrain blocks & river -->
+  <g opacity="0.62">
+    <polygon points="180,340 480,190 790,345 490,495" fill="#18323c"/>
+    <polygon points="240,290 480,170 720,290 480,410" fill="#234848"/>
+    <path d="M120 420 C280 330, 410 385, 535 285 C630 210, 740 230, 880 140" fill="none" stroke="#164663" stroke-width="46" stroke-linecap="round"/>
+    <path d="M120 420 C280 330, 410 385, 535 285 C630 210, 740 230, 880 140" fill="none" stroke="#2d7496" stroke-width="18" stroke-linecap="round" opacity="0.55"/>
+
+    <!-- Abstract miniature terraced blocks -->
+    <g>
+      <polygon points="350,235 415,202 480,235 415,268" fill="#5e7657"/>
+      <polygon points="350,235 415,268 415,292 350,259" fill="#3a4c3a"/>
+      <polygon points="415,268 480,235 480,259 415,292" fill="#28372c"/>
+
+      <polygon points="488,205 556,171 624,205 556,239" fill="#a88a5d"/>
+      <polygon points="488,205 556,239 556,268 488,234" fill="#775f3e"/>
+      <polygon points="556,239 624,205 624,234 556,268" fill="#53422b"/>
+
+      <polygon points="424,310 494,275 564,310 494,345" fill="#8f5c4a"/>
+      <polygon points="424,310 494,345 494,372 424,337" fill="#633e32"/>
+      <polygon points="494,345 564,310 564,337 494,372" fill="#462b23"/>
+
+      <polygon points="598,312 664,279 730,312 664,345" fill="#4d7055"/>
+      <polygon points="598,312 664,345 664,368 598,335" fill="#324a38"/>
+      <polygon points="664,345 730,312 730,335 664,368" fill="#223428"/>
+    </g>
+
+    <!-- Crisp landmark beacon in the miniature -->
+    <circle cx="494" cy="296" r="10" fill="#45ffd0" fill-opacity="0.28"/>
+    <circle cx="494" cy="296" r="4" fill="#45ffd0"/>
+  </g>
+  <rect width="960" height="540" fill="url(#vignette)"/>
+
+  <!-- Left foreground: Fact Card -->
+  <g>
+    <rect x="44" y="44" width="424" height="452" fill="#070e16" fill-opacity="0.94"/>
+    <rect x="44" y="44" width="424" height="3" fill="#487d71"/>
+    <rect x="44" y="47" width="424" height="449" fill="none" stroke="#487d71" stroke-opacity="0.35" stroke-width="1"/>
+
+    <text x="68" y="84" fill="#a1e8d6" font-family="sans-serif" font-size="10.5" font-weight="600" letter-spacing="2.1">FIELD NOTES</text>
+    <text x="202" y="84" fill="#abb8bf" font-family="sans-serif" font-size="10.5" letter-spacing="0.8">48.86° N · 2.29° E</text>
+    <line x1="68" y1="116" x2="444" y2="116" stroke="#f4eedf" stroke-opacity="0.16" stroke-width="1"/>
+
+    <!-- Rotated circular Passport Stamp -->
+    <g transform="rotate(-14 396 100)">
+      <circle cx="396" cy="100" r="42" fill="#070e16" fill-opacity="0.7" stroke="#a1e8d6" stroke-width="2"/>
+      <circle cx="396" cy="100" r="36" fill="none" stroke="#a1e8d6" stroke-width="1"/>
+      <text x="396" y="82" text-anchor="middle" fill="#a1e8d6" font-family="sans-serif" font-size="7.5" font-weight="600" letter-spacing="2">BIRDSVIEW</text>
+      <text x="396" y="106" text-anchor="middle" fill="#a1e8d6" font-family="Georgia, serif" font-size="16" letter-spacing="1.2">STAMPED</text>
+      <circle cx="396" cy="121" r="3" fill="#45ffd0"/>
+    </g>
+
+    <text x="68" y="146" fill="#a1e8d6" font-family="sans-serif" font-size="10.5" font-weight="600" letter-spacing="2">EUROPE / CITY</text>
+    <text x="68" y="204" fill="#f4eedf" font-family="Georgia, serif" font-size="52" font-weight="400">Paris</text>
+
+    <text x="68" y="248" fill="#f4eedf" font-family="sans-serif" font-size="16">The Eiffel Tower gets a little taller in</text>
+    <text x="68" y="274" fill="#f4eedf" font-family="sans-serif" font-size="16">summer! Heat makes its iron expand, and</text>
+    <text x="68" y="300" fill="#f4eedf" font-family="sans-serif" font-size="16">cold weather makes it shrink again.</text>
+
+    <!-- Fact pager -->
+    <text x="68" y="364" fill="#abb8bf" font-family="sans-serif" font-size="12">Fact 1 of 2</text>
+    <rect x="356" y="338" width="40" height="40" fill="none" stroke="#487d71" stroke-opacity="0.45" stroke-width="1"/>
+    <text x="376" y="363" text-anchor="middle" fill="#abb8bf" fill-opacity="0.45" font-family="sans-serif" font-size="16">←</text>
+    <rect x="404" y="338" width="40" height="40" fill="#0c1d23" stroke="#45ffd0" stroke-width="1"/>
+    <text x="424" y="363" text-anchor="middle" fill="#f4eedf" font-family="sans-serif" font-size="16">→</text>
+
+    <!-- Back to globe action -->
+    <rect x="68" y="414" width="376" height="44" fill="none" stroke="#487d71" stroke-width="1"/>
+    <text x="84" y="441" fill="#f4eedf" font-family="sans-serif" font-size="14" font-weight="500">← Back to globe</text>
+  </g>
+
+  <!-- Right foreground: Passport Panel -->
+  <g>
+    <rect x="504" y="44" width="412" height="452" fill="#0b141d" fill-opacity="0.94" stroke="#487d71" stroke-opacity="0.5" stroke-width="1"/>
+    <text x="530" y="80" fill="#a1e8d6" font-family="sans-serif" font-size="10.5" font-weight="600" letter-spacing="2.1">WHERE YOU HAVE BEEN</text>
+    <text x="530" y="124" fill="#f4eedf" font-family="Georgia, serif" font-size="40" font-weight="400">Passport</text>
+    <text x="530" y="148" fill="#abb8bf" font-family="sans-serif" font-size="13">4 of 26 places stamped</text>
+    <line x1="530" y1="164" x2="890" y2="164" stroke="#f4eedf" stroke-opacity="0.14" stroke-width="1"/>
+
+    <!-- Column 1: Europe & Africa -->
+    <g>
+      <text x="530" y="198" fill="#f4eedf" font-family="Georgia, serif" font-size="21">Europe</text>
+      <text x="530" y="216" fill="#a1e8d6" font-family="sans-serif" font-size="10" font-weight="600" letter-spacing="1.6">2 OF 4</text>
+
+      <circle cx="536" cy="240" r="5" fill="#f08a78"/>
+      <text x="550" y="244" fill="#f4eedf" font-family="sans-serif" font-size="13">Paris</text>
+
+      <circle cx="536" cy="268" r="5" fill="#f08a78"/>
+      <text x="550" y="272" fill="#f4eedf" font-family="sans-serif" font-size="13">Venice</text>
+
+      <circle cx="536" cy="296" r="5" fill="none" stroke="#487d71" stroke-width="1.8"/>
+      <text x="550" y="300" fill="#abb8bf" font-family="sans-serif" font-size="13">Giant’s Causeway</text>
+
+      <circle cx="536" cy="324" r="5" fill="none" stroke="#487d71" stroke-width="1.8"/>
+      <text x="550" y="328" fill="#abb8bf" font-family="sans-serif" font-size="13">Mount Vesuvius</text>
+
+      <text x="530" y="368" fill="#f4eedf" font-family="Georgia, serif" font-size="21">Africa</text>
+      <text x="530" y="386" fill="#a1e8d6" font-family="sans-serif" font-size="10" font-weight="600" letter-spacing="1.6">1 OF 4</text>
+
+      <circle cx="536" cy="410" r="5" fill="#f08a78"/>
+      <text x="550" y="414" fill="#f4eedf" font-family="sans-serif" font-size="13">Cape Town</text>
+
+      <circle cx="536" cy="438" r="5" fill="none" stroke="#487d71" stroke-width="1.8"/>
+      <text x="550" y="442" fill="#abb8bf" font-family="sans-serif" font-size="13">Ngorongoro Crater</text>
+
+      <circle cx="536" cy="466" r="5" fill="none" stroke="#487d71" stroke-width="1.8"/>
+      <text x="550" y="470" fill="#abb8bf" font-family="sans-serif" font-size="13">Sossusvlei</text>
+    </g>
+
+    <!-- Column 2: North America & Oceania -->
+    <g>
+      <text x="722" y="198" fill="#f4eedf" font-family="Georgia, serif" font-size="21">North America</text>
+      <text x="722" y="216" fill="#a1e8d6" font-family="sans-serif" font-size="10" font-weight="600" letter-spacing="1.6">1 OF 5</text>
+
+      <circle cx="728" cy="240" r="5" fill="#f08a78"/>
+      <text x="742" y="244" fill="#f4eedf" font-family="sans-serif" font-size="13">Grand Canyon</text>
+
+      <circle cx="728" cy="268" r="5" fill="none" stroke="#487d71" stroke-width="1.8"/>
+      <text x="742" y="272" fill="#abb8bf" font-family="sans-serif" font-size="13">New York</text>
+
+      <circle cx="728" cy="296" r="5" fill="none" stroke="#487d71" stroke-width="1.8"/>
+      <text x="742" y="300" fill="#abb8bf" font-family="sans-serif" font-size="13">Yellowstone</text>
+
+      <circle cx="728" cy="324" r="5" fill="none" stroke="#487d71" stroke-width="1.8"/>
+      <text x="742" y="328" fill="#abb8bf" font-family="sans-serif" font-size="13">Crater Lake</text>
+
+      <text x="722" y="368" fill="#f4eedf" font-family="Georgia, serif" font-size="21">Oceania</text>
+      <text x="722" y="386" fill="#a1e8d6" font-family="sans-serif" font-size="10" font-weight="600" letter-spacing="1.6">0 OF 4</text>
+
+      <circle cx="728" cy="410" r="5" fill="none" stroke="#487d71" stroke-width="1.8"/>
+      <text x="742" y="414" fill="#abb8bf" font-family="sans-serif" font-size="13">Sydney</text>
+
+      <circle cx="728" cy="438" r="5" fill="none" stroke="#487d71" stroke-width="1.8"/>
+      <text x="742" y="442" fill="#abb8bf" font-family="sans-serif" font-size="13">Great Barrier Reef</text>
+
+      <circle cx="728" cy="466" r="5" fill="none" stroke="#487d71" stroke-width="1.8"/>
+      <text x="742" y="470" fill="#abb8bf" font-family="sans-serif" font-size="13">Uluru</text>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,156 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="540" viewBox="0 0 960 540" role="img" aria-labelledby="title desc">
+  <title id="title">Birdsview globe and glowing hotspots</title>
+  <desc id="desc">A stylised planet Earth set against deep navy space with an atmosphere rim, electric-mint glowing hotspots labeled Paris and Cairo, and a Take me somewhere tour panel.</desc>
+  <defs>
+    <radialGradient id="space-glow" cx="70%" cy="51%" r="52%">
+      <stop offset="0%" stop-color="#13344d" stop-opacity="0.72"/>
+      <stop offset="56%" stop-color="#0b1d2c" stop-opacity="0.34"/>
+      <stop offset="100%" stop-color="#070e16" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="atmo-halo" cx="50%" cy="50%" r="50%">
+      <stop offset="80%" stop-color="#45ffd0" stop-opacity="0"/>
+      <stop offset="93%" stop-color="#45ffd0" stop-opacity="0.22"/>
+      <stop offset="100%" stop-color="#45ffd0" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="ocean-fill" cx="38%" cy="34%" r="68%">
+      <stop offset="0%" stop-color="#1a4b6b"/>
+      <stop offset="58%" stop-color="#0d2b44"/>
+      <stop offset="100%" stop-color="#071625"/>
+    </radialGradient>
+    <radialGradient id="sphere-shade" cx="34%" cy="32%" r="68%">
+      <stop offset="55%" stop-color="#070e16" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#04080e" stop-opacity="0.72"/>
+    </radialGradient>
+    <clipPath id="globe-clip">
+      <circle cx="674" cy="276" r="184"/>
+    </clipPath>
+  </defs>
+
+  <!-- Deep space ground and subtle atmospheric backdrop -->
+  <rect width="960" height="540" fill="#070e16"/>
+  <rect width="960" height="540" fill="url(#space-glow)"/>
+
+  <!-- Faint background stars -->
+  <g fill="#f4eedf">
+    <circle cx="118" cy="112" r="1.2" opacity="0.28"/>
+    <circle cx="386" cy="96" r="1.5" opacity="0.35"/>
+    <circle cx="468" cy="154" r="1.1" opacity="0.26"/>
+    <circle cx="512" cy="72" r="1.4" opacity="0.32"/>
+    <circle cx="888" cy="114" r="1.3" opacity="0.38"/>
+    <circle cx="916" cy="222" r="1.1" opacity="0.25"/>
+    <circle cx="894" cy="396" r="1.5" opacity="0.34"/>
+    <circle cx="486" cy="436" r="1.2" opacity="0.28"/>
+    <circle cx="298" cy="462" r="1.3" opacity="0.26"/>
+    <circle cx="836" cy="462" r="1.1" opacity="0.3"/>
+    <circle cx="578" cy="468" r="1.2" opacity="0.25"/>
+  </g>
+
+  <!-- Top masthead -->
+  <g font-family="sans-serif">
+    <text x="44" y="52" fill="#f4eedf" font-size="22" font-weight="600" letter-spacing="-0.5">birdsview</text>
+    <text x="143" y="52" fill="#45ffd0" font-size="22" font-weight="600">↗</text>
+
+    <rect x="652" y="28" width="128" height="34" rx="2" fill="#070e16" stroke="#487d71" stroke-width="1"/>
+    <text x="716" y="49" text-anchor="middle" fill="#f4eedf" font-size="10" font-weight="600" letter-spacing="1.4">QUALITY · FULL</text>
+
+    <rect x="792" y="28" width="124" height="34" rx="2" fill="#070e16" stroke="#487d71" stroke-width="1"/>
+    <text x="854" y="49" text-anchor="middle" fill="#f4eedf" font-size="10" font-weight="600" letter-spacing="1.4">PASSPORT · 4</text>
+  </g>
+
+  <!-- Left intro column -->
+  <g>
+    <text x="44" y="138" fill="#a1e8d6" font-family="sans-serif" font-size="11" font-weight="600" letter-spacing="2.2">YOUR WINDOW TO THE WORLD</text>
+    <text x="44" y="206" fill="#f4eedf" font-family="Georgia, serif" font-size="60" font-weight="400" letter-spacing="-1">A world of</text>
+    <text x="44" y="264" fill="#45ffd0" font-family="Georgia, serif" font-size="60" font-style="italic" font-weight="400" letter-spacing="-1">wonder.</text>
+
+    <text x="44" y="306" fill="#abb8bf" font-family="sans-serif" font-size="14">Follow glowing hotspots to bird’s-eye views</text>
+    <text x="44" y="326" fill="#abb8bf" font-family="sans-serif" font-size="14">across all seven continents.</text>
+
+    <text x="44" y="374" fill="#a1e8d6" font-family="sans-serif" font-size="10" font-weight="600" letter-spacing="2.1">TAKE ME SOMEWHERE</text>
+
+    <rect x="44" y="390" width="234" height="40" rx="2" fill="#0c1d23" stroke="#45ffd0" stroke-width="1.2"/>
+    <text x="60" y="414" fill="#45ffd0" font-family="sans-serif" font-size="10.5" font-weight="600" letter-spacing="1.3">ONCE AROUND THE WORLD ↗</text>
+
+    <rect x="44" y="440" width="234" height="40" rx="2" fill="#070e16" stroke="#487d71" stroke-width="1"/>
+    <text x="60" y="464" fill="#a1e8d6" font-family="sans-serif" font-size="10.5" font-weight="600" letter-spacing="1.3">WHAT SHAPES THE LAND? ↗</text>
+  </g>
+
+  <!-- Stylised painted-miniature Earth -->
+  <circle cx="674" cy="276" r="196" fill="url(#atmo-halo)"/>
+  <circle cx="674" cy="276" r="185.5" fill="none" stroke="#45ffd0" stroke-opacity="0.35" stroke-width="2"/>
+
+  <g clip-path="url(#globe-clip)">
+    <circle cx="674" cy="276" r="184" fill="url(#ocean-fill)"/>
+
+    <!-- Subtle graticule arcs -->
+    <g fill="none" stroke="#a1e8d6" stroke-opacity="0.14" stroke-width="1">
+      <ellipse cx="674" cy="276" rx="184" ry="56"/>
+      <ellipse cx="674" cy="276" rx="184" ry="122"/>
+      <ellipse cx="674" cy="276" rx="68" ry="184"/>
+      <ellipse cx="674" cy="276" rx="134" ry="184"/>
+      <line x1="490" y1="276" x2="858" y2="276"/>
+      <line x1="674" y1="92" x2="674" y2="460"/>
+    </g>
+
+    <!-- Stylised geometric landmasses (no traced map data) -->
+    <path d="M518 168 C548 144, 594 148, 608 176 C622 204, 588 228, 560 226 C532 224, 502 194, 518 168 Z" fill="#2a5c54"/>
+    <path d="M540 174 C562 162, 586 170, 590 190 C574 202, 550 198, 540 174 Z" fill="#3a614e"/>
+
+    <path d="M558 264 C584 252, 606 276, 600 318 C594 362, 564 398, 544 374 C528 352, 536 276, 558 264 Z" fill="#2a5c54"/>
+    <path d="M552 308 C568 302, 578 326, 570 356 C558 346, 548 324, 552 308 Z" fill="#7d6c4d" opacity="0.72"/>
+
+    <path d="M640 144 C686 128, 754 136, 788 168 C812 192, 804 228, 766 238 C728 248, 694 222, 654 224 C632 226, 616 172, 640 144 Z" fill="#2a5c54"/>
+    <path d="M674 162 C718 152, 766 164, 774 190 C754 210, 706 206, 672 194 Z" fill="#3a614e"/>
+    <path d="M716 178 C744 176, 760 192, 750 208 C728 214, 708 202, 716 178 Z" fill="#7d6c4d" opacity="0.68"/>
+
+    <path d="M652 246 C694 238, 738 258, 744 302 C748 348, 712 396, 682 392 C658 388, 650 342, 636 308 C624 278, 628 252, 652 246 Z" fill="#3a614e"/>
+    <path d="M664 260 C698 256, 722 278, 718 308 C696 312, 668 296, 664 260 Z" fill="#7d6c4d" opacity="0.74"/>
+
+    <path d="M758 326 C788 318, 818 338, 814 368 C810 392, 776 402, 754 384 C738 370, 740 334, 758 326 Z" fill="#2a5c54"/>
+
+    <!-- Subtle polar ice cap -->
+    <ellipse cx="674" cy="100" rx="92" ry="26" fill="#9fb8c2" opacity="0.28"/>
+
+    <!-- Spherical shading -->
+    <circle cx="674" cy="276" r="184" fill="url(#sphere-shade)"/>
+  </g>
+
+  <!-- Glowing electric-mint hotspots -->
+  <g>
+    <!-- Hotspot 1: western ridge -->
+    <circle cx="566" cy="202" r="14" fill="#45ffd0" fill-opacity="0.14"/>
+    <circle cx="566" cy="202" r="8" fill="#45ffd0" fill-opacity="0.28"/>
+    <circle cx="566" cy="202" r="5" fill="#45ffd0" stroke="#070e16" stroke-width="1.5"/>
+
+    <!-- Hotspot 2: Paris (labeled) -->
+    <line x1="654" y1="184" x2="612" y2="140" stroke="#45ffd0" stroke-opacity="0.65" stroke-width="1.2"/>
+    <circle cx="654" cy="184" r="16" fill="#45ffd0" fill-opacity="0.18"/>
+    <circle cx="654" cy="184" r="9.5" fill="#45ffd0" fill-opacity="0.34"/>
+    <circle cx="654" cy="184" r="5.5" fill="#45ffd0" stroke="#070e16" stroke-width="1.6"/>
+    <rect x="540" y="120" width="76" height="28" rx="3" fill="#0b141d" stroke="#487d71" stroke-width="1"/>
+    <text x="578" y="138" text-anchor="middle" fill="#f4eedf" font-family="sans-serif" font-size="12" font-weight="500" letter-spacing="0.4">Paris</text>
+
+    <!-- Hotspot 3: Cairo (labeled) -->
+    <line x1="696" y1="262" x2="758" y2="262" stroke="#45ffd0" stroke-opacity="0.65" stroke-width="1.2"/>
+    <circle cx="696" cy="262" r="16" fill="#45ffd0" fill-opacity="0.18"/>
+    <circle cx="696" cy="262" r="9.5" fill="#45ffd0" fill-opacity="0.34"/>
+    <circle cx="696" cy="262" r="5.5" fill="#45ffd0" stroke="#070e16" stroke-width="1.6"/>
+    <rect x="758" y="248" width="76" height="28" rx="3" fill="#0b141d" stroke="#487d71" stroke-width="1"/>
+    <text x="796" y="266" text-anchor="middle" fill="#f4eedf" font-family="sans-serif" font-size="12" font-weight="500" letter-spacing="0.4">Cairo</text>
+
+    <!-- Hotspot 4: eastern ridge -->
+    <circle cx="766" cy="196" r="14" fill="#45ffd0" fill-opacity="0.14"/>
+    <circle cx="766" cy="196" r="8" fill="#45ffd0" fill-opacity="0.28"/>
+    <circle cx="766" cy="196" r="5" fill="#45ffd0" stroke="#070e16" stroke-width="1.5"/>
+
+    <!-- Hotspot 5: southern island -->
+    <circle cx="780" cy="356" r="14" fill="#45ffd0" fill-opacity="0.14"/>
+    <circle cx="780" cy="356" r="8" fill="#45ffd0" fill-opacity="0.28"/>
+    <circle cx="780" cy="356" r="5" fill="#45ffd0" stroke="#070e16" stroke-width="1.5"/>
+  </g>
+
+  <!-- Bottom exploration strip -->
+  <rect x="0" y="494" width="960" height="46" fill="#0b141d"/>
+  <line x1="0" y1="494" x2="960" y2="494" stroke="#487d71" stroke-opacity="0.35" stroke-width="1"/>
+  <text x="480" y="521" text-anchor="middle" fill="#abb8bf" font-family="sans-serif" font-size="11" letter-spacing="1.8">DRAG TO EXPLORE <tspan fill="#a1e8d6">·</tspan> SCROLL TO GET CLOSER <tspan fill="#a1e8d6">·</tspan> FOLLOW THE GLOW</text>
+</svg>
